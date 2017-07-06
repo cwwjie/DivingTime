@@ -1,0 +1,575 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: "Helvetica", "Arial", "Hiragino Sans GB", "Microsoft YaHei", "sans-serif";
+}
+* body {
+  width: 100%;
+  height: 100%;
+  background: #F9F9F9;
+}
+* i {
+  display: block;
+  background-image: url("../../../dist/img/ico.png");
+}
+* a {
+  text-decoration: none;
+  color: #4d5d77;
+  font-family: "微软雅黑";
+}
+* a:hover {
+  text-decoration: none;
+  color: #4d5d77;
+  font-family: "微软雅黑";
+}
+header {
+  position: fixed;
+  width: 100%;
+  background: #fff;
+  height: 50px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.26);
+  font-size: 14px;
+  font-family: "微软雅黑";
+  z-index: 100;
+  color: #4d5d77;
+}
+header .login > div {
+  float: left;
+  width: 50px;
+}
+header a i {
+  margin-top: 8px;
+  margin-left: 10px;
+  float: left;
+  display: block;
+  width: 150px;
+  height: 35px;
+  background-position: -150px 0px;
+}
+header > div {
+  line-height: 50px;
+  float: right;
+  margin-right: 20px;
+}
+@media (max-width: 750px) {
+  header .tell-header {
+    display: none;
+  }
+}
+header .Center {
+  cursor: pointer;
+  width: 120px;
+  position: relative;
+}
+header .Center > i {
+  position: relative;
+  top: 9px;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+}
+header .Center .left {
+  float: left;
+  background-position: -120px -185px;
+}
+header .Center span {
+  display: block;
+  float: left;
+  width: 56px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+header .Center .right {
+  position: relative;
+  top: 12px;
+  background-position: -184px -185px;
+}
+header .Center .dropdown {
+  display: none;
+  padding-top: 6px;
+  position: absolute;
+  z-index: 101;
+  top: 50px;
+}
+header .Center .dropdown ul {
+  background: #fff;
+  margin-bottom: 0px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16), 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+header .Center .dropdown ul a li {
+  cursor: pointer;
+  height: 50px;
+  width: 120px;
+  list-style: none;
+  border-top: 1px solid #e9e9e9;
+}
+header .Center .dropdown ul a li i {
+  margin-left: 10px;
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+}
+header .Center .dropdown ul a li:hover {
+  background: #e7e7e7;
+}
+header .Center .dropdown ul a .First {
+  border-top: none;
+}
+header .Center .dropdown ul a .First:hover::before {
+  border-bottom: 6px solid #e7e7e7;
+}
+header .Center .dropdown ul a .First::before {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  margin-left: -2.5px;
+  display: block;
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #fff;
+}
+header .Center:hover .right {
+  background-position: -152px -185px;
+}
+header .Center:hover .dropdown {
+  display: block;
+}
+.modal-login {
+  position: relative;
+  margin: 0px auto;
+  top: 150px;
+  width: 360px;
+  min-height: 280px;
+}
+.modal-login .modal-content {
+  width: 360px;
+  min-height: 280px;
+}
+.modal-login .modal-content .content {
+  width: 320px;
+  min-height: 250px;
+  padding: 0px 5px 30px;
+  position: relative;
+  top: 25px;
+  margin: 0px auto;
+  color: rgba(0, 0, 0, 0.56);
+}
+.modal-login .modal-content .content .title {
+  overflow: hidden;
+  height: 31px;
+  padding-bottom: 5px;
+}
+.modal-login .modal-content .content .title .left {
+  float: left;
+  font-size: 24px;
+}
+.modal-login .modal-content .content .title .right {
+  float: right;
+  padding-top: 10px;
+  font-size: 16px;
+}
+.modal-login .modal-content .content input {
+  font-size: 16px;
+}
+.modal-login .modal-content .content .input1,
+.modal-login .modal-content .content .input2,
+.modal-login .modal-content .content .input3 {
+  position: relative;
+  padding-top: 15px;
+}
+.modal-login .modal-content .content .input1 input,
+.modal-login .modal-content .content .input2 input,
+.modal-login .modal-content .content .input3 input {
+  position: relative;
+  left: 2.5%;
+  padding-left: 10px;
+  height: 34px;
+  width: 95%;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+}
+.modal-login .modal-content .content .input1 .correcticon,
+.modal-login .modal-content .content .input2 .correcticon,
+.modal-login .modal-content .content .input3 .correcticon {
+  margin-right: 5px;
+  position: relative;
+  top: 3px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url("/dist/img/ico.png");
+  background-position: -48px -99px;
+}
+.modal-login .modal-content .content .input1 .mistakeicon,
+.modal-login .modal-content .content .input2 .mistakeicon,
+.modal-login .modal-content .content .input3 .mistakeicon {
+  margin-right: 5px;
+  position: relative;
+  top: 3px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url("/dist/img/ico.png");
+  background-position: -64px -99px;
+}
+.modal-login .modal-content .content .input2 .ShowPassword {
+  position: absolute;
+  top: 18px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  background: url("/dist/img/ico.png");
+  cursor: pointer;
+}
+.modal-login .modal-content .content .input2 .Show {
+  background-position: -366px -151px;
+}
+.modal-login .modal-content .content .input2 .hiden {
+  background-position: -334px -151px;
+}
+.modal-login .modal-content .content .Option {
+  overflow: hidden;
+  padding: 10px 0px 15px;
+}
+.modal-login .modal-content .content .Option label {
+  float: left;
+  font-size: 14px;
+}
+.modal-login .modal-content .content .Option input {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  top: 4px;
+  margin-right: 5px;
+}
+.modal-login .modal-content .content .Option a {
+  float: right;
+  text-decoration: underline;
+}
+.modal-login .modal-content .content .Btn {
+  margin-bottom: 30px;
+  height: 32px;
+  width: 100%;
+  background: #009f86;
+  color: #fff;
+  text-align: center;
+  line-height: 32px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.modal-login .modal-content .content .Btn:hover {
+  background: #009079;
+}
+.content .spinner {
+  position: relative;
+  top: 200px;
+  width: 60px;
+  height: 60px;
+  background-color: #67CF22;
+  margin: 0px auto;
+  -webkit-animation: rotateplane 1.2s infinite ease-in-out;
+  animation: rotateplane 1.2s infinite ease-in-out;
+}
+@-webkit-keyframes rotateplane {
+  0% {
+    -webkit-transform: perspective(120px);
+  }
+  50% {
+    -webkit-transform: perspective(120px) rotateY(180deg);
+  }
+  100% {
+    -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg);
+  }
+}
+@keyframes rotateplane {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
+.content .SVG {
+  padding-top: 70px;
+  padding-bottom: 40px;
+}
+.content .SVG .icon {
+  display: block;
+  margin: 0 auto;
+}
+.content .Congratulations {
+  padding-bottom: 40px;
+  text-align: center;
+  font-size: 32px;
+}
+.content .OuterBorder {
+  max-width: 970px;
+  margin: 0px auto;
+  background: #fff;
+  border: solid 1px #DBDBDB;
+  padding: 40px 30px;
+  font-size: 16px;
+}
+.content .OuterBorder .CustomerInformationTitle {
+  padding-bottom: 20px;
+  font-size: 20px;
+}
+.content .OuterBorder .CustomerInformationTitle select {
+  height: 40px;
+  line-height: 40px;
+  padding: 0px 5px 0px 0px;
+  font-size: 20px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: dashed 1px #039be5;
+  outline: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.content .OuterBorder .CustomerInformationTitle option {
+  border: none;
+}
+.content .OuterBorder .CustomerInformationTitle span {
+  margin-left: 35px;
+  cursor: pointer;
+}
+.content .OuterBorder .CustomerInformationTitle span a {
+  color: #039be5;
+}
+.content .OuterBorder .OuterTitle {
+  height: 30px;
+  overflow: hidden;
+  width: 100%;
+  font-size: 20px;
+}
+.content .OuterBorder .OuterLeft {
+  float: left;
+}
+.content .OuterBorder .OuterrRight {
+  float: right;
+}
+.content .OuterBorder .Paragraph {
+  padding-top: 10px;
+}
+.content .OuterBorder .Form {
+  padding-top: 40px;
+  font-size: 14px;
+}
+.content .OuterBorder .Form .FLeft {
+  font-size: 18px;
+}
+.content .OuterBorder .Form .FRight {
+  text-align: right;
+}
+.content .OuterBorder .Form .FormRow {
+  border-bottom: solid 1px #DBDBDB;
+  border-left: solid 1px #DBDBDB;
+  border-right: solid 1px #DBDBDB;
+  overflow: hidden;
+  padding: 10px 0px;
+}
+.content .OuterBorder .Form .FormRow .line {
+  padding-left: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 100%;
+  overflow: hidden;
+}
+.content .OuterBorder .Form .FormRow .line > div {
+  float: left;
+  width: 33%;
+}
+.content .OuterBorder .Form .FormRow .line > div span {
+  display: inline-block;
+  width: 65px;
+  font-weight: bold;
+}
+.content .OuterBorder .Form .FormRow .line .two {
+  width: 66%;
+}
+.content .OuterBorder .Form .FormRow .line .one {
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .content .OuterBorder .Form .FormRow .line {
+    padding-top: 0px;
+  }
+  .content .OuterBorder .Form .FormRow .line > div {
+    padding-top: 15px;
+    float: none;
+    width: 100%;
+  }
+  .content .OuterBorder .Form .FormRow .line .two {
+    width: 100%;
+  }
+}
+.content .OuterBorder .Form .FormTitle {
+  border-left: none;
+  border-right: none;
+}
+.content .OuterBorder .BTNN {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+.content .OuterBorder .BTNN > a {
+  margin-left: 20px;
+  float: right;
+  width: 120px;
+  height: 30px;
+  cursor: pointer;
+  line-height: 30px;
+  text-align: center;
+  font-size: 16px;
+  color: #fff;
+  border: 1px solid #01b969;
+  background: #01b969;
+}
+.content .OuterBorder .BTNN > a:hover {
+  color: #009755;
+  border: 1px solid #009755;
+  background: #fff;
+}
+.content .OuterBorder .part1-Icon {
+  float: left;
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
+  position: relative;
+  top: 2px;
+}
+.content .OuterBorder .ConfirmOrder {
+  overflow: hidden;
+}
+.content .OuterBorder .ConfirmOrder > div {
+  float: right;
+  font-size: 16px;
+  padding: 0px 30px;
+  margin-left: 20px;
+  line-height: 35px;
+  background: red;
+  height: 35px;
+  cursor: pointer;
+  border-radius: 5px;
+  background: #01b969;
+  color: #fff;
+}
+footer {
+  overflow: hidden;
+  background: #3c3e40;
+  color: #dbdbdb;
+}
+footer a {
+  color: #dbdbdb;
+}
+footer a:hover {
+  color: #dbdbdb;
+}
+footer .F-Content {
+  position: relative;
+  left: 50%;
+  margin-left: -350px;
+  width: 700px;
+  padding-top: 20px;
+  height: 300px;
+  overflow: hidden;
+}
+footer .F-Content h4 {
+  font-size: 16px;
+}
+footer .F-Content p {
+  font-size: 14px;
+}
+footer .F-Content .F-left {
+  float: left;
+  padding-top: 20px;
+}
+footer .F-Content .F-left i {
+  display: block;
+  width: 60px;
+  height: 23px;
+  background-image: url("../../../dist/img/ico.png");
+  background-position: -300px 0px;
+}
+footer .F-Content .F-left h4 {
+  padding-top: 16px;
+  padding-bottom: 15px;
+}
+footer .F-Content .F-right {
+  float: right;
+  width: 80%;
+}
+footer .F-Content .F-right h3 {
+  letter-spacing: 8px;
+}
+footer .F-Content .F-right h4 {
+  padding-top: 2px;
+  padding-bottom: 15px;
+}
+footer .F-Content .F-right .FRigless {
+  font-size: 14px;
+}
+footer .F-Content .F-right .FRigRig {
+  padding-left: 40px;
+}
+footer .F-Content .F-bottom {
+  position: absolute;
+  left: 50%;
+  top: 240px;
+  margin-left: -120px;
+}
+footer .F-Content .F-bottom i {
+  float: left;
+  display: block;
+  width: 32px;
+  height: 32px;
+  background-image: url("../../../dist/img/ico.png");
+  background-position: -361px 0px;
+  margin: 0px 20px;
+}
+footer .FS-Content {
+  display: none;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+footer .FS-Content .FS-list {
+  opacity: 0.6;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+footer .FS-Content .FS-bottom {
+  position: relative;
+  width: 216px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+footer .FS-Content .FS-bottom i {
+  opacity: 0.6;
+  float: left;
+  display: block;
+  width: 32px;
+  height: 32px;
+  background-image: url("../../../dist/img/ico.png");
+  background-position: -361px 0px;
+  margin: 0px 20px;
+}
+@media only screen and (max-width: 992px) {
+  footer .F-Content {
+    display: none;
+  }
+  footer .FS-Content {
+    display: block;
+  }
+}

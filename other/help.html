@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>【潜游时光】马来西亚_卡帕莱_出境游_自由行_潜水度假村-潜游时光，让您的旅行有温度</title>
+  <meta name="keywords" content="潜游时光，马来西亚，卡帕莱，出境游，自由行，潜水度假村，旅游攻略" />
+  <meta name="description" content="【潜游时光】专业的旅游行程定制,全新的服务体验,最佳的旅游度假体验,为您提供一站式潜水度假村预定服务,为出国旅游者提供最佳的旅游攻略和服务,让您的旅行有温度。" />
+  <meta name="author" content="潜游时光" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="./../dist/css/bootstrap.min.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="./css/header.css" media="screen">
+  <script type="text/javascript" src="./../dist/js/jquery-2.1.4.min.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="./../dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="./../dist/js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="./../dist/js/appconfig.js?file_version=2.02"></script>
+  <script type="text/javascript" src="./js/header.js"></script>
+</head>
+<body>
+	<!-- 模态框(登录) -->
+	<div class="modal fade bs-example-modal-sm" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+		<div class="modal-login">
+			<div class="modal-content">
+			<div class="content">
+			  <div class="close" onclick="log_fun.hide()">X</div>
+			  <div class="title">
+			    <div class="left">登录</div>
+			    <div class="right"><a href="./../user/signup.html">去注册 ></a></div>
+			  </div>
+			  <div class="input1">
+			    <input type="text" name="User" id="User" placeholder="账号">
+			    <label for="User"><i class=""></i><span></span></label>
+			  </div>
+			  <div class="input2">
+			    <input type="password" name="password" id="password" placeholder="密码">
+			    <div class="ShowPassword hiden" id="ShowPassword"></div>
+			    <label for="password"><i></i><span></span></label>
+			  </div>
+			  <div class="Option">
+			    <label><input type="checkbox" name="auto" id="RememberCookie">自动登录</label>
+			    <a href="./../user/forget.html">忘记密码</a>
+			  </div>
+			  <div class="Btn" id="loginBtn" title="ready">登录</div>
+			</div>
+			</div>
+		</div>
+	</div>
+  <header>
+    <a href="./../index.html"><i></i></a>
+    <div class="login" id="login">
+      <div><a href="./../user/signup.html" target="_blank">注册</a></div>
+      <div><a href="JavaScript:;" onclick="log_fun.Show()" target="_self">登录</a></div>
+    </div>
+    <div class="tell-header">服务咨询 :<a href="tel://4006709078"> 400-9688-768</a></div>
+  </header>
+  <div class="main">
+    <div class="main_img">
+		<img src="./img/bar.jpg">
+	</div>
+	<div class="content">
+
+    <h1>关于Divingtime</h1>
+    <div style="height: 1px;background:rgb(220,220,220);margin:60px 0px 30px;"></div>
+    <h2>Divingtime是什么？</h2>
+    <p>Divingtime是东南亚潜水度假村预订平台。</p>
+    <h2>为什么通过Divingtime预定？</h2>
+    <p>Divingtime为你精心挑选出来自东南亚18家优质潜水度假村，竭力为你提供专业、贴心的服务。是值得信赖的东南亚度假村预订平台。</p>
+    <h2>如何使用Divingtime？</h2>
+    <p>Divingtime汇集众多优质的东南亚潜水度假区资源，供您探索、筛选。您可以通过拨打400-9688-768，联系在线客服，添加qq（2546623187）、微信（divingtimehailang）或登录https://divet.taobao.com联系在线客服，根据您的需求来定制您的潜水度假旅游行程。在每个专属的度假村产品中，您可以选择预定一种或多种房型，同样您也可以自助定制所需要的个性化服务。</p>
+    <h2>Divingtime提供哪些服务？</h2>
+    <p>您可以在Divingtime上自助预订您的度假行程。如果您对度假村行程预订有任何疑问，或需要更加个性化的订制与服务，Divingtime的旅行规划师将一对一为您提供免费咨询与协助。旅行中您与度假村之间产生的任何问题，Divingtime都将根据您的需求予以协助。</p>
+    <h2>加入Divingtime能获得的什么益处？</h2>
+    <p>加入Divingtime，体验每一次潜水度假给您带来的不同与惊喜，让潜水度假提高您的生活品质，成为您生活方式之一。</p>
+    <h2>如何进行商务合作？</h2>
+    <p>请联系邮箱res1@divingtime.asia</p>
+    <h2>Divingtime提供哪些保障？</h2>
+    <p>隐私保护：</p>
+    <p>  Divingtime对于每一位客人的个人信息及账户安全极其重视，执行严格、负责任的隐私政策，以保护用户隐私。</p>
+    <p>交易保障：</p>
+    <p>  Divingtime为减少支付渠道过多造成的安全隐患，目前只使用国内领先的独立第三方支付平台——支付宝作为官方唯一支付渠道，安全、简单、快速。您的每一笔交易都将在最严格的保护中进行，以保证您财产的安全。</p>
+    <p>旅途无忧</p>
+    <p>  Divingtime与东南亚最优质的潜水度假村合作，为您提供最好的潜水度假体验，并拥有专业的客户服务团队为您在旅途前中后提供度假预订、行程提醒、旅途当中提供帮助等贴心服务。让您全程无忧，轻松度假。</p>
+
+    <h1>关于度假村</h1>
+    <div style="height: 1px;background:rgb(220,220,220);margin:60px 0px 30px;"></div>
+    <h2>什么是度假村？</h2>
+    <p>度假村是指提供一个亲近大自然的机会，并享受一系列贴身服务和现代化的休闲和运动设施，彻底放松身心的建筑群，除了传统酒店提供的住宿餐饮以外，还依托周边旅游资源为客人提供丰富多彩的活动、娱乐设施等。</p>
+    <h2>度假村与传统酒店区别在哪儿？</h2>
+    <p>度假村能为客人安排丰富多彩的特色活动并提供娱乐设施</p>
+    <h2>Divingtime提供的服务与一般旅行社有什么不同？</h2>
+    <p>与一般旅行社固定的旅游线路套餐、标准化的住宿相比，Divingtime提供高度个性化的智能度假村住宿定制、一站式的度假预订（接送、度假村活动等）、及根据每个用户喜好提供深度行程设计，使每位客人都能获得最满意的度假体验。</p>
+    <h2>Divingtime如何选择合作的度假村？</h2>
+    <p>Divingtime精心挑选东南亚位于优质海洋环境中的高品质度假村，获得诸如全球奢华小型酒店，最受欢迎设计大奖，全球绿色环保等奖项且活动丰富，服务品质有保障的度假村。我们致力于您在Divingtime选择的每一次度假都是美好的体验。</p>
+    <h2>如何选择适合自己的度假村？</h2>
+    <p>可以根据不同的出行目的（如休闲、蜜月、商务考察等）、同行人员组成（独自旅行、与伴侣、朋友、家庭、团队等）、以及喜爱的元素（海滨、信仰、潜水、冲浪等），在探索板块中挑选出喜爱的度假村。</p>
+    <h2>度假村提供哪些特色服务？</h2>
+    <p>专车服务：</p>
+    <p>  度假村会为您安排专车接送服务，在您到达目的地之后第一时间将您舒适快速地送达度假村，避免因为对当地交通不熟悉和语言问题产生的烦恼。还可以提供您在当地游览的专船接送服务，让您在目的地往来之间省却使用公共交通的时间和麻烦。</p>
+    <p>蜜月布置：</p>
+    <p>  度假村会提前为度蜜月的客人准备浪漫的客房装饰，并按照您的喜好准备欢迎香槟、果盘和蛋糕。还可以为您安排在浪漫的沙滩或餐厅进行烛光晚餐，或安排一次双人SPA。只要您提前告知度假村的员工就可以在度假期间享受专属的浪漫服务。不同的度假村所提供的蜜月礼遇也有所不同。</p>
+    <p>中文服务：</p>
+    <p>  优质度假村会提供您在度假期间的中文私人管家服务，让您毋须担心因为沟通问题而使您的需要得不到满足。您的中文私人管家会全程贴心照管您在度假期间的饮食、住宿和活动的需要。</p>
+
+
+
+    <h1>操作指南</h1>
+    <div style="height: 1px;background:rgb(220,220,220);margin:60px 0px 30px;"></div>
+    <h2>操作指南</h2>
+    <p>在Divingtime网站顶部右方点击“注册”，填写注册邮箱及用户密码即可轻松完成注册</p>
+    <h2>所有的度假村都可以预订吗？</h2>
+    <p>是的，所有展示出来的度假村均可接受预订。</p>
+    <h2>支付遇到问题怎么办？</h2>
+    <p>目前网站只支持支付宝付款，如支付出现问题，请联系支付宝客服。</p>
+    <h2>如何查询我的订单进度？</h2>
+    <p>点击页面右上角个人头像>我的订单>点击具体订单，即可查看当前进度。</p>
+    <h2>需要在出发前多久预先预订呢？</h2>
+    <p>建议提前至少一个月预订。</p>
+    <h2>关于度假村的退款政策是如何制定的？</h2>
+    <p>每一个度假村都会根据自身业务需求制定适用于自己度假村的退款政策，并且严格执行。通常会根据距离入住天数的接近，退款时退还的款项会越来越少，甚至不予退款。预订时请看清楚度假村详情页最下方的度假村取消政策。</p>
+    <h2>订房的流程是怎样的？</h2>
+    <p>提交预定订单后，订单的状态为【预定中】，意味着订单已提交到Divingtime后台，工作人员将在48小时内联系度假村确定是否有房、以及您的其他需求能否得到满足。如确定有房后，订单状态为【可预订，等待付款】，并发送短信和邮件提醒您在规定时间内支付订单金额。如度假村在该时间段内无房、或无法满足客人的条件，客服人员将联系您咨询更改订单重新下单或取消订单事宜，同时原订单状态变为【预定失败】。</p>
+    <h2>如何申请退款？</h2>
+    <p>不同的度假村执行不同标准的取消政策，退款请联系客服。</p>
+    <h2>订单确认后，我是否能修改吗？</h2>
+    <p>订单确认成功后，用户如需增减订单项目或修改人员信息，请在09：00-17：30拨打（+86）400-9688-768联系客服人员。</p>
+    <h2>我需要完成我的个人资料吗？</h2>
+    <p>需要的，为了使您在预订的时候享受个性化的待遇，以及使您的预订进度得到最及时的反馈信息，请尽量完善您的个人资料。您填写的任何个人信息将受到Divingtime隐私政策保护。</p>
+    <h2>预订时，我需要提交护照等身份信息吗？</h2>
+    <p>度假村预订时需要每一位客人的护照信息。用户须在预订度假村后48小时内提交每位出行人员的护照信息，48小时内未能提供护照信息，该订单将会关闭。</p>
+    <h2>如何修改密码？</h2>
+    <p>页面右上角个人头像>帐号中心>修改密码设置</p>
+    <h2>我通过哪些方式付款？</h2>
+    <p>目前Divingtime支持只通过支付宝付款。</p>
+
+
+	</div>
+  </div>
+  <footer>
+    <div class="F-Content">
+      <div class="F-left">
+        <i></i>
+        <h4>公司信息</h4>
+        <p><a href="./../other/aboutUs.html">关于我们</a></p>
+        <p><a href="./../other/teamStory.html">团队故事</a></p>
+        <p><a href="./../other/joinUs.html">加入我们</a></p>
+      </div>
+      <div class="F-right">
+        <h3>深圳潜游时光文化传媒有限公司</h3>
+        <div class="row">
+          <div class="col-md-3">
+            <h4>关于更多</h4>
+            <p><a href="./../other/help.html">帮助</a></p>
+            <p><a href="./../other/Privacy.html">隐私声明</a></p>
+            <p><a href="./../other/policy.html">政策条款</a></p>
+          </div>
+          <div class="col-md-4">
+            <h4>商务合作</h4>
+            <p>&nbsp;</p>
+            <p><a class="FRigless" href="mailto://chopin@divingtime.asia">chopin@divingtime.asia</a></p>
+            <p><a>0755-23708886</a></p>
+          </div>
+          <div class="col-md-5 FRigRig">
+            <h4>客服专线</h4>
+            <p><a href="tel://400-9688-768">400-9688-768</a></p>
+            <p><a class="FRigless" href="mailto://consultant@divingtime.asia">consultant@divingtime.asia</a></p>
+            <p>顾问工作时间：9:00 - 18:00</p>
+          </div>
+        </div>
+      </div>
+      <div class="F-bottom">
+        <a href="https://divet.taobao.com/index.htm?spm=a1z10.1-c.w5002-2373231309.2.2zP0yr" target="_blank"><i style="background-position: -361px 0px;"></i></a>
+        <a href="http://weibo.com/divingtime" target="_blank"><i style="background-position: -393px 0px;"></i></a>
+        <div class="Show_weixin">
+          <div></div>
+          <a href="javascript:;">
+          <i style="background-position: -425px 0px;"></i>
+        </div>
+        <a id='___szfw_logo___' href='https://credit.szfw.org/CX20170620038855550156.html' target='_blank'><i style="background-position: -344px -217px;"></i></a>
+        </a>
+      </div>
+      <div class="copy_Right">
+        Copyright © 2016 DivingTime. All Rights Reserved. 潜游时光有限公司 版权所有
+      </div>
+    </div>
+    <div class="FS-Content">
+      <p><a href="tel://400-9688-768">400-9688-768</a>或<a href="mailto://consultant@divingtime.asia">consultant@divingtime.asia</a></p>
+      <p><a>顾问工作时间：9:00 - 18:00</a></p>
+      <p class="FS-list"><a href="./../other/aboutUs.html">关于我们</a> | <a href="./../other/teamStory.html">团队故事</a> | <a href="./../other/joinUs.html">加入我们</a> | <a href="./../other/help.html">帮助</a> | <a href="./../other/Privacy.html">隐私声明</a> | <a href="./../other/policy.html">政策条款</a></p>
+      <div class="FS-bottom">
+        <a href="https://divet.taobao.com/index.htm?spm=a1z10.1-c.w5002-2373231309.2.2zP0yr" target="_blank"><i style="background-position: -361px 0px;"></i></a>
+        <a href="http://weibo.com/divingtime" target="_blank"><i style="background-position: -393px 0px;"></i></a>
+        <a href="javascript:;"><i style="background-position: -425px 0px;"></i></a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

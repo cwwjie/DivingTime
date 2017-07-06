@@ -1,0 +1,861 @@
+/*
+ * 目录
+ * 模态框
+ * 主要内容
+ * 内容信息部分(待优化)
+ * 最后次新增
+ *   - 行程负责人
+ *   - 额外赠送
+ *   - 度假村接送时间
+ *   - 新增特别注意页面
+ *   - 提交成功
+ *   - 修改时间
+ *   - 床型新
+ */
+* {
+	body{
+		width:100%;
+		height:100%;
+		background:rgba(99, 217, 237, 1);
+	}
+	margin: 0px;
+	padding: 0px;
+	::-webkit-input-placeholder { /* WebKit browsers */
+		color: #9e9e9e;
+	}
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		color: #9e9e9e;
+	}
+	::-moz-placeholder { /* Mozilla Firefox 19+ */
+		color: #9e9e9e;
+	}
+	:-ms-input-placeholder { /* Internet Explorer 10+ */
+		color: #9e9e9e;
+	}
+}
+
+// 导航栏
+.Navigation {
+	@media (max-width:1025px) {
+		display: none;
+	}
+	width:100%;
+	background:#fff;
+	height:50px;
+	box-shadow: 0 1px 1px rgba(0,0,0,.26);
+	color:#4d5d77;
+	a {
+		color:#4d5d77;
+		line-height: 50px;
+		img {
+			margin-top:12px;
+			margin-left:10px;
+			float: left;
+			display: block;
+			width: 120px;
+			height: 29px;
+			background-position:-150px 0px;
+		}
+	}
+	.tell-header {
+		float: right;
+		margin-right:20px;
+	}
+}
+
+// 模态框
+* {
+
+	// 链接失效 模态框
+	.modal-fixed-failure {
+		@media (max-width:700px) {
+			width: 90%;
+		}
+		.modal-content {
+			@media (max-width:700px) {
+				padding:24px 10px 10px 10px;
+			}
+			.content{
+				overflow: hidden;
+				width:340px;
+				margin: 0 auto;
+				@media (max-width:700px) {
+					width:100%;
+				}
+				.mdi-navigation-cancel {
+					float: left;
+					color:#d50000;
+					font-size:80px;
+					@media (max-width:700px) {
+						float: none;
+						text-align: center;
+						position: relative;
+						left: 50%;
+						top:-10px;
+						margin-left:-40px;
+					}
+				}
+				div {
+					position: relative;
+					top:40px;
+					left: 20px;
+					font-family: "微软雅黑";
+					float: left;
+					color:#d50000;
+					font-size: 24px;
+					@media (max-width:700px) {
+						float: none;
+						top:-10px;
+						left:0px;
+						text-align: center;
+					}
+				}
+			}
+		}
+	}
+
+
+
+	// 获取信息 模态框
+	.modal-fixed-getGatherInfo {
+		.title {
+			text-align: center;
+			color: #26a69a;
+			font-size: 24px;
+			padding-bottom: 20px;
+		}
+		button {
+			text-align: center;
+			margin:0px auto;
+		}
+	}
+}
+
+
+
+
+// 主要内容
+.main {
+	margin: 90px auto;
+	width:1025px;
+	@media (max-width:1025px) {
+		margin: 0px;
+		height: 100px;
+		width:100%;
+	}
+	.card{
+		margin: 0px;
+		.card-content {
+			font-family: "微软雅黑";
+			@media (max-width:1025px) {
+				padding:20px 0px 0px 0px;
+			}
+			.cardNav {
+				@media (max-width:1025px) {
+					font-size: 16px;
+					.tabs {
+						overflow-y:auto;
+					}
+				}
+				.tabs {
+					overflow: hidden;
+					@media (max-width:1025px) {
+						overflow:auto;
+					}
+					height: 60px;
+					border-bottom: 1px solid rgba(160,160,160,0.2);
+					a {
+						color:#263238;
+					}
+					.active {
+						color: #ee6e73;
+					}
+					.indicator {
+						display: none;
+					}
+				}
+			}
+			.Collection {
+				.row {
+					margin-bottom: 0px;
+				}
+				.Voids {
+					padding-top: 20px;
+					@media (max-width:1025px) {
+						padding-top:10px;
+						font-size: 18px;
+					}
+				}
+				._addBTN {
+					top: 0px;
+					left: 20px;
+					width: 130px;
+					height: 68px;
+					position: absolute;
+				}
+				._part {
+					padding: 10px;
+				}
+				// 删除按钮
+				.delete {
+					padding-bottom: 20px;
+					font-size: 18px;
+					.title {
+						position: relative;
+						left: 10px;
+					}
+					i {
+						cursor: pointer;
+						margin-right: 10px;
+					}
+					i:hover {
+						color: #f44336;
+					}
+				}
+				// 客服咨询
+				.ContactUS {
+					padding: 100px 10px 10px 10px;
+					overflow: hidden;
+					width: 530px;
+					@media (max-width:530px) {
+						width: 100%;
+					}
+					margin: 0 auto;
+					>img{
+					}
+					._content {
+						font-size: 16px;
+						float: left;
+						margin-right: 60px;
+						padding:0px 20px 20px 20px;
+						width: 280px;
+					}
+					._content {
+						padding-top:10px;
+						float: right;
+						margin-right: 0px;
+						width: 280px;
+						font-size: 20px;
+						.iconnn {
+							padding-top: 10px;
+							padding-left: 70px;
+						}
+					}
+					.ContactUS_content {
+						float: left;
+						position: relative;
+						top: -5px;
+						@media (max-width:500px) {
+							top: 20px;
+							left: 20px;
+						}
+						width: 160px;
+						height: 160px;
+						>div{
+							position: relative;
+							left: 17.5px;
+							top: -5px;
+							margin-top: 10px;
+						}
+						article {
+							text-align: center;
+							position: relative;
+							top: -5px;
+							left: -22.5px;
+						}
+						svg {
+							position: relative;
+							top: 2.5px;
+						}
+						.iconnn{
+							position: relative;
+							left:37px;
+						}
+					}
+				}
+			}
+		}
+		.card-action {
+			a {
+				cursor: pointer;
+			}
+		}
+	}
+}
+
+
+
+
+// 内容信息部分 (待优化)
+.Collection {
+	overflow: hidden;
+	// 第一页
+	.theFirstPage {
+		.Declarations{
+			color: rgba(0,0,0,0.87);
+			.card-title{
+				font-weight:bold;
+				font-size: 16px;
+				color: rgba(0,0,0,0.74);
+				span{
+					font-size: 16px;
+				}
+			}
+			.strong {
+				color: #000000;
+				font-weight:bold;
+			}
+			.row {
+				padding:5px 0px 0px 20px;
+				color: rgba(0,0,0,0.87);
+				a {
+					font-style: italic;
+					color: #F44336;
+					text-decoration: underline;
+				}
+				p {
+					line-height:22px;
+					color: rgba(0,0,0,0.87);
+					padding-left: 10px;
+				}
+			}
+			._red{
+				color: #F44336;
+				font-weight:bold;
+			}
+		}
+		.overflow-title {
+			font-weight: bold;
+			font-size: 18px;
+		}
+		.phone-overflow {
+			margin-bottom: 25px;
+		}
+		@media (max-width:1025px) {
+			.phone-overflow {
+				margin-bottom:5px;
+				height: 500px;
+				overflow-y:scroll;
+			}
+		}
+	}
+	// 第二页
+	.TheSecondPage {
+		// 渲染附件信息的地方
+		#annex {
+			overflow: hidden;
+			.theCar{
+				float: left;
+				margin-right: 10px;
+				margin-left: 18px;
+				box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+				transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+				height: 170px;
+				width: 160px;
+				background: #e4e4e4;
+				overflow: hidden;
+				margin-bottom: 20px;
+				img{
+					width: 160px;
+					height: 160px;
+				}
+				div{
+					line-height: 30px;
+					height: 30px;
+					padding:0 5px;
+					overflow: hidden;
+					color: rgba(0,0,0,0.6);
+					cursor: pointer;
+					width: 160px;
+				}
+				span{
+					float: right;
+					color: rgba(0,0,0,0.6);
+					transition:color 0.2s;
+				}
+				span:hover {
+					color: #000;
+				}
+			}
+		}
+		// 模态框
+		#modalAnnex {
+			.modal-content{
+				.delete{
+					cursor: pointer;
+					float: right;
+					color: rgba(0,0,0,0.6);
+					transition:color 0.4s;
+				}
+				.delete:hover{
+					color: #000;
+				}
+			}
+		}
+		#outboundclass{
+			.datepicker_flightDate::-webkit-input-placeholder{
+				color: #8D8D8D;
+			}
+			.datepicker_flightDate::-moz-placeholder{
+				color: #8D8D8D;
+			}
+			.datepicker_flightDate:-ms-input-placeholder{
+				color: #8D8D8D;
+			}
+		}
+		.orderinformation{
+			padding-top: 10px;
+			.row{
+				padding:5px;
+				font-size: 16px;
+			}
+			.col{
+				position: relative;
+				color: #000;
+				span{
+					position: absolute;
+					left: 85px;
+					color:#717171;
+				}
+			}
+			.Hotel{
+				height: 24px;
+				>div{
+					position: relative;
+					top: -15px;
+					padding-left: 80px;
+					padding-right:40%;
+				}
+			}
+			// 渲染 赠送 的部分
+			.giftData {
+				position: relative;
+				top: -10px;
+			}
+			.giftTextarea {
+				padding: 0;
+				position: relative;
+			}
+			.grizzle{
+				font-size: 14px;
+				color:#000;
+			}
+			.prompt {
+				padding: 0px 0px 0px 5px;
+				div{
+					font-size: 14px;
+					color:#9e9e9e;
+				}
+			}
+			.col {
+				label {
+					color:#000;
+				}
+			}
+		}
+	}
+	// 第三页 导航 部分
+	#test3 {
+		.card-title{
+			font-weight:normal;
+			font-size: 18px;
+			font-weight: bold;
+			color: rgba(0,0,0,0.74);
+			span{
+				position: relative;
+				top: -2.5px;
+				left: -15px;
+				font-weight: normal;
+				font-size: 12px;
+			}
+		}
+		._nav{
+			padding-top:10px;
+			.tabs {
+				display:block;
+				height: auto;
+				padding:0;
+				width: 100px;
+				.tab {
+					float: none;
+					width: 100%;
+				}
+				// 下方横线
+				.indicator{
+					display: none;
+				}
+			}
+		}
+	}
+	// 第三页 模态框 部分
+	.RoomNav{
+		.collection-item {
+			a {
+				color:rgba(0,0,0,0.87);
+			}
+			.active {
+				color:#ee6e73;
+			}
+		}
+	}
+	._TraModal {
+		width: 985px;
+		@media (max-width:985px) {
+			width: 100%;
+			max-height: 100%;
+		}
+		.Delete {
+			float: right;
+			cursor: pointer;
+			font-size: 20px;
+			position: relative;
+			top: -10px;
+		}
+		.Delete:hover{
+			color: red;
+		}
+		input::-webkit-input-placeholder{
+			color: #8D8D8D;
+		}
+		input::-moz-placeholder{
+			color: #8D8D8D;
+		}
+		input:-ms-input-placeholder{
+			color: #8D8D8D;
+		}
+	}
+	// 边框
+	.callout-title {
+		padding-left: 10px;
+		font-size: 30px;
+	}
+	.callout {
+		position: relative;
+		color: #ff0000;
+		top: -3px;
+		font-size: 14px;
+		padding: 3px;
+		padding-left: 10px;
+		margin-left: 20px;
+		border: 1px solid #e0e0e0;
+		border-left-color: #e07979;
+		border-left-width: 5px;
+		background: #efbcbc;
+	}
+	// 初始化掉 materialize
+	.select{
+		display: block;
+		background: #fafafa;
+		border: 1px solid #fafafa;
+			border-bottom-color: #9e9e9e;
+			border-bottom-style: solid;
+			border-bottom-width: 1px;
+		option {
+			border: 1px solid #fafafa;
+				border-top-color: #fff;
+				border-top-style: solid;
+				border-top-width: 0px;
+		}
+	}
+	.selectadd{
+		background: #fff;
+	}
+	.select:active{
+		border: 1px solid #fafafa;
+			border-bottom-color: #fff;
+			border-bottom-style: solid;
+			border-bottom-width: 0px;
+	}
+	// 第三页 内容 部分
+	._Travelers {
+		min-height: 510px;
+		position: relative;
+		margin-bottom: 10px;
+		top: 10px;
+		border: 1px solid #e0e0e0;
+		padding-bottom: 20px;
+		._title {
+			padding-top:5px;
+			.addTravelers {
+				position: relative;
+				left:0px;
+				top:10px;
+			}
+		}
+		._part {
+			input::-webkit-input-placeholder{
+				color:#313131;
+			}
+			input::-moz-placeholder{
+				color:#313131;
+			}
+			input:-ms-input-placeholder{
+				color:#313131;
+			}
+			input:not([type]):disabled, input:not([type])[readonly="readonly"], input[type=text]:disabled, input[type=text][readonly="readonly"], input[type=password]:disabled, input[type=password][readonly="readonly"], input[type=email]:disabled, input[type=email][readonly="readonly"], input[type=url]:disabled, input[type=url][readonly="readonly"], input[type=time]:disabled, input[type=time][readonly="readonly"], input[type=date]:disabled, input[type=date][readonly="readonly"], input[type=datetime-local]:disabled, input[type=datetime-local][readonly="readonly"], input[type=tel]:disabled, input[type=tel][readonly="readonly"], input[type=number]:disabled, input[type=number][readonly="readonly"], input[type=search]:disabled, input[type=search][readonly="readonly"], textarea.materialize-textarea:disabled, textarea.materialize-textarea[readonly="readonly"] {
+				color:#313131;
+			}
+		}
+		._editTravelers{
+			height: 50px;
+			button{
+				position: relative;
+				top: 0px;
+				left: -20px;
+			}
+		}
+	}
+
+
+	// 第三页渲染部分
+	._roomInfoList{
+		.col{
+			position: relative;
+			color: #000;
+			span{
+				position: absolute;
+				left: 85px;
+				color:#717171;
+			}
+		}
+	}
+}
+
+
+// 覆盖
+.newInput{
+	position: relative;
+	input {
+		margin-bottom: 25px;
+	}
+	div{
+		position: absolute;
+		color: red;
+		top: 50px;
+		font-size: 14px;
+	}
+}
+
+
+// 行程负责人
+.charge {
+	position: relative;
+	border-bottom: 1px solid #9e9e9e;
+	.charge_left {
+		@media (max-width:700px) {
+			display: none;
+		}
+		span {
+			font-size: 14px;
+		}
+	}
+	.charge_right {
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		@media (max-width:700px) {
+			position:relative;
+		}
+		span {
+			font-size: 14px;
+		}
+		.qrCode {
+			display: none;
+			position: absolute;
+			top: 0px;
+			right: 0px;
+			z-index: 100;
+			border:1px dashed #888;
+			background: #fff;
+		}
+	}
+	.charge_right:hover {
+		.qrCode {
+			display: block;
+		}
+	}
+	>div {
+		font-size: 16px;
+		color: #717171;
+	}
+}
+// 额外赠送
+.extraGift {
+	color: rgb(3, 155, 229);
+	font-size: 20px;
+	position: relative;
+	top: -5px;
+	left:-5px;
+	cursor: pointer;
+	#renderEG {
+		word-wrap: break-word;
+		white-space:normal;
+		width: 350px;
+		color: #000;
+		border-radius: 2.5px;
+		display: none;
+		line-height:25px;
+		font-size: 16px;
+		border: 1px solid #dcdcdc;
+		padding-top:5px;
+		font-weight: normal;
+		font-style: normal;
+		padding-bottom:5px;
+		padding-left:10px;
+		padding-right:10px;
+		z-index: 5;
+		background: #fff;
+		position: absolute;
+		top: 5px;
+	}
+}
+.extraGift:hover {
+	#renderEG {
+		display: block;
+	}
+}
+
+
+// 度假村接送时间
+#pickUp {
+	display: none;
+	.card-pickUp {
+		padding-top: 0px;
+	}
+	padding-left: 15px;
+}
+.pickUp {
+	display: none;
+	position: relative;
+	border: 1px solid #888;
+	.pickUptop {
+		overflow: hidden;
+		>div {
+			float: left;
+			padding:10px;
+			height: 224px;
+		}
+		.pickUpP1 {
+			width: 35%;
+			border-right: 1px solid #888;
+			letter-spacing: 2px;
+		}
+		.pickUpP2 {
+			width: 35%;
+			border-right: 1px solid #888;
+		}
+		.pickUpP3 {
+			width: 30%;
+		}
+	}
+	.pickUpBot {
+		border-top: 1px solid #888;
+		.PUBall{
+			text-align: center;
+			color: red;
+		}
+		padding:10px;
+	}
+	.pickUp-title {
+		padding-bottom: 5px;
+		text-align: center;
+		font-weight: bold;
+	}
+}
+// 新增特别注意页面
+.pickUpTime {
+	padding-left: 10px;
+	.PUT-title {
+		font-weight:bold;
+		padding-top: 2.5px;
+		padding-bottom: 2.5px;
+	}
+	.Related {
+		display: none;
+	}
+}
+
+
+// 修改时间
+.select-field {
+	position: relative;
+	top: 15px;
+	label {
+		padding: 5px;
+		font-size: 16px;
+	}
+	select {
+		display: inline-block;
+		width: 30%;
+		background-color: transparent;
+		border: none;
+		border-bottom: 1px solid #9e9e9e;
+		border-radius: 0;
+		outline: none;
+		height: 3rem;
+		font-size: 1rem;
+		margin: 0 0 15px 0;
+		padding: 0;
+		box-shadow: none;
+		box-sizing: content-box;
+		transition: all .3s;
+	}
+	div {
+		position: relative;
+		top: -15px;
+		color: red;
+	}
+}
+
+
+
+// 床型新
+.bedtype {
+	margin:30px 0px 0px 0px;
+	label {
+		color: #039be5;
+	}
+}
+
+
+
+
+
+// 响应式
+@media (max-width:700px) {
+	#Insurance {
+			height:68px;
+	}
+	#transfers {
+			height:140px;
+	}
+	.select-field {
+		padding:0px;
+		label {
+			padding:0px;
+		}
+	}
+	.pickUptop {
+		>div {
+			overflow: auto;
+		}
+	}
+	.card-panel{
+		.input-field {
+			height: 42px;
+		}
+	}
+	.orderinforClass {
+		.row {
+			height: 48px;
+		}
+	}
+	#toPageFives {
+		position: absolute;
+		right: 0px;
+	}
+}
+
+
+
+

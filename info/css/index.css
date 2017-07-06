@@ -1,0 +1,806 @@
+/*
+ * 目录
+ * 模态框
+ * 主要内容
+ * 内容信息部分(待优化)
+ * 最后次新增
+ *   - 行程负责人
+ *   - 额外赠送
+ *   - 度假村接送时间
+ *   - 新增特别注意页面
+ *   - 提交成功
+ *   - 修改时间
+ *   - 床型新
+ */
+* {
+  margin: 0px;
+  padding: 0px;
+}
+* body {
+  width: 100%;
+  height: 100%;
+  background: #63d9ed;
+}
+* ::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #9e9e9e;
+}
+* :-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #9e9e9e;
+}
+* ::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #9e9e9e;
+}
+* :-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: #9e9e9e;
+}
+.Navigation {
+  width: 100%;
+  background: #fff;
+  height: 50px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.26);
+  color: #4d5d77;
+}
+@media (max-width: 1025px) {
+  .Navigation {
+    display: none;
+  }
+}
+.Navigation a {
+  color: #4d5d77;
+  line-height: 50px;
+}
+.Navigation a img {
+  margin-top: 12px;
+  margin-left: 10px;
+  float: left;
+  display: block;
+  width: 120px;
+  height: 29px;
+  background-position: -150px 0px;
+}
+.Navigation .tell-header {
+  float: right;
+  margin-right: 20px;
+}
+@media (max-width: 700px) {
+  * .modal-fixed-failure {
+    width: 90%;
+  }
+}
+@media (max-width: 700px) {
+  * .modal-fixed-failure .modal-content {
+    padding: 24px 10px 10px 10px;
+  }
+}
+* .modal-fixed-failure .modal-content .content {
+  overflow: hidden;
+  width: 340px;
+  margin: 0 auto;
+}
+@media (max-width: 700px) {
+  * .modal-fixed-failure .modal-content .content {
+    width: 100%;
+  }
+}
+* .modal-fixed-failure .modal-content .content .mdi-navigation-cancel {
+  float: left;
+  color: #d50000;
+  font-size: 80px;
+}
+@media (max-width: 700px) {
+  * .modal-fixed-failure .modal-content .content .mdi-navigation-cancel {
+    float: none;
+    text-align: center;
+    position: relative;
+    left: 50%;
+    top: -10px;
+    margin-left: -40px;
+  }
+}
+* .modal-fixed-failure .modal-content .content div {
+  position: relative;
+  top: 40px;
+  left: 20px;
+  font-family: "微软雅黑";
+  float: left;
+  color: #d50000;
+  font-size: 24px;
+}
+@media (max-width: 700px) {
+  * .modal-fixed-failure .modal-content .content div {
+    float: none;
+    top: -10px;
+    left: 0px;
+    text-align: center;
+  }
+}
+* .modal-fixed-getGatherInfo .title {
+  text-align: center;
+  color: #26a69a;
+  font-size: 24px;
+  padding-bottom: 20px;
+}
+* .modal-fixed-getGatherInfo button {
+  text-align: center;
+  margin: 0px auto;
+}
+.main {
+  margin: 90px auto;
+  width: 1025px;
+}
+@media (max-width: 1025px) {
+  .main {
+    margin: 0px;
+    height: 100px;
+    width: 100%;
+  }
+}
+.main .card {
+  margin: 0px;
+}
+.main .card .card-content {
+  font-family: "微软雅黑";
+}
+@media (max-width: 1025px) {
+  .main .card .card-content {
+    padding: 20px 0px 0px 0px;
+  }
+}
+@media (max-width: 1025px) {
+  .main .card .card-content .cardNav {
+    font-size: 16px;
+  }
+  .main .card .card-content .cardNav .tabs {
+    overflow-y: auto;
+  }
+}
+.main .card .card-content .cardNav .tabs {
+  overflow: hidden;
+  height: 60px;
+  border-bottom: 1px solid rgba(160, 160, 160, 0.2);
+}
+@media (max-width: 1025px) {
+  .main .card .card-content .cardNav .tabs {
+    overflow: auto;
+  }
+}
+.main .card .card-content .cardNav .tabs a {
+  color: #263238;
+}
+.main .card .card-content .cardNav .tabs .active {
+  color: #ee6e73;
+}
+.main .card .card-content .cardNav .tabs .indicator {
+  display: none;
+}
+.main .card .card-content .Collection .row {
+  margin-bottom: 0px;
+}
+.main .card .card-content .Collection .Voids {
+  padding-top: 20px;
+}
+@media (max-width: 1025px) {
+  .main .card .card-content .Collection .Voids {
+    padding-top: 10px;
+    font-size: 18px;
+  }
+}
+.main .card .card-content .Collection ._addBTN {
+  top: 0px;
+  left: 20px;
+  width: 130px;
+  height: 68px;
+  position: absolute;
+}
+.main .card .card-content .Collection ._part {
+  padding: 10px;
+}
+.main .card .card-content .Collection .delete {
+  padding-bottom: 20px;
+  font-size: 18px;
+}
+.main .card .card-content .Collection .delete .title {
+  position: relative;
+  left: 10px;
+}
+.main .card .card-content .Collection .delete i {
+  cursor: pointer;
+  margin-right: 10px;
+}
+.main .card .card-content .Collection .delete i:hover {
+  color: #f44336;
+}
+.main .card .card-content .Collection .ContactUS {
+  padding: 100px 10px 10px 10px;
+  overflow: hidden;
+  width: 530px;
+  margin: 0 auto;
+}
+@media (max-width: 530px) {
+  .main .card .card-content .Collection .ContactUS {
+    width: 100%;
+  }
+}
+.main .card .card-content .Collection .ContactUS ._content {
+  font-size: 16px;
+  float: left;
+  margin-right: 60px;
+  padding: 0px 20px 20px 20px;
+  width: 280px;
+}
+.main .card .card-content .Collection .ContactUS ._content {
+  padding-top: 10px;
+  float: right;
+  margin-right: 0px;
+  width: 280px;
+  font-size: 20px;
+}
+.main .card .card-content .Collection .ContactUS ._content .iconnn {
+  padding-top: 10px;
+  padding-left: 70px;
+}
+.main .card .card-content .Collection .ContactUS .ContactUS_content {
+  float: left;
+  position: relative;
+  top: -5px;
+  width: 160px;
+  height: 160px;
+}
+@media (max-width: 500px) {
+  .main .card .card-content .Collection .ContactUS .ContactUS_content {
+    top: 20px;
+    left: 20px;
+  }
+}
+.main .card .card-content .Collection .ContactUS .ContactUS_content > div {
+  position: relative;
+  left: 17.5px;
+  top: -5px;
+  margin-top: 10px;
+}
+.main .card .card-content .Collection .ContactUS .ContactUS_content article {
+  text-align: center;
+  position: relative;
+  top: -5px;
+  left: -22.5px;
+}
+.main .card .card-content .Collection .ContactUS .ContactUS_content svg {
+  position: relative;
+  top: 2.5px;
+}
+.main .card .card-content .Collection .ContactUS .ContactUS_content .iconnn {
+  position: relative;
+  left: 37px;
+}
+.main .card .card-action a {
+  cursor: pointer;
+}
+.Collection {
+  overflow: hidden;
+}
+.Collection .theFirstPage .Declarations {
+  color: rgba(0, 0, 0, 0.87);
+}
+.Collection .theFirstPage .Declarations .card-title {
+  font-weight: bold;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.74);
+}
+.Collection .theFirstPage .Declarations .card-title span {
+  font-size: 16px;
+}
+.Collection .theFirstPage .Declarations .strong {
+  color: #000000;
+  font-weight: bold;
+}
+.Collection .theFirstPage .Declarations .row {
+  padding: 5px 0px 0px 20px;
+  color: rgba(0, 0, 0, 0.87);
+}
+.Collection .theFirstPage .Declarations .row a {
+  font-style: italic;
+  color: #F44336;
+  text-decoration: underline;
+}
+.Collection .theFirstPage .Declarations .row p {
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.87);
+  padding-left: 10px;
+}
+.Collection .theFirstPage .Declarations ._red {
+  color: #F44336;
+  font-weight: bold;
+}
+.Collection .theFirstPage .overflow-title {
+  font-weight: bold;
+  font-size: 18px;
+}
+.Collection .theFirstPage .phone-overflow {
+  margin-bottom: 25px;
+}
+@media (max-width: 1025px) {
+  .Collection .theFirstPage .phone-overflow {
+    margin-bottom: 5px;
+    height: 500px;
+    overflow-y: scroll;
+  }
+}
+.Collection .TheSecondPage #annex {
+  overflow: hidden;
+}
+.Collection .TheSecondPage #annex .theCar {
+  float: left;
+  margin-right: 10px;
+  margin-left: 18px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  height: 170px;
+  width: 160px;
+  background: #e4e4e4;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.Collection .TheSecondPage #annex .theCar img {
+  width: 160px;
+  height: 160px;
+}
+.Collection .TheSecondPage #annex .theCar div {
+  line-height: 30px;
+  height: 30px;
+  padding: 0 5px;
+  overflow: hidden;
+  color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  width: 160px;
+}
+.Collection .TheSecondPage #annex .theCar span {
+  float: right;
+  color: rgba(0, 0, 0, 0.6);
+  transition: color 0.2s;
+}
+.Collection .TheSecondPage #annex .theCar span:hover {
+  color: #000;
+}
+.Collection .TheSecondPage #modalAnnex .modal-content .delete {
+  cursor: pointer;
+  float: right;
+  color: rgba(0, 0, 0, 0.6);
+  transition: color 0.4s;
+}
+.Collection .TheSecondPage #modalAnnex .modal-content .delete:hover {
+  color: #000;
+}
+.Collection .TheSecondPage #outboundclass .datepicker_flightDate::-webkit-input-placeholder {
+  color: #8D8D8D;
+}
+.Collection .TheSecondPage #outboundclass .datepicker_flightDate::-moz-placeholder {
+  color: #8D8D8D;
+}
+.Collection .TheSecondPage #outboundclass .datepicker_flightDate:-ms-input-placeholder {
+  color: #8D8D8D;
+}
+.Collection .TheSecondPage .orderinformation {
+  padding-top: 10px;
+}
+.Collection .TheSecondPage .orderinformation .row {
+  padding: 5px;
+  font-size: 16px;
+}
+.Collection .TheSecondPage .orderinformation .col {
+  position: relative;
+  color: #000;
+}
+.Collection .TheSecondPage .orderinformation .col span {
+  position: absolute;
+  left: 85px;
+  color: #717171;
+}
+.Collection .TheSecondPage .orderinformation .Hotel {
+  height: 24px;
+}
+.Collection .TheSecondPage .orderinformation .Hotel > div {
+  position: relative;
+  top: -15px;
+  padding-left: 80px;
+  padding-right: 40%;
+}
+.Collection .TheSecondPage .orderinformation .giftData {
+  position: relative;
+  top: -10px;
+}
+.Collection .TheSecondPage .orderinformation .giftTextarea {
+  padding: 0;
+  position: relative;
+}
+.Collection .TheSecondPage .orderinformation .grizzle {
+  font-size: 14px;
+  color: #000;
+}
+.Collection .TheSecondPage .orderinformation .prompt {
+  padding: 0px 0px 0px 5px;
+}
+.Collection .TheSecondPage .orderinformation .prompt div {
+  font-size: 14px;
+  color: #9e9e9e;
+}
+.Collection .TheSecondPage .orderinformation .col label {
+  color: #000;
+}
+.Collection #test3 .card-title {
+  font-weight: normal;
+  font-size: 18px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.74);
+}
+.Collection #test3 .card-title span {
+  position: relative;
+  top: -2.5px;
+  left: -15px;
+  font-weight: normal;
+  font-size: 12px;
+}
+.Collection #test3 ._nav {
+  padding-top: 10px;
+}
+.Collection #test3 ._nav .tabs {
+  display: block;
+  height: auto;
+  padding: 0;
+  width: 100px;
+}
+.Collection #test3 ._nav .tabs .tab {
+  float: none;
+  width: 100%;
+}
+.Collection #test3 ._nav .tabs .indicator {
+  display: none;
+}
+.Collection .RoomNav .collection-item a {
+  color: rgba(0, 0, 0, 0.87);
+}
+.Collection .RoomNav .collection-item .active {
+  color: #ee6e73;
+}
+.Collection ._TraModal {
+  width: 985px;
+}
+@media (max-width: 985px) {
+  .Collection ._TraModal {
+    width: 100%;
+    max-height: 100%;
+  }
+}
+.Collection ._TraModal .Delete {
+  float: right;
+  cursor: pointer;
+  font-size: 20px;
+  position: relative;
+  top: -10px;
+}
+.Collection ._TraModal .Delete:hover {
+  color: red;
+}
+.Collection ._TraModal input::-webkit-input-placeholder {
+  color: #8D8D8D;
+}
+.Collection ._TraModal input::-moz-placeholder {
+  color: #8D8D8D;
+}
+.Collection ._TraModal input:-ms-input-placeholder {
+  color: #8D8D8D;
+}
+.Collection .callout-title {
+  padding-left: 10px;
+  font-size: 30px;
+}
+.Collection .callout {
+  position: relative;
+  color: #ff0000;
+  top: -3px;
+  font-size: 14px;
+  padding: 3px;
+  padding-left: 10px;
+  margin-left: 20px;
+  border: 1px solid #e0e0e0;
+  border-left-color: #e07979;
+  border-left-width: 5px;
+  background: #efbcbc;
+}
+.Collection .select {
+  display: block;
+  background: #fafafa;
+  border: 1px solid #fafafa;
+  border-bottom-color: #9e9e9e;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+.Collection .select option {
+  border: 1px solid #fafafa;
+  border-top-color: #fff;
+  border-top-style: solid;
+  border-top-width: 0px;
+}
+.Collection .selectadd {
+  background: #fff;
+}
+.Collection .select:active {
+  border: 1px solid #fafafa;
+  border-bottom-color: #fff;
+  border-bottom-style: solid;
+  border-bottom-width: 0px;
+}
+.Collection ._Travelers {
+  min-height: 510px;
+  position: relative;
+  margin-bottom: 10px;
+  top: 10px;
+  border: 1px solid #e0e0e0;
+  padding-bottom: 20px;
+}
+.Collection ._Travelers ._title {
+  padding-top: 5px;
+}
+.Collection ._Travelers ._title .addTravelers {
+  position: relative;
+  left: 0px;
+  top: 10px;
+}
+.Collection ._Travelers ._part input::-webkit-input-placeholder {
+  color: #313131;
+}
+.Collection ._Travelers ._part input::-moz-placeholder {
+  color: #313131;
+}
+.Collection ._Travelers ._part input:-ms-input-placeholder {
+  color: #313131;
+}
+.Collection ._Travelers ._part input:not([type]):disabled,
+.Collection ._Travelers ._part input:not([type])[readonly="readonly"],
+.Collection ._Travelers ._part input[type=text]:disabled,
+.Collection ._Travelers ._part input[type=text][readonly="readonly"],
+.Collection ._Travelers ._part input[type=password]:disabled,
+.Collection ._Travelers ._part input[type=password][readonly="readonly"],
+.Collection ._Travelers ._part input[type=email]:disabled,
+.Collection ._Travelers ._part input[type=email][readonly="readonly"],
+.Collection ._Travelers ._part input[type=url]:disabled,
+.Collection ._Travelers ._part input[type=url][readonly="readonly"],
+.Collection ._Travelers ._part input[type=time]:disabled,
+.Collection ._Travelers ._part input[type=time][readonly="readonly"],
+.Collection ._Travelers ._part input[type=date]:disabled,
+.Collection ._Travelers ._part input[type=date][readonly="readonly"],
+.Collection ._Travelers ._part input[type=datetime-local]:disabled,
+.Collection ._Travelers ._part input[type=datetime-local][readonly="readonly"],
+.Collection ._Travelers ._part input[type=tel]:disabled,
+.Collection ._Travelers ._part input[type=tel][readonly="readonly"],
+.Collection ._Travelers ._part input[type=number]:disabled,
+.Collection ._Travelers ._part input[type=number][readonly="readonly"],
+.Collection ._Travelers ._part input[type=search]:disabled,
+.Collection ._Travelers ._part input[type=search][readonly="readonly"],
+.Collection ._Travelers ._part textarea.materialize-textarea:disabled,
+.Collection ._Travelers ._part textarea.materialize-textarea[readonly="readonly"] {
+  color: #313131;
+}
+.Collection ._Travelers ._editTravelers {
+  height: 50px;
+}
+.Collection ._Travelers ._editTravelers button {
+  position: relative;
+  top: 0px;
+  left: -20px;
+}
+.Collection ._roomInfoList .col {
+  position: relative;
+  color: #000;
+}
+.Collection ._roomInfoList .col span {
+  position: absolute;
+  left: 85px;
+  color: #717171;
+}
+.newInput {
+  position: relative;
+}
+.newInput input {
+  margin-bottom: 25px;
+}
+.newInput div {
+  position: absolute;
+  color: red;
+  top: 50px;
+  font-size: 14px;
+}
+.charge {
+  position: relative;
+  border-bottom: 1px solid #9e9e9e;
+}
+@media (max-width: 700px) {
+  .charge .charge_left {
+    display: none;
+  }
+}
+.charge .charge_left span {
+  font-size: 14px;
+}
+.charge .charge_right {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+@media (max-width: 700px) {
+  .charge .charge_right {
+    position: relative;
+  }
+}
+.charge .charge_right span {
+  font-size: 14px;
+}
+.charge .charge_right .qrCode {
+  display: none;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 100;
+  border: 1px dashed #888;
+  background: #fff;
+}
+.charge .charge_right:hover .qrCode {
+  display: block;
+}
+.charge > div {
+  font-size: 16px;
+  color: #717171;
+}
+.extraGift {
+  color: #039be5;
+  font-size: 20px;
+  position: relative;
+  top: -5px;
+  left: -5px;
+  cursor: pointer;
+}
+.extraGift #renderEG {
+  word-wrap: break-word;
+  white-space: normal;
+  width: 350px;
+  color: #000;
+  border-radius: 2.5px;
+  display: none;
+  line-height: 25px;
+  font-size: 16px;
+  border: 1px solid #dcdcdc;
+  padding-top: 5px;
+  font-weight: normal;
+  font-style: normal;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  z-index: 5;
+  background: #fff;
+  position: absolute;
+  top: 5px;
+}
+.extraGift:hover #renderEG {
+  display: block;
+}
+#pickUp {
+  display: none;
+  padding-left: 15px;
+}
+#pickUp .card-pickUp {
+  padding-top: 0px;
+}
+.pickUp {
+  display: none;
+  position: relative;
+  border: 1px solid #888;
+}
+.pickUp .pickUptop {
+  overflow: hidden;
+}
+.pickUp .pickUptop > div {
+  float: left;
+  padding: 10px;
+  height: 224px;
+}
+.pickUp .pickUptop .pickUpP1 {
+  width: 35%;
+  border-right: 1px solid #888;
+  letter-spacing: 2px;
+}
+.pickUp .pickUptop .pickUpP2 {
+  width: 35%;
+  border-right: 1px solid #888;
+}
+.pickUp .pickUptop .pickUpP3 {
+  width: 30%;
+}
+.pickUp .pickUpBot {
+  border-top: 1px solid #888;
+  padding: 10px;
+}
+.pickUp .pickUpBot .PUBall {
+  text-align: center;
+  color: red;
+}
+.pickUp .pickUp-title {
+  padding-bottom: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+.pickUpTime {
+  padding-left: 10px;
+}
+.pickUpTime .PUT-title {
+  font-weight: bold;
+  padding-top: 2.5px;
+  padding-bottom: 2.5px;
+}
+.pickUpTime .Related {
+  display: none;
+}
+.select-field {
+  position: relative;
+  top: 15px;
+}
+.select-field label {
+  padding: 5px;
+  font-size: 16px;
+}
+.select-field select {
+  display: inline-block;
+  width: 30%;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  border-radius: 0;
+  outline: none;
+  height: 3rem;
+  font-size: 1rem;
+  margin: 0 0 15px 0;
+  padding: 0;
+  box-shadow: none;
+  box-sizing: content-box;
+  transition: all .3s;
+}
+.select-field div {
+  position: relative;
+  top: -15px;
+  color: red;
+}
+.bedtype {
+  margin: 30px 0px 0px 0px;
+}
+.bedtype label {
+  color: #039be5;
+}
+@media (max-width: 700px) {
+  #Insurance {
+    height: 68px;
+  }
+  #transfers {
+    height: 140px;
+  }
+  .select-field {
+    padding: 0px;
+  }
+  .select-field label {
+    padding: 0px;
+  }
+  .pickUptop > div {
+    overflow: auto;
+  }
+  .card-panel .input-field {
+    height: 42px;
+  }
+  .orderinforClass .row {
+    height: 48px;
+  }
+  #toPageFives {
+    position: absolute;
+    right: 0px;
+  }
+}

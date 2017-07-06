@@ -1,0 +1,196 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+* body {
+  width: 100%;
+  height: 100%;
+  background: #d0daf3;
+}
+@media (max-width: 700px) {
+  .modal-fixed-footer {
+    width: 90%;
+  }
+}
+@media (max-width: 700px) {
+  .modal-fixed-footer .modal-content {
+    padding: 24px 10px 10px 10px;
+  }
+}
+.modal-fixed-footer .modal-content .content {
+  overflow: hidden;
+  width: 340px;
+  margin: 0 auto;
+}
+@media (max-width: 700px) {
+  .modal-fixed-footer .modal-content .content {
+    width: 100%;
+  }
+}
+.modal-fixed-footer .modal-content .content .mdi-navigation-cancel {
+  float: left;
+  color: #d50000;
+  font-size: 80px;
+}
+@media (max-width: 700px) {
+  .modal-fixed-footer .modal-content .content .mdi-navigation-cancel {
+    float: none;
+    text-align: center;
+    position: relative;
+    left: 50%;
+    top: -10px;
+    margin-left: -40px;
+  }
+}
+.modal-fixed-footer .modal-content .content div {
+  position: relative;
+  top: 40px;
+  left: 20px;
+  font-family: "微软雅黑";
+  float: left;
+  color: #d50000;
+  font-size: 24px;
+}
+@media (max-width: 700px) {
+  .modal-fixed-footer .modal-content .content div {
+    float: none;
+    top: -10px;
+    left: 0px;
+    text-align: center;
+  }
+}
+.main {
+  margin: 90px auto;
+  width: 1025px;
+}
+@media (max-width: 1025px) {
+  .main {
+    margin: 0px;
+    height: 100px;
+    width: 100%;
+  }
+}
+.main .card {
+  margin: 0px;
+}
+.main .card .card-content {
+  font-family: "微软雅黑";
+}
+@media (max-width: 1025px) {
+  .main .card .card-content {
+    padding: 20px 0px 0px 0px;
+  }
+}
+@media (max-width: 1025px) {
+  .main .card .card-content .cardNav {
+    font-size: 16px;
+  }
+  .main .card .card-content .cardNav .tabs {
+    overflow-y: auto;
+  }
+}
+.main .card .card-content .cardNav .tabs {
+  overflow: hidden;
+  height: 60px;
+  border-bottom: 1px solid rgba(160, 160, 160, 0.2);
+}
+@media (max-width: 1025px) {
+  .main .card .card-content .cardNav .tabs {
+    overflow: auto;
+  }
+}
+.main .card .card-content .cardNav .tabs a {
+  color: #263238;
+}
+.main .card .card-content .cardNav .tabs .active {
+  color: #ee6e73;
+}
+.main .card .card-content .cardNav .tabs .indicator {
+  display: none;
+}
+.main .card .card-content .Collection .row {
+  margin-bottom: 0px;
+}
+.main .card .card-content .Collection .Voids {
+  padding-top: 20px;
+}
+@media (max-width: 1025px) {
+  .main .card .card-content .Collection .Voids {
+    padding-top: 10px;
+    font-size: 18px;
+  }
+}
+.main .card .card-content .Collection ._addBTN {
+  top: 0px;
+  left: 20px;
+  width: 130px;
+  height: 68px;
+  position: absolute;
+}
+.main .card .card-content .Collection ._part {
+  padding: 10px;
+}
+.main .card .card-content .Collection .delete {
+  font-size: 18px;
+}
+.main .card .card-content .Collection .delete .title {
+  position: relative;
+  left: 10px;
+}
+.main .card .card-content .Collection .delete i {
+  cursor: pointer;
+  margin-right: 10px;
+}
+.main .card .card-content .Collection .delete i:hover {
+  color: #f44336;
+}
+.main .card .card-content .Collection .ContactUS {
+  padding: 100px 10px 10px 10px;
+  overflow: hidden;
+  width: 500px;
+  margin: 0 auto;
+}
+@media (max-width: 500px) {
+  .main .card .card-content .Collection .ContactUS {
+    width: 100%;
+  }
+}
+.main .card .card-content .Collection .ContactUS ._content {
+  font-size: 16px;
+  float: left;
+  margin-right: 60px;
+  padding: 0px 20px 20px 20px;
+  width: 240px;
+}
+.main .card .card-content .Collection .ContactUS .ContactUS_content {
+  float: left;
+  position: relative;
+  top: -5px;
+  width: 160px;
+  height: 160px;
+}
+@media (max-width: 500px) {
+  .main .card .card-content .Collection .ContactUS .ContactUS_content {
+    top: 20px;
+    left: 20px;
+  }
+}
+.main .card .card-content .Collection .ContactUS .ContactUS_content > div {
+  position: relative;
+  left: 17.5px;
+  top: -5px;
+  margin-top: 10px;
+}
+.main .card .card-content .Collection .ContactUS .ContactUS_content article {
+  text-align: center;
+  position: relative;
+  top: -5px;
+  left: -22.5px;
+}
+.main .card .card-content .Collection .ContactUS .ContactUS_content svg {
+  position: relative;
+  top: 2.5px;
+}
+.main .card .card-action a {
+  cursor: pointer;
+}

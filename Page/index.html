@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>【潜游时光】马来西亚_卡帕莱_出境游_自由行_潜水度假村-潜游时光，让您的旅行有温度</title>
+  <meta name="keywords" content="潜游时光，马来西亚，卡帕莱，出境游，自由行，潜水度假村，旅游攻略" />
+  <meta name="description" content="【潜游时光】专业的旅游行程定制,全新的服务体验,最佳的旅游度假体验,为您提供一站式潜水度假村预定服务,为出国旅游者提供最佳的旅游攻略和服务,让您的旅行有温度。" />
+  <meta name="author" content="潜游时光" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="./../dist/css/bootstrap.min.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="./css/bootstrap-datetimepicker.min.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="./css/main.css?file_version=2.02">
+  <script type="text/javascript" src="./../dist/js/jquery-2.1.4.min.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="./../dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="./../dist/js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="./js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="./js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="./../dist/js/appconfig.js?file_version=2.02"></script>
+  <script type="text/javascript" src="./js/main.js?file_version=2.02"></script>
+</head>
+<body>
+  <header>
+    <a href="./../index.html"><i></i></a>
+    <div class="login" id="login">
+      <div><a href="./../user/signup.html" target="_blank">注册</a></div>
+      <div><a href="JavaScript:;" onclick="log_fun.Show()" target="_self">登录</a></div>
+    </div>
+    <div class="tell-header">服务咨询 :<a href="tel://4006709078"> 400-9688-768</a></div>
+  </header>
+  <!-- 模态框(登录) -->
+  <div class="modal fade bs-example-modal-sm" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-login">
+      <div class="modal-content">
+        <div class="content">
+          <div class="close" onclick="log_fun.hide()">X</div>
+          <div class="title">
+            <div class="left">登录</div>
+            <div class="right"><a href="./../user/signup.html">去注册 ></a></div>
+          </div>
+          <div class="input1">
+            <input type="text" name="User" id="User" placeholder="账号">
+            <label for="User"><i class=""></i><span></span></label>
+          </div>
+          <div class="input2">
+            <input type="password" name="password" id="password" placeholder="密码">
+            <div class="ShowPassword hiden" id="ShowPassword"></div>
+            <label for="password"><i></i><span></span></label>
+          </div>
+          <div class="Option">
+            <label><input type="checkbox" name="auto" id="RememberCookie">自动登录</label>
+            <a href="./../user/forget.html">忘记密码</a>
+          </div>
+          <div class="Btn" id="loginBtn" title="ready">登录</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav data-display="show">
+    <div class="NavContent">
+      <div class="NC-L" id="NC-L">
+        <a href="#MContentTitle1" id="NC1">说明</a>
+        <a href="#MContentTitle2" id="NC2">行程</a>
+        <a href="#MContentTitle3" id="NC3">包含</a>
+        <!-- <a href="#MContentTitle4" id="NC4">交通</a> -->
+        <a href="#MContentTitle5" id="NC5">退款</a>
+      </div>
+      <div class="NC-R">
+        <div class="NC-RTitle" id="product_Name">正在加载...</div>
+      </div>
+    </div>
+  </nav>
+  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    </ol>
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox"  id="carousel">
+      <div class="item active">
+        <img src="">
+        <div class="carousel-caption">
+        </div>
+      </div>
+    </div>
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+      <span class="sr-only">Previous</span>
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <i class="left-btn allbtn"></i>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+      <span class="sr-only">Next</span>
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <i class="right-btn allbtn"></i>
+    </a>
+  </div>
+  <div class="boxline" id="part1">
+    <div class="MainContent">
+      <aside class="PriceAside">
+        <div class="PATop">
+          <div class="PAL">套餐价格</div>
+          <div class="PAR"><span id="productPrice">正在加载...</span> RMB<i title="暂无套餐说明"></i></div>
+        </div>
+        <div class="PABot">
+          <div class="PAL">价格优惠期</div>
+          <div class="PAR" id="promoteTime">正在加载...<!-- <span>2016-11-2</span> 至 <span>2016-11-5</span> --></div>
+        </div>
+      </aside>
+      <div class="MContent-L">
+        <h1 id="productName">正在加载... <span><!-- 潜游双人套餐 --></span></h1>
+        <p id="productDesc">正在加载...<!-- 马达京度假村是一个潜水，度假，蜜月，深海，探索的最佳选择。酒店房间精致典雅，让你度假时享受异国请调的浪漫，更受情侣们的喜爱。 --></p>
+      </div>
+      <div class="MContent-R">
+        <div class="Order" id="Order">
+          <div class="OrderContent">
+            <div class="OrderDate" id="OrderDate" title="">出发日期</div>
+            <div class="datetimepicker-all" id="datetimepicker" style="display:none;"></div>
+            <div class="packagNumber" id="packagNumber">
+              <div class="slideS sL">-</div>
+              <div class="center" data-price="">套餐数量 <span>1</span> 份</div>
+              <div class="slideS sR">+</div>
+            </div>
+            <div class="totalPrice" id="totalPrice">
+              <div class="tleft">总价<i title="暂无套餐说明"></i></div>
+              <div class="tright">合计<span>正在计算...</span>RMB</div>
+            </div>
+            <div class="OrderConfirm" id="OrderConfirm">预订套餐</div>
+          </div>
+          <div class="ContactUS" id="ContactUS">
+            <div class="CUS-L">
+              <div class="ContactUS_content">
+                <div><span></span><a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&touid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&siteid=cntaobao&status=1&charset=utf-8"><img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&site=cntaobao&s=1&charset=utf-8" alt="" title="" /></a></div>
+                <div><span></span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2546623187&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2546623187:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a></div>
+                <div><span></span>
+                <article>微信号：
+                <div>divingtimehailang</div>
+                <div class="weixinQRcode"><i></i></div>
+                </article>
+                </div>
+              </div>
+            </div>
+            <div class="CUS-R">
+              <div>客服咨询</div>
+              <p>联系我们</p><p>收悉您的需求后，</p><p>我们会第一时间与您联系！</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="Bolckline interval" id="MContentTitle1">
+    <div class="MainContent">
+      <div class="MContent-L" id="renderIncludes">
+        <div class="MContentRow">
+          <div class="MContentTitle">套餐说明</div>
+        </div>
+        <div class="MContentContent MCLine">
+          <div class="MCCL"><!-- 入住说明 --></div>
+          <div class="MCCR">
+          	<!-- <p>房间需两人入住，单人入住加收额外的50%房价。</p> -->
+          </div>
+        </div>
+        <div class="MContentContent">
+          <div class="MCCL"><!-- 诗巴丹费用 --></div>
+          <!-- <div class="MCCR">
+          <p>马达京诗巴丹名额7个。</p>
+            <p>以下费用含船费分摊+40马币上岛费：</p>
+            <p>1人去1110RM；2人去450RM/人；3人去 330RM/人； </p>
+            <p>4人 去270RM/人； 5人去235RM/人；1船6人/7人，200RM/人；</p>
+            <br>
+            <p>如需申请，请提前告知：</p>
+            <p>价格为（RM）/人，此价格已含船费与许可证费用；</p>
+            <p>一旦成功申请，无论个人取消行程与否，都需要支付相应的申请费用及船费。</p>
+          </div> -->
+        </div>
+      </div>
+      <div class="ContactUS-R">
+      </div>
+    </div>
+  </div>
+  <div class="Bolckline" id="MContentTitle2">
+    <div class="MainContent">
+      <div class="MContent-L" id="renderTrip">
+	      <div class="MContentRow">
+				  <div class="MContentTitle">套餐行程</div>
+					<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+					  查看详情
+					</button>
+				</div>
+				<div class="MContentform">
+          <!-- 渲染行程列表处 -->
+  					<!-- <div class="MContentform-row FormTitle">
+              <div class="MContentform-row1">日期</div>
+              <div class="MContentform-row2">项目&amp;活动</div>
+              <div class="MContentform-row3">入住&amp;景点</div>
+            </div>
+            <div class="MContentform-row FormLists" data-toggle="modal" data-target="#myModal">
+              <div class="MContentform-row1">Day1</div>
+              <div class="MContentform-row2">
+                <p>上午从斗湖机场接客人到码头坐12点的船上岛；</p>
+                <p>13:00  到达马达京度假村，办理入住手续，享用午餐；</p>
+                <p>15:00  到达日不可以深潜，所以可以浮潜或者在岛上休息；</p>
+                <p>16:00  享用下午茶，岛上浮潜，拍拍照；</p>
+                <p>19:00  享用晚餐</p>
+                <p>20:00  回房休息。</p>
+              </div>
+              <div class="MContentform-row3">巴彦高勒酒店</div>
+            </div>
+            <div class="MContentform-row FormLists" data-toggle="modal" data-target="#myModal">
+              <div class="MContentform-row1">Day1</div>
+              <div class="MContentform-row2">
+                <p>上午从斗湖机场接客人到码头坐12点的船上岛；</p>
+                <p>13:00  到达马达京度假村，办理入住手续，享用午餐；</p>
+                <p>15:00  到达日不可以深潜，所以可以浮潜或者在岛上休息；</p>
+                <p>16:00  享用下午茶，岛上浮潜，拍拍照；</p>
+                <p>19:00  享用晚餐</p>
+                <p>20:00  回房休息。</p>
+              </div>
+              <div class="MContentform-row3">巴彦高勒酒店</div>
+            </div>
+            <div class="MContentform-row FormLists" data-toggle="modal" data-target="#myModal">
+              <div class="MContentform-row1">Day1</div>
+              <div class="MContentform-row2">
+                <p>上午从斗湖机场接客人到码头坐12点的船上岛；</p>
+                <p>13:00  到达马达京度假村，办理入住手续，享用午餐；</p>
+                <p>15:00  到达日不可以深潜，所以可以浮潜或者在岛上休息；</p>
+                <p>16:00  享用下午茶，岛上浮潜，拍拍照；</p>
+                <p>19:00  享用晚餐</p>
+                <p>20:00  回房休息。</p>
+              </div>
+              <div class="MContentform-row3">巴彦高勒酒店</div>
+            </div>
+            <div class="MContentform-row FormLists" data-toggle="modal" data-target="#myModal">
+              <div class="MContentform-row1">Day1</div>
+              <div class="MContentform-row2">
+                <p>上午从斗湖机场接客人到码头坐12点的船上岛；</p>
+                <p>13:00  到达马达京度假村，办理入住手续，享用午餐；</p>
+                <p>15:00  到达日不可以深潜，所以可以浮潜或者在岛上休息；</p>
+                <p>16:00  享用下午茶，岛上浮潜，拍拍照；</p>
+                <p>19:00  享用晚餐</p>
+                <p>20:00  回房休息。</p>
+              </div>
+              <div class="MContentform-row3">巴彦高勒酒店</div>
+            </div> -->
+				</div>
+				<!-- 模态框(套餐行程) -->
+				<div class="modal travel fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <!-- <div class="modal-dialog">
+            <div class="modal-content">
+                        <div class="_nav">
+                          <div><a href="#_day1">第一天</a></div>
+                          <div><a href="#_day2">第二天</a></div>
+                          <div><a href="#_day3">第三天</a></div>
+                        </div>
+                        <div class="_content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+                            <h4 class="modal-title" id="myModalLabel">马达京5天四晚深潜套餐 (诗巴丹名额提前申请)</h4>
+                          </div>
+                          <div class="modal-body">
+                            <div class="journey">
+                              <div class="journey-title" id="_day1">
+                                第1天 抵达目的地 &amp; 南部海滩
+                              </div>
+                              <div class="journey-content">
+                                <i></i>
+                                <h4>接机</h4>
+                                <p>我们的司机导游将会在科伦坡机场接机，送您到预订酒店入住。</p>
+                              </div>
+                              <div class="journey-content">
+                                <i></i>
+                                <h4>本托塔海滩</h4>
+                                <p>本托塔沙滩沙色金黄，素有「砂糖海岸」的称号。阳光、蓝天、椰影摇曳，让人心情瞬时轻松，悠闲的感觉，欧洲旅游协会将这块沙滩评选为全世界最美丽的沙滩。</p>
+                                <img src="./img/Sidebar1.jpg"/>
+                              </div>
+                              <div class="journey-title" id="_day2">
+                                第2天 红树林游船
+                              </div>
+                              <div class="journey-content">
+                                <i></i>
+                                <h4>红树林漂流</h4>
+                                <p>酒店早餐后参加本托塔红树林漂流。这里有一条马渡河，坐船进入河中央能够看到大片的红树林，鸟儿，还可上岛观看当地居民制作肉桂的全过程。</p>
+                              </div>
+                              <div class="journey-content">
+                                <i></i>
+                                <h4>本托塔海滩</h4>
+                                <p>本托塔沙滩沙色金黄，素有「砂糖海岸」的称号。阳光、蓝天、椰影摇曳，让人心情瞬时轻松，悠闲的感觉，欧洲旅游协会将这块沙滩评选为全世界最美丽的沙滩。</p>
+                                <img src="./img/Sidebar1.jpg"/>
+                              </div>
+                              <div class="journey-title" id="_day3">
+                                第3天 探秘国家公园
+                              </div>
+                              <div class="journey-content">
+                                <i></i>
+                                <h4>雅拉国家公园</h4>
+                                <p>早餐后驱车前往亚拉地区，换乘雅拉国家公园越野车进入公园内进行摄影。亚拉国家公园称得上是全亚洲最棒的观看拍摄野生动物的地方，追踪豹子、黑熊、大象及其他各种珍稀野生动物的身姿。在这个开放式的茂密丛林，生活着大豹，懒熊，大象，野猪，野生水牛，狐，狼，穿山甲，豪猪等109种哺乳动物和许多爬行动物及海生动物。公园尤其以鸟类丰富闻名，达400多种，鸟类中有鹈鹕，彩鹳，火烈鸟，朱鹭，鸿紫鹞，紫首金莺等珍禽，特别是黑颈鹳，体形颇大，特别珍异，全斯里兰卡估计也只有十只左右，湖中还有各种热带鱼，并有鳄鱼活动。</p>
+                                <img src="./img/Sidebar1.jpg"/>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                          </div>
+                        </div>
+            </div>
+          </div> -->
+				</div>
+      </div>
+    </div>
+  </div>
+  <div class="Bolckline interval" id="MContentTitle3">
+    <div class="MainContent">
+      <div class="MContent-L" id="renderDescription">
+        <div class="MContentRow">
+          <div class="MContentTitle">套餐包含</div>
+        </div>
+        <div class="MContentContent">
+          <div class="MCCL">&nbsp;</div>
+          <div class="MCCR">
+          	<!-- <p>往返机场或者酒店接送至码头约70分钟；</p>
+						<p>往返码头至度假村约60分钟；</p>
+						<p>每日三餐（自助餐）加下午茶和水果；</p>
+						<p>日间服务有无限量茶或咖啡，冷水；</p>
+						<p>岛上豪华木屋住宿及无限次浮潜；</p>
+						<p>深潜套餐含每天三次出海船潜，不含到达日和离开日。</p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="Bolckline" id="MContentTitle4">
+    <div class="MainContent" style="display: none;">
+      <div class="MContent-L">
+        <div class="MContentRow">
+          <div class="MContentTitle">交通信息</div>
+        </div>
+        <div class="MContentContent">
+          <div class="MCCL">&nbsp;</div>
+          <div class="MCCR">
+          	<!-- <p>同一单的客人必须同进同出</p>
+						<p>◇斗湖机场-仙本那 8:20AM，10:30AM，15:30PM；</p>
+						<p>◇仙本那-马达京珊瑚度假村 9:30AM，12:00PM，16:30PM；</p>
+						<p>◇马达京珊瑚度假村 -仙本那-斗湖机场 6:30 11:00AM，14:00PM。</p>
+						<br>
+						<p>中转酒店-马达京珊瑚度假村</p>
+						<p>◇住斗湖酒店的客人：7：30AM在酒店大堂等待接送；</p>
+						<p>◇住仙本那酒店的客人：9：00AM在酒店大堂等待接送。</p>
+						<br>
+						<p>马达京珊瑚度假村-中转酒店</p>
+						<p>◇离岛后可送至斗湖市区的酒店；</p>
+						<p>◇离岛后可送至仙本那SEAFES HOTEL和DRAGON INN。 送往其它酒店需付10马币/人。</p>
+						<br>
+						<p>马达京珊瑚度假村 机场</p>
+						<p>◇离岛当天可送至机场；</p>
+						<p>◇离岛后一天不提供机场接送。</p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="Bolckline interval" id="MContentTitle5">
+    <div class="MainContent">
+      <div class="MContent-L">
+        <div class="MContentRow">
+          <div class="MContentTitle">退款说明</div>
+        </div>
+        <div class="MContentContent" style="display: none;">
+          <div class="MCCL" id="refundDesc" style="font-size: 16px;">正在加载...</div>
+          <div class="MCCR" style="font-size: 16px;">
+            <p id="refundName">正在加载...</p>
+          </div>
+        </div>
+        <div class="MContentContent">
+          <div class="MCCL">&nbsp;</div>
+          <div class="MCCR">
+            <div class="colorBlocks" id="ruleItemList">
+              正在加载...
+              <!-- <div style="width:5%;background:rgba(69, 90, 100,1);"><span>7天</span></div>
+              <div style="width:15%;background:rgba(69, 90, 100,0.5);"><span>15天</span></div>
+              <div style="width:50%;background:rgba(69, 90, 100,0.15);"><span>30天</span></div>
+              <div style="width:100%;background:rgba(69, 90, 100,0.05);"><span>30天以上</span></div> -->
+            </div>
+          </div>
+        </div>
+        <div></div>
+        <div class="MContentContent">
+          <div class="MCCL">&nbsp;</div>
+          <div class="MCCR" id="ruleDesc">
+              正在加载...
+            <!-- <p>500元定金/人，预定成功后不可退；余款: 入住前46天需补齐余款；</p>
+            <p>入住前35天及以上退订，需要扣除全款的30%；</p>
+            <p>入住前34-16天退订，需要扣除全款的50%</p>
+            <p>入住前15-8天退订，需要扣除全款的75%</p>
+            <p>入住前7天退订，需要扣除全款的100%</p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 底部轮播图 -->
+  <!-- <div class="BottomSlide">
+    <div class="BSContain">
+      <i class="BSControl-L" id="BSControl-L"></i>
+      <i class="BSControl-R" id="BSControl-R"></i>
+      <div class="BSCmain">
+        <ul id="BottomSlide">
+          <li>
+            <div class="BSCMlist">
+              <img src="">
+              <div class="BSCMLline">
+                <div class="BSCMLline-T">
+                  <div class="BSCMLline-l">邦邦岛蜜月之旅</div>
+                  <div class="BSCMLline-R">1320RMB</div>
+                </div>
+                <div class="BSCMLline-B">
+                  <div class="BSCMLline-l">2人 · 水上木屋</div>
+                  <div class="BSCMLline-R">1560RMB</div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="BSCMlist">
+              <img src="">
+              <div class="BSCMLline">
+                <div class="BSCMLline-T">
+                  <div class="BSCMLline-l">邦邦岛蜜月之旅</div>
+                  <div class="BSCMLline-R">1320RMB</div>
+                </div>
+                <div class="BSCMLline-B">
+                  <div class="BSCMLline-l">2人 · 水上木屋</div>
+                  <div class="BSCMLline-R">1560RMB</div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="BSCMlist">
+              <img src="">
+              <div class="BSCMLline">
+                <div class="BSCMLline-T">
+                  <div class="BSCMLline-l">邦邦岛蜜月之旅</div>
+                  <div class="BSCMLline-R">1320RMB</div>
+                </div>
+                <div class="BSCMLline-B">
+                  <div class="BSCMLline-l">2人 · 水上木屋</div>
+                  <div class="BSCMLline-R">1560RMB</div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="BSCMlist">
+              <img src="">
+              <div class="BSCMLline">
+                <div class="BSCMLline-T">
+                  <div class="BSCMLline-l">邦邦岛蜜月之旅</div>
+                  <div class="BSCMLline-R">1320RMB</div>
+                </div>
+                <div class="BSCMLline-B">
+                  <div class="BSCMLline-l">2人 · 水上木屋</div>
+                  <div class="BSCMLline-R">1560RMB</div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="BSCMlist">
+              <img src="">
+              <div class="BSCMLline">
+                <div class="BSCMLline-T">
+                  <div class="BSCMLline-l">邦邦岛蜜月之旅</div>
+                  <div class="BSCMLline-R">1320RMB</div>
+                </div>
+                <div class="BSCMLline-B">
+                  <div class="BSCMLline-l">2人 · 水上木屋</div>
+                  <div class="BSCMLline-R">1560RMB</div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="BSCMlist">
+              <img src="">
+              <div class="BSCMLline">
+                <div class="BSCMLline-T">
+                  <div class="BSCMLline-l">邦邦岛蜜月之旅</div>
+                  <div class="BSCMLline-R">1320RMB</div>
+                </div>
+                <div class="BSCMLline-B">
+                  <div class="BSCMLline-l">2人 · 水上木屋</div>
+                  <div class="BSCMLline-R">1560RMB</div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div> -->
+  <!-- 返回顶部 -->
+  <div class="return_Top">
+    <div class="Taobao_customer_service"  id="Taobao_customer_service">
+      <div class="_SVG"></div>
+      <div class="Taobao_List" style="display: none;">
+        <div class="A_content">
+          <div class="title">
+            <span>
+              <a href="https://divet.taobao.com/?spm=a1z10.1-c.0.0.8cxl3q" target="_blank">潜游时光</a>
+            </span>
+            <a href="https://divet.taobao.com/?spm=a1z10.1-c.0.0.8cxl3q" target="_blank"><i></i></a>
+          </div>
+          <div class="main_content">
+            <p>在线客服</p>
+            <div><span>淘宝客服</span><a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&touid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&siteid=cntaobao&status=1&charset=utf-8"><img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&site=cntaobao&s=1&charset=utf-8" alt="" title="" /></a></div>
+            <div><span>腾讯客服</span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2546623187&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2546623187:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a></div>
+            <div class="QRcode"><span>微信客服</span>
+            <div class="weixinQRcode"><i></i></div>
+            <article> divingtime<div>hailang</div></article>
+            </div>
+          </div>
+          <div class="main_content">
+            <p>工作时间</p>
+            <div><span style="font-size:12px;">周一至周日：9:00-23:00</span></div>
+          </div>
+          <div class="main_content" style="border:none;">
+            <p>联系方式</p>
+            <div><span style="font-size:12px;white-space:nowrap;">联系电话：400-9688-768</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="top" id="scroll_Top"><i></i></div>
+  </div>
+  <footer>
+    <div class="F-Content">
+      <div class="F-left">
+        <i></i>
+        <h4>公司信息</h4>
+        <p><a href="./../other/aboutUs.html">关于我们</a></p>
+        <p><a href="./../other/teamStory.html">团队故事</a></p>
+        <p><a href="./../other/joinUs.html">加入我们</a></p>
+      </div>
+      <div class="F-right">
+        <h3>深圳潜游时光文化传媒有限公司</h3>
+        <div class="row">
+          <div class="col-md-3">
+            <h4>关于更多</h4>
+            <p><a href="./../other/help.html">帮助</a></p>
+            <p><a href="./../other/Privacy.html">隐私声明</a></p>
+            <p><a href="./../other/policy.html">政策条款</a></p>
+          </div>
+          <div class="col-md-4">
+            <h4>商务合作</h4>
+            <p>&nbsp;</p>
+            <p><a class="FRigless" href="mailto://chopin@divingtime.asia">chopin@divingtime.asia</a></p>
+            <p><a>0755-23708886</a></p>
+          </div>
+          <div class="col-md-5 FRigRig">
+            <h4>客服专线</h4>
+            <p><a href="tel://400-9688-768">400-9688-768</a></p>
+            <p><a class="FRigless" href="mailto://consultant@divingtime.asia">consultant@divingtime.asia</a></p>
+            <p><a>顾问工作时间：9:00 - 18:00</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="F-bottom">
+        <a href="https://divet.taobao.com/index.htm?spm=a1z10.1-c.w5002-2373231309.2.2zP0yr" target="_blank"><i style="background-position: -361px 0px;"></i></a>
+        <a href="http://weibo.com/divingtime" target="_blank"><i style="background-position: -393px 0px;"></i></a>
+        <div class="Show_weixin">
+          <div></div>
+          <a href="javascript:;">
+          <i style="background-position: -425px 0px;"></i>
+          </a>
+        </div>
+        <a id='___szfw_logo___' href='https://credit.szfw.org/CX20170620038855550156.html' target='_blank'><i style="background-position: -344px -217px;"></i></a>
+      </div>
+    </div>
+    <div class="FS-Content">
+      <p><a href="tel://400-9688-768">400-9688-768</a>或<a href="mailto://consultant@divingtime.asia">consultant@divingtime.asia</a></p>
+      <p><a>顾问工作时间：9:00 - 18:00</a></p>
+      <p class="FS-list"><a href="./../other/aboutUs.html">关于我们</a> | <a href="./../other/teamStory.html">团队故事</a> | <a href="./../other/joinUs.html">加入我们</a> | <a href="./../other/help.html">帮助</a> | <a href="./../other/Privacy.html">隐私声明</a> | <a href="./../other/policy.html">政策条款</a></p>
+      <div class="FS-bottom">
+        <a href="https://divet.taobao.com/index.htm?spm=a1z10.1-c.w5002-2373231309.2.2zP0yr" target="_blank"><i style="background-position: -361px 0px;"></i></a>
+        <a href="http://weibo.com/divingtime" target="_blank"><i style="background-position: -393px 0px;"></i></a>
+        <a href="#"><i style="background-position: -425px 0px;"></i></a>
+      </div>
+    </div>
+  </footer>
+  <!-- 侧边栏 -->
+  <div class="Sidebar">
+    <div class="title">
+      联系客服
+      <div class="close" id="closeSidebar">X</div>
+    </div>
+    <a href="https://divet.taobao.com/?spm=a1z10.1-c.0.0.8cxl3q" target="_blank">
+    <div class="block-content">
+      <div class="the_block block2">
+        <img src="./img/Sidebar2.jpg"/>
+      </div>
+    </div>
+    </a>
+    <a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&touid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&siteid=cntaobao&status=1&charset=utf-8">
+    <div class="block-content">
+      <div class="the_block block3">
+        <img src="./img/Sidebar3.jpg"/>
+        <div class="Sidebar3">
+          <div>淘宝客服</div>
+          <div style="font-size:16px;">点击弹出阿里旺旺客服</div>
+        </div>
+      </div>
+    </div>
+    </a>
+    <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2546623187&site=qq&menu=yes">
+    <div class="block-content">
+      <div class="the_block">
+        <img src="./img/Sidebar1.jpg"/>
+        <div class="Sidebar1">联系我们</div>
+      </div>
+    </div>
+    </a>
+    <div class="block-content">
+      <div class="the_block block4">
+        <i></i>
+        <div class="the_right">
+        <div class="bigsize">微信咨询</div>
+        <div>请扫码关注我们，收到需求后，我们会第一时间回复你</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside>
+    <div class="Aside-L">
+      <div class="A_content">
+        <div class="title">
+          <span>
+            <a href="https://divet.taobao.com/?spm=a1z10.1-c.0.0.8cxl3q" target="_blank">潜游时光</a>
+          </span>
+          <i></i>
+        </div>
+        <div class="main_content">
+          <p>在线客服</p>
+          <div><span>淘宝客服</span><a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&touid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&siteid=cntaobao&status=1&charset=utf-8"><img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&site=cntaobao&s=1&charset=utf-8" alt="" title="" /></a></div>
+          <div><span>腾讯客服</span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2546623187&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2546623187:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a></div>
+          <div><span>微信客服</span><article>divingtimehailang</article></div>
+        </div>
+        <div class="main_content">
+          <p>工作时间</p>
+          <div><span style="font-size:12px;">周一至周日：9:00-23:00</span></div>
+        </div>
+        <div class="main_content" style="border:none;">
+          <p>联系方式</p>
+          <div><span style="font-size:12px;">联系电话：400-9688-768</span></div>
+        </div>
+      </div>
+	    <div class="Aside-T">套餐价格</div>
+			<div class="Aside-B">起价套餐价格包含优惠价 <span></span>RMB</div>
+		</div>
+    <div class="Aside-R" id="sideConfirm" title="order">
+      预定套餐
+    </div>
+  </aside>
+  <!-- 禁止显示 -->
+  <div class="SVG" id="SVG">
+    <div class="SVG-content">
+      <div>
+      <svg class="icon2" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1909" xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150"><path d="M952.505177 163.1498 877.394503 100.781334 515.995499 416.400688 193.121927 88.069825 67.115072 214.0951 410.052608 508.929058 73.455477 802.887067 199.461309 928.918481 519.736707 603.228771 883.784026 916.214135 946.165796 853.832366 609.730347 511.713474Z" p-id="1910" fill="#FF0000"></path></svg>
+      <p>非常抱歉，这条数据已经删除</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>潜游时光-客户信息收集</title>
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/materialize.min.css">
+	<link rel="stylesheet" href="css/materialize.clockpicker.css">
+	<link rel="stylesheet" type="text/css" href="./css/index.css">
+</head>
+<body>
+  <!-- 链接失效模态框按钮 -->
+	<a class="modal-trigger waves-effect waves-light btn" href="#modal1" style="display: none;">Modal</a>
+  <!-- 链接失效模态框 -->
+	<div id="modal1" class="modal modal-fixed-footer" style="height:200px;">
+		<div class="modal-content" style="height:100%;">
+			<div class="content">
+				<i class="mdi-navigation-cancel"></i>
+				<div>抱歉，该链接已经失效</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="row">
+		<div class="main">
+			<div class="card">
+				<div class="card-content">
+					<div class="row">
+						<div class="col s12 card-title cardNav">
+							<ul class="tabs">
+								<li class="tab col s3 "><a href="#test1" class="active">基本信息</a><div id="nav_1">基本信息</div></li>
+								<li class="tab col s3 "><a href="#test2">入住信息</a><div id="nav_2">入住信息</div></li>
+								<li class="tab col s3 "><a href="#test3">航班信息</a><div id="nav_3">航班信息</div></li>
+								<li class="tab col s3 "><a href="#test4">提交信息</a><div id="nav_4">提交信息</div></li>
+							</ul>
+						</div>
+						<div style="height:60px;"></div>
+						<div class="Collection">
+							<div id="test1" class="col s12">
+								<div class="row" style="padding-top:20px;">
+									<div class="input-field col s12">
+									  <input disabled value="订单信息" id="orderInfor" type="text" class="validate">
+									  <label for="orderInfor">订单信息</label>
+									</div>
+								</div>
+								<div class="card-title Voids">个人信息</div>
+								<div class="row">
+									<div class="input-field col s6">
+										<input id="BasicName" type="text" class="validate" data-ID="BasicName">
+										<label for="BasicName">姓名</label>
+									</div>
+									<div class="input-field col s6">
+										<input id="BasicAccount" type="text" class="validate" data-ID="BasicAccount">
+										<label for="BasicAccount">付款账号名</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s6">
+										<input id="BasicPhone" type="tel" data-ID="BasicPhone">
+										<label for="BasicPhone">手机号码(电话)</label>
+									</div>
+									<div class="input-field col s6">
+										<input id="BasicEmail" type="email" class="validate" data-ID="BasicEmail">
+										<label for="BasicEmail">邮箱</label>
+									</div>
+								</div>
+								<div class="card-title Voids">紧急联系人信息</div>
+								<div class="row">
+									<div class="input-field col s6">
+										<input id="urgentName" type="text" class="validate" data-ID="urgentName">
+										<label for="urgentName">姓名</label>
+									</div>
+									<div class="input-field col s6">
+										<input id="urgentRelation" type="text" class="validate" data-ID="urgentRelation">
+										<label for="urgentRelation">关系</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s6">
+										<input id="urgentPhone" type="tel" class="validate" data-ID="urgentPhone">
+										<label for="urgentPhone">手机(电话)</label>
+									</div>
+									<div class="input-field col s6">
+										<input id="urgentEmail" type="email" class="validate" data-ID="urgentEmail">
+										<label for="urgentEmail">邮箱</label>
+									</div>
+								</div>
+							</div>
+							<div id="test2" class="col s12" style="position:relative;">
+								<div class="card-title Voids _addBTN">客人信息</div>
+								<a id="addTravelers" class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="点击添加更多的入住信息" style="position: relative;top:25px;left: 130px;margin-bottom:25px;visibility: hidden;">
+									<span style="position: relative;top: -3px;">添加</span>
+									<i class="mdi-content-add"></i>
+								</a>
+								<div id="renderTravelers" class="_render" style="padding-top:20px;">
+									<div class="card-panel _part" id="card-panel">
+										<div class="row delete">
+											<a class="title">1</a>
+											<i id="delete" class="mdi-navigation-close right" data-delete="0" style="display: none;"></i>
+										</div>
+										<div class="row">
+											<div class="input-field col s6">
+												<input id="PassportNumber" type="text" class="validate" data-ID="PassportNumber">
+												<label for="PassportNumber">护照号码</label>
+											</div>
+											<div class="input-field col s6">
+
+												<select id="liveCountry" class="initialized">
+													<option value="0" selected>请选择国籍</option>
+													<option value="中国/CHINA<">中国 CHINA</option>
+													<option value="中国-香港/HONGKONG CHINA">中国-香港 HONGKONG-CHINA</option>
+													<option value="中国-澳门/MACAO CHINA">中国-澳门 MACAO-CHINA</option>
+													<option value="中国-台湾/TAIWAN CHINA">中国-台湾 TAIWAN-CHINA</option>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s6">
+												<input id="liveName" type="text" class="validate" data-ID="liveName">
+												<label for="liveName">姓名(中文)</label>
+											</div>
+											<div class="input-field col s6">
+												<input id="livePinyin" type="text" class="validate" data-ID="livePinyin">
+												<label for="livePinyin">姓名(拼音)</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s6">
+												<form action="#">
+											    <input class="with-gap" name="client_sex" type="radio" id="client_man" checked/>
+											    <label for="client_man" >男</label>
+											    <input class="with-gap" name="client_sex" type="radio" id="client_girls"/>
+											    <label for="client_girls">女</label>
+												</form>
+											</div>
+											<div class="input-field col s6">
+												<input id="liveBirthday" value=""yyyy-MM-dd"" data-value="1972/01/01" type="date" class="datepicker validate" data-ID="liveBirthday" placeholder="生日(与护照一致)">
+												<label for="liveBirthday" id="_liveBirthday">生日(与护照一致)</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s6">
+												<input id="livePhone" placeholder="机号码(电话)" type="tel" data-ID="livePhone" class="validate">
+												<label for="livePhone">手机号码(电话)</label>
+											</div>
+											<div class="input-field col s6">
+												<input id="liveEmail" placeholder="邮箱" type="email" class="validate" data-ID="liveEmail" class="validate">
+												<label for="liveEmail">邮箱</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s12">
+												<select id="livebed" class="initialized" data-ID="livebed">
+													<option value="0" disabled selected>请选择床型</option>
+													<option value="大床">大床</option>
+													<option value="双床">双床</option>
+													<option value="蜜月大床">蜜月大床</option>
+													<option value="大床+单床">大床+单床</option>
+													<option value="双床+单床">双床+单床</option>
+												</select>
+												<label>床型</label>
+											</div>
+										</div>
+										<div class="row" style="padding-top: 20px;">
+											<div class="switch col s12">
+												度假潜水类型
+												<label>
+													<input id="DivingType" class="typeDiving" type="checkbox" data-diving="false">
+													<span class="lever"></span>
+													<span id="diving">非潜水</span>
+												</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s6" id="Dive_level">
+												<select id="Divelevel" class="initialized Divelevel" data-ID="Divelevel">
+													<option value="0" selected>请选择潜水级别</option>
+													<option value="1">OW(初级潜水员)</option>
+													<option value="2">AOW(开放水域进阶潜水员)</option>
+													<option value="3">EFR(第一紧急反应)</option>
+													<option value="4">RESCUE(救援潜水员)</option>
+													<option value="5">MASTER SCUBA(名仕潜水员)</option>
+													<option value="6">MASTER(潜水长)</option>
+													<option value="7">OWSI(开放水域水肺教练)</option>
+													<option value="8">MSDT(名仕潜水员训练官)</option>
+													<option value="9">MASTER INSTRUCTOR(教练长)</option>
+													<option value="null">无</option>
+												</select>
+												<label></label>
+											</div>
+											<div class="input-field col s6">
+												<input disabled id="DiveAmount" type="text" class="validate DiveNumber" data-ID="DiveAmount">
+												<label for="DiveAmount">潜水次数</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s12">
+												<input disabled id="diving_time" type="date" class="datepicker_diving diving_time" data-ID="divingTime">
+												<label for="diving_time">上次潜水时间</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s12">
+												<input disabled id="MajorDisease" type="text" class="validate MajorDisease" data-ID="MajorDisease">
+												<label for="MajorDisease">以往重大病史</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="row">
+												<form class="col s12">
+												<div class="row">
+													<div class="input-field col s12">
+													<textarea id="Remarks" class="materialize-textarea" data-ID="Remarks"></textarea>
+													<label for="Remarks">备注</label>
+													</div>
+												</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="test3" class="col s12">
+								<div class="row">
+									<div class="input-field col s6">
+										<input id="checkIn" type="date" class="datepicker_flightDate validate" placeholder="入住日期">
+										<label for="checkIn" id="_checkIn">入住日期</label>
+									</div>
+									<div class="input-field col s6">
+										<input id="checkOut" type="date" class="datepicker_flightDate validate" placeholder="退房日期">
+										<label for="checkOut" id="_checkOut">退房日期</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s4">
+										<input id="outboundNum" type="text" class="validate">
+										<label for="outboundNum">国际航班号</label>
+									</div>
+									<div class="input-field col s4">
+										<input id="landDate" type="date" class="datepicker_flightDate">
+										<label for="landDate" id="_landDate">抵达日期</label>
+									</div>
+									<div class="input-field col s4">
+										<input id="landTime" type="time" class="datepicker_flightTime">
+										<label for="landTime">抵达时间</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s4">
+										<input id="inboundNum" type="text" class="validate">
+										<label for="inboundNum">到港航班号</label>
+									</div>
+									<div class="input-field col s4">
+										<input id="takeoffDate" type="date" class="datepicker_flightDate">
+										<label for="takeoffDate" id="_takeoffDate">抵达日期</label>
+									</div>
+									<div class="input-field col s4">
+										<input id="takeoffTime" type="time" class="datepicker_flightTime">
+										<label for="takeoffTime">抵达时间</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s4">
+										<input id="inHarbourNum" type="text" class="validate">
+										<label for="inHarbourNum">国际航班号</label>
+									</div>
+									<div class="input-field col s4">
+										<input id="hLandDate" type="date" class="datepicker_flightDate">
+										<label for="hLandDate" id="_hLandDate">起飞日期</label>
+									</div>
+									<div class="input-field col s4">
+										<input id="hLandTime" type="time" class="datepicker_flightTime">
+										<label for="hLandTime">起飞时间</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s4">
+										<input id="outHarbourNum" type="text" class="validate">
+										<label for="outHarbourNum">离港航班号</label>
+									</div>
+									<div class="input-field col s4">
+										<input id="hTakeoffDate" type="date" class="datepicker_flightDate">
+										<label for="hTakeoffDate" id="_hTakeoffDate">起飞日期</label>
+									</div>
+									<div class="input-field col s4">
+										<input id="hTakeoffTime" type="time" class="datepicker_flightTime">
+										<label for="hTakeoffTime">起飞时间</label>
+									</div>
+								</div>
+							</div>
+							<div id="test4" class="col s12">
+								<div class="card-title" style="text-align: center;">
+									<h2 style="color:#039be5;">
+										<i class="mdi-action-done" style="display: none;" id="_ENDiconOk"></i>
+									  <div class="preloader-wrapper big active" id="_ENDiconNo">
+									    <div class="spinner-layer spinner-blue-only">
+									      <div class="circle-clipper left">
+									        <div class="circle"></div>
+									      </div><div class="gap-patch">
+									      <div class="circle"></div>
+									      </div><div class="circle-clipper right">
+									        <div class="circle"></div>
+									      </div>
+									    </div>
+									  </div>
+									</h2>
+									<p id="_END">正在提交您的信息轻稍候..</p>
+								</div>
+								<div class="ContactUS">
+									<div class="_content">
+										<p style="font-size: 20px;margin-bottom:10px;">潜游时光</p>
+										如需要修改相关信息，请及时联系后台客服人员进行修改，谢谢!
+									</div>
+		              <div class="ContactUS_content card-panel">
+		                <div><span></span><a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&touid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&siteid=cntaobao&status=1&charset=utf-8"><img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&site=cntaobao&s=1&charset=utf-8" alt="" title="" /></a></div>
+		                <div><span></span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2546623187&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2546623187:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a></div>
+		                <div><span></span>
+		                <article>微信号
+		                <div>divingtimehailang</div>
+		                </article>
+		                </div>
+		              </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-action">
+					<a id="returnPageSecond" style="color:#039be5;display:none;"><i class="mdi-navigation-chevron-left"></i>上一步</a>
+					<a id="returnPageFirst" style="color:#039be5;visibility:hidden;"><i class="mdi-navigation-chevron-left"></i>上一步</a>
+
+					<a id="toPageSecond" class="right" style="color:#039be5;" >下一步<i class="mdi-navigation-chevron-right"></i></a>
+					<a id="toPageThird" class="right" style="color:#039be5;display: none;" >下一步<i class="mdi-navigation-chevron-right"></i></a>
+					<a id="toPageFourth" class="right" style="color:#039be5;display: none;" >完成<i class="mdi-navigation-chevron-right"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+	<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<!-- 	<script type="text/javascript" src="js/jquery-migrate-1.2.1.js"></script>
+
+<link rel="stylesheet" type="text/css" href="js/css/jquery-ui.css" />
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-slide.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script> -->
+
+	<script type="text/javascript" src="js/materialize.min.js"></script>
+	<script type="text/javascript" src="js/materialize.clockpicker.js"></script>
+
+
+	<script type="text/javascript" src="./js/main.js"></script>
+</html>
