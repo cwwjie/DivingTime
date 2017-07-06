@@ -5,9 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>潜游时光-客户信息收集</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<link rel="stylesheet" href="css/materialize.min.css?file_version=2.02">
-	<link rel="stylesheet" href="css/materialize.clockpicker.css?file_version=2.02">
-	<link rel="stylesheet" type="text/css" href="./css/index.css?file_version=2.02">
+	<link rel="stylesheet" href="css/materialize.min.css?file_version=2.03">
+	<link rel="stylesheet" href="css/materialize.clockpicker.css?file_version=2.03">
+	<link rel="stylesheet" type="text/css" href="./css/index.css?file_version=2.03">
 </head>
 <body>
 
@@ -228,16 +228,17 @@
 										</div>
 										<div class="row" id="Insurance">
 											<div class="col s6">
-												保险:<span>安联境外短途旅行保障计划</span>
+												赠送保险:<span>安联境外短途旅行保障计划</span>
 											</div>
 											<div class="col s6" id="InsuranceData">
 												保险期间:<span id="InsuranceInfo">暂无保险日期信息</span>
 											</div>
 										</div>
-										<div class="row" id="transfers">
-											<div class="col s12">
-												接送:<span style="font-size: 14px;">(1次往返亚庇机场--市区酒店的接送,免费接机时间段为6:05-21:55，超出时间需另付35元)</span><div style="display: inline-block; color: #717171;" id="transfersInfo">暂无接送信息</div>
+										<div id="transfers">
+											<div>
+												接送: <span class="qewTransfers">(1次往返亚庇机场--市区酒店的接送,免费接机时间段为6:05-21:55，超出时间需另付35元)</span>
 											</div>
+											<div id="transfersInfo">暂无接送信息</div>
 										</div>
 									</div>
 								</div>
@@ -283,7 +284,7 @@
 											<input id="landDate" type="date" class="datepicker_flightDate" placeholder="马来西亚抵达日期">
 										</div>
 										<div class="input-field col s4">
-											<input id="outboundNum" type="text" class="validate" placeholder="到达航班号">
+											<input id="outboundNum" type="text" class="validate" placeholder="抵达航班号">
 										</div>
 										<div class="select-field col s4" id="_landTime">
 										</div>
@@ -296,7 +297,7 @@
 											<input id="hLandDate" type="date" class="datepicker_flightDate" placeholder="斗湖抵达日期">
 										</div>
 										<div class="input-field col s4">
-											<input id="inHarbourNum" type="text" class="validate" placeholder="到达航班号">
+											<input id="inHarbourNum" type="text" class="validate" placeholder="抵达航班号">
 										</div>
 										<div class="select-field col s4" id="_hLandTime">
 										</div>
@@ -687,6 +688,36 @@
 									<div class="charge_right">行程负责人:<span id="Contactname2">某某某</span>&nbsp &nbsp &nbsp微信号: <span id="Contactwebchat2">15976713287</span><div class="qrCode"></div></div>
 								</div>
 								<div class="card-title Voids callout-title">【五】入住信息 <span id="_RoomNumber" class="callout">还可入住1人</span></div>
+								<div class="EmergencyCT">
+									<div class='EmergencyCT-title'>紧急联系人信息</div>
+									<div class='row'>
+										<div class='newInput col s6'>
+											<input type='text' id='_ugName' value='' placeholder='姓名(必填)'>
+											<div id="_ugNameText"></div>
+										</div>
+										<div class='newInput col s6'>
+											<select class='select selectadd' id='_ugRelation'>
+												<option value='0' selected>请选择关系</option>
+												<option value='兄弟姐妹'>兄弟姐妹</option>
+												<option value='父母'>父母</option>
+												<option value='夫妻'>夫妻</option>
+												<option value='朋友'>朋友</option>
+												<option value='其他'>其他</option>
+											</select>
+											<div id="_ugRelationText"></div>
+										</div>
+									</div>
+									<div class='row'>
+										<div class='newInput col s6'>
+											<input type='tel' class='validate' id='_ugPhone' value='' placeholder='手机/电话(必填)'>
+											<div id="_ugPhoneText"></div>
+										</div>
+										<div class='newInput col s6'>
+											<input type='email' class='validate' id='_ugEmail' value='' placeholder='邮箱(必填)'>
+											<div id="_ugEmailText"></div>
+										</div>
+									</div>
+								</div>
 								<div class="row">
 									<div class="col l2 s12 _nav">
 										<ul class="tabs collection RoomNav" id="RoomNav">
@@ -919,14 +950,21 @@
 
 
 </body>
-	<script type="text/javascript" src="./../dist/js/appconfig.js?file_version=2.02"></script>
-	<script type="text/javascript" src="js/jquery-2.1.1.min.js?file_version=2.02"></script>
-	<script type="text/javascript" src="js/materialize.min.js?file_version=2.02"></script>
-	<script type="text/javascript" src="js/materialize.clockpicker.js?file_version=2.02"></script>
+	<script type="text/javascript" src="./../dist/js/appconfig.js?file_version=2.03"></script>
+	<script type="text/javascript" src="js/jquery-2.1.1.min.js?file_version=2.03"></script>
+	<script type="text/javascript" src="js/materialize.min.js?file_version=2.03"></script>
+	<script type="text/javascript" src="js/materialize.clockpicker.js?file_version=2.03"></script>
 
-	<script type="text/javascript" src="js/fetch.js?file_version=2.02"></script>
+	<script type="text/javascript" src="js/fetch.js?file_version=2.03"></script>
 
-	<script type="text/javascript" src="js/jQuery.Hz2Py-min.js?file_version=2.02"></script>
+	<script type="text/javascript" src="js/jQuery.Hz2Py-min.js?file_version=2.03"></script>
 
-	<script type="text/javascript" src="js/main.js?file_version=2.02"></script>
+	<script type="text/javascript" src="my/init.js?file_version=2.03"></script>
+	<script type="text/javascript" src="my/page1.js?file_version=2.03"></script>
+	<script type="text/javascript" src="my/page2.js?file_version=2.03"></script>
+	<script type="text/javascript" src="my/page3.js?file_version=2.03"></script>
+	<script type="text/javascript" src="my/page4.js?file_version=2.03"></script>
+	<script type="text/javascript" src="my/page5.js?file_version=2.03"></script>
+	<script type="text/javascript" src="my/ready.js?file_version=2.03"></script>
+
 </html>

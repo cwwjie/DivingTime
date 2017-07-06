@@ -326,6 +326,7 @@ var loginSuccessful = {},
 
 // 判断成功 初始化页面
 function initAll() {
+	loaddata.template = 3;
 	/**
 	 * 下面是常规的初始化(技术相关)
 	 */
@@ -1749,7 +1750,7 @@ var pageThird = (function(){
 		$('ul.tabs').tabs();
 
 		// 如果 模板 3 ，不需要填写紧急联系人信息
-		if (loaddata.template == 3 || loaddata.template == 9) {
+		if (loaddata.template == 3) {
 		}else {
 			$("._urgent").css("display","none");
 		}

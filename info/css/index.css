@@ -10,7 +10,8 @@
  *   - 新增特别注意页面
  *   - 提交成功
  *   - 修改时间
- *   - 床型新
+ *   - 床型新 + 接送
+ *   - 响应式
  */
 * {
   margin: 0px;
@@ -776,6 +777,28 @@
 }
 .bedtype label {
   color: #039be5;
+}
+#transfers {
+  padding-top: 5px;
+  font-size: 16px;
+  padding-left: 1.1rem;
+}
+#transfers .qewTransfers {
+  padding-left: 5px;
+  font-size: 14px;
+  color: #717171;
+}
+#transfers #transfersInfo {
+  padding-left: 45px;
+  color: #717171;
+}
+.EmergencyCT {
+  padding-left: 20px;
+}
+.EmergencyCT .EmergencyCT-title {
+  color: rgba(0, 0, 0, 0.74);
+  font-size: 15px;
+  font-weight: bold;
 }
 @media (max-width: 700px) {
   #Insurance {

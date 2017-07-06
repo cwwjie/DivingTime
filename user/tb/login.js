@@ -1,4 +1,10 @@
 $(document).ready(function(){
+	if (window.ActiveXObject || "ActiveXObject" in window) {
+		if (confirm("检测到您的浏览器为IE内核，请问你需要继续浏览吗？(建议更换浏览器，否则可能会发生不可预知的错误)")) {
+		}else {
+			return
+		}
+	}
 	Check();
 	log();
 	showPassword()
