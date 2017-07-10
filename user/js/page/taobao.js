@@ -105,10 +105,10 @@ function taobao() {
           localStorage.setItem('_digest',$.cookie('digest'));
           localStorage.setItem('_uniqueKey',allTaobaoList[i].uniqueKey);
           localStorage.setItem('loginSuccessful',JSON.stringify(allTaobaoList[i]));
-          window.open("./../info/gather.html");
+          window.open("./../info/view/index.html");
           $("#pop-up").click(function(event) {
-            window.open("./../info/gather.html");
-            location = "./../info/gather.html";
+            window.open("./../info/view/index.html");
+            location = "./../info/view/index.html";
           });
           $('#taobaoModal').modal({backdrop:'static'});
         });

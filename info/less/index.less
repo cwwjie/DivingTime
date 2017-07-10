@@ -12,6 +12,9 @@
  *   - 修改时间
  *   - 床型新 + 接送
  *   - 响应式
+ *   - 二维码
+ *   - 其他
+ *   	- 正在加载
  */
 * {
 	body{
@@ -748,6 +751,26 @@
 		.pickUpP3 {
 			width: 30%;
 		}
+		@media (max-width:1025px) {
+			>div {
+				float: none;
+				height: auto;
+			}
+			.pickUpP1 {
+				width: 100%;
+				border-right:none;
+				border-bottom: 1px solid #888;
+			}
+			.pickUpP2 {
+				width: 100%;
+				border-right:none;
+				border-bottom: 1px solid #888;
+			}
+			.pickUpP3{
+				width: 100%;
+				border-right:none;
+			}
+		}
 	}
 	.pickUpBot {
 		border-top: 1px solid #888;
@@ -876,6 +899,123 @@
 		right: 0px;
 	}
 }
+
+
+// 二维码
+#allllllll {
+	position: relative;
+}
+.charge {
+	display: none;
+}
+.D2code {
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+	margin-left: 512.5px;
+	//margin-left: -653.5px;
+	position: absolute;
+	padding:10px;
+	left: 50%;
+	top: 0px;
+	width: 140px;
+	background: #fff;
+	> div {
+		margin:0 auto;
+		text-align: center;
+	}
+	.weche {
+		padding-top: 5px;
+		font-size: 14px;
+		padding-bottom: 2px;
+		border-bottom:1px #888 solid;
+	}
+	.fuzeren {
+		padding-top: 5px;
+	}
+	.name {
+		font-weight: bold;
+	}
+	.qrCode {
+		width: 120px;
+		height: 120px;
+		> img {
+			width: 100%;
+			height: 100%;
+		}
+	}
+}
+@media (max-width:1326px) {
+	.D2code {
+		display: none;
+	}
+	.charge {
+		display: block;
+	}
+}
+
+// 正在加载
+.other {
+	display: none;
+	z-index: 9999;
+	width: 70px;
+	border-radius:10px;
+	height: 40px;
+	background: rgba(0, 0, 0, 0.7);
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 999px;
+	.loader--audioWave {
+		position: relative;
+		top: 5px;
+	  margin: 0 auto;
+	  width: 3em;
+	  height: 2em;
+	  background: linear-gradient(#9b59b6, #9b59b6) 0 50%, linear-gradient(#9b59b6, #9b59b6) 0.625em 50%, linear-gradient(#9b59b6, #9b59b6) 1.25em 50%, linear-gradient(#9b59b6, #9b59b6) 1.875em 50%, linear-gradient(#9b59b6, #9b59b6) 2.5em 50%;
+	  background-repeat: no-repeat;
+	  background-size: 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em;
+	  animation: audioWave 1.5s linear infinite;
+	}
+	@keyframes audioWave {
+	  25% {
+	    background: linear-gradient(#3498db, #3498db) 0 50%, linear-gradient(#9b59b6, #9b59b6) 0.625em 50%, linear-gradient(#9b59b6, #9b59b6) 1.25em 50%, linear-gradient(#9b59b6, #9b59b6) 1.875em 50%, linear-gradient(#9b59b6, #9b59b6) 2.5em 50%;
+	    background-repeat: no-repeat;
+	    background-size: 0.5em 2em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em;
+	  }
+	  37.5% {
+	    background: linear-gradient(#9b59b6, #9b59b6) 0 50%, linear-gradient(#3498db, #3498db) 0.625em 50%, linear-gradient(#9b59b6, #9b59b6) 1.25em 50%, linear-gradient(#9b59b6, #9b59b6) 1.875em 50%, linear-gradient(#9b59b6, #9b59b6) 2.5em 50%;
+	    background-repeat: no-repeat;
+	    background-size: 0.5em 0.25em, 0.5em 2em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em;
+	  }
+	  50% {
+	    background: linear-gradient(#9b59b6, #9b59b6) 0 50%, linear-gradient(#9b59b6, #9b59b6) 0.625em 50%, linear-gradient(#3498db, #3498db) 1.25em 50%, linear-gradient(#9b59b6, #9b59b6) 1.875em 50%, linear-gradient(#9b59b6, #9b59b6) 2.5em 50%;
+	    background-repeat: no-repeat;
+	    background-size: 0.5em 0.25em, 0.5em 0.25em, 0.5em 2em, 0.5em 0.25em, 0.5em 0.25em;
+	  }
+	  62.5% {
+	    background: linear-gradient(#9b59b6, #9b59b6) 0 50%, linear-gradient(#9b59b6, #9b59b6) 0.625em 50%, linear-gradient(#9b59b6, #9b59b6) 1.25em 50%, linear-gradient(#3498db, #3498db) 1.875em 50%, linear-gradient(#9b59b6, #9b59b6) 2.5em 50%;
+	    background-repeat: no-repeat;
+	    background-size: 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 2em, 0.5em 0.25em;
+	  }
+	  75% {
+	    background: linear-gradient(#9b59b6, #9b59b6) 0 50%, linear-gradient(#9b59b6, #9b59b6) 0.625em 50%, linear-gradient(#9b59b6, #9b59b6) 1.25em 50%, linear-gradient(#9b59b6, #9b59b6) 1.875em 50%, linear-gradient(#3498db, #3498db) 2.5em 50%;
+	    background-repeat: no-repeat;
+	    background-size: 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 2em;
+	  }
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

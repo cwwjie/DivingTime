@@ -20,6 +20,7 @@ var pageFirst = (function(){
 	}
 	// 点击下一步
 	function nextPage() {
+		loding.show();
 		if (!($("#Terms").is(':checked'))) {
 			Materialize.toast('请仔细阅读条款', 4000)
 			return

@@ -513,6 +513,7 @@ var pageSecond = (function(){
 	}
 	// 进入下一页
 	function nextPage() {
+		loding.show();
 		// 进行判断是否可以下一页
 		for(var _cardperson in dataAllow){
 			if (dataAllow[_cardperson].allow == false) {

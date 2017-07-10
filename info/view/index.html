@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>潜游时光-客户信息收集</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="stylesheet" href="./../css/view.css?file_version=2.03">
+  <link rel="stylesheet" href="./../css/row.min.css?file_version=2.03">
+</head>
+<body>
+  <header class="Navigation">
+    <a href="./../../index.html"><img src="./../logo.png"/></a>
+    <div class="tell-header">服务咨询 :<a href="tel://4006709078"> 400-9688-768</a></div>
+  </header>
+
+
+  <div class="Main">
+    <div class="D2code">
+      <div class="qrCode"></div>
+      <div class="weche">微信:12345689</div>
+      <div class="fuzeren">行程负责人</div>
+      <div class="name">葛武荣</div>
+    </div>
+
+
+    <div class="Main-content">
+      <div class="charge">
+        <div class="charge_left">行程负责人:<span id="Contactname">某某某</span></div>
+        <div class="charge_right">微信号: <span id="Contactwebchat">15976713287</span><div class="qrCode"></div></div>
+      </div>
+
+
+      <div class="part part1">
+        <div class="part-title">【一】条款声明</div>
+        <div class="part-tip"></div>
+        <div class="provision">
+          <div class="show" id="provision-show"><span class="provision-btn">></span><span class="provision-click">政策条款</span></div>
+          <div class="hide" id="provision-hide">
+            <div class="row">1、<span class="strong">潜游时光通过网络为客人提供代定服务。如用户预定的相关服务项目中，最终服务的酒店或者度假村以及其他一日游，包船等服务商提供的服务出现纠纷，本公司并不承担责任，</span>但本公司将尽力协助客人与相关服务提供商进行协调，不能协商解决的，客人可以向当地旅游局或通过法律途径解决。</div>
+            <div class="row">2、潜游时光提供的只是代预定服务，如最终不能顺利代客人预定到相关产品，潜游时光将无条件退还客人为预定该项目所支付的全额款项，但潜游时光不承担任何由此产生的、可能对行程产生影响的后果和责任，如不能接受此政策，请勿在本店铺选择潜游的服务或拍下并支付任何款项。</div>
+            <div class="row">3、关于套餐预定之外的其他一切额外要求，如蜜月布置、楼层房间相邻或朝向的指定，无(或可吸)烟房等，一律以登记入住时，酒店实际安排为准，<span class="strong">潜游时光只提供代备注的协助，并无决定或满足以上要求的权利。</span></div>
+            <div class="row">4、因部分地区酒店的价格变化大，所以在客人支付款项到支付宝后和本店下单给酒店之间的过程中，不排除预定价格出现变化的情况发生。此时如客人不接受变化后的价格，客人可向客服申请支付宝退款。潜游时光对本店下单给酒店前的价格变化不承担任何责任。</div>
+            <div class="row">5、在给买家提供的免费咨询服务过程中，除报价以外的其他信息，如行程评点建议，航班信息、各国签证情况、酒店信息(如酒店位置、房间上网收费否、房间面积数等设施配置等信息)等，<span class="strong">我们的回复仅供客人选择参考，不构成任何推荐责任。如提供参考信息有不符，请分别以航空公司和度假村官网或实际情况为准。</span></div>
+            <div class="row">6、<span class="strong">潜游时光保留可更改网店上显示价格的权利，恕不另行通知。另外本店已经确认了您的预定并接受了您的付款，但本店仍保留取消订单及返还您已付款项的权利。</span></div>
+            <div class="row">7、本店对客人在度假村的服务范围内所遇到的替代性的安排一概不承担任何责任。在任何情况下，潜游时光的赔偿与退款都不会超出您支出的费用。</div>
+            <div class="row">8、通常情况下，潜游时光的电子确认单内容不会超过淘宝产品页注明的包含内容(住宿，潜水和接送等)，如有额外支付费用预定项目和接送服务请和客服仔细确认。没有特殊说明的情况下，均按网站页面显示的套餐包含内容执行。</div>
+            <div class="row">9、请详细阅读网站的服务政策，如您在本网站支付了预定款项，代表您已<span class="strong">审慎阅读、充分理解并</span>同意接受以上之政策。只有您理解并同意，您才选择我们的服务，谢谢理解。</div>
+            <div class="row">10、最后，感谢您通过潜游时光来预定您的行程，预祝您游玩愉快。</div>
+            <div class="row">11、<span class="strong">如果您未满18周岁，请在法定监护人的陪同下阅读本协议并进行网站注册、使用相关服务。</span></div>
+            <div class="row">12、<span class="strong">本条款内容中以黑体、加粗、下划线、斜体、红色字体等方式显著标识的条款，请用户着重阅读。</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part">
+        <div class="part-title">【二】订单信息</div>
+        <div class="part-tip"></div>
+        <div class="orderinforClass">
+          <div class="row">
+            <div class="col-6">
+              订单号:<span id="orderSn">正在加载...</span>
+            </div>
+            <div class="col-6" style="display: none;">
+              来源:<span id="orderSrc">正在加载...</span>
+            </div>
+            <div class="col-6">
+              订单状态:<span id="payStatus">正在加载...</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              套餐名称:<span id="orderName">正在加载...</span>
+            </div>
+            <div class="col-6">
+              周期长度:<span id="cycleLength">正在加载...</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              房间数:<span id="roomNum">正在加载...</span>
+            </div>
+            <div class="col-6">
+              总人数:<span id="peopleNum">正在加载...</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              儿童数:<span id="childNum">正在加载...</span>
+            </div>
+            <div class="col-6">
+              成人数:<span id="adultNum">正在加载...</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              入住日期:<span id="checkIn">正在加载...</span>
+            </div>
+            <div class="col-6">
+              退房日期:<span id="checkOut">正在加载...</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              产品金额:<span id="productAmount">正在加载...</span>
+            </div>
+            <div class="col-6">
+              优惠金额:<span id="discount">正在加载...</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              订单总额:<span id="orderAmount">正在加载...</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              计算方式:<span id="calMethod">正在加载...</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              已付金额:<span id="payAmount">正在加载...</span>
+            </div>
+            <div class="col-6">
+              未付金额:<span id="notPayAmount">正在加载...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part" id="present">
+        <div class="part-title">【三】额外赠送</div>
+        <div class="part-tip" id="renderEG"></div>
+        <div id="part3">
+          <div class="row" id="Insurance">
+            <div class="col-6">
+              赠送保险:<span>安联境外短途旅行保障计划</span>
+            </div>
+            <div class="col-6" id="InsuranceData">
+              保险期间:<span id="InsuranceInfo">暂无保险日期信息</span>
+            </div>
+          </div>
+          <div id="transfers">
+            <div>
+              接送: <span class="qewTransfers">(1次往返亚庇机场--市区酒店的接送,免费接机时间段为6:05-21:55，超出时间需另付35元)</span>
+            </div>
+            <div id="transfersInfo">暂无接送信息</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part" id="present">
+        <div class="part-title">【四】下单信息</div>
+        <div class="part-tip"></div>
+        <div id="part4">
+          <div class="row">
+            <div class="col-6">
+              预定人姓名:<span id="signName">正在加载...</span>
+            </div>
+            <div class="col-6">
+              付款人账号:<span id="payAccount">正在加载...</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              手机/电话:<span id="BasicPhone">正在加载...</span>
+            </div>
+            <div class="col-6">
+              预定人邮箱:<span id="BasicEmail">正在加载...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part" id="present">
+        <div class="part-title">【五】航班信息</div>
+        <div class="part-tip"><div>若未订航班,请日后补充/可参考以下接送时间</div></div>
+        <div id="part5">
+          <div class="row">
+            <div class="col-4 line">
+              <div>
+                CHECK IN:<span id="checkIn1">正在加载...</span>
+              </div>
+            </div>
+            <div class="col-4 line">
+              <div>
+                CHECK OUT:<span id="checkOut1">正在加载...</span>
+              </div>
+            </div>
+            <div class="col-4">
+              <div>
+                周期:<span id="cycleLength1">正在加载...</span>
+              </div>
+            </div>
+          </div>
+          <div class="row" id="outboundclass">
+            <div class="col-4 line">
+              马来西亚抵达日期:<span id="landDate">正在加载...</span>
+            </div>
+            <div class="col-4 line">
+              抵达航班号:<span id="outboundNum">正在加载...</span>
+            </div>
+            <div class="col-4">
+              抵达时间:<span id="_landTime">正在加载...</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class=" col-4 line">
+              斗湖抵达日期:<span id="hLandDate">正在加载...</span>
+            </div>
+            <div class=" col-4 line">
+              抵达航班号:<span id="inHarbourNum">正在加载...</span>
+            </div>
+            <div class="col-4">
+              抵达时间:<span id="_hLandTime">正在加载...</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class=" col-4 line">
+              斗湖离开日期:<span id="hTakeoffDate">正在加载...</span>
+            </div>
+            <div class=" col-4 line">
+              离开航班号:<span id="outHarbourNum">正在加载...</span>
+            </div>
+            <div class="col-4">
+              离开时间:<span id="_hTakeoffTime">正在加载...</span>
+            </div>
+          </div>
+          <div class="row" id="inboundclass">
+            <div class=" col-4 line">
+              马来西亚离开日期:<span id="takeoffDate">正在加载...</span>
+            </div>
+            <div class=" col-4 line">
+              离开航班号:<span id="inboundNum">正在加载...</span>
+            </div>
+            <div class="col-4">
+              离开时间:<span id="_takeoffTime">正在加载...</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              备注:<span id="flightNote">正在加载...</span>
+            </div>
+          </div>
+          <div id="pickUp">
+            <div class="card-pickUp">度假村接送时间</div>
+              <div class="pickUp" id="pickUp-item1">
+                <div class="pickUptop">
+                  <div class="pickUpP1">
+                    <div class="pickUp-title">斗湖机场--中转酒店</div>
+                    <div>① 提前一天15：00前到达的航班仅接送至斗湖市区HERITAGE HOTEL（需提供预订码），或者送至仙本那的SEAFEST HOTEL与DRAGON INN。</div>
+                    <div>② 提前一天15：00后到达的航班仅接送至斗湖市区的HERITAGE HOTEL（需要提供入住预订码）</div>
+                  </div>
+                  <div class="pickUpP2">
+                    <div class="pickUp-title">仙本那码头上岛时间</div>
+                    <div>① 10：00</div>
+                    <div>② 12：00</div>
+                    <div>③ 16：30</div>
+                    <div class="pickUp-title">中转酒店接送时间:</div>
+                    <div>① 住斗湖酒店的客人7：30AM在酒店大堂等待接送</div>
+                    <div>② 住仙本那酒店的客人9：00AM在酒店大堂等待接送</div>
+                  </div>
+                  <div class="pickUpP3">
+                    <div class="pickUp-title">马达京度假村离岛时间</div>
+                    <div>11：00/14：00</div>
+                    <div class="pickUp-title">马达京度假村--中转酒店</div>
+                    <div>① 离岛后可送至斗湖市区的酒店</div>
+                    <div>② 离岛后可送至仙本那海丰酒店和DRAGON INN。</div>
+                    <div class="pickUp-title">马达京度假村--机场</div>
+                    <div>① 离岛当天可送至机场，离岛后第二天起请自行前往机场。</div>
+                  </div>
+                </div>
+                <div class="pickUpBot"><div class="PUBall">离岛航班推荐：乘11点的船离岛买15点后的航班，乘14点的船离岛买18点后的航班。</div></div>
+              </div>
+              <div class="pickUp" id="pickUp-item2">
+                <div class="pickUptop">
+                  <div class="pickUpP1">
+                    <div class="pickUp-title">仙本那码头上岛时间</div>
+                    <div>① 10：00</div>
+                    <div>② 12：00</div>
+                    <div>③ 16：30</div>
+                    <div>11：00后到达斗湖的航班需第二天上岛；</div>
+                    <div>提前一天17：00前到达的航班可送至仙本那</div>
+                  </div>
+                  <div class="pickUpP2">
+                    <div class="pickUp-title">中转酒店接送时间</div>
+                    <div>① 住斗湖酒店的客人7：00AM在酒店大堂等待接送</div>
+                    <div>② 住仙本那酒店的客人9：30AM在酒店大堂等待接送</div>
+                  </div>
+                  <div class="pickUpP3">
+                    <div class="pickUp-title">离岛船班</div>
+                    <div>① 06：00</div>
+                    <div>② 11：00</div>
+                    <div>③ 13：30</div>
+                    <div>离岛第二天不送机</div>
+                  </div>
+                </div>
+                <div class="pickUpBot">
+                  <div>离岛航班推荐</div>
+                  <div>乘6点的船离岛买10点后的航班，乘11点的船离岛买15点后的航班，乘13：30的船离岛买17：30后的航班。</div>
+                </div>
+              </div>
+              <div class="pickUp" id="pickUp-item3">
+                <div class="pickUptop">
+                  <div class="pickUpP1">
+                    <div class="pickUp-title">斗湖机场-仙本那</div>
+                    <div>① 提前1天到达（16：30前）可免费送至斗湖或仙本那酒店。</div>
+                    <div>② 提前1天到达（16：30后到）可免费送至斗湖酒店。</div>
+                    <div>③ 入住当天13：30 前抵达斗湖机场，可入住卡帕莱。</div>
+                    <div>④ 提前2天起到达不接机。</div>
+                  </div>
+                  <div class="pickUpP2">
+                    <div class="pickUp-title">仙本那码头上岛时间</div>
+                    <div>①  10：00AM</div>
+                    <div>②  12：30PM</div>
+                    <div>③  15：00PM</div>
+                  </div>
+                  <div class="pickUpP3">
+                    <div class="pickUp-title">卡帕莱度假村离岛船班</div>
+                    <div>① 06：30AM</div>
+                    <div>② 09：30AM</div>
+                    <div>③ 13：30PM</div>
+                    <div>离岛第二天自行前往机场</div>
+                  </div>
+                </div>
+                <div class="pickUpBot">
+                  <div style="color: red;">温馨提示，爱的建议:</div>
+                  <div>①  当天上岛的客人请尽量预订最早航班到达斗湖。</div>
+                  <div>②  离岛航班推荐：乘6：30的船离岛买10点半后的航班，乘9：30的船离岛买13：30后的航班，乘13：30点的船离岛买17：30后的航班。</div>
+                </div>
+              </div>
+              <div class="pickUp" id="pickUp-item5">
+                <div class="pickUptop">
+                  <div class="pickUpP1" style="height: 224px;">
+                    <div class="pickUp-title">仙本那码头上岛时间</div>
+                    <div>①  12:30</div>
+                    <div>②  16:30</div>
+                  </div>
+                  <div class="pickUpP2">
+                    <div class="pickUp-title">邦邦岛度假村离岛时间</div>
+                    <div>①  09:30</div>
+                    <div>②  13:00</div>
+                  </div>
+                  <div class="pickUpP3">
+                    <div>抵达：当天上岛，需购买15:00前到达斗湖的航班，否则无法当天上岛。</div>
+                    <div>离开：离岛当天离开斗湖，需预定13：30以后的航班</div>
+                    <div>斗湖酒店：早上8:00在酒店大堂接，乘12:30船班上岛</div>
+                    <div>仙本那酒店：早上11:15在酒店大堂接，乘12:30船班上岛</div>
+                  </div>
+                </div>
+                <div class="pickUpBot">
+                  <div style="color: red;">离岛航班推荐：乘9：30点的船离岛买13：30点后的航班，乘13：30点的船离岛买17：30点后的航班。提前&离岛后一天均无航班接送。</div>
+                </div>
+              </div>
+              <!-- 马布岛 水屋 木屋 -->
+              <div class="pickUp" id="pickUp-item6">
+                <div class="pickUptop">
+                  <div class="pickUpP1">
+                    <div class="pickUp-title">斗湖机场--仙本那</div>
+                    <div>① 15点之前到斗湖机场的可以接机送上岛</div>
+                    <div>② 提前一天15点前到斗湖机场可送到仙本那酒店（斗湖酒店需自行前往），第二天9:30在酒店大堂等接上岛。</div>
+                    <div>③ 其他时间到达，需自行前往酒店。</div>
+                  </div>
+                  <div class="pickUpP2">
+                    <div class="pickUp-title">仙本那码头上岛时间</div>
+                    <div>① 10：00AM</div>
+                    <div>② 12：30PM</div>
+                    <div>③ 16：30PM</div>
+                  </div>
+                  <div class="pickUpP3">
+                    <div class="pickUp-title">马布岛度假村—机场</div>
+                    <div>① 06：30AM</div>
+                    <div>② 11：00AM</div>
+                    <div>③ 14：00PM</div>
+                    <div>离岛第二天不送机</div>
+                  </div>
+                </div>
+                <div class="pickUpBot">
+                  <div>离岛航班推荐</div>
+                  <div>乘6点的船离岛买10点后的航班，乘11点的船离岛买15点后的航班，乘13：30的船离岛买17：30后的航班。</div>
+                </div>
+              </div>
+              <!-- 邦邦岛 白珍珠 -->
+              <div class="pickUp" id="pickUp-item7">
+                <div class="pickUptop">
+                  <div class="pickUpP1" style="height: 120px;">
+                    <div class="pickUp-title">仙本那码头上岛时间</div>
+                    <div>①  12:30</div>
+                    <div>②  16:30</div>
+                  </div>
+                  <div class="pickUpP2" style="height: 120px;">
+                    <div class="pickUp-title">邦邦岛度假村离岛时间</div>
+                    <div>①  06:30</div>
+                    <div>②  09:30</div>
+                    <div>③  13:30</div>
+                  </div>
+                  <div class="pickUpP3" style="height: 120px;">
+                    <div>当天上岛的客人按到达的时间接送至仙本那码头（超过14：30 后到达的航班当天不安排上岛，但是可以送往仙本那酒店）</div>
+                  </div>
+                </div>
+                <div class="pickUpBot">
+                  <div style="color: red;">离岛航班推荐：乘6：30的船离岛买10：30后的航班，乘9：30的船离岛买13：30后的航班，乘13：30的船离岛买17：30后的航班。</div>
+                </div>
+              </div>
+              <!-- 兰卡央 -->
+              <div class="pickUp" id="pickUp-item9">
+                <div class="pickUptop">
+                  <div class="pickUpP1" style="height: 120px;">
+                    <div class="pickUp-title" style="text-align: left;">上岛船班：</div>
+                    <div>10:00AM</div>
+                    <div class="pickUp-title" style="text-align: left;">离岛船班：</div>
+                    <div>7:00AM</div>
+                  </div>
+                  <div class="pickUpP3" style="height: 120px;width: 50%;">
+                    <div class="pickUp-title" style="text-align: left;">离岛航班推荐：</div>
+                    <div>建议购买11：00后离开山打根的航班，当天上岛需8：30前到达山打根。</div>
+                  </div>
+                </div>
+                <div class="pickUpBot">
+                    <div>09:00之前抵达山打根航班可当天送上兰卡央岛</div>
+                    <div>09:00之后抵达无法当天上岛，需要提前一天到并自行前往山打根住宿，次日09:30从山打根酒店接上前往码头上岛</div>
+                    <div>返程航班在上午11:00之前需提前一晚离岛，次日自行前往机场，如需离岛当天起飞，建议至少订中午12:00后山打根起飞的航班,如需参加西必洛半日游的，请订14点以后的航班。</div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part" id="present">
+        <div class="part-title">【六】入住信息</div>
+        <div class="part-tip" id="_RoomNumber"></div>
+        <div class="part6">
+          <div id="EmergencyCT">
+            <div class="part6-title">紧急联系人信息</div>
+            <div class="row">
+              <div class="col-6">
+                联系人姓名:<span id="_ugName">正在加载...</span>
+              </div>
+              <div class="col-6">
+                联系人关系:<span id="_ugRelation">正在加载...</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                联系人电话:<span id="_ugPhone">正在加载...</span>
+              </div>
+              <div class="col-6">
+                联系人邮箱:<span id="_ugEmail">正在加载...</span>
+              </div>
+            </div>
+          </div>
+          <div id="renderRoom"></div>
+          <!-- <div class="room">
+            <div class="room-title">房间1</div>
+            <div class="room-content">
+              <div class="row bed">
+                <div class="col-12">
+                  床型:<span id="livebed">正在加载...</span>
+                </div>
+              </div>
+            <div class="room-panel" data-show="false">
+              <div class="show" id="provision-show"><span class="provision-btn" style="">▶</span><span class="provision-click">旅客信息1</span></div>
+              <div class="hide" id="provision-hide">
+                <div class="row">
+                  <div class="col-6">
+                    护照号:<span id="livebed">正在加载...</span>
+                  </div>
+                  <div class="col-6">
+                    国籍:<span id="livebed">正在加载...</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    姓名(中文):<span id="livebed">正在加载...</span>
+                  </div>
+                  <div class="col-6">
+                    姓名(拼音):<span id="livebed">正在加载...</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    性别:<span id="livebed">正在加载...</span>
+                  </div>
+                  <div class="col-6">
+                    生日:<span id="livebed">正在加载...</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    手机(电话):<span id="livebed">正在加载...</span>
+                  </div>
+                  <div class="col-6">
+                    邮箱:<span id="livebed">正在加载...</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    是否深潜:<span id="livebed">正在加载...</span>
+                  </div>
+                  <div class="col-6">
+                    潜水证号:<span id="livebed">正在加载...</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    潜水级别:<span id="livebed">正在加载...</span>
+                  </div>
+                  <div class="col-6">
+                    潜水次数:<span id="livebed">正在加载...</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    上次潜水:<span id="livebed">正在加载...</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    重大病史:<span id="livebed">正在加载...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-bottom"></div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+
+
+      <div class="part" id="present">
+        <div class="part-title">【七】特别注意</div>
+        <div class="part-tip" id="_RoomNumber"></div>
+        <div id="part7">
+          <div class="pickUpTime">
+            <!-- 马达京 -->
+            <div class="Related" id="Refundinstruction1">
+              <div class="PUT-title">1.退款说明：</div>
+              <div class="row">预定成功后定金不退，退订扣除定金（入住前46天补余款）；</div>
+              <div class="row">&nbsp&nbsp入住前35天以上退订，需要扣除全款的30%；</div>
+              <div class="row">&nbsp&nbsp入住前34-16天退订，需要扣除全款的50%；</div>
+              <div class="row">&nbsp&nbsp入住前15-8天退订，需要扣除全款的75%；</div>
+              <div class="row">&nbsp&nbsp入住前7-入住日，扣除100%全款。</div>
+              <div class="row">2. 因各个度假村上岛时间及接送安排不同，预定机票时请咨询我们的顾问。</div>
+              <div class="row">3. 免责声明：我们对自身掌控范围之外的原因直接或间接给客人造成的延迟、额外费用或不便不承担责任。
+              </div>
+              <div class="row">-------具体请参考潜游时光淘宝店里“政策说明”页面。</div>
+              <div class="row" style="color: red">如您在本店铺支付了预订款项，代表您已同意以上政策，谢谢理解。</div>
+            </div>
+            <!-- 马布岛 水屋 和 木屋的 -->
+            <div class="Related" id="Refundinstruction2">
+              <div class="PUT-title">退款说明：</div>
+              <div class="row">预定成功后定金不退，退订扣除定金（入住前46天补余款）；</div>
+              <div class="row">&nbsp&nbsp入住前45-36天以上退订，需要扣除全款的30%；</div>
+              <div class="row">&nbsp&nbsp入住前34-16天退订，需要扣除全款的50%；</div>
+              <div class="row">&nbsp&nbsp入住前15-8天退订，需要扣除全款的75%；</div>
+              <div class="row">&nbsp&nbsp入住前7-入住日，扣除100%全款。</div>
+              <div class="row">2. 因各个度假村上岛时间及接送安排不同，预定机票时请咨询我们的顾问。</div>
+              <div class="row">3. 免责声明：我们对自身掌控范围之外的原因直接或间接给客人造成的延迟、额外费用或不便不承担责任。
+              </div>
+              <div class="row">-------具体请参考潜游时光淘宝店里“政策说明”页面。</div>
+              <div class="row" style="color: red">如您在本店铺支付了预订款项，代表您已同意以上政策，谢谢理解。</div>
+            </div>
+            <!-- 卡帕莱 -->
+            <div class="Related" id="Refundinstruction3">
+              <div class="PUT-title">退款说明：</div>
+              <div class="row">预定成功后定金不退，退订扣除定金（入住前35天补余款）；</div>
+              <div class="row">&nbsp&nbsp入住前34-16天退订，需要扣除全款的30%；</div>
+              <div class="row">&nbsp&nbsp入住前15-8天退订，需要扣除全款的50%；</div>
+              <div class="row">&nbsp&nbsp入住前7-1入住日，扣除100%全款。</div>
+              <div class="row">&nbsp&nbsp入住当天退订，需要扣除100%全款。</div>
+              <div class="row">2. 因各个度假村上岛时间及接送安排不同，预定机票时请咨询我们的顾问。</div>
+              <div class="row">3. 免责声明：我们对自身掌控范围之外的原因直接或间接给客人造成的延迟、额外费用或不便不承担责任。
+              </div>
+              <div class="row">-------具体请参考潜游时光淘宝店里“政策说明”页面。</div>
+              <div class="row" style="color: red">如您在本店铺支付了预订款项，代表您已同意以上政策，谢谢理解。</div>
+            </div>
+            <!-- 白珍珠 -->
+            <div class="Related" id="Refundinstruction4">
+              <div class="PUT-title">退款说明：</div>
+              <div class="row">预定成功后定金不退，退订扣除定金（入住前35天补余款）；</div>
+              <div class="row">&nbsp&nbsp入住前34-16天退订，需要扣除全款的30%；</div>
+              <div class="row">&nbsp&nbsp入住前15-天退订，扣除100%全款；</div>
+              <div class="row">2. 因各个度假村上岛时间及接送安排不同，预定机票时请咨询我们的顾问。</div>
+              <div class="row">3. 免责声明：我们对自身掌控范围之外的原因直接或间接给客人造成的延迟、额外费用或不便不承担责任。
+              </div>
+              <div class="row">-------具体请参考潜游时光淘宝店里“政策说明”页面。</div>
+              <div class="row" style="color: red">如您在本店铺支付了预订款项，代表您已同意以上政策，谢谢理解。</div>
+            </div>
+
+            <div class="Related" id="Related1">
+              <div class="PUT-title">关于诗巴丹：</div>
+              <div class="row">1、船费（不含6%消费税）：一人1200马币，2人600马币/人，3人400马币/人，4人300马币/人，5人260马币/人，6或7人230马币/人。</div>
+              <div class="row">2、拼船价格需当天依度假村的具体安排为准</div>
+              <div class="row">3、诗巴丹名额一经预约（预订房间时让客服帮忙预约），就不可取消，你到达度假村后，都需要支付这个费用，务必考虑清楚</div>
+              <div class="row">4、诗巴丹名船费在马达京现付，预约成功，是不能取消不付费的</div>
+              <div class="row">5、诗巴丹上岛费40马币（不含6%消费税）每人需现付</div>
+              <div class="row">6、马达京到诗巴丹船程约80分钟</div>
+            </div>
+            <div class="Related" id="Related2">
+              <div class="PUT-title">关于诗巴丹：</div>
+              <div class="row">仅确保入住5天4晚及以上的客人一天诗巴丹的名额；预订时需提前支付80人民币诗巴丹上岛费确保名额。</div>
+              <div class="row">任何额外的名额分配仅在入住度假村后确认，费用为146马币每人/天，12岁以下不能确保名额。</div>
+              <div class="row">申请诗巴丹名额，需提前告知客服，一天诗巴丹为四潜安排。</div>
+            </div>
+            <div class="Related" id="Related3">
+              <div class="PUT-title">申请诗巴丹潜水名额需满足以下条件：</div>
+              <div class="row">一、有潜水员证</div>
+              <div class="row">二、有20潜或以上的记录</div>
+              <div class="row">三、预订卡帕莱5天4晚或以上的深潜套餐</div>
+            </div>
+            <div class="Related" id="Related4">
+              <div class="PUT-title">关于诗巴丹：</div>
+              <div class="row">诗巴丹许可证每天配额有限，请提早预订。</div>
+              <div class="row">2人间住3晚保证一次诗巴丹</div>
+              <div class="row">入住4人间，不含诗巴丹，可另付530马币/人/天前往（已含6%消费税）</div>
+              <div class="row">所有去诗巴丹的客人均需自付许可证RM40/人</div>
+            </div>
+            <div class="Related" id="Related5">
+            </div>
+            <!-- 马布岛 水屋 和 木屋的 -->
+            <div class="Related" id="Related6">
+              <div class="PUT-title">关于诗巴丹许可证：</div>
+              <div class="row">入住独栋和水屋5晚及以上的客人享受一日诗巴丹，优先安排水屋的潜水员，并不能保证非潜水员诗巴丹名额。上岛当天可询问岛上工作人员是否被安排去诗巴丹，如果没被安排，可390马币/人购买。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="edit" id="edit">
+      <div>编辑出行信息</div>
+    </div>
+  </div>
+
+
+
+</body>
+  <script type="text/javascript" src="./../../dist/js/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="./../../dist/js/appconfig.js?file_version=2.03"></script>
+  <script type="text/javascript" src="./method.js?file_version=2.03"></script>
+  <script type="text/javascript" src="./main.js?file_version=2.03"></script>
+</html>

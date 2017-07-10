@@ -89,7 +89,8 @@ var pageFourth = (function(){
 			});
 		}
 		$("#_ENDBTN").click(function(event) {
-			window.location = sessionStorage.getItem('AllUrl');
+        	location = "./view/index.html";
+			// window.location = sessionStorage.getItem('AllUrl');
 		});
 	}
 	var obj = {

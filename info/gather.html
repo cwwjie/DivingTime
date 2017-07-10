@@ -12,7 +12,7 @@
 <body>
 
     <header class="Navigation">
-      <a href="./index.html"><img src="./logo.png"/></a>
+      <a href="./../index.html"><img src="./logo.png"/></a>
       <div class="tell-header">服务咨询 :<a href="tel://4006709078"> 400-9688-768</a></div>
     </header>
 
@@ -61,8 +61,13 @@
 
 
 
-
 	<div class="row" id="allllllll" style="display: none;">
+		<div class="D2code">
+			<div class="qrCode"></div>
+			<div class="weche">微信:12345689</div>
+			<div class="fuzeren">行程负责人</div>
+			<div class="name">葛武荣</div>
+		</div>
 		<div class="main">
 			<div class="card">
 				<div class="card-content">
@@ -84,39 +89,6 @@
 								<div class="overflow-title Voids">条款声明</div>
 								<div class="row">
 										<div class="phone-overflow">
-										<!-- <div class="row Declarations" id="templateThree">
-											<div class="card-title">【卡帕莱度假村预定条款】</div>
-											<div class="row">*度假村接受世界预订，有房请尽早下单，以免错失良机。</div>
-											<div class="row">*查房跟订房有时间差，不保证能100%预订成功，预订不成功我们会全退款给您。</div>
-											<div class="row">
-												1、退款说明：
-												<p>·入住前35天及以上退订，需要扣除定金200元/人，入住前35天需补齐余款</p>
-												<p>·入住前34-16天退订，需要扣除全款的30%</p>
-												<p>·入住前15-8天退订，需要扣除全款的50%</p>
-												<p>·入住前7-入住日，扣除全款的75%。</p>
-												<p>·入住当天退订，扣除100%全款</p>
-											</div>
-											<div class="row">2、 因各个度假村上岛时间及接送安排不同，预定机票时请咨询我们的顾问。</div>
-											<div class="row">3、<span class="strong"> 免责声明：我们对自身掌控范围之外的原因直接或间接给客人造成的延迟、额外费用或不便不承担责任。<br/>-------具体请参考潜游时光网站<a href="http://www.divingtime.asia/other/policy.html" target="_blank">“政策条款”</a>页面。</span></div>
-											<div class="_red row">如您在本网站支付了预订款项，代表您已同意以上政策，谢谢理解。</div>
-										</div>
-										<div class="row Declarations" id="templateOther">
-											<div class="card-title">【除卡帕莱以外的度假村预定条款】</div>
-											<div class="row">*度假村接受世界预订，有房请尽早下单，以免错失良机。</div>
-											<div class="row">*查房跟订房有时间差，不保证能100%预订成功，预订不成功我们会全退款给您。</div>
-											<div class="row">
-												1、 退款说明：
-												<p>·入住前46天及以上退订，需扣除定金500元/人，入住前46天需补齐余款</p>
-												<p>·入住前45-36天退订，需要扣除全款的30%</p>
-												<p>·入住前34-16天退订，需要扣除全款的50%</p>
-												<p>·入住前15-8天退订，需要扣除全款的75%</p>
-												<p>·入住前7-1天退订，需要扣除全款的100%</p>
-												<p>·不出现，扣除100%全款</p>
-											</div>
-											<div class="row">2、 因各个度假村上岛时间及接送安排不同，预定机票时请咨询我们的顾问。</div>
-											<div class="row">3、<span class="strong"> 免责声明：我们对自身掌控范围之外的原因直接或间接给客人造成的延迟、额外费用或不便不承担责任。<br/>-------具体请参考潜游时光网站<a href="http://www.divingtime.asia/other/policy.html" target="_blank">“政策条款”</a>页面。</span></div>
-											<div class="_red row">如您在本网站支付了预订款项，代表您已同意以上政策，谢谢理解。</div>
-										</div> -->
 										<div class="row Declarations">
 											<!-- <div class="card-title">政策条款说明：</div> -->
 											<div class="row">1、<span class="strong">潜游时光通过网络为客人提供代定服务。如用户预定的相关服务项目中，最终服务的酒店或者度假村以及其他一日游，包船等服务商提供的服务出现纠纷，本公司并不承担责任，</span>但本公司将尽力协助客人与相关服务提供商进行协调，不能协商解决的，客人可以向当地旅游局或通过法律途径解决。</div>
@@ -874,7 +846,6 @@
 											<div class="PUT-title">关于诗巴丹许可证：</div>
 											<div class="row">入住独栋和水屋5晚及以上的客人享受一日诗巴丹，优先安排水屋的潜水员，并不能保证非潜水员诗巴丹名额。上岛当天可询问岛上工作人员是否被安排去诗巴丹，如果没被安排，可390马币/人购买。</div>
 										</div>
-
 									</div>
 							</div>
 							<div id="test5" class="col s12">
@@ -949,22 +920,25 @@
 
 
 
+	<div class="other" id="loding">
+		<div class='loader loader--audioWave'></div>
+	</div>
 </body>
 	<script type="text/javascript" src="./../dist/js/appconfig.js?file_version=2.03"></script>
-	<script type="text/javascript" src="js/jquery-2.1.1.min.js?file_version=2.03"></script>
-	<script type="text/javascript" src="js/materialize.min.js?file_version=2.03"></script>
-	<script type="text/javascript" src="js/materialize.clockpicker.js?file_version=2.03"></script>
+	<script type="text/javascript" src="./js/jquery-2.1.1.min.js?file_version=2.03"></script>
+	<script type="text/javascript" src="./js/materialize.min.js?file_version=2.03"></script>
+	<script type="text/javascript" src="./js/materialize.clockpicker.js?file_version=2.03"></script>
 
-	<script type="text/javascript" src="js/fetch.js?file_version=2.03"></script>
+	<script type="text/javascript" src="./js/fetch.js?file_version=2.03"></script>
 
-	<script type="text/javascript" src="js/jQuery.Hz2Py-min.js?file_version=2.03"></script>
+	<script type="text/javascript" src="./js/jQuery.Hz2Py-min.js?file_version=2.03"></script>
 
-	<script type="text/javascript" src="my/init.js?file_version=2.03"></script>
-	<script type="text/javascript" src="my/page1.js?file_version=2.03"></script>
-	<script type="text/javascript" src="my/page2.js?file_version=2.03"></script>
-	<script type="text/javascript" src="my/page3.js?file_version=2.03"></script>
-	<script type="text/javascript" src="my/page4.js?file_version=2.03"></script>
-	<script type="text/javascript" src="my/page5.js?file_version=2.03"></script>
-	<script type="text/javascript" src="my/ready.js?file_version=2.03"></script>
+	<script type="text/javascript" src="./my/init.js?file_version=2.03"></script>
+	<script type="text/javascript" src="./my/page1.js?file_version=2.03"></script>
+	<script type="text/javascript" src="./my/page2.js?file_version=2.03"></script>
+	<script type="text/javascript" src="./my/page3.js?file_version=2.03"></script>
+	<script type="text/javascript" src="./my/page4.js?file_version=2.03"></script>
+	<script type="text/javascript" src="./my/page5.js?file_version=2.03"></script>
+	<script type="text/javascript" src="./my/ready.js?file_version=2.03"></script>
 
 </html>

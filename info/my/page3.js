@@ -242,6 +242,7 @@ var pageThird = (function(){
 
 		// 初始化 模态框保存
 		$("#colseModal").click(function(event) {
+			loding.show();
 			// 判断 dataModal 的数据，如果等于 false 不通过并且弹出警告
 			if (chackTraveler() == false) {
 				return
@@ -893,6 +894,7 @@ var pageThird = (function(){
 		$("#_RoomNumber").text( "还可入住" + _Num + "人" )
 	}
 	function nextPage() {
+		loding.show();
 		// 用来判断是否通过
 		var _allow = true,
 			_toast = '您有信息仍未完善';

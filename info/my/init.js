@@ -189,7 +189,7 @@ function initAll() {
 	// 渲染 起飞日期（国际航班）
 	// $("#takeoffTime").val( returnTimestamp(loaddata.takeoffTime) );
 	// $("#takeoffTime").next().attr('class', 'value active');
-	if (loaddata.landTime != null) {
+	if (loaddata.takeoffTime != null) {
 		var showtakeoffTime = loaddata.takeoffTime + 28800000;
 		$("#_takeoffTime select[name='hour']").val(Math.floor(showtakeoffTime/3600000));
 		$("#_takeoffTime select[name='Minute']").val(Math.floor((showtakeoffTime - (3600000*Math.floor(showtakeoffTime/3600000)))/60000));
@@ -203,7 +203,7 @@ function initAll() {
 	// 渲染 抵达时间
 	// $("#hLandTime").val( returnTimestamp(loaddata.hLandTime) );
 	// $("#hLandTime").next().attr('class', 'value active');
-	if (loaddata.landTime != null) {
+	if (loaddata.hLandTime != null) {
 		var showhLandTime = loaddata.hLandTime + 28800000;
 		$("#_hLandTime select[name='hour']").val(Math.floor(showhLandTime/3600000));
 		$("#_hLandTime select[name='Minute']").val(Math.floor((showhLandTime - (3600000*Math.floor(showhLandTime/3600000)))/60000));
@@ -217,7 +217,7 @@ function initAll() {
 	// 渲染 起飞时间
 	// $("#hTakeoffTime").val( returnTimestamp(loaddata.hTakeoffTime) );
 	// $("#hTakeoffTime").next().attr('class', 'value active');
-	if (loaddata.landTime != null) {
+	if (loaddata.hTakeoffTime != null) {
 		var showhTakeoffTime = loaddata.hTakeoffTime + 28800000;
 		$("#_hTakeoffTime select[name='hour']").val(Math.floor(showhTakeoffTime/3600000));
 		$("#_hTakeoffTime select[name='Minute']").val(Math.floor((showhTakeoffTime - (3600000*Math.floor(showhTakeoffTime/3600000)))/60000));
@@ -652,6 +652,18 @@ function RenderingTime() {
 	return _string;
 }
 
-
-
+var loding = {
+	show:function() {
+		$("#loding").css('display','block');
+		setTimeout(function(){
+			$("#loding").css('display','none');
+		},1000);
+	},
+	begin:function(){
+		$("#loding").css('display','block');
+	},
+	end:function(){
+		$("#loding").css('display','none');
+	}
+}
 
