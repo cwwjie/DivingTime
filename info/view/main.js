@@ -201,6 +201,8 @@ function renderMain() {
 	if (documentDate.hTakeoffTime != null) {
 		var showhTakeoffTime = documentDate.hTakeoffTime + 28800000;
 		$("#_hTakeoffTime").html(Math.floor(showhTakeoffTime/3600000)+'时'+Math.floor((showhTakeoffTime - (3600000*Math.floor(showhTakeoffTime/3600000)))/60000)+'分');
+	}else {
+		$("#_hTakeoffTime").html("");
 	}
 
 	// 渲染 国际航班号（入境）
