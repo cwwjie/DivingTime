@@ -1,0 +1,345 @@
+{{ set (homeURL = "./../../") }}
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  {{ include ("./../../basehead") }}
+
+
+  <script type="text/javascript" src="./birthday.min.js"></script>
+  <script type="text/javascript" src="./jQuery.Hz2Py-min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="./main.css?file_version=2.04">
+  <script type="text/javascript" src="./main.js?file_version=2.04"></script>
+
+
+
+</head>
+<body>
+  {{ include ("./../../navheader") }}
+
+
+  <!-- 模态框(旅客信息) -->
+  <div class="modal fade bs-example-modal-sm" id="InforModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-Infor">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+          <h4 class="modal-title" id="myModalLabel">添加旅客信息</h4>
+        </div>
+        <div class="modal-body" style="min-height:400px;">
+          <div class="list_Render" id="list_Render">
+            <div class="line_Render"></div>
+              正在加载...
+            <!-- <div class="list">
+              <div class="list_unselected list_select"><i></i></div>
+              <div class="list_content">
+                <div class="cont_name select"><span>曾杰</span>15976713287</div>
+                <div class="cont_addr">广东深圳宝安区西乡大道282号合正汇一城中西席座1606室</div>
+              </div>
+              <div class="list_edit" data-number=""><i></i></div>
+            </div> -->
+          </div>
+          <div style="height:80px;"></div>
+        </div>
+        <div class="modal-body" style="border-top:1px solid #e5e5e5;"><div class="add_Infor" id="pop_Infor">+ 新增用户信息</div></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" id="addPage" class="btn btn-Infor">保存并添加</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 模态框(编辑添加旅客信息) -->
+  <div class="modal fade bs-example-modal-sm" id="InforPopModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-Infor">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" id="modal2" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+          <h4 class="modal-title" id="myModalLabel">编辑添加旅客信息</h4>
+        </div>
+        <div class="modal-body" style="min-height:400px;">
+          <div class="add_edit">
+            <div class="line-boder">
+              <div class="content">
+                <div class="line">
+                  <div class="line-left">
+                    <div class="line-top"><span class="red">*</span>姓名(中文)</div>
+                    <input class="bot" type="text" name="ChineseName" id="ChineseName">
+                    <span class="Des"></span>
+                  </div>
+                  <div class="line-right">
+                    <div class="line-top"><span class="red">*</span>姓名(拼音)</div>
+                    <input class="bot" type="text" name="EnglishName" id="EnglishName">
+                    <span class="Des"></span>
+                  </div>
+                </div>
+                <div class="line">
+                  <div class="line-left">
+                    <div class="line-top">护照号码</div>
+                    <input class="bot" type="text" name="Passport">
+                    <span class="Des"></span>
+                  </div>
+                  <div class="line-right">
+                    <div class="line-top"><span class="red">*</span>性别</div>
+                    <div class="sex">
+                      <input type="radio" name="sex" id="male" checked="true"/>
+                      <label for="male">男</label>
+                    </div>
+                    <div class="sex">
+                      <input type="radio" name="sex" id="female"/>
+                      <label for="female">女</label>
+                    </div>
+                    <div class="sex" style="display: none;">
+                      <input type="radio" name="sex" id="secret" checked="true" />
+                      <label for="secret">保密</label>
+                    </div>
+                    <span class="Des"></span>
+                  </div>
+                </div>
+                <div class="line">
+                  <div class="line-left">
+                    <div class="line-top"><span class="red">*</span>出生日期</div>
+                    <div class="" id="time">
+                      <select class="sel_year" id="sel_year" rel="2016"></select><span> 年 </span>
+                      <select class="sel_month" id="sel_month" rel="1"></select><span> 月 </span>
+                      <select class="sel_day" id="sel_day" rel="1"></select><span> 日 </span>
+                    </div>
+                    <span class="Des" id="sel_time"></span>
+                  </div>
+                  <div class="line-right">
+                    <div class="line-top"><span class="red">*</span>年龄</div>
+                    <input class="bot" type="text" name="Age" id="Age">
+                    <span class="Des"></span>
+                  </div>
+                </div>
+                <div class="line">
+                  <div class="line-left">
+                    <div class="line-top"><span class="red">*</span>手机号码</div>
+                    <input class="bot" type="text" name="PhoneNumber">
+                    <span class="Des"></span>
+                  </div>
+                  <div class="line-right">
+                    <div class="line-top"><span class="red">*</span>邮箱</div>
+                    <input class="bot" type="text" name="Mailbox">
+                    <span class="Des"></span>
+                  </div>
+                </div>
+                <div class="line">
+                  <div class="line-left">
+                    <div class="line-top">潜水等级</div>
+                      <select name="Divelevel" class="count_select">
+                        <option selected="selected" disabled="disabled" value="null">请选择</option>
+                        <option value="1">OW(初级潜水员)</option>
+                        <option value="2">OW以上</option>
+                        <option value="null">无</option>
+                      </select>
+                    <span class="Des"></span>
+                  </div>
+                  <div class="line-right">
+                    <div class="line-top">潜水次数(请填写100以下次数)</div>
+                    <input class="bot" type="text" name="DiveTimes">
+                    <span class="Des"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body" style="border-top:1px solid #e5e5e5;">
+          <div class="edit_Infor" id="add_Infor">保存并使用</div>
+          <div class="edit_Infor" id="sub_Infor">保存并使用</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 模态框(预定成功) -->
+  <div id="reserve_Modal" class="my_Large_Modal modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="SVG">
+          <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="9165" xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150">
+          <path d="M301.104 493.52l131.456 254.464S646.208 230.8 983.088 58.416c-8.208 123.136-41.072 229.856 16.448 361.2-147.904 32.848-451.936 402.288-550.544 582.88-139.68-172.4-304-303.744-419.056-344.832l271.168-164.144z" fill="#017CD2" p-id="9166">
+          </path>
+          </svg>
+        </div>
+        <p>您的订单已提交<br/><small>正在等待客服审核处理</small></p>
+        <div>正在为您自动跳转到订单中心 <span id="_time"></span></div>
+        <a href="./../../user/account.html#Orders"><button type="button" class="btn btn-primary" id="modal_Jump">查看订单</button></a>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="OrdersNav">
+      <ol>
+        <li class="NavAfter">1 · 选择度假产品</li>
+        <li class="NavActive">2 · 确认订单填写客户信息</li>
+        <li class="NavBefore">3 · 提交订单</li>
+      </ol>
+    </div>
+    <div class="Part1 Center">
+      <h2><span>1</span>订单详情</h2>
+      <div class="OuterBorder">
+        <div class="OuterTitle">
+          <div class="OuterLeft" id="productName">正在加载...</div>
+          <div class="OuterrRight" id="productPrice"><span>正在加载...</span> RMB</div>
+        </div>
+        <div class="Paragraph" id="departureDate"><i class="part1-Icon" style="background-position:-16px -99px"></i><span>2016-11-14 至 2016-11-16（3 天 2 晚）</span></div>
+        <div class="Paragraph" style="display: none;"><i class="part1-Icon" style="background-position:-32px -99px"></i>成人 2 人，儿童 0 人</div>
+        <div class="Form">
+          <div class="FormTitle FormRow">
+            <div class="FLeft">项目</div>
+            <div>数量</div>
+            <div class="FRight">价格</div>
+          </div>
+          <div class="FormRow">
+            <div class="FLeft">合计</div>
+            <div id="productNum">正在加载...</div>
+            <div class="FRight" id="totalPrice">正在计算...</div>
+          </div>
+          <div class="FormRow" style="display: none;">
+            <div class="FLeft">总价</div>
+            <div>2</div>
+            <div class="FRight">正在加载...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="Part2 Center">
+      <h2><span>2</span>客人信息</h2>
+      <div class="OuterBorder">
+        <div class="CustomerInformationTitle">
+          旅客信息<span style="color: red;font-size:16px;margin-left:10px;">注: 至少提供一人信息</span>
+        </div>
+        <div class="add_Passenger_Information" id="add_Passenger_1" data-number="1">选择旅客信息</div>
+        <!-- 渲染(出行旅客信息) -->
+        <div id="Render_Passenger">
+          <!-- <div class="Info_Deta User_info">
+            <div class="InformationDetail" id="User_info1">
+              <div class="CustomerInformationTitle userinfo">
+                <div class="Info_Deta_title">旅客1</div>
+                <div class="Info_Deta_close" data-number="">X</div>
+              </div>
+              <div class="line">
+                <div class="row">
+                  <div class="col-md-2">护照号码:</div>
+                  <div class="col-md-4">
+                    <input type="text" name="Passport_Number" placeholder="G12345678" disabled="disabled">
+                  </div>
+                  <div class="col-md-6 prompt">请确保护照的有效期在出行前6个月以上。</div>
+                </div>
+              </div>
+              <div class="line">
+                <div class="row">
+                  <div class="col-md-2">姓名(中文):</div>
+                  <div class="col-md-4">
+                    <input type="text" name="chineseName" placeholder="张三" disabled="disabled">
+                  </div>
+                  <div class="col-md-6 prompt">请依照护照姓名中文输入。例，张三</div>
+                </div>
+              </div>
+              <div class="line">
+                <div class="row">
+                  <div class="col-md-2">姓名(拼音):</div>
+                  <div class="col-md-4">
+                    <input type="text" name="pinyinName" placeholder="ZHANGSAN" disabled="disabled">
+                  </div>
+                  <div class="col-md-6 prompt">请依照护照拼音输入。例，ZHANGSAN</div>
+                </div>
+              </div>
+              <div class="line">
+                <div class="row">
+                  <div class="col-md-2">性别:</div>
+                  <div class="col-md-5">
+                    <div>
+                      <input type="radio" name="sex1" id="male1" disabled="disabled">
+                      <label for="male1">男</label>
+                    </div>
+                    <div>
+                      <input type="radio" name="sex1" id="female1" disabled="disabled">
+                      <label for="female1">女</label>
+                    </div>
+                    <div>
+                      <input type="radio" name="sex1" id="secret1" disabled="disabled">
+                      <label for="secret1">保密</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="line">
+                <div class="row">
+                <div class="col-md-2">出生日期:
+                </div>
+                <div class="col-md-4">
+                <select class="sel_year" id="sel_year1" rel="2000">
+                </select>
+                <span>年
+                </span>
+                <select class="sel_month" id="sel_month1" rel="1">
+                </select>
+                <span>月
+                </span>
+                <select class="sel_day" id="sel_day1" rel="1">
+                </select>
+                <span>日
+                </span>
+                </div>
+                <div class="col-md-1">年龄:
+                </div>
+                <div class="col-md-4">
+                <input type="text" name="information" disabled="disabled">
+                </div>
+                </div>
+              </div>
+              <div class="line">
+                <div class="row">
+                <div class="col-md-2">手机号码:
+                </div>
+                <div class="col-md-4">
+                <input type="text" name="information" disabled="disabled">
+                </div>
+                <div class="col-md-1">邮箱:
+                </div>
+                <div class="col-md-4">
+                <input type="text" name="information" disabled="disabled">
+                </div>
+                </div>
+              </div>
+              <div class="line">
+                <div class="row">
+                <div class="col-md-2">潜水等级:
+                </div>
+                <div class="col-md-4">
+                <input type="text" name="information" disabled="disabled">
+                </div>
+                <div class="col-md-1">潜次:
+                </div>
+                <div class="col-md-4">
+                <input type="text" name="information" disabled="disabled">
+                </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <div class="ConfirmOrder">
+          <div class="Confirm_Order" id="ConfirmOrder">确认订单</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside style="display:none;" id="ShowConfirm">
+    <div class="ConfirmBackground" id="ConfirmBackground"></div>
+    <div class="content">
+      <div class="pay">等待付款...</div>
+      <div class="detail">请在新的窗口中完成支付</div>
+      <div class="Btn">
+        <div class="BtnLeft">已完成支付</div>
+        <div class="BtnRight">支付遇到问题</div>
+      </div>
+    </div>
+  </aside>
+
+  {{ include ("./../../navbottom") }}
+</body>
+</html>

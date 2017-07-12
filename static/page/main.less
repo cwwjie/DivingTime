@@ -1,0 +1,784 @@
+@heise:#4d5d77;
+@huise:#dbdbdb;
+@lanse:#00a0ea;
+@yingying: 0 2px 5px rgba(0,0,0,.26);
+@icon:url("./../dist/img/ico.png");
+@baisetop:#dbdbdb;
+@baisemin:#8a8a8a;
+@FontFamily:Helvetica,Arial,"Hiragino Sans GB","Microsoft YaHei",sans-serif;
+*{
+	padding:0px;
+	margin:0px;
+	font-family:@FontFamily;
+	i {
+		display:block;
+		background-image:@icon;
+	}
+	body{
+		width: 100%;
+		height: 100%
+	}
+	a {
+		text-decoration: none;
+		color: @heise;
+		font-family:"微软雅黑";
+	}
+	a:hover {
+		text-decoration: none;
+		color: @heise;
+		font-family:"微软雅黑";
+	}
+}
+nav {
+	display: none;
+	position: fixed;
+	margin-top: -50px;
+	width:100%;
+	background:#fff;
+	height:50px;
+	font-size:14px;
+	font-family:"微软雅黑";
+	line-height:50px;
+	z-index: 100;
+	color:@heise;
+	.NavContent {
+		height: 50px;
+		max-width: 1170px;
+		margin:0px auto;
+		position: relative;
+		.NC-L {
+			float: left;
+			a {
+				line-height: 50px;
+				margin-right:25px;
+				font-size:16px;
+				padding-bottom: 12px;
+			}
+			a:hover {
+				border-bottom: 4px solid #00a0ea;
+				color: #00a0ea;
+			}
+		}
+		@media (max-width:1170px) {
+			.NC-L {
+				padding-left: 25px;
+			}
+		}
+		.NC-R {
+			position: absolute;
+			right:0px;
+			top: 0px;
+			z-index: 10;
+			.NC-RTitle {
+				@media (max-width: 1170px) {
+					display: none;
+				}
+				overflow:hidden;
+				text-overflow:ellipsis;
+				white-space:nowrap;
+				background: #717686;
+				color:#f5f5f5;
+				width: 315px;
+				height: 50px;
+				text-align: center;
+				line-height: 50px;
+				font-size:16px;
+			}
+		}
+	}
+}
+/* 轮播图的意思 */
+.carouselpadding {
+	padding-top: 50px;
+	.carousel {
+		margin-top: 50px;
+		.carousel-indicators {
+			@media (max-width: 1170px) {
+				li {
+					opacity: 0;
+				}
+			}
+		}
+		.carousel-inner {
+			img {
+				height:100%;
+			}
+		}
+		.carousel-control {
+			.glyphicon {
+				width: 64px;
+				height: 64px;
+				background-image: @icon;
+			}
+			.glyphicon-chevron-left {
+				background-position:0px -35px;
+			}
+			.glyphicon-chevron-right {
+				background-position:-64px -35px;
+			}
+		}
+		.item {
+			img {
+				width:100%;
+			}
+		}
+	}
+}
+.boxline {
+	box-shadow:0px 0px 8px rgba(0, 0, 0, 0.4);
+	color: @heise;
+	z-index:2;
+	.PriceAside {
+		z-index: 50;
+		@media (max-width: 1170px) {
+			display: none;
+		}
+		width: 315px;
+		position:absolute;
+		right: 0px;
+		top: -75px;
+		background:rgba(0, 0, 0, 0.5);
+		.PATop {
+			position: relative;
+			color:@baisetop;
+			height: 50px;
+			line-height: 50px;
+			padding:0px 20px;
+			font-size: 18px;
+			.PAR {
+				font-size:16px;
+				i {
+					width: 16px;
+					height: 16px;
+					position: absolute;
+					background-position: 0px -99px;
+					top: 5px;
+					right:5px;
+					cursor: help;
+				}
+			}
+		}
+		.PABot {
+			height: 25px;
+			line-height:25px;
+			background:rgba(0, 0, 0, 0.5);
+			color:@baisemin;
+			padding:0px 20px;
+		}
+		.PAL {
+			float: left;
+		}
+		.PAR {
+			float: right;
+		}
+	}
+	.MContent-L {
+		height: 160px;
+		color: #797979;
+		#productName {
+			span {
+				display:inline-block;
+			}
+		}
+		@media (max-width: 1170px) {
+			h1 {
+				padding-left: 20px;
+			}
+			>p {
+				padding-left: 20px;
+			}
+		}
+		@media (max-width: 750px) {
+			height:auto;
+			padding:0px 20px;
+		}
+		h1{
+			@media (max-width: 750px) {
+				text-align: center;
+				line-height: 45px;
+				padding-top: 20px;
+			}
+			padding-top: 30px;
+			font-size: 30px;
+			margin: 0px;
+			font-weight:normal;
+			span {
+				background:#3bb9c4;
+				color:#fff;
+				font-size:14px;
+				padding:8px 8px;
+				margin-left: 10px;
+				position: relative;
+				bottom: 5px;
+			}
+		}
+		p {
+			@media (max-width: 750px) {
+				text-align: center;
+				margin: 0px;
+			}
+			padding-top:20px;
+			font-size:14px;
+			padding-bottom:30px;
+			margin: 0px;
+		}
+	}
+	.MContent-R {
+		@media (max-width: 1170px) {
+			display: none;
+		}
+		width: 315px;
+		height: 100%;
+		position: absolute;
+		right: 0px;
+		top: 0px;
+		z-index: 10;
+		.Order {
+			.OrderContent {
+				z-index: 19;
+				padding-top: 30px;
+				.OrderDate {
+					border: #dbdbdb solid 1px;
+					color:@heise;
+					width: 270px;
+					height: 40px;
+					margin:0px auto;
+					margin-bottom: 20px;
+					text-align: center;
+					font-size:18px;
+					line-height: 40px;
+					cursor:pointer;
+				}
+				.OrderDate:hover{
+					background: #6fcca6;
+					color: #f5f5f5;
+				}
+				.datetimepicker-all {
+					background: #fff;
+					margin-bottom: 20px;
+					.datetimepicker-inline {
+						width: 268px;
+						margin: 0px auto;
+						border: #dbdbdb solid 1px;
+						.datetimepicker-days,.datetimepicker-months,.datetimepicker-years {
+							.table-condensed {
+								width: 260px;
+								.next,.prev {
+									position: relative;
+								}
+								.next::after {
+									content:">";
+								}
+								.prev::after {
+									content:"<";
+								}
+							}
+						}
+					}
+				}
+				.packagNumber {
+					display: none;
+					background: #fff;
+					border-top: #dbdbdb solid 1px;
+					border-bottom: #dbdbdb solid 1px;
+					width: 270px;
+					height: 40px;
+					margin:0px auto;
+					margin-bottom: 20px;
+					text-align: center;
+					font-size:18px;
+					line-height: 40px;
+					overflow: hidden;
+					>div{
+						float: left;
+					}
+					.slideS {
+						cursor:pointer;
+						width: 20%;
+						border-left: #dbdbdb solid 1px;
+						border-right: #dbdbdb solid 1px;
+					}
+					.slideS:hover {
+						background: #fb8f1c;
+						color:#f5f5f5;
+					}
+					.center {
+						width: 60%;
+					}
+				}
+				.totalPrice {
+					display: none;
+					background: #fff;
+					border: #dbdbdb solid 1px;
+					width: 270px;
+					height: 50px;
+					margin:0px auto;
+					margin-bottom: 20px;
+					text-align: center;
+					font-size:18px;
+					line-height: 50px;
+					overflow: hidden;
+					>div{
+						float: left;
+					}
+					.tleft {
+						position: relative;
+						width: 35%;
+						border-right: #dbdbdb solid 1px;
+						i {
+							position: absolute;
+							top: 8px;
+							right: 15px;
+							width: 12px;
+							height: 12px;
+							border-radius: 6px;
+							background:#6b6b6b;
+							cursor: help;
+						}
+						i::after{
+							position: absolute;
+							top: -18px;
+							left: 4px;
+							content:"!";
+							font-size: 6px;
+							color:#fff;
+						}
+					}
+					.tright {
+						font-size: 14px;
+						width: 65%;
+					}
+				}
+				.OrderConfirm {
+					background: #fb8f1c;
+					border: #dbdbdb solid 1px;
+					color:#f5f5f5;
+					width: 270px;
+					height: 40px;
+					margin:0px auto;
+					margin-bottom: 30px;
+					text-align: center;
+					font-size:18px;
+					line-height: 40px;
+					cursor:pointer;
+				}
+				.OrderConfirm:hover {
+					color:#eee;
+				}
+			}
+			.ContactUS {
+				@media (max-width: 1170px) {
+					display: none;
+				}
+				position: relative;
+				top:40px;
+				width: 315px;
+				height: 140px;
+				padding:10px;
+				background:#fff;
+				border: @huise solid 1px;
+				z-index: 100;
+				.CUS-L {
+					.ContactUS_content {
+						position: relative;
+						top: -8px;
+						width: 120px;
+						>div{
+							position: relative;
+							left: 25px;
+							top: 10px;
+							margin-top: 10px;
+						}
+						article {
+							position: relative;
+							text-align: center;
+							position: relative;
+							top: -5px;
+							left: -15px;
+							.weixinQRcode {
+								display: none;
+								position: relative;
+								top: -115px;
+								left: -5px;
+							}
+						}
+						article:hover{
+							.weixinQRcode{
+								display: block;
+							}
+						}
+						svg {
+							position: relative;
+							top: 2.5px;
+						}
+					}
+					border-right: 1px solid @huise;
+					float: left;
+					width: 145px;
+					height: 120px;
+					i {
+						width: 120px;
+						height: 120px;
+						background-position: 0px -115px;
+					}
+				}
+				.CUS-R {
+					position: absolute;
+					top: 10px;
+					left:170px;
+					width: 120px;
+					height: 120px;
+					> div {
+						padding-top: 10px;
+						font-size:16px;
+						padding-bottom:10px;
+					}
+					p {
+						font-size:12px;
+						margin:0px;
+						padding-right: 5px;
+					}
+				}
+			}
+		}
+		.NewOrder {
+			position: fixed;
+			top: 50px;
+			width: 315px;
+			.OrderContent {
+				background: #fff;
+				border: #eee solid 1px;
+			}
+		}
+	}
+	@media (max-width: 1170px) {
+		.MContent-R {
+			position: none;
+			.Order {
+				.OrderContent {
+					background: #fff;
+					position: fixed;
+					top: 50px;
+					left: 0px;
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+	}
+}
+.MainContent {
+	aside {
+		display: block;
+	}
+	max-width: 1170px;
+	margin:0px auto;
+	position:relative;
+	.MContent-L {
+		max-width:770px;
+	}
+}
+.Bolckline {
+	color: @heise;
+	border-bottom: @huise solid 1px;
+	@media (max-width:1170px) {
+		padding-left: 15px;
+	}
+	.MainContent {
+		.MContent-L {
+			padding:40px 20px 40px 0px;
+			@media (max-width:770px) {
+				padding: 40px 15px 40px 0px;
+			}
+			.MContentRow {
+				height: 30px;
+				position: relative;
+				overflow: hidden;
+				width: 100%;
+				.MContentTitle {
+					float: left;
+					font-size: 18px;
+				}
+				button {
+					position:absolute;
+					right:0px;
+				}
+			}
+			.MContentform {
+				margin-top: 20px;
+				overflow: hidden;
+				border: 1px solid @huise;
+				border-bottom:none;
+				.MContentform-row {
+					background: #fff;
+					padding:10px 10px;
+					overflow: hidden;
+					border-bottom: @huise 1px solid;
+					div {
+						float: left;
+						height: 100%;
+					}
+					.MContentform-row1 {
+						width: 20%
+					}
+					.MContentform-row2 {
+						border-left: @huise 1px solid;
+						border-right: @huise 1px solid;
+						width: 60%;
+						padding-left: 10px;
+						padding-right: 10px;
+					}
+					.MContentform-row3 {
+						width: 20%;
+						padding-left: 10px;
+					}
+				}
+				.FormTitle {
+					font-weight: bold;
+				}
+				.FormLists{
+					cursor: pointer;
+				}
+				.FormLists:hover {
+					background:#8ddde4;
+					color: #fff;
+					.MContentform-row2 {
+						border-left:#fff 1px solid;
+						border-right:#fff 1px solid;
+					}
+				}
+			}
+			.MContentContent{
+				overflow: hidden;
+				padding-top:20px;
+				.colorBlocks{
+					a {
+						font-size: 10px;
+					}
+					height: 25px;
+					width: 100%;
+					> div {
+						position: absolute;
+						right: 0px;
+						top: 0px;
+						height: 25px;
+						span{
+							position: absolute;
+							top: -20px;
+						}
+						// @media (max-width:750px) {
+						// 	span{
+						// 		display: none;
+						// 	}
+						// }
+					}
+				}
+				.MCCL{
+					word-break:break-all;
+					word-wrap:break-word;
+					float: left;
+					width: 20%;
+					color:#8d8d8d;
+					@media (max-width:750px) {
+						float:none;
+						padding-bottom: 20px;
+					}
+				}
+				.MCCR{
+					position: relative;
+					float: left;
+					width: 70%;
+					@media (max-width:750px) {
+						width:100%;
+					}
+				}
+			}
+			.MCLine {
+				border-bottom: 1px solid #eee;
+			}
+		}
+		.ContactUS-R {
+			position: absolute;
+			right: 0px;
+			top: 30px;
+			width: 315px;
+			height: 140px;
+		}
+	}
+}
+.interval {
+	position: relative;
+	top:3px;
+	background:#f9f9f9;
+}
+// 模态框(套餐行程)
+.travel {
+	.modal-dialog{
+		width: 970px;
+		@media (max-width: 970px) {
+			width: 100%;
+		}
+		height: 100%;
+		margin:0px auto;
+		overflow:hidden;
+		.modal-content {
+			width: 970px;
+			@media (max-width: 970px) {
+				width: 100%;
+			}
+			height: 100%;
+			border-radius: 0px;
+			overflow-y: auto;
+			margin:0px auto;
+			._nav{
+				@media (max-width: 1190px) {
+					display: none;
+				}
+				text-align: center;
+				position: fixed;
+				top: 0px;
+				background-color: #4c575a;
+				width: 130px;
+				height: 100%;
+				a {
+					display: block;
+					color: #fff;
+					height: 50px;
+					line-height: 50px;
+					cursor: pointer;
+				}
+				> div{
+					border-bottom: 1px solid #3d4547;
+				}
+				> div:hover{
+					background: rgb(122, 134, 137);
+				}
+			}
+			._content{
+				margin-left: 130px;
+				width: 820px;
+				@media (max-width: 1190px) {
+					margin-left: 0px;
+					width: 100%;
+				}
+				.modal-body {
+					position: relative;
+					padding:0px;
+					.journey-title {
+						font-size: 16px;
+						padding:15px;
+						background: #eeeeee;
+					}
+					.journey-content {
+						position: relative;
+						margin-left: 20px;
+						border-left: 2px solid #eeeeee;
+						padding:20px;
+						i {
+							width: 32px;
+							height:32px;
+							background-position: -457px 0px;
+							position: absolute;
+							left: -18px;
+						}
+						h4 {
+							font-size: 16px;
+						}
+						img {
+							width:auto;
+							@media (max-width: 615px) {
+								width: 100%;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+.BottomSlide {
+	height:250px;
+	background-color:#3bb9c4;
+	@media only screen and (max-width: 1190px) {
+		display: none;
+	}
+	.BSContain {
+		position: relative;
+		top: 30px;
+		width: 1190px;
+		margin: 0px auto;
+		i {
+			width: 64px;
+			height: 64px;
+			position: absolute;
+			top:60px;
+			cursor: pointer;
+			opacity: 0.6;
+		}
+		i:hover {
+			opacity: 1;
+		}
+		.BSControl-L {
+			background-position: 0px -35px;
+			left: 0px;
+		}
+		.BSControl-R {
+			background-position: -64px -35px;
+			right: 0px;
+		}
+		.BSCmain {
+			overflow: hidden;
+			position: relative;
+			left: 84px;
+			width: 1060px;
+			ul {
+				width: 1700px;
+				position: relative;
+				li {
+					background: #fff;
+					margin-right: 35px;
+					float: left;
+					list-style-type:none;
+					color:#fff;
+					.BSCMlist {
+						padding:10px;
+						width: 230px;
+						height: 190px;
+						img {
+							width:210px;
+							height: 120px;
+						}
+						.BSCMLline {
+							padding-top: 10px;
+							.BSCMLline-T {
+								color: @heise;
+								overflow: hidden;
+								position: relative;
+								font-size:14px;
+								font-family: "微软雅黑";
+							}
+							.BSCMLline-B {
+								overflow: hidden;
+								position: relative;
+								font-size:10px;
+								color:#8d8d8d;
+							}
+							.BSCMLline-l {
+								float: left;
+								width: 60%;
+							}
+							.BSCMLline-R {
+								position: absolute;
+								right: 0px;
+								width: 30%;
+							}
+							.BSCMLline-B .BSCMLline-R {
+								text-decoration: line-through;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,789 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+* i {
+  display: block;
+  background-image: url("../dist/img/ico.png");
+}
+* body {
+  width: 100%;
+  height: 100%;
+}
+* a {
+  text-decoration: none;
+  color: #4d5d77;
+  font-family: "微软雅黑";
+}
+* a:hover {
+  text-decoration: none;
+  color: #4d5d77;
+  font-family: "微软雅黑";
+}
+nav {
+  display: none;
+  position: fixed;
+  margin-top: -50px;
+  width: 100%;
+  background: #fff;
+  height: 50px;
+  font-size: 14px;
+  font-family: "微软雅黑";
+  line-height: 50px;
+  z-index: 100;
+  color: #4d5d77;
+}
+nav .NavContent {
+  height: 50px;
+  max-width: 1170px;
+  margin: 0px auto;
+  position: relative;
+}
+nav .NavContent .NC-L {
+  float: left;
+}
+nav .NavContent .NC-L a {
+  line-height: 50px;
+  margin-right: 25px;
+  font-size: 16px;
+  padding-bottom: 12px;
+}
+nav .NavContent .NC-L a:hover {
+  border-bottom: 4px solid #00a0ea;
+  color: #00a0ea;
+}
+@media (max-width: 1170px) {
+  nav .NavContent .NC-L {
+    padding-left: 25px;
+  }
+}
+nav .NavContent .NC-R {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  z-index: 10;
+}
+nav .NavContent .NC-R .NC-RTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: #717686;
+  color: #f5f5f5;
+  width: 315px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 16px;
+}
+@media (max-width: 1170px) {
+  nav .NavContent .NC-R .NC-RTitle {
+    display: none;
+  }
+}
+/* 轮播图的意思 */
+.carousel {
+  margin-top: 50px;
+}
+@media (max-width: 1170px) {
+  .carousel .carousel-indicators li {
+    opacity: 0;
+  }
+}
+.carousel .carousel-inner img {
+  height: 100%;
+}
+.carousel .carousel-control .glyphicon {
+  width: 64px;
+  height: 64px;
+  background-image: url("../dist/img/ico.png");
+}
+.carousel .carousel-control .glyphicon-chevron-left {
+  background-position: 0px -35px;
+}
+.carousel .carousel-control .glyphicon-chevron-right {
+  background-position: -64px -35px;
+}
+.carousel .item img {
+  width: 100%;
+}
+.boxline {
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
+  color: #4d5d77;
+  z-index: 2;
+}
+.boxline .PriceAside {
+  z-index: 50;
+  width: 315px;
+  position: absolute;
+  right: 0px;
+  top: -75px;
+  background: rgba(0, 0, 0, 0.5);
+}
+@media (max-width: 1170px) {
+  .boxline .PriceAside {
+    display: none;
+  }
+}
+.boxline .PriceAside .PATop {
+  position: relative;
+  color: #dbdbdb;
+  height: 50px;
+  line-height: 50px;
+  padding: 0px 20px;
+  font-size: 18px;
+}
+.boxline .PriceAside .PATop .PAR {
+  font-size: 16px;
+}
+.boxline .PriceAside .PATop .PAR i {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  background-position: 0px -99px;
+  top: 5px;
+  right: 5px;
+  cursor: help;
+}
+.boxline .PriceAside .PABot {
+  height: 25px;
+  line-height: 25px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #8a8a8a;
+  padding: 0px 20px;
+}
+.boxline .PriceAside .PAL {
+  float: left;
+}
+.boxline .PriceAside .PAR {
+  float: right;
+}
+.boxline .MContent-L {
+  height: 160px;
+  color: #797979;
+}
+.boxline .MContent-L #productName span {
+  display: inline-block;
+}
+@media (max-width: 1170px) {
+  .boxline .MContent-L h1 {
+    padding-left: 20px;
+  }
+  .boxline .MContent-L > p {
+    padding-left: 20px;
+  }
+}
+@media (max-width: 750px) {
+  .boxline .MContent-L {
+    height: auto;
+    padding: 0px 20px;
+  }
+}
+.boxline .MContent-L h1 {
+  padding-top: 30px;
+  font-size: 30px;
+  margin: 0px;
+  font-weight: normal;
+}
+@media (max-width: 750px) {
+  .boxline .MContent-L h1 {
+    text-align: center;
+    line-height: 45px;
+    padding-top: 20px;
+  }
+}
+.boxline .MContent-L h1 span {
+  background: #3bb9c4;
+  color: #fff;
+  font-size: 14px;
+  padding: 8px 8px;
+  margin-left: 10px;
+  position: relative;
+  bottom: 5px;
+}
+.boxline .MContent-L p {
+  padding-top: 20px;
+  font-size: 14px;
+  padding-bottom: 30px;
+  margin: 0px;
+}
+@media (max-width: 750px) {
+  .boxline .MContent-L p {
+    text-align: center;
+    margin: 0px;
+  }
+}
+.boxline .MContent-R {
+  width: 315px;
+  height: 100%;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  z-index: 10;
+}
+@media (max-width: 1170px) {
+  .boxline .MContent-R {
+    display: none;
+  }
+}
+.boxline .MContent-R .Order .OrderContent {
+  z-index: 19;
+  padding-top: 30px;
+}
+.boxline .MContent-R .Order .OrderContent .OrderDate {
+  border: #dbdbdb solid 1px;
+  color: #4d5d77;
+  width: 270px;
+  height: 40px;
+  margin: 0px auto;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 40px;
+  cursor: pointer;
+}
+.boxline .MContent-R .Order .OrderContent .OrderDate:hover {
+  background: #6fcca6;
+  color: #f5f5f5;
+}
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all {
+  background: #fff;
+  margin-bottom: 20px;
+}
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline {
+  width: 268px;
+  margin: 0px auto;
+  border: #dbdbdb solid 1px;
+}
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline .datetimepicker-days .table-condensed,
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline .datetimepicker-months .table-condensed,
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline .datetimepicker-years .table-condensed {
+  width: 260px;
+}
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline .datetimepicker-days .table-condensed .next,
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline .datetimepicker-months .table-condensed .next,
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline .datetimepicker-years .table-condensed .next,
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline .datetimepicker-days .table-condensed .prev,
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline .datetimepicker-months .table-condensed .prev,
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline .datetimepicker-years .table-condensed .prev {
+  position: relative;
+}
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline .datetimepicker-days .table-condensed .next::after,
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline .datetimepicker-months .table-condensed .next::after,
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline .datetimepicker-years .table-condensed .next::after {
+  content: ">";
+}
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline .datetimepicker-days .table-condensed .prev::after,
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline .datetimepicker-months .table-condensed .prev::after,
+.boxline .MContent-R .Order .OrderContent .datetimepicker-all .datetimepicker-inline .datetimepicker-years .table-condensed .prev::after {
+  content: "<";
+}
+.boxline .MContent-R .Order .OrderContent .packagNumber {
+  display: none;
+  background: #fff;
+  border-top: #dbdbdb solid 1px;
+  border-bottom: #dbdbdb solid 1px;
+  width: 270px;
+  height: 40px;
+  margin: 0px auto;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 40px;
+  overflow: hidden;
+}
+.boxline .MContent-R .Order .OrderContent .packagNumber > div {
+  float: left;
+}
+.boxline .MContent-R .Order .OrderContent .packagNumber .slideS {
+  cursor: pointer;
+  width: 20%;
+  border-left: #dbdbdb solid 1px;
+  border-right: #dbdbdb solid 1px;
+}
+.boxline .MContent-R .Order .OrderContent .packagNumber .slideS:hover {
+  background: #fb8f1c;
+  color: #f5f5f5;
+}
+.boxline .MContent-R .Order .OrderContent .packagNumber .center {
+  width: 60%;
+}
+.boxline .MContent-R .Order .OrderContent .totalPrice {
+  display: none;
+  background: #fff;
+  border: #dbdbdb solid 1px;
+  width: 270px;
+  height: 50px;
+  margin: 0px auto;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 50px;
+  overflow: hidden;
+}
+.boxline .MContent-R .Order .OrderContent .totalPrice > div {
+  float: left;
+}
+.boxline .MContent-R .Order .OrderContent .totalPrice .tleft {
+  position: relative;
+  width: 35%;
+  border-right: #dbdbdb solid 1px;
+}
+.boxline .MContent-R .Order .OrderContent .totalPrice .tleft i {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background: #6b6b6b;
+  cursor: help;
+}
+.boxline .MContent-R .Order .OrderContent .totalPrice .tleft i::after {
+  position: absolute;
+  top: -18px;
+  left: 4px;
+  content: "!";
+  font-size: 6px;
+  color: #fff;
+}
+.boxline .MContent-R .Order .OrderContent .totalPrice .tright {
+  font-size: 14px;
+  width: 65%;
+}
+.boxline .MContent-R .Order .OrderContent .OrderConfirm {
+  background: #fb8f1c;
+  border: #dbdbdb solid 1px;
+  color: #f5f5f5;
+  width: 270px;
+  height: 40px;
+  margin: 0px auto;
+  margin-bottom: 30px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 40px;
+  cursor: pointer;
+}
+.boxline .MContent-R .Order .OrderContent .OrderConfirm:hover {
+  color: #eee;
+}
+.boxline .MContent-R .Order .ContactUS {
+  position: relative;
+  top: 40px;
+  width: 315px;
+  height: 140px;
+  padding: 10px;
+  background: #fff;
+  border: #dbdbdb solid 1px;
+  z-index: 100;
+}
+@media (max-width: 1170px) {
+  .boxline .MContent-R .Order .ContactUS {
+    display: none;
+  }
+}
+.boxline .MContent-R .Order .ContactUS .CUS-L {
+  border-right: 1px solid #dbdbdb;
+  float: left;
+  width: 145px;
+  height: 120px;
+}
+.boxline .MContent-R .Order .ContactUS .CUS-L .ContactUS_content {
+  position: relative;
+  top: -8px;
+  width: 120px;
+}
+.boxline .MContent-R .Order .ContactUS .CUS-L .ContactUS_content > div {
+  position: relative;
+  left: 25px;
+  top: 10px;
+  margin-top: 10px;
+}
+.boxline .MContent-R .Order .ContactUS .CUS-L .ContactUS_content article {
+  text-align: center;
+  position: relative;
+  top: -5px;
+  left: -15px;
+}
+.boxline .MContent-R .Order .ContactUS .CUS-L .ContactUS_content article .weixinQRcode {
+  display: none;
+  position: relative;
+  top: -115px;
+  left: -5px;
+}
+.boxline .MContent-R .Order .ContactUS .CUS-L .ContactUS_content article:hover .weixinQRcode {
+  display: block;
+}
+.boxline .MContent-R .Order .ContactUS .CUS-L .ContactUS_content svg {
+  position: relative;
+  top: 2.5px;
+}
+.boxline .MContent-R .Order .ContactUS .CUS-L i {
+  width: 120px;
+  height: 120px;
+  background-position: 0px -115px;
+}
+.boxline .MContent-R .Order .ContactUS .CUS-R {
+  position: absolute;
+  top: 10px;
+  left: 170px;
+  width: 120px;
+  height: 120px;
+}
+.boxline .MContent-R .Order .ContactUS .CUS-R > div {
+  padding-top: 10px;
+  font-size: 16px;
+  padding-bottom: 10px;
+}
+.boxline .MContent-R .Order .ContactUS .CUS-R p {
+  font-size: 12px;
+  margin: 0px;
+  padding-right: 5px;
+}
+.boxline .MContent-R .NewOrder {
+  position: fixed;
+  top: 50px;
+  width: 315px;
+}
+.boxline .MContent-R .NewOrder .OrderContent {
+  background: #fff;
+  border: #eee solid 1px;
+}
+@media (max-width: 1170px) {
+  .boxline .MContent-R {
+    position: none;
+  }
+  .boxline .MContent-R .Order .OrderContent {
+    background: #fff;
+    position: fixed;
+    top: 50px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+  }
+}
+.MainContent {
+  max-width: 1170px;
+  margin: 0px auto;
+  position: relative;
+}
+.MainContent aside {
+  display: block;
+}
+.MainContent .MContent-L {
+  max-width: 770px;
+}
+.Bolckline {
+  color: #4d5d77;
+  border-bottom: #dbdbdb solid 1px;
+}
+@media (max-width: 1170px) {
+  .Bolckline {
+    padding-left: 15px;
+  }
+}
+.Bolckline .MainContent .MContent-L {
+  padding: 40px 20px 40px 0px;
+}
+@media (max-width: 770px) {
+  .Bolckline .MainContent .MContent-L {
+    padding: 40px 15px 40px 0px;
+  }
+}
+.Bolckline .MainContent .MContent-L .MContentRow {
+  height: 30px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+.Bolckline .MainContent .MContent-L .MContentRow .MContentTitle {
+  float: left;
+  font-size: 18px;
+}
+.Bolckline .MainContent .MContent-L .MContentRow button {
+  position: absolute;
+  right: 0px;
+}
+.Bolckline .MainContent .MContent-L .MContentform {
+  margin-top: 20px;
+  overflow: hidden;
+  border: 1px solid #dbdbdb;
+  border-bottom: none;
+}
+.Bolckline .MainContent .MContent-L .MContentform .MContentform-row {
+  background: #fff;
+  padding: 10px 10px;
+  overflow: hidden;
+  border-bottom: #dbdbdb 1px solid;
+}
+.Bolckline .MainContent .MContent-L .MContentform .MContentform-row div {
+  float: left;
+  height: 100%;
+}
+.Bolckline .MainContent .MContent-L .MContentform .MContentform-row .MContentform-row1 {
+  width: 20%;
+}
+.Bolckline .MainContent .MContent-L .MContentform .MContentform-row .MContentform-row2 {
+  border-left: #dbdbdb 1px solid;
+  border-right: #dbdbdb 1px solid;
+  width: 60%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.Bolckline .MainContent .MContent-L .MContentform .MContentform-row .MContentform-row3 {
+  width: 20%;
+  padding-left: 10px;
+}
+.Bolckline .MainContent .MContent-L .MContentform .FormTitle {
+  font-weight: bold;
+}
+.Bolckline .MainContent .MContent-L .MContentform .FormLists {
+  cursor: pointer;
+}
+.Bolckline .MainContent .MContent-L .MContentform .FormLists:hover {
+  background: #8ddde4;
+  color: #fff;
+}
+.Bolckline .MainContent .MContent-L .MContentform .FormLists:hover .MContentform-row2 {
+  border-left: #fff 1px solid;
+  border-right: #fff 1px solid;
+}
+.Bolckline .MainContent .MContent-L .MContentContent {
+  overflow: hidden;
+  padding-top: 20px;
+}
+.Bolckline .MainContent .MContent-L .MContentContent .colorBlocks {
+  height: 25px;
+  width: 100%;
+}
+.Bolckline .MainContent .MContent-L .MContentContent .colorBlocks a {
+  font-size: 10px;
+}
+.Bolckline .MainContent .MContent-L .MContentContent .colorBlocks > div {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  height: 25px;
+}
+.Bolckline .MainContent .MContent-L .MContentContent .colorBlocks > div span {
+  position: absolute;
+  top: -20px;
+}
+.Bolckline .MainContent .MContent-L .MContentContent .MCCL {
+  word-break: break-all;
+  word-wrap: break-word;
+  float: left;
+  width: 20%;
+  color: #8d8d8d;
+}
+@media (max-width: 750px) {
+  .Bolckline .MainContent .MContent-L .MContentContent .MCCL {
+    float: none;
+    padding-bottom: 20px;
+  }
+}
+.Bolckline .MainContent .MContent-L .MContentContent .MCCR {
+  position: relative;
+  float: left;
+  width: 70%;
+}
+@media (max-width: 750px) {
+  .Bolckline .MainContent .MContent-L .MContentContent .MCCR {
+    width: 100%;
+  }
+}
+.Bolckline .MainContent .MContent-L .MCLine {
+  border-bottom: 1px solid #eee;
+}
+.Bolckline .MainContent .ContactUS-R {
+  position: absolute;
+  right: 0px;
+  top: 30px;
+  width: 315px;
+  height: 140px;
+}
+.interval {
+  position: relative;
+  top: 3px;
+  background: #f9f9f9;
+}
+.travel .modal-dialog {
+  width: 970px;
+  height: 100%;
+  margin: 0px auto;
+  overflow: hidden;
+}
+@media (max-width: 970px) {
+  .travel .modal-dialog {
+    width: 100%;
+  }
+}
+.travel .modal-dialog .modal-content {
+  width: 970px;
+  height: 100%;
+  border-radius: 0px;
+  overflow-y: auto;
+  margin: 0px auto;
+}
+@media (max-width: 970px) {
+  .travel .modal-dialog .modal-content {
+    width: 100%;
+  }
+}
+.travel .modal-dialog .modal-content ._nav {
+  text-align: center;
+  position: fixed;
+  top: 0px;
+  background-color: #4c575a;
+  width: 130px;
+  height: 100%;
+}
+@media (max-width: 1190px) {
+  .travel .modal-dialog .modal-content ._nav {
+    display: none;
+  }
+}
+.travel .modal-dialog .modal-content ._nav a {
+  display: block;
+  color: #fff;
+  height: 50px;
+  line-height: 50px;
+  cursor: pointer;
+}
+.travel .modal-dialog .modal-content ._nav > div {
+  border-bottom: 1px solid #3d4547;
+}
+.travel .modal-dialog .modal-content ._nav > div:hover {
+  background: #7a8689;
+}
+.travel .modal-dialog .modal-content ._content {
+  margin-left: 130px;
+  width: 820px;
+}
+@media (max-width: 1190px) {
+  .travel .modal-dialog .modal-content ._content {
+    margin-left: 0px;
+    width: 100%;
+  }
+}
+.travel .modal-dialog .modal-content ._content .modal-body {
+  position: relative;
+  padding: 0px;
+}
+.travel .modal-dialog .modal-content ._content .modal-body .journey-title {
+  font-size: 16px;
+  padding: 15px;
+  background: #eeeeee;
+}
+.travel .modal-dialog .modal-content ._content .modal-body .journey-content {
+  position: relative;
+  margin-left: 20px;
+  border-left: 2px solid #eeeeee;
+  padding: 20px;
+}
+.travel .modal-dialog .modal-content ._content .modal-body .journey-content i {
+  width: 32px;
+  height: 32px;
+  background-position: -457px 0px;
+  position: absolute;
+  left: -18px;
+}
+.travel .modal-dialog .modal-content ._content .modal-body .journey-content h4 {
+  font-size: 16px;
+}
+.travel .modal-dialog .modal-content ._content .modal-body .journey-content img {
+  width: auto;
+}
+@media (max-width: 615px) {
+  .travel .modal-dialog .modal-content ._content .modal-body .journey-content img {
+    width: 100%;
+  }
+}
+.BottomSlide {
+  height: 250px;
+  background-color: #3bb9c4;
+}
+@media only screen and (max-width: 1190px) {
+  .BottomSlide {
+    display: none;
+  }
+}
+.BottomSlide .BSContain {
+  position: relative;
+  top: 30px;
+  width: 1190px;
+  margin: 0px auto;
+}
+.BottomSlide .BSContain i {
+  width: 64px;
+  height: 64px;
+  position: absolute;
+  top: 60px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+.BottomSlide .BSContain i:hover {
+  opacity: 1;
+}
+.BottomSlide .BSContain .BSControl-L {
+  background-position: 0px -35px;
+  left: 0px;
+}
+.BottomSlide .BSContain .BSControl-R {
+  background-position: -64px -35px;
+  right: 0px;
+}
+.BottomSlide .BSContain .BSCmain {
+  overflow: hidden;
+  position: relative;
+  left: 84px;
+  width: 1060px;
+}
+.BottomSlide .BSContain .BSCmain ul {
+  width: 1700px;
+  position: relative;
+}
+.BottomSlide .BSContain .BSCmain ul li {
+  background: #fff;
+  margin-right: 35px;
+  float: left;
+  list-style-type: none;
+  color: #fff;
+}
+.BottomSlide .BSContain .BSCmain ul li .BSCMlist {
+  padding: 10px;
+  width: 230px;
+  height: 190px;
+}
+.BottomSlide .BSContain .BSCmain ul li .BSCMlist img {
+  width: 210px;
+  height: 120px;
+}
+.BottomSlide .BSContain .BSCmain ul li .BSCMlist .BSCMLline {
+  padding-top: 10px;
+}
+.BottomSlide .BSContain .BSCmain ul li .BSCMlist .BSCMLline .BSCMLline-T {
+  color: #4d5d77;
+  overflow: hidden;
+  position: relative;
+  font-size: 14px;
+  font-family: "微软雅黑";
+}
+.BottomSlide .BSContain .BSCmain ul li .BSCMlist .BSCMLline .BSCMLline-B {
+  overflow: hidden;
+  position: relative;
+  font-size: 10px;
+  color: #8d8d8d;
+}
+.BottomSlide .BSContain .BSCmain ul li .BSCMlist .BSCMLline .BSCMLline-l {
+  float: left;
+  width: 60%;
+}
+.BottomSlide .BSContain .BSCmain ul li .BSCMlist .BSCMLline .BSCMLline-R {
+  position: absolute;
+  right: 0px;
+  width: 30%;
+}
+.BottomSlide .BSContain .BSCmain ul li .BSCMlist .BSCMLline .BSCMLline-B .BSCMLline-R {
+  text-decoration: line-through;
+}
