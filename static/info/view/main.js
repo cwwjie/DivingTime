@@ -59,6 +59,7 @@ function init() {
 }
 
 function renderMain() {
+
 	// 初始化二维码
 	$.ajax({
 		type:"GET",
@@ -69,6 +70,8 @@ function renderMain() {
 				$(".qrCode").html(
 					"<img src='" + URLbase + val.data.qrCode + "'/>"
 				);
+				$(".D2code .weche").html("微信:"+val.data.webchat);
+				$(".D2code .name").html(val.data.name);
 				$("#Contactname").text(val.data.name);
 				$("#Contactwebchat").text(val.data.webchat);
 			}
@@ -182,6 +185,9 @@ function renderMain() {
 	// 渲染 到港航班号
 	$("#inHarbourNum").html( documentDate.inHarbourNum );
 	// 渲染 抵达日期
+	if (documentDate.template == 9) {
+		$("#_hLandDate").html("山打根抵达日期:<span id='hLandDate'>正在加载...</span>");
+	}
 	$("#hLandDate").html( returnDate(documentDate.hLandDate) );
 	// 渲染 抵达时间
 	if (documentDate.hLandTime != null) {
@@ -194,6 +200,9 @@ function renderMain() {
 	// 渲染 离港航班号
 	$("#outHarbourNum").html( documentDate.outHarbourNum );
 	// 渲染 起飞日期
+	if (documentDate.template == 9) {
+		$("#_hTakeoffDate").html("山打根离开日期:<span id='hTakeoffDate'>正在加载...</span>");
+	}
 	$("#hTakeoffDate").html( returnDate(documentDate.hTakeoffDate) );
 	// 渲染 起飞时间
 	// $("#hTakeoffTime").val( returnTimestamp(documentDate.hTakeoffTime) );
@@ -345,9 +354,8 @@ function renderMain() {
 	}else if (documentDate.template == 8) {// 马布岛-----------婆罗
 		$("#Related2").css('display', 'block');
 	}else if (documentDate.template == 9) {// 兰卡央
-		$("#hLandDate").attr('placeholder', '山打根抵达日期');
-		$("#hTakeoffDate").attr('placeholder', '山打根离开日期');
 	}
+
 }
 
 function initEvent() {

@@ -785,6 +785,7 @@ header .Center:hover .dropdown {
   background: #fff;
 }
 .taobao .List .List-item .item-content .content3 .checking {
+  padding-bottom: 5px;
   cursor: pointer;
   width: 100px;
   text-align: center;
@@ -841,6 +842,7 @@ header .Center:hover .dropdown {
 }
 .taobao .List .item .item6 .checking {
   text-align: center;
+  padding-bottom: 5px;
   text-decoration: underline;
   color: #009755;
 }
@@ -1057,7 +1059,7 @@ header .Center:hover .dropdown {
   display: inline-block;
   width: 16px;
   height: 16px;
-  background: url("./../../dist/img/ico.png");
+  background: url("../../dist/img/ico.png");
   background-position: -48px -99px;
 }
 .ContainR .changeAccoun .input1 .mistakeicon,
@@ -1069,7 +1071,7 @@ header .Center:hover .dropdown {
   display: inline-block;
   width: 16px;
   height: 16px;
-  background: url("./../../dist/img/ico.png");
+  background: url("../../dist/img/ico.png");
   background-position: -64px -99px;
 }
 .ContainR .changeAccoun .input1 .ShowPassword,
@@ -1079,7 +1081,7 @@ header .Center:hover .dropdown {
   right: 10px;
   width: 32px;
   height: 32px;
-  background: url("./../../dist/img/ico.png");
+  background: url("../../dist/img/ico.png");
   cursor: pointer;
 }
 .ContainR .changeAccoun .input1 .Show,

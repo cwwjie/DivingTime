@@ -16,6 +16,7 @@ function taobao() {
         'digest':$.cookie('digest')
       },
       success: function (val) {
+        console.log(val)
         if (val.result == "0") {
           allTaobaoList = val.data;
           Rendering();
@@ -42,6 +43,9 @@ function taobao() {
     $("#meetTrouble").click(function(){
       $(".Sidebar").animate({right:'0'},70);
     });
+    $(".meetTrouble").click(function(){
+      $(".Sidebar").animate({right:'0'},70);
+    });
   })();
   // 渲染所有订单
   function Rendering() {
@@ -65,7 +69,7 @@ function taobao() {
       +allTaobaoList[i].discount+"</span>RMB</div><div class='minor'>订单总金额:<span>"//
       +allTaobaoList[i].orderAmount+"</span>RMB</div>"//
       +amountstatus(allTaobaoList[i].payStatus,allTaobaoList[i].payAmount,allTaobaoList[i].notPayAmount)+"</div><div class='content3'>"//
-      +information(allTaobaoList[i].infoId,i)+"</div></div><div class='line'></div></div>"
+      +information(allTaobaoList[i].infoId,allTaobaoList[i].isConfirmed,i)+"</div></div><div class='line'></div></div>"
 
 
 
@@ -112,8 +116,21 @@ function taobao() {
           });
           $('#taobaoModal').modal({backdrop:'static'});
         });
+        if (allTaobaoList[j].isConfirmed == "Y") {
+          $("#confirm"+j).click(function(event){
+            var P = event.target.getAttribute("data-id");
+            localStorage.setItem('confirmUniqueKey',allTaobaoList[P].uniqueKey);
+            window.open("./../info/confirm/index.html");
+            $("#pop-confirm").click(function(event) {
+              window.open("./../info/confirm/index.html");
+              location = "./../info/confirm/index.html";
+            });
+            $('#confirmModal').modal({backdrop:'static'});
+          });
+        }
       }
     }
+    // 如果只有一个的时候，自动弹出信息收集
     if (supplementNum==1) {
       for (var F = 0; F < allTaobaoList.length; F++) {
         if (allTaobaoList[F].infoId == null) {
@@ -154,11 +171,16 @@ function taobao() {
         return _string
       }
     }
-    function information(infoId,i) {
+    function information(infoId,isConfirmed,i) {
       if (infoId == null) {
         return "<div class='supplement' id='supplement"+i+"' data-id="+i+">填写出行信息</div>"
       }else {
-        return "<div class='checking' id='checking"+i+"' data-id="+i+">查看信息</div>"
+        // 说明可以查看确认函
+        if (isConfirmed == 'Y') {
+          return "<div class='checking' id='checking"+i+"' data-id="+i+">查看信息</div><div class='checking' id='confirm"+i+"' data-id="+i+">查看确认函</div>"
+        }else {
+          return "<div class='checking' id='checking"+i+"' data-id="+i+">查看信息</div>"
+        }
       }
     }
   }

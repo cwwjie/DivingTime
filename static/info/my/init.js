@@ -340,6 +340,8 @@ function initAll() {
 				$(".qrCode").html(
 					"<img src='" + URLbase + val.data.qrCode + "'/>"
 				);
+				$(".D2code .weche").html("微信:"+val.data.webchat);
+				$(".D2code .name").html(val.data.name);
 				$("#Contactname1").text(val.data.name);
 				$("#Contactwebchat1").text(val.data.webchat);
 				$("#Contactname2").text(val.data.name);

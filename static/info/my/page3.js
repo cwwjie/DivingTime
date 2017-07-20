@@ -21,26 +21,26 @@ var pageThird = (function(){
 		 	// 如果是模板 3 紧急联系人是必填
 		 	if ( loaddata.template == 3 ) {
 				var obj = {
-				    "roomId":{allow:true,data:null},
-				    "bedType":{allow:false,data:null},
-				    "iceName":{allow:false,data:null},
-				    "iceRelation":{allow:false,data:null},
-				    "iceMobile":{allow:false,data:null},
-				    "iceEmail":{allow:false,data:null},
-				    "infoId":{allow:true,data:null},
-				    "customerInfoList":[]
+					"roomId":{allow:true,data:null},
+					"bedType":{allow:false,data:null},
+					"iceName":{allow:false,data:null},
+					"iceRelation":{allow:false,data:null},
+					"iceMobile":{allow:false,data:null},
+					"iceEmail":{allow:false,data:null},
+					"infoId":{allow:true,data:null},
+					"customerInfoList":[]
 				};
 				return obj
 		 	}else {
 				var obj = {
-				    "roomId":{allow:true,data:null},
-				    "bedType":{allow:false,data:null},
-				    "iceName":{allow:true,data:null},
-				    "iceRelation":{allow:true,data:null},
-				    "iceMobile":{allow:true,data:null},
-				    "iceEmail":{allow:true,data:null},
-				    "infoId":{allow:true,data:null},
-				    "customerInfoList":[]
+					"roomId":{allow:true,data:null},
+					"bedType":{allow:false,data:null},
+					"iceName":{allow:true,data:null},
+					"iceRelation":{allow:true,data:null},
+					"iceMobile":{allow:true,data:null},
+					"iceEmail":{allow:true,data:null},
+					"infoId":{allow:true,data:null},
+					"customerInfoList":[]
 				};
 				return obj
 		 	}
@@ -399,7 +399,7 @@ var pageThird = (function(){
 			});
 			// 选择浮潜
 			$("#lever_Simple").click(function(){
-				// 隐藏深潜
+				// 隐藏浮潜
 				document.getElementById("Diving_Depth").setAttribute("style","display:none;")
 				dataModal.isDive.data="N";
 				// 清空显示

@@ -107,7 +107,7 @@ header div {
   display: inline-block;
   width: 16px;
   height: 16px;
-  background: url("./../../dist/img/ico.png");
+  background: url("../../dist/img/ico.png");
   background-position: -48px -99px;
 }
 .content .input1 .mistakeicon,
@@ -123,7 +123,7 @@ header div {
   display: inline-block;
   width: 16px;
   height: 16px;
-  background: url("./../../dist/img/ico.png");
+  background: url("../../dist/img/ico.png");
   background-position: -64px -99px;
 }
 .content .input2 .getMobileCode {
@@ -140,7 +140,7 @@ header div {
   right: 10px;
   width: 32px;
   height: 32px;
-  background: url("./../../dist/img/ico.png");
+  background: url("../../dist/img/ico.png");
   cursor: pointer;
 }
 .content .input3 .Show,
