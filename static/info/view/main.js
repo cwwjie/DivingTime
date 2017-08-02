@@ -133,7 +133,7 @@ function renderMain() {
 
 	// 保险
 		// 预定仙本那
-		if ( localDate.template == 1 || localDate.template == 2 || localDate.template == 3 || localDate.template == 5 || localDate.template == 6 || localDate.template == 7 || localDate.template == 8 ) {
+		if ( localDate.template == 1 || localDate.template == 2 || localDate.template == 3 || localDate.template == 5 || localDate.template == 6 || localDate.template == 7 || localDate.template == 8 || localDate.template == 9 ) {
 			$("#renderEG").html('<div>现预定仙本那度假村的客户：<br/>'//
 				+'2-3人每人赠送7天安联境外保险或一次往返亚庇机场到市区酒店的接送（时间为6:05-21:55之间，超出时间需付35元夜间服务费）；<br/>'//
 				+'4-7人每人赠送7天安联境外保险和一次往返亚庇机场到市区酒店的接送（时间不限）；<br/>'//

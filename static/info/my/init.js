@@ -232,12 +232,6 @@ function initAll() {
 		// 只有 2 个 航班
 		$("#outboundclass").css('display', 'none');
 		$("#inboundclass").css('display', 'none');
-
-		// 显示模板条款 隐藏其他模板条款
-		$("#templateThree").css('display', 'none');
-	} else if ( loaddata.template == 3 || loaddata.template == 9) {// 声明条款三 只赠送保险
-		// 显示斗湖条款 隐藏其他模板条款
-		$("#templateOther").css('display', 'none');
 	}
 
 	// 渲染 潜游时光额外赠送项目
@@ -255,7 +249,6 @@ function initAll() {
 	}else {
 		$("#annexInfo").css('display', 'none');
 	}
-
 
 	// 渲染 度假村接送时间
 	if (loaddata.template == 1) {// 马达京
@@ -284,6 +277,7 @@ function initAll() {
 		$("#pickUp").css('display', 'block');
 		$("#pickUp-item9").css('display', 'block');
 	}
+	loaddata.template = 9;
 	// 渲染 特别注意
 	if (loaddata.template == 1) {// 马达京
 		$("#Related1").css('display', 'block');

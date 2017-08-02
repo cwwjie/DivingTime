@@ -33,6 +33,7 @@ function loadMessage() {
         }
       }else {
         alert("确认函信息获取失败，原因:"+val.message+"。请联系客服！");
+        location = "./../../index.html";
       }
     }
   });
@@ -42,6 +43,7 @@ function loadMessage() {
 function earnest() {
   $("title").html("潜游时光-定金确认函");
   $("#earnest").css("display","block");
+  $("#part3-fullamount").css("display","none");
   var bedTypeString = "";
   var StringisDive = "浮潜套餐";
   for (var i = 0; i < mainInfo.roomInfoList.length; i++) {

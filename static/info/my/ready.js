@@ -69,7 +69,39 @@ $(document).ready(function() {
 							"productAmount":loginSuccessful.productAmount,
 							flightNote:"",
 							// "userId":loginSuccessful.userId,
-							"infoId":loginSuccessful.infoId,"isRead":"N","readTime":null,"orderSn":loginSuccessful.orderSn,"orderSrc":loginSuccessful.orderSrc,"template":loginSuccessful.template,"orderName":loginSuccessful.orderName,"roomNum":loginSuccessful.roomNum,"peopleNum":loginSuccessful.peopleNum,"checkIn":loginSuccessful.checkIn,"checkOut":loginSuccessful.checkOut,"orderAmount":loginSuccessful.orderAmount,"discount":loginSuccessful.discount,"payAmount":loginSuccessful.payAmount,"notPayAmount":loginSuccessful.notPayAmount,"present":"","signName":null,"payAccount":null,"mobile":null,"email":null,"outboundNum":null,"landTime":null,"landDate":null,"inboundNum":null,"takeoffTime":null,"takeoffDate":null,"inHarbourNum":null,"hLandTime":null,"hLandDate":null,"outHarbourNum":null,"hTakeoffTime":null,"hTakeoffDate":null,roomInfoList:[]
+							"infoId":loginSuccessful.infoId,
+							"isRead":"N",
+							"readTime":null,
+							"orderSn":loginSuccessful.orderSn,
+							"orderSrc":loginSuccessful.orderSrc,
+							"template":loginSuccessful.template,
+							"orderName":loginSuccessful.orderName,
+							"roomNum":loginSuccessful.roomNum,
+							"peopleNum":loginSuccessful.peopleNum,
+							"checkIn":loginSuccessful.checkIn,
+							"checkOut":loginSuccessful.checkOut,
+							"orderAmount":loginSuccessful.orderAmount,
+							"discount":loginSuccessful.discount,
+							"payAmount":loginSuccessful.payAmount,
+							"notPayAmount":loginSuccessful.notPayAmount,
+							"present":loginSuccessful.present,
+							"signName":null,
+							"payAccount":null,
+							"mobile":null,
+							"email":null,
+							"outboundNum":null,
+							"landTime":null,
+							"landDate":null,
+							"inboundNum":null,
+							"takeoffTime":null,
+							"takeoffDate":null,
+							"inHarbourNum":null,
+							"hLandTime":null,
+							"hLandDate":null,
+							"outHarbourNum":null,
+							"hTakeoffTime":null,
+							"hTakeoffDate":null,
+							"roomInfoList":[]
 						}
 						function newroomInfo() {
 							var roomInfo = {"roomId":null,"iceName":null,"iceRelation":null,"iceMobile":null,"iceEmail":null,"bedType":null,"infoId":null,"customerInfoList":[]}
@@ -89,7 +121,7 @@ $(document).ready(function() {
 					initAll();
 					$("#allllllll").css('display', 'block');
 				}else{
-					Materialize.toast('请你重新输入密码，原因:发生未知错误-'+message.message, 4000);
+					Materialize.toast('信息收集初页面始化失败，原因:发生未知错误-'+message.message, 4000);
 				}
 			}
 		})

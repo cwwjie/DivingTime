@@ -4,6 +4,7 @@
  * 渲染所有订单
  */
 var allTaobaoList = [];
+var _clientWidth = 1170;
 function taobao() {
   // 初始化
   (function () {
@@ -27,7 +28,7 @@ function taobao() {
     });
 
     // 初始化侧边栏
-    var _clientWidth=document.body.clientWidth;
+    _clientWidth = document.body.clientWidth;
     if (_clientWidth < 500) {
       $(".Sidebar").css("right","-"+(_clientWidth+10)+"px");
       $(".Sidebar").css("width",(_clientWidth+10)+"px");
@@ -89,33 +90,54 @@ function taobao() {
       // 判断绑定什么事件
       if (allTaobaoList[j].infoId == null) {
         supplementNum++;
+        // 第一次填写信息收集
         $("#supplement"+j).click(function(event){
           var i = event.target.getAttribute("data-id");
           localStorage.setItem('_token',$.cookie('token'));
           localStorage.setItem('_digest',$.cookie('digest'));
           localStorage.setItem('_uniqueKey',allTaobaoList[i].uniqueKey);
           localStorage.setItem('loginSuccessful',JSON.stringify(allTaobaoList[i]));
-          window.open("./../info/gather.html");
-          $("#pop-up").click(function(event) {
+          if (_clientWidth < 768) {
+            window.open("./../info/mobile/index.html");
+          }else {
             window.open("./../info/gather.html");
-            location = "./../info/gather.html";
+          }
+          $("#pop-up").click(function(event) {
+            if (_clientWidth < 768) {// 手机端
+              window.open("./../info/mobile/index.html");
+              location = "./../info/mobile/index.html";
+            }else {
+              window.open("./../info/gather.html");
+              location = "./../info/gather.html";
+            }
           });
           $('#taobaoModal').modal({backdrop:'static'});
         });
       }else {
+        // 补充信息收集
         $("#checking"+j).click(function(event){
           var i = event.target.getAttribute("data-id");
           localStorage.setItem('_token',$.cookie('token'));
           localStorage.setItem('_digest',$.cookie('digest'));
           localStorage.setItem('_uniqueKey',allTaobaoList[i].uniqueKey);
           localStorage.setItem('loginSuccessful',JSON.stringify(allTaobaoList[i]));
-          window.open("./../info/view/index.html");
-          $("#pop-up").click(function(event) {
+          if (_clientWidth < 768) {// 手机端
+            window.open("./../info/mobile/index.html");
+          }else {
             window.open("./../info/view/index.html");
-            location = "./../info/view/index.html";
+          }
+          $("#pop-up").click(function(event) {
+            if (_clientWidth < 768) {
+              window.open("./../info/mobile/index.html");
+              location = "./../info/mobile/index.html";
+            }else {
+              location = "./../info/view/index.html";
+              window.open("./../info/view/index.html");
+            }
           });
           $('#taobaoModal').modal({backdrop:'static'});
         });
+        // 查看确认函
         if (allTaobaoList[j].isConfirmed == "Y") {
           $("#confirm"+j).click(function(event){
             var P = event.target.getAttribute("data-id");
