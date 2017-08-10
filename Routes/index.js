@@ -1,5 +1,6 @@
 const KoaRouter = require("koa-router");
 const router = new KoaRouter();
+const mobileInfo = require("./mobileInfo");
 
 
 
@@ -23,6 +24,15 @@ router.get("/other/joinus.html", function*() { yield this.render("other/joinus")
 router.get("/other/help.html", function*() { yield this.render("other/help") });
 router.get("/other/privacy.html", function*() { yield this.render("other/privacy") });
 router.get("/other/policy.html", function*() { yield this.render("other/policy") });
+
+
+// 手机端信息收集
+router.get("/info/mobile/index.html", function *(next) {
+	let _this = this;
+	yield mobileInfo(_this);
+});
+
+
 
 
 module.exports = router;

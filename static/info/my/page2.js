@@ -416,7 +416,8 @@ var pageSecond = (function(){
 			}
 			var uploadForm = new FormData();
 			uploadForm.append("attachFile", AnnexFile);
-			$("#UploadAnnex").text('正在上传')
+			$("#UploadAnnex").text('正在上传');
+			// 上次新的
 			if (loaddata.infoId == null || loaddata.infoId == '') {
 				fetch(
 					URLbase + URLversion + "/gather/attach/"+$("#selectAnnex").val()+"/add.do",{
@@ -431,6 +432,7 @@ var pageSecond = (function(){
 				}).then(function(json) {
 					dealwith(json);
 				})
+			// 覆盖原有的
 			}else {
 				fetch(
 					URLbase + URLversion + "/gather/attach/"+$("#selectAnnex").val()+"/"+loaddata.infoId+"/add.do",{
@@ -467,6 +469,7 @@ var pageSecond = (function(){
 				$("#UploadAnnex").text('上传')
 			}
 		});
+		// 渲染附件信息
 		function renderAnnex() {
 			var _data = dataAllow.attachmentList.data,
 				_string = ""
@@ -483,7 +486,7 @@ var pageSecond = (function(){
 			$("#annex").html(_string);
 			for (var j = 0; j < _data.length; j++) {
 				$("#deleteAnnex"+j).click(function(event) {
-					var _confirm=confirm("确认要删除?")
+					var _confirm = confirm("确认要删除?");
 					if (_confirm == true){
 					}else{
 						return
@@ -506,7 +509,6 @@ var pageSecond = (function(){
 						}
 					});
 				});
-
 			}
 		}
 		renderAnnex();

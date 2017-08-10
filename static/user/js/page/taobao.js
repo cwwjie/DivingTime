@@ -160,10 +160,19 @@ function taobao() {
           localStorage.setItem('_digest',$.cookie('digest'));
           localStorage.setItem('_uniqueKey',allTaobaoList[F].uniqueKey);
           localStorage.setItem('loginSuccessful',JSON.stringify(allTaobaoList[F]));
+          if (_clientWidth < 768) {
+            window.open("./../info/mobile/index.html");
+          }else {
             window.open("./../info/gather.html");
+          }
           $("#pop-up").click(function(event) {
-            window.open("./../info/gather.html");
-            location = "./../info/gather.html";
+            if (_clientWidth < 768) {
+              window.open("./../info/mobile/index.html");
+              location = "./../info/mobile/index.html";
+            }else {
+              location = "./../info/view/index.html";
+              window.open("./../info/view/index.html");
+            }
           });
           $('#taobaoModal').modal({backdrop:'static'});
           return

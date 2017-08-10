@@ -21,6 +21,15 @@ app.use(Routes.routes());
 // 开启静态资源一定要这样做的
 app.use(static("static"));
 
+// 当以上都未拦截到返回，就返回404页面
+app.use((ctx, next)=>{
+	switch (ctx.status) {
+		case 404:
+			ctx.body = '404'
+		break
+	}
+	return next()
+});
 
 app.listen(3000);
 
