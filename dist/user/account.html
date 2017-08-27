@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>潜游时光 DivingTime - 让你的旅游有温度</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" type="text/css" href="./../dist/css/bootstrap.min.css">
+  <script type="text/javascript" src="./../dist/js/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="./../dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="./../dist/js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="./../dist/js/appconfig.js?file_version=2.05"></script>
+
+  <link rel="stylesheet" type="text/css" href="./css/account.css?file_version=2.05">
+  <script type="text/javascript" src="./js/birthday.min.js"></script>
+  <script type="text/javascript" src="./js/jQuery.Hz2Py-min.js?file_version=2.05"></script>
+  <script type="text/javascript" src="./js/account.js?file_version=2.05"></script>
+  <script type="text/javascript" src="./js/page/person.js?file_version=2.05"></script>
+  <script type="text/javascript" src="./js/page/orders.js?file_version=2.05"></script>
+  <script type="text/javascript" src="./js/page/taobao.js?file_version=2.05"></script>
+  <script type="text/javascript" src="./js/page/accoun.js?file_version=2.05"></script>
+  <script type="text/javascript" src="./js/page/addres.js?file_version=2.05"></script>
+  <script type="text/javascript" src="./js/page/client.js?file_version=2.05"></script>
+</head>
+<body>
+	<header>
+    <a href="./../index.html"><i></i></a>
+    <div class="Center">
+      <i class="left"></i><span id="login">用户名</span><i class="right"></i>
+			<div class="dropdown">
+				<ul>
+					<a href="./account.html#Person" onclick="window.location.hash='#Person';Render()"><li class="First"><i style="background-position:-216px -185px;"></i>个人中心</li></a>
+					<a href="./account.html#Orders" onclick="window.location.hash='#Orders';Render()"><li><i style="background-position:-248px -185px;"></i>商城订单</li></a>
+					<a href="./account.html#taobao" onclick="window.location.hash='#taobao';Render()"><li><i style="background-position:-408px -185px;"></i>淘宝订单</li></a>
+					<a href="./account.html#Accoun" onclick="window.location.hash='#Accoun';Render()"><li><i style="background-position:-280px -185px;"></i>账号中心</li></a>
+					<a style="display: none;" href="./account.html#Addres" onclick="window.location.hash='#Addres';Render()"><li><i style="background-position:-344px -185px;"></i>收货地址</li></a>
+					<a href="./account.html#Client" onclick="window.location.hash='#Client';Render()"><li><i style="background-position:-376px -185px;"></i>旅客信息</li></a>
+					<a onclick="Logout()"><li id="Log_out"><i style="background-position:-312px -185px;"></i>退出登录</li></a>
+				</ul>
+			</div>
+    </div>
+    <div class="tell-header">服务咨询 :<a href="tel://4006709078"> 400-9688-768</a></div>
+  </header>
+  <div class="main">
+  	<div class="mainContain">
+	  	<nav>
+			<ul>
+				<li id="Person"><i style="background-position:-216px -185px;"></i>个人中心</li>
+				<li id="Orders"><i style="background-position:-248px -185px;"></i>商城订单</li>
+				<li id="taobao"><i style="background-position:-408px -185px;"></i>淘宝订单</li>
+				<li id="Accoun"><i style="background-position:-280px -185px;"></i>账号中心</li>
+				<li id="Addres" style="display: none;"><i style="background-position:-344px -185px;"></i>收货地址</li>
+				<li id="Client"><i style="background-position:-376px -185px;"></i>旅客信息</li>
+			</ul>
+	  	</nav>
+	  	<div class="ContainR" id="ContainR">
+	  	</div>
+  	</div>
+  </div>
+</body>
+</html>

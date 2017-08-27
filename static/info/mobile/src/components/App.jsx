@@ -24,7 +24,7 @@ class App extends React.Component {
     }
 
     /* 正式环境 */
-    // let loginSuccessful = JSON.parse(localStorage.getItem('loginSuccessful'));
+    let loginSuccessful = JSON.parse(localStorage.getItem('loginSuccessful'));
 
     /* 第一次 */
     // localStorage.setItem('_token','f8928b80-0f61-4b84-8465-c117c2e593e2');
@@ -33,10 +33,10 @@ class App extends React.Component {
     // let loginSuccessful = {"linkId": 95,"uniqueKey": "b5164e71-605a-4d3a-bf48-5d06311eaf92","submitTime": null,"isLocked": "Y","isComplete": "N","orderSn": "201706291","orderName": "扫扫地","orderDesc": "撒旦法撒","orderSrc": "TB","template": 2,"roomNum": 1,"adultNum": 2,"childNum": 0,"peopleNum": 2,"checkIn": 1500652800000,"checkOut": 1500739200000,"productAmount": 12000,"orderAmount": 11800,"discount": 200,"payAmount": 500,"notPayAmount": 11300,"calMethod": "6000*2-200=11800元","createBy": 29,"createTime": 1498674860000,"updateBy": null,"updateTime": null,"infoId": null,"present": "","insuranceBegin": null,"insuranceEnd": null,"userId": 69,"payStatus": 2,"transfersInfo": "","isConfirmed": "N","confirmStatus": null};
 
     /* 第二次 */
-    localStorage.setItem('_token',"f8928b80-0f61-4b84-8465-c117c2e593e2");
-    localStorage.setItem('_digest',"405fc83c-f9fa-4f1e-a83c-324b90b19edf");
-    localStorage.setItem('_uniqueKey',"32fb5446-c86a-4dee-b100-10ae40f8e36b");
-    let loginSuccessful = {"linkId": 95,"uniqueKey": "b5164e71-605a-4d3a-bf48-5d06311eaf92","submitTime": null,"isLocked": "Y","isComplete": "N","orderSn": "201706291","orderName": "扫扫地","orderDesc": "撒旦法撒","orderSrc": "TB","template": 2,"roomNum": 1,"adultNum": 2,"childNum": 0,"peopleNum": 2,"checkIn": 1500652800000,"checkOut": 1500739200000,"productAmount": 12000,"orderAmount": 11800,"discount": 200,"payAmount": 500,"notPayAmount": 11300,"calMethod": "6000*2-200=11800元","createBy": 29,"createTime": 1498674860000,"updateBy": null,"updateTime": null,"infoId": null,"present": "","insuranceBegin": null,"insuranceEnd": null,"userId": 69,"payStatus": 2,"transfersInfo": "","isConfirmed": "N","confirmStatus": null};
+    // localStorage.setItem('_token',"f8928b80-0f61-4b84-8465-c117c2e593e2");
+    // localStorage.setItem('_digest',"405fc83c-f9fa-4f1e-a83c-324b90b19edf");
+    // localStorage.setItem('_uniqueKey',"32fb5446-c86a-4dee-b100-10ae40f8e36b");
+    // let loginSuccessful = {"linkId": 95,"uniqueKey": "b5164e71-605a-4d3a-bf48-5d06311eaf92","submitTime": null,"isLocked": "Y","isComplete": "N","orderSn": "201706291","orderName": "扫扫地","orderDesc": "撒旦法撒","orderSrc": "TB","template": 2,"roomNum": 1,"adultNum": 2,"childNum": 0,"peopleNum": 2,"checkIn": 1500652800000,"checkOut": 1500739200000,"productAmount": 12000,"orderAmount": 11800,"discount": 200,"payAmount": 500,"notPayAmount": 11300,"calMethod": "6000*2-200=11800元","createBy": 29,"createTime": 1498674860000,"updateBy": null,"updateTime": null,"infoId": null,"present": "","insuranceBegin": null,"insuranceEnd": null,"userId": 69,"payStatus": 2,"transfersInfo": "","isConfirmed": "N","confirmStatus": null};
 
 
     // 查询所有度假村图片

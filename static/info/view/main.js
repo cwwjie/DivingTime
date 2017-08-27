@@ -160,10 +160,12 @@ function renderMain() {
 		}
 
 
-	// 渲染下单人姓名
-	$("#signName").html( documentDate.signName )
 	// 渲染付款账号名
-	$("#payAccount").html( documentDate.payAccount )
+	$("#payAccount").html( documentDate.payAccount );
+	// 渲染下单人姓名
+	$("#signName").html( documentDate.signName );
+	// 渲染下单人英文名
+	$("#pinyinName").html( documentDate.pinyinName );
 	// 渲染下单人手机
 	$("#BasicPhone").html( documentDate.mobile );
 	// 渲染下单人邮箱
@@ -269,7 +271,7 @@ function renderMain() {
 	if (documentDate.template == 3) {
 		$("#EmergencyCT").css('display', 'block');
 		$("#_ugName").html(documentDate.roomInfoList[0].iceName);
-		$("#_ugRelation").html(roomInfoList[0].iceRelation);
+		$("#_ugRelation").html(documentDate.roomInfoList[0].iceRelation);
 		$("#_ugPhone").html(documentDate.roomInfoList[0].iceMobile);
 		$("#_ugEmail").html(documentDate.roomInfoList[0].iceEmail);
 	}

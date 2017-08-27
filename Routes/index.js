@@ -27,10 +27,10 @@ router.get("/other/policy.html", function*() { yield this.render("other/policy")
 
 
 // 手机端信息收集
-router.get("/info/mobile/index.html", function *(next) {
-	let _this = this;
-	yield mobileInfo(_this);
-});
+// router.get("/info/mobile/index.html", function *(next) {
+// 	let _this = this;
+// 	yield mobileInfo(_this);
+// });
 
 
 

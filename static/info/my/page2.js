@@ -5,14 +5,18 @@
 var pageSecond = (function(){
 	// 初始化 设置 所有数据
 	var dataAllow = {
+		payAccount:{
+			allow:true,
+			data:null
+		},
 		signName:{
 			// false 表示必填 才可以通过 true 表示不填 都可以通过
 			allow:false,
 			// data 表示数据
 			data:null
 		},
-		payAccount:{
-			allow:true,
+		pinyinName:{
+			allow:false,
 			data:null
 		},
 		mobile:{
@@ -106,7 +110,7 @@ var pageSecond = (function(){
 			// 如果传进来的数据已经填写
 			if (loaddata[_cardperson] != null) {
 				// 那么赋值进去
-				dataAllow[_cardperson].data = loaddata[_cardperson]
+				dataAllow[_cardperson].data = loaddata[_cardperson];
 				// 如果这个数据必填 false
 				if (dataAllow[_cardperson].allow == false) {
 					dataAllow[_cardperson].allow = true;
@@ -271,6 +275,10 @@ var pageSecond = (function(){
 		})
 
 		// 将数据 验证 并入主数据
+		$("#payAccount").blur(function(event) {
+			dataAllow.payAccount.data = event.target.value.trim();
+			dataAllow.payAccount.allow = true;
+		});
 		$("#signName").blur(function(event) {
 			if (event.target.value.trim() == "" || event.target.value.trim() == null) {
 				$("#signName").next().text("预定人姓名 不能为空");
@@ -283,10 +291,32 @@ var pageSecond = (function(){
 			$("#signName").next().text("")
 			dataAllow.signName.data = event.target.value.trim();
 			dataAllow.signName.allow = true;
+			// 转换
+			var _pingyin = $(this).toPinyin();
+			$("#pinyinName").val(_pingyin);
+			dataAllow.pinyinName.data = _pingyin;
+			dataAllow.pinyinName.allow = true;
 		});
-		$("#payAccount").blur(function(event) {
-			dataAllow.payAccount.data = event.target.value.trim();
-			dataAllow.payAccount.allow = true;
+		$("#pinyinName").blur(function(event) {
+			if (event.target.value.trim() == "" || event.target.value.trim() == null) {
+				$("#pinyinName").next().text("预定人拼音 不能为空");
+				setTimeout(function(){
+					event.target.setAttribute("class","validate invalid");
+				},100);
+				dataAllow.pinyinName.allow = false;
+				return
+			}else if ( event.target.value.length >= 32 ) {
+				// 判断是否小于32个汉字
+				setTimeout(function(){
+					event.target.setAttribute("class","validate invalid");
+				},100);
+				$("#pinyinName").next().text("不能超过32位");
+				dataModal.pinyinName.allow  = false;
+				return
+			}
+			$("#pinyinName").next().text("")
+			dataAllow.pinyinName.data = event.target.value.trim();
+			dataAllow.pinyinName.allow = true;
 		});
 		$("#BasicPhone").blur(function(event) {
 			if (event.target.value == "" || event.target.value.trim() == null) {
@@ -520,8 +550,12 @@ var pageSecond = (function(){
 		for(var _cardperson in dataAllow){
 			if (dataAllow[_cardperson].allow == false) {
 				if ( _cardperson == "signName" ) {
-					Materialize.toast("预定人姓名为必填", 4000);
+					Materialize.toast("预定人姓名(中文)为必填", 4000);
 					$("#signName").next().text("必填");
+					return
+				}else if (_cardperson == "pinyinName" ) {
+					Materialize.toast("预定人姓名(英文)为必填", 4000);
+					$("#BasicPhone").next().text("有误");
 					return
 				}else if (_cardperson == "mobile" ) {
 					Materialize.toast("预定人手机号码/电话为必填", 4000);

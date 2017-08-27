@@ -152,12 +152,24 @@ function initAll() {
 			$("#InsuranceInfo").text(_stringData);
 			$("#transfersInfo").html(_Info);
 		}
-
-	// 渲染下单人姓名
-	$("#signName").val( loaddata.signName )
-	$("#signName").next().attr('class', 'value active');
+	if (loaddata.isRead == "N") {// 第一次填写
+		loaddata.signName = loginSuccessful.signName;
+		loaddata.pinyinName = loginSuccessful.pinyinName;
+		$("#signName").val( loginSuccessful.signName );
+		$("#signName").next().attr('class', 'value active');
+		// 渲染下单人姓名(英文)
+		$("#pinyinName").val( loginSuccessful.pinyinName );
+		$("#pinyinName").next().attr('class', 'value active');
+	}else {
+		// 渲染下单人姓名(中文)
+		$("#signName").val( loaddata.signName );
+		$("#signName").next().attr('class', 'value active');
+		// 渲染下单人姓名(英文)
+		$("#pinyinName").val( loaddata.pinyinName );
+		$("#pinyinName").next().attr('class', 'value active');
+	}
 	// 渲染付款账号名
-	$("#payAccount").val( loaddata.payAccount )
+	$("#payAccount").val( loaddata.payAccount );
 	$("#payAccount").next().attr('class', 'value active');
 	// 渲染下单人手机
 	$("#BasicPhone").val( loaddata.mobile );

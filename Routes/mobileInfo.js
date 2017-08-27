@@ -9,7 +9,12 @@ const pxtorem = require('postcss-pxtorem');
 let mobileInfo =  async (ctx) => {
 	let webpackPromise = new Promise(function(resolve, reject){
 		let compiler = webpack({
-		  entry: { "index": path.resolve(__dirname, './../static/info/mobile/src/index') },
+		  entry: {
+		  	"index":[
+		  		'whatwg-fetch',
+		  		path.resolve(__dirname, './../static/info/mobile/src/index')
+		  	]
+		  },
 
 		  output: {
 		    filename: '[name].js',

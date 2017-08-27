@@ -136,10 +136,13 @@ var pageThird = (function(){
 		 // 渲染房间
 		 RenderRoom();
 		if (loaddata.roomInfoList.length!= 0) {
-			$("#_ugName").val(allRoom[0].iceName.data);
-			$("#_ugRelation").val(allRoom[0].iceRelation.data);
-			$("#_ugPhone").val(allRoom[0].iceMobile.data);
-			$("#_ugEmail").val(allRoom[0].iceEmail.data);
+			if (loaddata.isRead == "N") {
+			}else {
+				$("#_ugName").val(allRoom[0].iceName.data);
+				$("#_ugRelation").val(allRoom[0].iceRelation.data);
+				$("#_ugPhone").val(allRoom[0].iceMobile.data);
+				$("#_ugEmail").val(allRoom[0].iceEmail.data);
+			}
 		}
 
 

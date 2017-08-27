@@ -10,7 +10,7 @@ const fs = require('fs');
 //xtemplate模板渲染 http://book.apebook.org/minghe/koa-action/xtemplate/layout.html
 xtpl(app, {
     //配置模板目录，指向工程的view目录
-    views: './views'
+    views: './static'
 });
 
 

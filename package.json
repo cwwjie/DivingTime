@@ -6,21 +6,18 @@
   "keywords": [],
   "scripts": {
     "start": "node server.js",
-    "xtpl": "node renderFile.js"
+    "build": "node renderFile.js"
   },
   "dependencies": {
+    "antd-mobile": "^1.2.0",
+    "babel-runtime": "^6.11.6",
     "co-fs": "^1.2.0",
+    "history": "^4.6.3",
+    "immutable": "^3.8.1",
     "koa": "^2.0.1",
     "koa-router": "^5.4.0",
     "koa-static": "^3.0.0",
     "koa-static-cache": "^5.0.0",
-    "xtemplate": "^4.6.0",
-    "xtpl": "^3.3.0",
-
-    "antd-mobile": "^1.2.0",
-    "babel-runtime": "^6.11.6",
-    "history": "^4.6.3",
-    "immutable": "^3.8.1",
     "lodash.assign": "^4.2.0",
     "lodash.drop": "^4.1.1",
     "lodash.dropwhile": "^4.6.0",
@@ -29,7 +26,10 @@
     "react-redux": "^5.0.5",
     "react-router": "3.x",
     "react-router-redux": "^5.0.0-alpha.6",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "whatwg-fetch": "^2.0.3",
+    "xtemplate": "^4.6.0",
+    "xtpl": "^3.3.0"
   },
   "devDependencies": {
     "antd-mobile-demo-data": "^0.1.3",

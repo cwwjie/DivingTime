@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<div class="Addres">
+		<div class="containAddres">
+			<div class="top">
+				<div class="Btn" id="addAddres">新增收货地址</div>
+				<div class="left">您已创建 <span id="lengthAddres">0</span> 个收货地址，最多可创建20 个</div>
+			</div>
+			<div id="renderAddres">
+				<div class="line">
+					<div class="line-boder">
+						<div class="title">用户名</div>
+						<div class="delete">X</div>
+						<div class="content">
+							<div class="row"><div class="left">收货人:</div><div class="right">曾杰杰</div></div>
+							<div class="row">
+								<div class="left">所在地区:</div>
+								<div class="right">
+									<span>广东</span>
+									<span>深圳</span>
+									<span>宝安</span>
+								</div>
+							</div>
+							<div class="row"><div class="left">地址:</div><div class="right">广东茂名市茂南区城区官渡二路 广东石油化工学院</div></div>
+							<div class="row"><div class="left">手机号码:</div><div class="right">15967613287</div></div>
+							<div class="row"><div class="left">固定电话:</div><div class="right"></div></div>
+							<div class="row"><div class="left">邮政编码:</div><div class="right"></div></div>
+						</div>
+						<div class="edit">编辑</div>
+					</div>
+				</div>
+				<div class="line">
+					<div class="line-boder">
+						<div class="title">用户名</div>
+						<div class="delete">X</div>
+						<div class="content">
+							<div class="row"><div class="left">收货人:</div><div class="right">曾杰杰</div></div>
+							<div class="row">
+								<div class="left">所在地区:</div>
+								<div class="right">
+									<span>广东</span>
+									<span>深圳</span>
+									<span>宝安</span>
+								</div>
+							</div>
+							<div class="row"><div class="left">地址:</div><div class="right">广东茂名市茂南区城区官渡二路 广东石油化工学院</div></div>
+							<div class="row"><div class="left">手机号码:</div><div class="right">15967613287</div></div>
+							<div class="row"><div class="left">固定电话:</div><div class="right"></div></div>
+							<div class="row"><div class="left">邮政编码:</div><div class="right"></div></div>
+						</div>
+						<div class="edit">编辑</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<aside id="confirmAddres" style="display: none;">
+			<div class="title">添加收货地址</div>
+			<div class="delete">X</div>
+			<div class="line-boder">
+				<div class="content">
+					<div class="line">
+						<div class="line-top"><span class="red">*</span>收货人</div>
+						<input class="bot" type="text" name="people"><span class="Des"></span>
+					</div>
+					<div class="line">
+						<div class="line-top"><span class="red">*</span>所在地区</div>
+						<div class="bot">
+							<div id="city">
+								<select class="prov">
+									<option selected="selected" disabled="disabled" value="null">省</option>
+								</select>
+								<select class="city" disabled="disabled">
+									<option selected="selected" disabled="disabled" value="null">市</option>
+								</select>
+								<select class="dist" disabled="disabled">
+									<option selected="selected" disabled="disabled" value="null">区</option>
+								</select>
+							</div>
+							<span class="Des"></span>
+						</div>
+					</div>
+					<div class="line">
+						<div class="line-top"><span class="red">*</span>地址</div>
+						<input class="bot addres" type="text" name="Addres"><span class="Des"></span>
+					</div>
+					<div class="line">
+						<div class="line-top"><span class="red">*</span>邮政编码</div>
+						<input class="bot" type="text" name="postal"><span class="Des"></span>
+					</div>
+					<div class="line">
+						<div class="line-top"><span class="red">*</span>手机号码</div>
+						<input class="bot" type="text" name="Phone"><span class="Des"></span>
+					</div>
+					<div class="line">
+						<div class="line-top">固定电话</div>
+						<input class="bot" type="text" name="tell">
+					</div>
+				</div>
+				<div class="confirm" id="confirm">保存</div>
+				<div class="confirm" id="modifyAddres">保存</div>
+			</div>
+		</aside>
+	</div>
+</body>
+</html>
