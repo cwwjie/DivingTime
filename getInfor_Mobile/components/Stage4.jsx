@@ -249,6 +249,7 @@ class Stage4 extends React.Component {
                 return <div className="NextPageActi" onClick={function(){
                   let _data = assign({},_this.props.infor.finaldata);
                   _data.signName = _this.state.signName;
+                  _data.pinyinName = _this.state.pinyinName;
                   _data.payAccount = _this.state.payAccount;
                   _data.mobile = _this.state.mobile;
                   _data.email = _this.state.email;
@@ -278,61 +279,70 @@ class Stage4 extends React.Component {
               }
             }else {
               if (this.state.next) {
-                return <div className="NextPageActi" onClick={function(){
-                  let inforDate = assign({},_this.props.infor.finaldata);
-                  inforDate.signName = _this.state.signName;
-                  inforDate.payAccount = _this.state.payAccount;
-                  inforDate.mobile = _this.state.mobile;
-                  inforDate.email = _this.state.email;
+                return <div className="submitContent">
+                  <div className="subData" onClick={function(){
+                    let inforDate = assign({},_this.props.infor.finaldata);
+                    inforDate.signName = _this.state.signName;
+                    inforDate.payAccount = _this.state.payAccount;
+                    inforDate.mobile = _this.state.mobile;
+                    inforDate.email = _this.state.email;
 
-                  // 提交信息
-                  _this.setState({animating:true});
-                  // 如果信息有改变则提交
-                  if (true) {
-                    fetch(
-                      URL.base + URL.version + "/gather/"+localStorage.getItem('_uniqueKey')+"/updateForm.do",{
-                      method: "POST",
-                      headers:{
-                        "Content-Type": "application/json; charset=utf-8",
-                        'token':localStorage.getItem('_token'),
-                        'digest':localStorage.getItem('_digest')
-                      },
-                      body:JSON.stringify(inforDate)
-                     }).then(function(response) {
-                      return response.json()
-                     }).then(function(json) {
-                      let _date = assign({},_this.state);
-                      if (json.result == "0") {
-                        _this.props.dispatch({type:'change_infor',data:inforDate});
-                        _date.animating = false;
-                      }else if (json.result == "2") {
-                        _date.animating = false;
-                        alert("非常抱歉，该链接已经失效");
-                      }else if (json.result == "3") {
-                        _date.animating = false;
-                        alert("非常抱歉，无法进行数据修改");
-                      }else {
-                        _date.animating = false;
-                        alert("发生未知错误:" + json.message);
-                      }
-                      _this.setState(_date);
-                      _this.props.router.push('/index');
-                      document.body.scrollTop = document.documentElement.scrollTop = 0;
-                    });
-                  }
-                }}>保存</div>
+                    // 提交信息
+                    _this.setState({animating:true});
+                    // 如果信息有改变则提交
+                    if (true) {
+                      fetch(
+                        URL.base + URL.version + "/gather/"+localStorage.getItem('_uniqueKey')+"/updateForm.do",{
+                        method: "POST",
+                        headers:{
+                          "Content-Type": "application/json; charset=utf-8",
+                          'token':localStorage.getItem('_token'),
+                          'digest':localStorage.getItem('_digest')
+                        },
+                        body:JSON.stringify(inforDate)
+                      }).then(function(response) {
+                        return response.json()
+                      }).then(function(json) {
+                        let _date = assign({},_this.state);
+                        if (json.result == "0") {
+                          _this.props.dispatch({type:'change_infor',data:inforDate});
+                          _date.animating = false;
+                        }else if (json.result == "2") {
+                          _date.animating = false;
+                          alert("非常抱歉，该链接已经失效");
+                        }else if (json.result == "3") {
+                          _date.animating = false;
+                          alert("非常抱歉，无法进行数据修改");
+                        }else {
+                          _date.animating = false;
+                          alert("发生未知错误:" + json.message);
+                        }
+                        _this.setState(_date);
+                        _this.props.router.push('/index');
+                        document.body.scrollTop = document.documentElement.scrollTop = 0;
+                      });
+                    }
+                  }}>保存</div>
+                  <div className="abanData" onClick={function(){
+                    _this.props.router.push('/index');
+                  }}>返回</div>
+                </div>
               }else {
                 return <div className="NextPage" onClick={function(){
                   let _date = assign({},_this.state);
-                  if( _this.state.nameError == false && _this.state.signName == "" ) {
+                  if( _this.state.nameError == true && _this.state.signName == "" ) {
                     _date.nameError = true;
-                    _date.nameErrorT = '姓名为必填';
+                    _date.nameErrorT = '姓名(中文)为必填';
                   }
-                  if( _this.state.phoneError == false && _this.state.mobile == "" ) {
+                  if( _this.state.pinyinError == true && _this.state.pinyinName == "" ) {
+                    _date.pinyinError = true;
+                    _date.pinyinErrorT = '姓名(英文)为必填';
+                  }
+                  if( _this.state.phoneError == true && _this.state.mobile == "" ) {
                     _date.phoneError = true;
                     _date.phoneErrorT = '姓名为必填';
                   }
-                  if( _this.state.emailError == false && _this.state.email == "" ) {
+                  if( _this.state.emailError == true && _this.state.email == "" ) {
                     _date.emailError = true;
                     _date.emailErrorT = '姓名为必填';
                   }

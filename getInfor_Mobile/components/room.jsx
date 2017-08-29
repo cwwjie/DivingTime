@@ -11,21 +11,16 @@ import dateTime from './../method/dateTime.jsx';
 const Item = List.Item;
 const Brief = Item.Brief;
 
-const bedTypeList = [
-  {
-    label: '大床',
-    value: '大床'
-  },
-  {
-    label: '双床',
-    value: '双床'
-  },
-  {
-    label: '蜜月大床',
-    value: '蜜月大床'
-  },
-];
-
+const bedTypeList = [{label: '大床',value: '大床'},{label: '双床',value: '双床'},{label: '蜜月大床',value: '蜜月大床'}];
+let bedTypeList1 = [{label: '大床',value: '大床'},{label: '双床(仅园景房提供)',value: '双床'},{label: '蜜月大床(需半年内结婚证申请/含免费花瓣铺床，烛光晚餐)',value: '蜜月大床'},{label: '大床+单床',value: '大床+单床'},{label: '大床+单床(仅园景房和半独立房提供)',value: '大床+单床'}];
+let bedTypeList2 = [{label: '大床',value: '大床'},{label: '双床',value: '双床'},{label: '大床+单床(联排不可选)',value: '大床+单床'},{label: '双床+单床(联排不可选',value: '双床+单床'},{label: '大床+床垫(只限联排房间)',value: '大床+床垫'},{label: '双床+床垫(只限联排房间)',value: '双床+床垫'},{label: '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)',value: '蜜月大床'}];
+let bedTypeList3 = [{label: '单床(一人入住只能选)',value: '单床'},{label: '大床',value: '大床'},{label: '双床',value: '双床'},{label: '大床+单床',value: '大床+单床'},{label: '双床+单床',value: '双床+单床'},{label: '布置大床(需要支付160马币/仅限入住当天)',value: '蜜月大床'}];
+let bedTypeList4 = [{label: '单床(仅限四人间选)',value: '单床'},{label: '双床(二人间可选)',value: '双床'},{label: '大床(二人间可选)',value: '大床'}]
+let bedTypeList5 = [{label: '大床',value: '大床'},{label: '双床',value: '双床'},{label: '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)',value: '蜜月大床'},{label: '大床+单床',value: '大床+单床'},{label: '双床+单床',value: '双床+单床'}]
+let bedTypeList6 = [{label: '大床',value: '大床'},{label: '双床',value: '双床'},{label: '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)',value: '蜜月大床'},{label: '大床+单床',value: '大床+单床'},{label: '双床+单床',value: '双床+单床'}]
+let bedTypeList7 = [{label: '大床',value: '大床'},{label: '双床',value: '双床'},{label: '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)',value: '蜜月大床'},{label: '大床+单床',value: '大床+单床'},{label: '双床+单床',value: '双床+单床'}]
+let bedTypeList8 = [{label: '大床',value: '大床'},{label: '双床',value: '双床'},{label: '大床+单床',value: '大床+单床'},{label: '双床+单床',value: '双床+单床'},{label: '大床+床垫',value: '大床+床垫'},{label: '双床+床垫',value: '双床+床垫'},{label: '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)',value: '蜜月大床'}]
+let bedTypeList9 = [{label: '单床',value: '单床'},{label: '大床',value: '大床'},{label: '双床',value: '双床'},{label: '大床+单床',value: '大床+单床'},{label: '双床+单床',value: '双床+单床'},{label: '蜜月布置大床(需要支付160马币/仅限入住当天)',value: '蜜月大床'}]
 class room extends React.Component {
   constructor(props){
     super(props);
@@ -33,7 +28,7 @@ class room extends React.Component {
       next:false,
       allert:"",
 
-
+      bedTypeList:[{label: '大床',value: '大床'},{label: '双床',value: '双床'},{label: '蜜月大床',value: '蜜月大床'}],
       bedType:null,
 
       customerRestNum:[null],
@@ -73,11 +68,37 @@ class room extends React.Component {
     let roomInfor = this.props.infor.finaldata.roomInfoList[roomId];
 
     // 初始化剩余人数
+    // 剩余人数 = 所有人数 - 已入住人数;
+    // PS: 每间房间至少入住1人 (除开自己房间
     let customerRestNum = [];
-    customerRestNum.push((this.props.infor.loaddata.peopleNum - this.props.infor.finaldata.roomInfoList.length + 1 - this.props.room.livingNum));
+    if ( this.props.room.livingNum > (this.props.infor.finaldata.roomInfoList.length - 1)) {
+      customerRestNum.push((this.props.infor.loaddata.peopleNum - this.props.room.livingNum));
+    }else {
+      customerRestNum.push((this.props.infor.loaddata.peopleNum - this.props.infor.finaldata.roomInfoList.length + 1));
+    }
     _date.customerRestNum = customerRestNum;
 
     // 初始化床型
+    if (this.props.infor.loaddata.template == 1) {
+      _date.bedTypeList = bedTypeList1;
+    }else if (this.props.infor.loaddata.template == 2) {
+      _date.bedTypeList = bedTypeList2;
+    }else if (this.props.infor.loaddata.template == 3) {
+      _date.bedTypeList = bedTypeList3;
+    }else if (this.props.infor.loaddata.template == 4) {
+      _date.bedTypeList = bedTypeList4;
+    }else if (this.props.infor.loaddata.template == 5) {
+      _date.bedTypeList = bedTypeList5;
+    }else if (this.props.infor.loaddata.template == 6) {
+      _date.bedTypeList = bedTypeList6;
+    }else if (this.props.infor.loaddata.template == 7) {
+      _date.bedTypeList = bedTypeList7;
+    }else if (this.props.infor.loaddata.template == 8) {
+      _date.bedTypeList = bedTypeList8;
+    }else if (this.props.infor.loaddata.template == 9) {
+      _date.bedTypeList = bedTypeList9;
+    }
+
     let bedType = [];
     if (roomInfor.bedType != null) {
       bedType.push(roomInfor.bedType);
@@ -113,7 +134,7 @@ class room extends React.Component {
 
           <List renderHeader={() => '房间床型'} className="my-list">
             <Picker
-              data={bedTypeList} cols={1} className="forss"
+              data={this.state.bedTypeList} cols={1} className="forss"
               value={this.state.bedType}
               title="请选床型"
               onChange={function(val){

@@ -20,11 +20,7 @@ class Stage1 extends React.Component {
     if (this.props.infor.loaddata == null) {
       this.props.router.push('/');
       return
-    }else {
-      // 测试用
-      // this.props.router.push('/s6');
     }
-
 
     if (this.props.infor.loaddata.isRead == "N") {
       _date.first = true;
@@ -65,29 +61,30 @@ class Stage1 extends React.Component {
             <div className="row">10、最后，感谢您通过潜游时光来预定您的行程，预祝您游玩愉快。</div>
             <div className="row">11、<span className="strong">如果您未满18周岁，请在法定监护人的陪同下阅读本协议并进行网站注册、使用相关服务。</span></div>
             <div className="row">12、<span className="strong">本条款内容中以黑体、加粗、下划线、斜体、红色字体等方式显著标识的条款，请用户着重阅读。</span></div>
-            <div className="AgreeItem">
-              <AgreeItem
-                checked={this.state.AgreeItem}
-                onChange={function (argument) {
-                  let _date = assign({},this.state);
-                  // 如果是第一次才能编辑
-                  if (this.state.first) {
-                    if (argument.target.checked) {
-                      _date.next = true;
-                      _date.AgreeItem = true;
-                    }else {
-                      _date.AgreeItem = false;
-                      _date.next = false;
-                    }
-                  }
-                  this.setState(_date);
-                }.bind(this)}>
-                <div className="Item">同意条款</div>
-              </AgreeItem>
-            </div>
+
           </div>
         </div>
-        <div className="NavBottom">
+        <div className="NavAgree">
+          <div className="AgreeItem">
+            <AgreeItem
+              checked={this.state.AgreeItem}
+              onChange={function (argument) {
+                let _date = assign({},this.state);
+                // 如果是第一次才能编辑
+                if (this.state.first) {
+                  if (argument.target.checked) {
+                    _date.next = true;
+                    _date.AgreeItem = true;
+                  }else {
+                    _date.AgreeItem = false;
+                    _date.next = false;
+                  }
+                }
+                this.setState(_date);
+              }.bind(this)}>
+              <div className="Item">同意条款</div>
+            </AgreeItem>
+          </div>
           {(function(){
             let _this = this;
             // 如果是第一次

@@ -29,13 +29,13 @@ class App extends React.Component {
     // localStorage.setItem('_uniqueKey','b5164e71-605a-4d3a-bf48-5d06311eaf92');
 
     if(process.env.NODE_ENV=="tesk") {
-      localStorage.setItem('loginSuccessful',"'{'linkId':124,'uniqueKey':'9e6ccdf7-6aa8-4d2c-9476-cc3695e758dc','submitTime':null,'isLocked':'N','isComplete':'N','orderSn':'AK1232','orderName':'水上屋','orderDesc':'567890-=asdfasds','orderSrc':'TB','template':3,'roomNum':1,'adultNum':2,'childNum':0,'peopleNum':2,'checkIn':1505836800000,'checkOut':1506096000000,'productAmount':5000,'orderAmount':4500,'discount':500,'payAmount':1000,'notPayAmount':3500,'calMethod':'阿斯顿发收费的','createBy':33,'createTime':1503790739000,'updateBy':null,'updateTime':null,'infoId':null,'present':'1,2','insuranceBegin':1505836800000,'insuranceEnd':1506614400000,'userId':70,'payStatus':2,'operationStatus':0,'transfersInfo':'啊手动阀手动阀手动阀手动阀手动阀','isConfirmed':'N','confirmStatus':null,'signName':'镉污染','pinyinName':'Ge Wu Ran '}'");
+      localStorage.setItem('loginSuccessful',JSON.stringify({adultNum:2,calMethod:"去啊啊收费的",checkIn:1506528000000,checkOut:1506614400000,childNum:0,confirmStatus:null,createBy:1,createTime:1503885124000,discount:2,infoId:96,insuranceBegin:null,insuranceEnd:null,isComplete:"N",isConfirmed:"N",isLocked:"N",isValid:"Y",linkId:131,notPayAmount:498,operationStatus:0,orderAmount:998,orderDesc:"asdf",orderName:"园景房",orderSn:"AK456",orderSrc:"TB",payAmount:500,payStatus:2,peopleNum:2,pinyinName:"Zhe Ge Ren ",present:"",productAmount:1000,roomNum:2,signName:"这个人",submitTime:1503886181000,template:1,transfersInfo:"",uniqueKey:"ed140d83-8012-4f1c-aa55-6b97a500191e",updateBy:1,updateTime:1503886152000,userId:72}) );
       let router = "";
       let teskData = {};
       if (confirm("这是测试环境,请问你是第一次填写吗?")){
         teskData = {"adultNum":1,"calMethod":"4500","childNum":0,"orderDesc":"订单描述","payStatus":1,"productAmount":500,"flightNote":"","infoId":null,"isRead":"N","readTime":null,"orderSn":"2017082701","orderSrc":"TB","template":1,"orderName":"四人间","roomNum":1,"peopleNum":3,"checkIn":1507564800000,"checkOut":1507651200000,"orderAmount":4500,"discount":0,"payAmount":500,"notPayAmount":4000,"present":"","signName":null,"payAccount":null,"mobile":null,"email":null,"outboundNum":null,"landTime":null,"landDate":null,"inboundNum":null,"takeoffTime":null,"takeoffDate":null,"inHarbourNum":null,"hLandTime":null,"hLandDate":null,"outHarbourNum":null,"hTakeoffTime":null,"hTakeoffDate":null,"roomInfoList":[]};
         teskData.isRead = "N";
-        teskData.template = 1;
+        teskData.template = 3;
         teskData.roomNum = 2;
         teskData.present = "";
         function newroomInfo() {
@@ -50,11 +50,16 @@ class App extends React.Component {
       }else {
         teskData = {"adultNum":1,"calMethod":"4500","childNum":0,"orderDesc":"订单描述","payStatus":1,"productAmount":500,"flightNote":"","infoId":1,"isRead":"Y","readTime":null,"orderSn":"2017082701","orderSrc":"TB","template":1,"orderName":"四人间","roomNum":2,"peopleNum":3,"checkIn":1507564800000,"checkOut":1507651200000,"orderAmount":4500,"discount":0,"payAmount":500,"notPayAmount":4000,"present":"","signName":null,"payAccount":null,"mobile":null,"email":null,"outboundNum":null,"landTime":null,"landDate":null,"inboundNum":null,"takeoffTime":null,"takeoffDate":null,"inHarbourNum":null,"hLandTime":null,"hLandDate":null,"outHarbourNum":null,"hTakeoffTime":null,"hTakeoffDate":null,"roomInfoList":[]};
         teskData.isRead = "Y";
-        teskData.template = 1;
+        teskData.template = 3;
         teskData.roomNum = 2;
         teskData.present = "";
         function newroomInfo() {
-          let roomInfo = {"roomId":null,"iceName":null,"iceRelation":null,"iceMobile":null,"iceEmail":null,"bedType":null,"infoId":1,"customerInfoList":[]};
+          let roomInfo = {
+            "roomId":null,"iceName":"你好","iceRelation":"父母","iceMobile":15976713287,"iceEmail":"454766952@qq.com","bedType":"大床","infoId":1,"customerInfoList":
+            [
+              {"passportNo":1123,"nationality":"CHINA","chineseName":"你好","pinyinName":"nihao","gender":1,"birthday":-410256000000,"mobile":15976713287,"email":"455544554@qq.com","isDive":"N","divingRank":null,"divingCount":null,"lastDiveTime":null,"divingNo":null,"anamnesis":null,}
+            ]
+          };
           return roomInfo
         }
         for (let i = 0; i < 2; i++) {
@@ -141,7 +146,6 @@ class App extends React.Component {
           _this.props.dispatch({type:'inti_infor',data:json.data});
           _this.props.router.push('/index');
         }
-
       // 表示加载失败
       }else {
         _this.setState({
@@ -150,23 +154,18 @@ class App extends React.Component {
         alert("信息收集初页面始化失败，原因:"+json.message);
       }
     })
-
   }
   render() {
     return (
-
-
       <div className="Toplayer">
         {(function(){
           if (this.state.error == true) {
-            return "有误"
+            return "信息收集初页面始化失败"
           }else {
             return this.props.children
           }
         }.bind(this))()}
       </div>
-
-
     );
   }
 }

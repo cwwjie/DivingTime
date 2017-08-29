@@ -20,7 +20,6 @@ class ResultPage extends React.Component {
     }
     let _date = assign({},this.state);
     let _json = this.props.infor.finaldata;
-    console.log(_json);
     // 第一次提交
     if (this.props.infor.loaddata.isRead == "N") {
       fetch(

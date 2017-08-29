@@ -51,10 +51,11 @@ class Stage3 extends React.Component {
     if (this.props.infor.loaddata.template == 9) {
       _date.disGiveNote = "none";
     }
-
-    let loginSuccessful = JSON.parse(localStorage.getItem('loginSuccessful'));
-    console.log(loginSuccessful.insuranceBegin);
-    let insurance = dateTime.stampToFormat(loginSuccessful.insuranceBegin) +" 至 "+ dateTime.stampToFormat(loginSuccessful.insuranceEnd);
+    let insurance = "";
+    if (this.props.infor.loaddata.present != "" ) {
+      let loginSuccessful = JSON.parse(localStorage.getItem('loginSuccessful'));
+      insurance = dateTime.stampToFormat(loginSuccessful.insuranceBegin) +" 至 "+ dateTime.stampToFormat(loginSuccessful.insuranceEnd);
+    }
     // 无接送
     if ( this.props.infor.loaddata.present == "1" ) {
       _date.disTransInfo = "none";

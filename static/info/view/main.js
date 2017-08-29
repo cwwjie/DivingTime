@@ -407,7 +407,6 @@ function initPanel() {
 		}
 		// if (panelShow == 'false') {
 		// 	event.currentTarget.setAttribute('data-show','true');
-		// 	console.log(event.currentTarget.childNodes[3])
 		// 	event.currentTarget.childNodes[1].childNodes["0"].innerHTML = '▼';
 		// 	event.currentTarget.childNodes[3].setAttribute('style','display: block;');
 		// }else {

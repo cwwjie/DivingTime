@@ -17,7 +17,6 @@ function taobao() {
         'digest':$.cookie('digest')
       },
       success: function (val) {
-        console.log(val)
         if (val.result == "0") {
           allTaobaoList = val.data;
           Rendering();

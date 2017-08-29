@@ -107,7 +107,6 @@ var subOrder = function() {
                 if (message.result == "0") {
                     $("#ConfirmOrder").text('提交成功');
                     var Time = document.getElementById("_time");
-                    console.log(Time)
                     Time.innerText = 30;
                     for (var i = 0; i < 30; i++) {
                         (function(x) {

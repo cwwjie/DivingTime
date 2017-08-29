@@ -42,7 +42,11 @@ function initAll() {
 	 	selectMonths: true,
 	 	selectYears: 3
 	 });
-	    $('ul.tabs').tabs();
+	 $('ul.tabs').tabs();
+	 if (loaddata.isRead == "N") {// 第一次填写
+		loaddata.signName = loginSuccessful.signName;
+		loaddata.pinyinName = loginSuccessful.pinyinName;
+	 }
 	 // 初始化 第一页
 	 pageFirst.init();
 	 // 初始化 第二页
@@ -152,22 +156,12 @@ function initAll() {
 			$("#InsuranceInfo").text(_stringData);
 			$("#transfersInfo").html(_Info);
 		}
-	if (loaddata.isRead == "N") {// 第一次填写
-		loaddata.signName = loginSuccessful.signName;
-		loaddata.pinyinName = loginSuccessful.pinyinName;
-		$("#signName").val( loginSuccessful.signName );
-		$("#signName").next().attr('class', 'value active');
-		// 渲染下单人姓名(英文)
-		$("#pinyinName").val( loginSuccessful.pinyinName );
-		$("#pinyinName").next().attr('class', 'value active');
-	}else {
-		// 渲染下单人姓名(中文)
-		$("#signName").val( loaddata.signName );
-		$("#signName").next().attr('class', 'value active');
-		// 渲染下单人姓名(英文)
-		$("#pinyinName").val( loaddata.pinyinName );
-		$("#pinyinName").next().attr('class', 'value active');
-	}
+	// 渲染下单人姓名(中文)
+	$("#signName").val( loaddata.signName );
+	$("#signName").next().attr('class', 'value active');
+	// 渲染下单人姓名(英文)
+	$("#pinyinName").val( loaddata.pinyinName );
+	$("#pinyinName").next().attr('class', 'value active');
 	// 渲染付款账号名
 	$("#payAccount").val( loaddata.payAccount );
 	$("#payAccount").next().attr('class', 'value active');
@@ -289,7 +283,6 @@ function initAll() {
 		$("#pickUp").css('display', 'block');
 		$("#pickUp-item9").css('display', 'block');
 	}
-	loaddata.template = 9;
 	// 渲染 特别注意
 	if (loaddata.template == 1) {// 马达京
 		$("#Related1").css('display', 'block');

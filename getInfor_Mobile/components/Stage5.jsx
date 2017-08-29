@@ -466,7 +466,7 @@ class Stage5 extends React.Component {
                     <Accordion.Panel header="离岛航班推荐">
                       <div className="List">
                         <List className="my-list">
-                          <Item wrap>乘6点的船离岛买10点后的航班，乘11点的船离岛买15点后的航班，乘13：30的船离岛买17：30后的航班。</Item>
+                          <Item wrap>乘6点的船离岛买10点后的航班，乘11点的船离岛买15点后的航班，乘14：00的船离岛买18：00后的航班。</Item>
                         </List>
                       </div>
                     </Accordion.Panel>
@@ -791,84 +791,89 @@ class Stage5 extends React.Component {
             let _this = this;
             if (this.state.first == false) {
               if (this.state.next) {
-                return <div className="NextPageActi" onClick={function(){
-                  let _data = assign({},_this.props.infor.finaldata);
+                return <div className="submitContent">
+                  <div className="subData" onClick={function(){
+                    let _data = assign({},_this.props.infor.finaldata);
 
-                  let today = new Date();
-                  let birtoday = Date.parse( new Date( today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0 ) );
+                    let today = new Date();
+                    let birtoday = Date.parse( new Date( today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0 ) );
 
-                  // 马来西亚抵达航班
-                  _data.outboundNum = _this.state.outboundNum;
-                  if (_this.state.landDate != null) {
-                    _data.landDate = Date.parse(_this.state.landDate._d);
-                  }
-                  if (_this.state.landTime != null) {
-                    _data.landTime = Date.parse(_this.state.landTime._d) - birtoday - 28800000;
-                  }
+                    // 马来西亚抵达航班
+                    _data.outboundNum = _this.state.outboundNum;
+                    if (_this.state.landDate != null) {
+                      _data.landDate = Date.parse(_this.state.landDate._d);
+                    }
+                    if (_this.state.landTime != null) {
+                      _data.landTime = Date.parse(_this.state.landTime._d) - birtoday - 28800000;
+                    }
 
-                  // 斗湖抵达航班
-                  _data.inHarbourNum = _this.state.inHarbourNum;
-                  if (_this.state.hLandDate != null) {
-                    _data.hLandDate = Date.parse(_this.state.hLandDate._d);
-                  }
-                  if (_this.state.hLandTime != null) {
-                    _data.hLandTime = Date.parse(_this.state.hLandTime._d) - birtoday - 28800000;
-                  }
+                    // 斗湖抵达航班
+                    _data.inHarbourNum = _this.state.inHarbourNum;
+                    if (_this.state.hLandDate != null) {
+                      _data.hLandDate = Date.parse(_this.state.hLandDate._d);
+                    }
+                    if (_this.state.hLandTime != null) {
+                      _data.hLandTime = Date.parse(_this.state.hLandTime._d) - birtoday - 28800000;
+                    }
 
-                  // 斗湖离开航班
-                  _data.outHarbourNum = _this.state.outHarbourNum;
-                  if (_this.state.hTakeoffDate != null) {
-                    _data.hTakeoffDate = Date.parse(_this.state.hTakeoffDate._d);
-                  }
-                  if (_this.state.hTakeoffTime != null) {
-                    _data.hTakeoffTime = Date.parse(_this.state.hTakeoffTime._d) - birtoday - 28800000;
-                  }
+                    // 斗湖离开航班
+                    _data.outHarbourNum = _this.state.outHarbourNum;
+                    if (_this.state.hTakeoffDate != null) {
+                      _data.hTakeoffDate = Date.parse(_this.state.hTakeoffDate._d);
+                    }
+                    if (_this.state.hTakeoffTime != null) {
+                      _data.hTakeoffTime = Date.parse(_this.state.hTakeoffTime._d) - birtoday - 28800000;
+                    }
 
-                  // 马来西亚离开航班
-                  _data.inboundNum = _this.state.inboundNum;
-                  if (_this.state.takeoffDate != null) {
-                    _data.takeoffDate = Date.parse(_this.state.takeoffDate._d);
-                  }
-                  if (_this.state.takeoffTime != null) {
-                    _data.takeoffTime = Date.parse(_this.state.takeoffTime._d) - birtoday - 28800000;
-                  }
+                    // 马来西亚离开航班
+                    _data.inboundNum = _this.state.inboundNum;
+                    if (_this.state.takeoffDate != null) {
+                      _data.takeoffDate = Date.parse(_this.state.takeoffDate._d);
+                    }
+                    if (_this.state.takeoffTime != null) {
+                      _data.takeoffTime = Date.parse(_this.state.takeoffTime._d) - birtoday - 28800000;
+                    }
 
-                  // 提交信息
-                  _this.setState({animating:true});
-                  // 如果信息有改变则提交
-                  if (true) {
-                    fetch(
-                      URL.base + URL.version + "/gather/"+localStorage.getItem('_uniqueKey')+"/updateForm.do",{
-                      method: "POST",
-                      headers:{
-                        "Content-Type": "application/json; charset=utf-8",
-                        'token':localStorage.getItem('_token'),
-                        'digest':localStorage.getItem('_digest')
-                      },
-                      body:JSON.stringify(_data)
-                     }).then(function(response) {
-                      return response.json()
-                     }).then(function(json) {
-                      let _date = assign({},_this.state);
-                      if (json.result == "0") {
-                        _this.props.dispatch({type:'change_infor',data:_data});
-                        _date.animating = false;
-                      }else if (json.result == "2") {
-                        _date.animating = false;
-                        alert("非常抱歉，该链接已经失效");
-                      }else if (json.result == "3") {
-                        _date.animating = false;
-                        alert("非常抱歉，无法进行数据修改");
-                      }else {
-                        _date.animating = false;
-                        alert("发生未知错误:" + json.message);
-                      }
-                      _this.setState(_date);
-                      _this.props.router.push('/index');
-                      document.body.scrollTop = document.documentElement.scrollTop = 0;
-                    });
-                  }
-                }}>保存</div>
+                    // 提交信息
+                    _this.setState({animating:true});
+                    // 如果信息有改变则提交
+                    if (true) {
+                      fetch(
+                        URL.base + URL.version + "/gather/"+localStorage.getItem('_uniqueKey')+"/updateForm.do",{
+                        method: "POST",
+                        headers:{
+                          "Content-Type": "application/json; charset=utf-8",
+                          'token':localStorage.getItem('_token'),
+                          'digest':localStorage.getItem('_digest')
+                        },
+                        body:JSON.stringify(_data)
+                      }).then(function(response) {
+                        return response.json()
+                      }).then(function(json) {
+                        let _date = assign({},_this.state);
+                        if (json.result == "0") {
+                          _this.props.dispatch({type:'change_infor',data:_data});
+                          _date.animating = false;
+                        }else if (json.result == "2") {
+                          _date.animating = false;
+                          alert("非常抱歉，该链接已经失效");
+                        }else if (json.result == "3") {
+                          _date.animating = false;
+                          alert("非常抱歉，无法进行数据修改");
+                        }else {
+                          _date.animating = false;
+                          alert("发生未知错误:" + json.message);
+                        }
+                        _this.setState(_date);
+                        _this.props.router.push('/index');
+                        document.body.scrollTop = document.documentElement.scrollTop = 0;
+                      });
+                    }
+                  }}>保存</div>
+                  <div className="abanData" onClick={function(){
+                    _this.props.router.push('/index');
+                  }}>返回</div>
+                </div>
               }else {
                 return <div className="NextPage">保存</div>
               }

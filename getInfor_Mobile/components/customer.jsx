@@ -108,7 +108,7 @@ class customer extends React.Component {
       "email":null,
         emailError:false,
         emailErrorT:'中文名为必填',
-      "Dive":false,
+      "Dive":true,
       "isDive":"N",// 是否深潜？ "N" "Y"
       "DiveName":'浮潜',
       "divingRank":null,
@@ -155,11 +155,11 @@ class customer extends React.Component {
       _date.email = customerInfo.email;
       _date.isDive = customerInfo.isDive;
       if (customerInfo.isDive == "Y") {
-        _date.Dive = true;
-        _date.DiveName = "深潜";
-      }else {
         _date.Dive = false;
         _date.DiveName = "浮潜";
+      }else {
+        _date.Dive = true;
+        _date.DiveName = "深潜";
       }
       let divingRank = [];
       divingRank.push(customerInfo.divingRank);
@@ -323,23 +323,22 @@ class customer extends React.Component {
                   if (value) {
                     this.setState({
                       Dive:true,
-                      isDive:"Y",
-                      DiveName:"深潜"
+                      isDive:"N",
+                      DiveName:"浮潜"
                     });
                   }else {
                     this.setState({
                       Dive:false,
-                      isDive:"N",
-                      DiveName:"浮潜"
+                      isDive:"Y",
+                      DiveName:"深潜"
                     });
                   }
                 }.bind(this)}
               />}
             >{this.state.DiveName}</List.Item>
             {(function(){
-              if (this.state.Dive) {
+              if (this.state.Dive == false) {
                 return <div>
-
                   <Picker
                     data={divingList} cols={1} className="forss"
                     value={this.state.divingRank}

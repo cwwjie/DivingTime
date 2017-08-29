@@ -35,7 +35,7 @@ $(document).ready(function() {
 
 
 	sessionStorage.setItem('AllUrl',window.location.href);
-    THERUL = localStorage.getItem('_uniqueKey');
+  THERUL = localStorage.getItem('_uniqueKey');
 
 	loginSuccessful = JSON.parse(localStorage.getItem('loginSuccessful'));
 
@@ -111,6 +111,7 @@ $(document).ready(function() {
 						for (var i = 0; i < loginSuccessful.roomNum; i++) {
 							_obj.roomInfoList.push(newroomInfo());
 						}
+						console.log(_obj);
 						// ES5 深层复制
 						loaddata =JSON.parse(JSON.stringify(_obj));
 						finaldata = JSON.parse(JSON.stringify(_obj));

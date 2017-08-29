@@ -83,22 +83,6 @@ var pageSecond = (function(){
 			allow:true,
 			data:''
 		},
-		// present:{ // 这个是赠送
-		// 	allow:false,
-		// 	data:""
-		// },
-		// insuranceBegin:{ // 保险开始日期
-		// 	allow:true,
-		// 	data:""
-		// },
-		// insuranceEnd:{ // 保险结束日期
-		// 	allow:true,
-		// 	data:""
-		// },
-		// transfersInfo:{ // 这个是接送信息
-		// 	allow:true,
-		// 	data:""
-		// },
 		attachmentList:{
 			allow:true,
 			data:[]
