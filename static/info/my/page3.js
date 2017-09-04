@@ -245,11 +245,11 @@ var pageThird = (function(){
 
 		// 初始化 模态框保存
 		$("#colseModal").click(function(event) {
-			loding.show();
 			// 判断 dataModal 的数据，如果等于 false 不通过并且弹出警告
 			if (chackTraveler() == false) {
 				return
 			}
+			loding.show();
 			// 判断 修改的是哪间房的 旅客信息
 			var RoomID = parseInt($("#colseModal").attr('data-RoomID'));
 			// 判断 data-type 是 add 新增数据 还是 change修改数据
@@ -274,11 +274,11 @@ var pageThird = (function(){
 		// 国籍
 		$("#_liveCountry").change(function(event){
 			if (event.target.value == "0") {
-				event.target.nextSibling.nextElementSibling.innerHTML = '国籍为必选';
+				$(this).next().html('国籍为必选');
 				dataModal.nationality.allow = false;
 				return
 			}
-			event.target.nextSibling.nextElementSibling.innerHTML = '';
+			$(this).next().html('');
 			dataModal.nationality.data = event.target.value;
 			dataModal.nationality.allow = true;
 		});
@@ -289,7 +289,7 @@ var pageThird = (function(){
 					event.target.setAttribute("class","validate invalid");
 				},100);
 				dataModal.chineseName.allow  = false;
-				event.target.nextSibling.nextElementSibling.innerHTML ='姓名为必填'
+				$(this).next().html('姓名为必填!');
 				return
 			}else if ( !(/^[\u4E00-\u9FA5]+$/.test(event.target.value.trim())) ) {
 				// 判断是否全是中中文
@@ -297,18 +297,18 @@ var pageThird = (function(){
 					event.target.setAttribute("class","validate invalid");
 				},100);
 				dataModal.chineseName.allow  = false;
-				event.target.nextSibling.nextElementSibling.innerHTML ='必须为中文'
+				$(this).next().html('必须为中文!');
 				return
 			}else if ( event.target.value.length >= 15 ) {
 				// 判断是否小于5个汉字
 				setTimeout(function(){
 					event.target.setAttribute("class","validate invalid");
 				},100);
-				event.target.nextSibling.nextElementSibling.innerHTML ='不能超出15个汉字'
+				$(this).next().html('不能超出15个汉字!');
 				dataModal.chineseName.allow  = false;
 				return
 			}
-			event.target.nextSibling.nextElementSibling.innerHTML =''
+			$(this).next().html('');
 			dataModal.chineseName.allow  = true;
 			dataModal.chineseName.data = event.target.value.trim();
 
@@ -324,18 +324,18 @@ var pageThird = (function(){
 				setTimeout(function(){
 					event.target.setAttribute("class","validate invalid");
 				},100);
-				event.target.nextSibling.nextElementSibling.innerHTML ='不能超过32位'
+				$(this).next().html('不能超过32位!');
 				dataModal.pinyinName.allow  = false;
 				return
 			}else if (event.target.value.trim() == "" || event.target.value.trim() == null) {
 				setTimeout(function(){
 					event.target.setAttribute("class","validate invalid");
 				},100);
-				event.target.nextSibling.nextElementSibling.innerHTML ='不能为空'
+				$(this).next().html('不能为空!');
 				dataModal.pinyinName.allow  = false;
 				return
 			}
-			event.target.nextSibling.nextElementSibling.innerHTML =''
+			$(this).next().html('');
 			dataModal.pinyinName.allow  = true;
 			dataModal.pinyinName.data = event.target.value.trim();
 		});
@@ -365,30 +365,30 @@ var pageThird = (function(){
 		// 判断 手机号码 是否正确
 		$("#livePhone").blur(function(event){
 			if (event.target.value == "" || event.target.value.trim() == null) {
-				event.target.nextSibling.nextElementSibling.innerHTML = '不能为空';
+				$(this).next().html('不能为空');
 				dataModal.mobile.allow = false;
 				return
 			}
-			event.target.nextSibling.nextElementSibling.innerHTML = '';
+			$(this).next().html('');
 			dataModal.mobile.data = event.target.value.trim();
 			dataModal.mobile.allow = true;
 		})
 		// 判断 邮箱 是否正确
 		$("#liveEmail").blur(function(event){
 			if (event.target.value == "" || event.target.value.trim() == null) {
-				event.target.nextSibling.nextElementSibling.innerHTML = '不能为空';
+				$(this).next().html('不能为空');
 				dataModal.email.allow = false;
 				return
 			}else if (!(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(event.target.value.trim()))) {
 				// 邮箱不正确
-				event.target.nextSibling.nextElementSibling.innerHTML = '邮箱不正确';
+				$(this).next().html('邮箱不正确');
 				setTimeout(function(){
 					event.target.setAttribute("class","validate invalid");
 				},100);
 				dataModal.email.allow = false;
 				return
 			}
-			event.target.nextSibling.nextElementSibling.innerHTML = '';
+			$(this).next().html('');
 			dataModal.email.data = event.target.value.trim();
 			dataModal.email.allow = true;
 		})
@@ -429,7 +429,7 @@ var pageThird = (function(){
 		$("#Depth_divingNo").change(function(event){
 			// 长度不能超过 16位
 			if (event.target.value.length > 16) {
-				event.target.nextSibling.nextElementSibling.innerHTML = '潜水证号长度不能超过 16位';
+				$(this).next().html('潜水证号长度不能超过 16位');
 				setTimeout(function(){
 					event.target.setAttribute("class","validate invalid");
 				},100);
@@ -437,7 +437,7 @@ var pageThird = (function(){
 				dataModal.divingNo.allow = false;
 				return
 			}
-			event.target.nextSibling.nextElementSibling.innerHTML = '';
+			$(this).next().html('');
 			dataModal.divingNo.allow = true;
 			dataModal.divingNo.data = event.target.value.trim();
 		});
@@ -454,7 +454,7 @@ var pageThird = (function(){
 			if ( !(/^\d+$/.test(event.target.value.trim())) ) {
 				// 判断是否全为数字
 				if (event.target.value.trim() != "") {
-					event.target.nextSibling.nextElementSibling.innerHTML = '潜水次数必须全为数字';
+					$(this).next().html('潜水次数必须全为数字');
 					dataModal.divingCount.allow = false;
 					setTimeout(function(){
 						event.target.setAttribute("class","validate invalid");
@@ -463,7 +463,7 @@ var pageThird = (function(){
 					return
 				}
 			}
-			event.target.nextSibling.nextElementSibling.innerHTML = '';
+			$(this).next().html('');
 			dataModal.divingCount.allow = true;
 			dataModal.divingCount.data = event.target.value.trim();
 		});
@@ -538,23 +538,23 @@ var pageThird = (function(){
 		// 渲染 房间内容
 		var _roomString = '';
 		for (var i = 0; i < allRoom.length; i++) {
-			_roomString += "<div id='room"//
-				+ (i+1) +"' class='col s12'><div class='card-title _title'>房间"//
-				+ (i+1) +"<a id='addTravelers"//
-				+ (i+1) +"' class='waves-effect waves-light btn tooltipped right addTravelers' data-position='bottom' data-delay='50' data-tooltip='点击添加旅客信息'>旅客信息<i class='mdi-content-add'></i></a></div><div class='row'><div class='input-field col s12 bedtype' id='bedtype"//
-				+ (i+1) +"'><select id='livebed"//
-				+ (i+1) +"' class='initialized'><option value='0' disabled selected>请选择床型</option>"//
-				+ correspondBedtype()
-				// + "<option value='大床'>大床</option><option value='双床'>双床</option><option value='蜜月大床'>蜜月大床</option><option value='大床+单床'>大床+单床</option><option value='双床+单床'>双床+单床</option>"//
-				+"</select><label>床型</label></div></div><div class='_roomInfoList' id='Render"//
-				+ (i+1) +"'></div><div class='_urgent'><div class='card-title Voids'>紧急联系人信息</div><div class='row'><div class='newInput col s6'><input id='urgentName"//
-				+ (i+1) +"' type='text' data-ID='urgentName' value='"//
-				+ ((allRoom[i].iceName.data==null)?"":allRoom[i].iceName.data) +"' placeholder='姓名(必填)'><div></div></div><div class='newInput col s6'>"//
-				+ renderurgentRelation(i,allRoom[i].iceRelation.data) + "<div></div></div></div><div class='row'><div class='newInput col s6'><input id='urgentPhone"//
-				+ (i+1) +"' type='tel' class='validate' data-ID='urgentPhone' value='"//
-				+ ((allRoom[i].iceMobile.data==null)?"":allRoom[i].iceMobile.data) +"' placeholder='手机/电话(必填)'><div></div></div><div class='newInput col s6'><input id='urgentEmail"//
-				+ (i+1) +"' type='email' class='validate' data-ID='urgentEmail' value='"//
-				+ ((allRoom[i].iceEmail.data==null)?"":allRoom[i].iceEmail.data) +"' placeholder='邮箱(必填)'><div></div></div></div></div></div>";
+			var roomTempString = [
+				"<div id='room"+ (i+1) +"' class='col s12'>",
+					"<div class='card-title _title'>",
+						"房间"+ (i+1), 
+						"<a id='addTravelers"+ (i+1) +"' class='waves-effect waves-light btn tooltipped right addTravelers' data-position='bottom' data-delay='50' data-tooltip='点击添加旅客信息'>",
+							"旅客信息",
+							"<i class='mdi-content-add'></i>",
+						"</a>",
+					"</div>",
+					"<div class='row'>",
+						"<div class='newInput input-field col s12 bedtype' id='bedtype"+ (i+1) +"' style='padding:0px;'>",
+						"</div>",
+					"</div>",
+					"<div class='_roomInfoList' id='Render"+ (i+1) +"'></div>",
+				"</div>",
+			].join("");
+			_roomString += roomTempString;
 		}
 		$("._Travelers").html(_roomString);
 		$('ul.tabs').tabs(); // 初始化导航栏
@@ -563,19 +563,15 @@ var pageThird = (function(){
 		if (loaddata.template != 3) {
 			$(".EmergencyCT").css("display","none");
 		}
-		$("._urgent").css("display","none");
-		// 但是此处改版了！所以隐藏所有、
-		// if (loaddata.template == 3) {
-		// }else {
-		// 	$("._urgent").css("display","none");
-		// }
 
 		// 绑定新的房间 所有事件
 		for (var i = 0; i < allRoom.length; i++) {
+
 			$("#bedtype"+(i+1)).html(livebedToString(allRoom[i].bedType.data,(i+1)))
 			// 初始化床型选择框
-			$('#livebed'+(i+1)).material_select();
+			// $('#livebed'+(i+1)).material_select();
 			$('#livebed'+(i+1)).attr('data-RoomID',i);
+
 			// 初始化所有旅客信息
 			RenderCard(i);
 			// 初始化添加旅客信息
@@ -587,10 +583,10 @@ var pageThird = (function(){
 				}
 				// 判断是否达到最大人数，如果是，不给继续添加！
 				if (num >= loaddata.peopleNum) {
-					Materialize.toast('达到最大人数', 4000);
+					myToast('达到最大人数', 4000);
 					return
 				}
-				// 初始化模态框数据，指向新的数据、旧数据自动垃圾回收、
+				// 初始化模态框数据，指向新的数据、
 				dataModal = initiModal();
 				dataModal.roomId.data = allRoom[event.target.getAttribute("data-Roomid")].roomId.data;
 				// 判断 编辑还是添加 旅客信息
@@ -605,104 +601,13 @@ var pageThird = (function(){
 			});
 			// 选择床型并入到主数据
 			$('#livebed'+(i+1)).change(function(event) {
+				$(this).addClass("selectDone");
 				var RoomID = event.target.getAttribute("data-RoomID");
 				allRoom[RoomID].bedType.allow= true;
 				allRoom[RoomID].bedType.data = event.target.value.trim();
+				$(".bedtype .showError").html("");
 			});
 
-
-			// 下面的废弃了
-			// 紧急联系人姓名并入到主数据
-			// $("#urgentName"+(i+1)).attr('data-RoomID',i);
-			// $("#urgentName"+(i+1)).blur(function(event) {
-			// 	var RoomID = event.target.getAttribute("data-RoomID");
-			// 	allRoom[RoomID].iceName.allow= false;
-			// 	if (event.target.value.trim() == "" || event.target.value.trim() == null) {
-			// 		event.target.nextSibling.innerHTML ='不能为空'
-			// 		setTimeout(function(){
-			// 			event.target.setAttribute("class","validate invalid");
-			// 		},100);
-			// 		return
-			// 	}else if ( !(/^[\u4E00-\u9FA5]+$/.test(event.target.value.trim())) ) {
-			// 		// 判断是否全是中中文
-			// 		setTimeout(function(){
-			// 			event.target.setAttribute("class","validate invalid");
-			// 		},100);
-			// 		event.target.nextSibling.innerHTML ='必须为中文'
-			// 		return
-			// 	}else if ( event.target.value.length >= 5 ) {
-			// 		// 判断是否小于5个汉字
-			// 		setTimeout(function(){
-			// 			event.target.setAttribute("class","validate invalid");
-			// 		},100);
-			// 		event.target.nextSibling.innerHTML ='不能超出5个汉字'
-			// 		return
-			// 	}
-			// 	event.target.nextSibling.innerHTML =''
-			// 	allRoom[RoomID].iceName.allow= true;
-			// 	allRoom[RoomID].iceName.data = event.target.value.trim();
-			// });
-			// // 紧急联系人关系并入到主数据
-			// $("#_urgentRelation"+(i+1)).attr('data-RoomID',i);
-			// 	$("#_urgentRelation"+(i+1)).change(function(event) {
-			// 	var RoomID = event.target.getAttribute("data-RoomID");
-			// 	allRoom[RoomID].iceRelation.allow = false;
-			// 	if (event.target.value == "0") {
-			// 		event.target.nextSibling.innerHTML ='紧急联系人关系是必选'
-			// 		return
-			// 	}
-			// 	event.target.nextSibling.innerHTML =''
-			// 	allRoom[RoomID].iceRelation.allow= true;
-			// 	allRoom[RoomID].iceRelation.data = event.target.value;
-			// });
-			// // 紧急联系人手机(电话)并入到主数据
-			// $("#urgentPhone"+(i+1)).attr('data-RoomID',i);
-			// 	$("#urgentPhone"+(i+1)).blur(function(event) {
-			// 	var RoomID = event.target.getAttribute("data-RoomID");
-			// 	allRoom[RoomID].iceMobile.allow= false;
-			// 	if (event.target.value.trim() == "" || event.target.value.trim() == null) {
-			// 		event.target.nextSibling.innerHTML ='不能为空'
-			// 		setTimeout(function(){
-			// 			event.target.setAttribute("class","validate invalid");
-			// 		},100);
-			// 		return
-			// 	}
-			// 	if (!(/^1[34578]\d{9}$/.test(event.target.value.trim()))) {
-			// 		// 号码错误
-			// 		event.target.nextSibling.innerHTML ='格式错误'
-			// 		setTimeout(function(){
-			// 			event.target.setAttribute("class","validate invalid");
-			// 		},100);
-			// 		return
-			// 	}
-			// 	event.target.nextSibling.innerHTML =''
-			// 	allRoom[RoomID].iceMobile.allow= true;
-			// 	allRoom[RoomID].iceMobile.data = event.target.value.trim();
-			// });
-			// // 紧急联系人邮箱并入到主数据
-			// $("#urgentEmail"+(i+1)).attr('data-RoomID',i);
-			// 	$("#urgentEmail"+(i+1)).blur(function(event) {
-			// 	var RoomID = event.target.getAttribute("data-RoomID");
-			// 	allRoom[RoomID].iceEmail.allow= false;
-			// 	if (event.target.value.trim() == "" || event.target.value.trim() == null) {
-			// 		setTimeout(function(){
-			// 			event.target.setAttribute("class","validate invalid");
-			// 		},100);
-			// 		event.target.nextSibling.innerHTML ='不能为空'
-			// 		return
-			// 	}
-			// 	if (!(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(event.target.value))) {
-			// 	// 邮箱不正确
-			// 		event.target.nextSibling.innerHTML ='格式不正确'
-			// 		setTimeout(function(){
-			// 			event.target.setAttribute("class","validate invalid");
-			// 		},100);
-			// 		return
-			// 	}
-			// 		event.target.nextSibling.innerHTML =''
-			// 	allRoom[RoomID].iceEmail.allow= true;
-			// 	allRoom[RoomID].iceEmail.data = event.target.value.trim();
-			// });
 		}
 		// 渲染关系方法
 		function renderurgentRelation(_id,_data) {
@@ -787,24 +692,32 @@ var pageThird = (function(){
 			}else {
 				if (dataModal[data].allow == false) {
 					if (data == "mobile") {
-						Materialize.toast('请填写手机号码', 4000);
-						document.getElementById('livePhone').nextSibling.nextElementSibling.innerHTML = '请填写手机号码';
+						myToast('请填写手机号码');
+						$("#livePhone").next().html('请填写手机号码');
+						return false
 					}else if (data == "email") {
-						Materialize.toast('请填写邮箱', 4000);
-						document.getElementById('liveEmail').nextSibling.nextElementSibling.innerHTML = '请填写邮箱';
+						myToast('请填写邮箱');
+						$("#liveEmail").next().html('请填写邮箱');
+						return false
 					}else if (data == "nationality") {
-						Materialize.toast('请选择国籍', 4000);
-						document.getElementById('_liveCountry').nextSibling.nextElementSibling.innerHTML = '请选择国籍';
+						myToast('请选择国籍');
+						$("#_liveCountry").next().html('请选择国籍');
+						return false
 					}else if (data == "chineseName") {
-						Materialize.toast('请填写中文名', 4000);
-						document.getElementById('liveName').nextSibling.nextElementSibling.innerHTML = '请填写中文名';
+						myToast('请填写中文名');
+						$("#liveName").next().html('请填写中文名');
+						return false
 					}else if (data == "pinyinName") {
-						Materialize.toast('请填写英文名', 4000);
-						document.getElementById('livePinyin').nextSibling.nextElementSibling.innerHTML = '请填写英文名';
+						myToast('请填写英文名');
+						$("#livePinyin").next().html('请填写英文名');
+						return false
 					}else if (data == "birthday") {
-						Materialize.toast('请选择生日日期', 4000);
+						myToast('请选择生日日期');
+						return false
+					}else {
+						myToast("获取数据"+data+"发生异常,请联系客服或更换浏览器.");
+						return false
 					}
-					return false
 				}
 			}
 		}
@@ -869,7 +782,7 @@ var pageThird = (function(){
 			$("#_editTravelers"+i+"Room"+roomNum).attr('data-RoomID',roomNum);
 			$("#_editTravelers"+i+"Room"+roomNum).attr('data-CardID',i);
 			$("#_editTravelers"+i+"Room"+roomNum).click(function(event) {
-				// 初始化模态框数据，指向新的数据、旧数据自动垃圾回收、
+				// 初始化模态框数据，指向新的数据、
 				dataModal = initiModal();
 				dataModal.roomId.data = allRoom[event.target.getAttribute("data-RoomID")].roomId.data
 				// 进行模态框渲染
@@ -898,7 +811,6 @@ var pageThird = (function(){
 		$("#_RoomNumber").text( "还可入住" + _Num + "人" )
 	}
 	function nextPage() {
-		loding.show();
 		// 用来判断是否通过
 		var _allow = true,
 			_toast = '您有信息仍未完善';
@@ -910,7 +822,8 @@ var pageThird = (function(){
 					if (allRoom[i][_roomInfo].allow == false) {
 						// 如果有一个验证不通过，不让通过
 						if (_roomInfo == "bedType") {
-							_toast = '每间房间必须选择床型'
+							$(".bedtype .showError").html("每间房间必须选择床型");
+							_toast = '每间房间必须选择床型';
 						}else if (_roomInfo == "iceEmail") {
 							$("#_ugNameText").text('填写有误');
 							_toast = '每间房间必须填写紧急联系人邮箱'
@@ -930,7 +843,7 @@ var pageThird = (function(){
 			}
 			if (allRoom[i].customerInfoList.length == 0) {
 				_allow = false;
-				Materialize.toast('每间房间至少填写一人旅客信息', 4000);
+				myToast('每间房间至少填写一人旅客信息');
 				return
 			}else{
 				for (var j = 0; j < allRoom[i].customerInfoList.length; j++) {
@@ -948,9 +861,10 @@ var pageThird = (function(){
 			}
 		}
 		if (_allow == false) {
-			Materialize.toast(_toast, 4000)
+			myToast(_toast);
 			return
 		}
+		loding.show();
 		// 验证通过将数据并入主数据
 		var temObj = [];
 		for (var i = 0; i < allRoom.length; i++) {
@@ -978,7 +892,10 @@ var pageThird = (function(){
 
 			}
 		}
-		finaldata.roomInfoList = temObj
+		finaldata.roomInfoList = temObj;
+		if (_first == true) {
+			inforData.save();
+		}
 		// 并入成功跳转下一页
 		// 隐藏这一页按钮
 		$("#returnPageSecond").css('visibility', 'hidden');

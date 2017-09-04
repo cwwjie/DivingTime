@@ -22,7 +22,7 @@ var pageFirst = (function(){
 	function nextPage() {
 		loding.show();
 		if (!($("#Terms").is(':checked'))) {
-			Materialize.toast('请仔细阅读条款', 4000)
+			myToast('请仔细阅读条款');
 			return
 		}
 		// 隐藏这一页按钮

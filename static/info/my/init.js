@@ -8,6 +8,8 @@ var loginSuccessful = {},
 
 // 判断成功 初始化页面
 function initAll() {
+	// loaddata.template = 8;
+	// loaddata.present = "1";
 	/**
 	 * 下面是常规的初始化(技术相关)
 	 */
@@ -301,8 +303,10 @@ function initAll() {
 	}else if (loaddata.template == 8) {// 马布岛-----------婆罗
 		$("#Related2").css('display', 'block');
 	}else if (loaddata.template == 9) {// 兰卡央
-		$("#hLandDate").attr('placeholder', '山打根抵达日期');
-		$("#hTakeoffDate").attr('placeholder', '山打根离开日期');
+		$("#hLandDate").prev().html('山打根抵达日期');
+		$("#hTakeoffDate").prev().html('山打根抵达日期');
+		// $("#hLandDate").attr('placeholder', '山打根抵达日期');
+		// $("#hTakeoffDate").attr('placeholder', '山打根离开日期');
 	}
 
 	// 渲染 补齐余款
@@ -544,15 +548,20 @@ function initAll() {
  }
  // 床型转换 HTML结构
  function livebedToString(num,id) {
- 	if (num == null) { num = "请选择床型" }
- 	var _string = "";
- 	_string +="<select id='livebed"
- 		+ id +"' class='initialized'><option value='0' disabled selected>"//
- 		+ num +"</option>"//
- 		+ correspondBedtype()
- 		// + "<option value='大床'>大床</option><option value='双床'>双床</option><option value='蜜月大床'>蜜月大床</option><option value='大床+单床'>大床+单床</option><option value='双床+单床'>双床+单床</option>"//
- 		+ "</select><label>床型</label>"
- 	return _string
+	var tempClassName = "select selectDone";
+ 	if (num == null) {
+		 num = "请选择床型";
+		 tempClassName = "select";
+	}
+	var tempBedString = [
+		"<div class='bedTlitle'>床型</div>",
+		"<select id='livebed"+ id +"' class='"+tempClassName+"'>",
+			"<option value='0' disabled selected>" + num + "</option>",
+			correspondBedtype(),
+		"</select>",
+		"<div class='showError'></div>"
+	].join("");
+ 	return tempBedString
  }
 
  function SetModalHeight() {
@@ -641,7 +650,7 @@ function correspondBedtype() {
 	}
 }
 function RenderingTime() {
-	var _string = "<select name='hour'><option value='null'>--</option><option value='0'>0</option>";
+	var _string = "<span class='flight-date-time'>时间</span><select name='hour'><option value='null'>--</option><option value='0'>0</option>";
 	for (var i = 0; i < 23; i++) {
 		_string += "<option value='"+(i+1)+"'>"+(i+1)+"</option>";
 	}
@@ -665,6 +674,52 @@ var loding = {
 	},
 	end:function(){
 		$("#loding").css('display','none');
+	}
+}
+function myToast(errormessage) {
+	if (!errormessage) {
+		errormessage = "非常抱歉,发生错误";
+	}
+	var errorDom = $([
+		"<div class='myToast' id='myToast'>",
+			"<div class='myToast-content'>",
+				"<div class='myToast-icon'>X</div>",
+				"<div class='myToast-message'>"+ errormessage +"<div>",
+			"</div>",
+		"</div>"
+	].join(""));
+	$("body").after(errorDom);
+	errorDom.click(function(){
+		$(this).remove();
+	});
+}
+
+var inforData = {
+	save:function() {
+		var tempData = {};
+		tempData.time = Date.parse(new Date());
+		tempData.data = finaldata;
+		localStorage.setItem("Final_DATA", JSON.stringify(tempData));
+	},
+	get:function() {
+		var timeNow = Date.parse(new Date()),
+			mydataString = localStorage.getItem("Final_DATA");
+		// 如果数据不存在
+		if (!mydataString) {
+			return false;
+		}
+		var mydata = JSON.parse(mydataString),
+			dataTime = parseInt(mydata.time);
+		// 如果数据超时
+		if ( timeNow > (dataTime + 3600000) ) {
+			this.clear();
+			return false;
+		}else {
+			return mydata.data;
+		}
+	},
+	clear:function() {
+		localStorage.setItem("Final_DATA","");
 	}
 }
 

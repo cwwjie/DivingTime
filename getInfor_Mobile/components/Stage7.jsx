@@ -436,7 +436,7 @@ class Stage7 extends React.Component {
                     <Accordion.Panel header="关于诗巴丹">
                       <div className="List">
                         <List className="my-list">
-                          <Item wrap>仅确保入住5天4晚及以上的客人一天诗巴丹的名额；预订时需提前支付80人民币诗巴丹上岛费确保名额。</Item>
+                          <Item wrap>入住5天4晚及以上的成年客人，预定房间时每人支付80人民币，可保证每人1天诗巴丹之旅。</Item>
                           <Item wrap>任何额外的名额分配仅在入住度假村后确认，费用为146马币每人/天，12岁以下不能确保名额。</Item>
                           <Item wrap>申请诗巴丹名额，需提前告知客服，一天诗巴丹为四潜安排。</Item>
                         </List>

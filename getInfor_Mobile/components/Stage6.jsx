@@ -6,6 +6,7 @@ import assign from 'lodash.assign';
 import topicon from './../icon/order.png';
 import hotel from './../icon/hotel.png';
 import URL from './../method/URL.jsx';
+import inforData from './../method/inforData.jsx';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -153,7 +154,7 @@ class Stage6 extends React.Component {
                     <WhiteSpace size="lg" />
                     <Card>
                       <Card.Header
-                        title={<div style={{'paddingLeft':'5px'}}>房间{i}</div>}
+                        title={<div style={{'paddingLeft':'5px'}}>房间{(i+1)}</div>}
                         thumb={
                           <div style={{
                             width: '0.7rem',
@@ -182,6 +183,7 @@ class Stage6 extends React.Component {
                           }
                           _this.props.dispatch({type:'change_infor',data:inforData});
                         }
+                        inforData.save(inforData);
                         _this.props.dispatch({type:'init_roomID',data:i});
                         _this.props.router.push('/room');
                       }} style={{'color':'#039be5'}}>点击补充信息</div>} />
@@ -223,6 +225,7 @@ class Stage6 extends React.Component {
                           }
                           _this.props.dispatch({type:'change_infor',data:inforData});
                         }
+                        inforData.save(inforData);
                         _this.props.dispatch({type:'init_roomID',data:i});
                         _this.props.router.push('/room');
                       }} style={{'color':'#039be5'}}>点击补充信息</div>} />
@@ -379,6 +382,7 @@ class Stage6 extends React.Component {
                     inforData.roomInfoList[j].iceMobile = _this.state.iceMobile;
                     inforData.roomInfoList[j].iceEmail = _this.state.iceEmail;
                   }
+                  inforData.save(inforData);
                   _this.props.dispatch({type:'change_infor',data:inforData});
                   Toast.loading('Loading...', 0.5, () => {
                     _this.props.router.push('/s7');

@@ -7,6 +7,7 @@ import moment from 'moment';
 
 import traveler from './../icon/traveler.png';
 import dateTime from './../method/dateTime.jsx';
+import inforData from './../method/inforData.jsx';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -33,24 +34,7 @@ class room extends React.Component {
 
       customerRestNum:[null],
 
-      customerInfoList:[
-        {
-          passportNo:null,
-          nationality:"正在加载...",
-          chineseName:"正在加载...",
-          pinyinName:"正在加载...",
-          gender:"正在加载...",
-          mobile:"正在加载...",
-          email:"正在加载...",
-          isDive:"正在加载...",
-          divingRank:null,
-          divingCount:null,
-          divingNo:null,
-          lastDiveTime:0,
-          birthday:0,
-          anamnesis:null,
-        },
-      ]
+      customerInfoList:[]
     };
   }
   componentDidMount() {
@@ -141,17 +125,18 @@ class room extends React.Component {
                 let _this = this;
                 let _data = assign({},this.state);
                 _data.bedType = val;
-
                 // 判断是否能够进入下一步
                 if (this.state.customerInfoList.length > 0) {
                   _data.next = true;
                 }else {
+                  _data.next = false;
                   _data.allert = "至少一位入住人信息";
                 }
                 // 上传床型
                 let infor = assign({},this.props.infor.finaldata);
                 const roomId = this.props.room.roomID;
                 infor.roomInfoList[roomId].bedType = val[0];
+                inforData.save(infor);
                 Toast.loading('Loading...', 0.5, () => {
                   _this.props.dispatch({type:'change_infor',data:infor});
                   _this.setState(_data);
@@ -170,8 +155,8 @@ class room extends React.Component {
                     this.props.dispatch({type:'init_customerID',data:newInfoNum});
                     this.props.router.push('/customer');
                   }.bind(this)}>
-                  <Item arrow="horizontal" extra={"还可入住"+customerRestNum+"人"}>
-                    <Brief>新增入住信息</Brief>
+                  <Item extra={<div className="addCustomerInforBTN">添加入住信息</div>}>
+                    <Brief>{"还可入住"+customerRestNum+"人"}</Brief>
                   </Item>
                 </div>
               </List>
@@ -338,6 +323,13 @@ class room extends React.Component {
                               customerRestNum.push( ( this.state.customerRestNum[0] + 1 ) );
                               _data.customerRestNum = customerRestNum;
 
+                              // 判断是否可以下一步
+                              if ((this.state.customerInfoList.length - 1) > 0) {
+                                _data.next = true;
+                              }else {
+                                _data.next = false;
+                              }
+                              inforData.save(infor);
                               Toast.loading('Loading...', 0.5, () => {
                                 this.props.dispatch({type:'change_infor',data:infor});
                                 this.props.dispatch({type:'CUT_livingNum',data:true}); // 入住人数 -1
@@ -369,7 +361,14 @@ class room extends React.Component {
               }}>保存</div>
             }else {
               return <div className="NextPage" onClick={function(){
-                Toast.fail(_this.state.allert, 1);
+                let toastMessage = "";
+                if (_this.state.bedType == null ) {
+                  toastMessage = "请选择床型";
+                }
+                if (_this.state.customerInfoList.length == 0) {
+                  toastMessage = "至少提供一位入住人信息";
+                }
+                Toast.fail(toastMessage, 1);
               }}>保存</div>
             }
           }.bind(this))()}

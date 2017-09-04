@@ -83,22 +83,6 @@ var pageSecond = (function(){
 			allow:true,
 			data:''
 		},
-		// present:{ // 这个是赠送
-		// 	allow:false,
-		// 	data:""
-		// },
-		// insuranceBegin:{ // 保险开始日期
-		// 	allow:true,
-		// 	data:""
-		// },
-		// insuranceEnd:{ // 保险结束日期
-		// 	allow:true,
-		// 	data:""
-		// },
-		// transfersInfo:{ // 这个是接送信息
-		// 	allow:true,
-		// 	data:""
-		// },
 		attachmentList:{
 			allow:true,
 			data:[]
@@ -110,7 +94,7 @@ var pageSecond = (function(){
 			// 如果传进来的数据已经填写
 			if (loaddata[_cardperson] != null) {
 				// 那么赋值进去
-				dataAllow[_cardperson].data = loaddata[_cardperson]
+				dataAllow[_cardperson].data = loaddata[_cardperson];
 				// 如果这个数据必填 false
 				if (dataAllow[_cardperson].allow == false) {
 					dataAllow[_cardperson].allow = true;
@@ -288,7 +272,7 @@ var pageSecond = (function(){
 				dataAllow.signName.allow = false;
 				return
 			}
-			$("#signName").next().text("")
+			$("#signName").next().text("");
 			dataAllow.signName.data = event.target.value.trim();
 			dataAllow.signName.allow = true;
 			// 转换
@@ -431,17 +415,17 @@ var pageSecond = (function(){
 		});
 		$('#UploadAnnex').click(function(event) {
 			if ($("#selectAnnex").val() == null || $("#selectAnnex").val() == 'null') {
-				Materialize.toast('你尚未选择证件类型', 4000)
+				myToast('你尚未选择证件类型');
 				return
 			}
 			var AnnexFileList = document.getElementById("AnnexFile").files;
 			if (AnnexFileList.length == 0) {
-				Materialize.toast('你尚未选择任何文件', 4000)
+				myToast('你尚未选择任何文件');
 				return
 			}
 			var AnnexFile = AnnexFileList[0]
 			if ( AnnexFile.type != "image/jpeg" && AnnexFile.type != "image/png" && AnnexFile.type != "image/jpg" ) {
-				Materialize.toast('请选择 jpg 或 png 格式的文件', 4000)
+				myToast('请选择 jpg 或 png 格式的文件');
 				return
 			}
 			var uploadForm = new FormData();
@@ -494,7 +478,7 @@ var pageSecond = (function(){
 					renderAnnex();
 					$('#modalAnnex').closeModal();
 				}else {
-					Materialize.toast('上传失败,原因:'+json.message, 4000);
+				myToast('上传失败,原因:'+json.message);
 				}
 				$("#UploadAnnex").text('上传')
 			}
@@ -502,16 +486,36 @@ var pageSecond = (function(){
 		// 渲染附件信息
 		function renderAnnex() {
 			var _data = dataAllow.attachmentList.data,
-				_string = ""
+				_string = "";
 			for (var i = 0; i < _data.length; i++) {
 				if (_data[i].attachType == null) {return}
 				if (_data[i].attachThumb == null) {return}
-				_string += "<div class='theCar'><div>"//
-					+(_data[i].attachType=='PT'?"机票":"结婚证")+"<span id='deleteAnnex"//
-					+i+"' data-ID="//
-					+_data[i].attachId+" data-Array="//
-					+i+">X</span></div><img src='"//
-					+URLbase + _data[i].attachThumb+"'></div>"
+				AnnexHTML = [
+					"<div class='theCar'>",
+						"<div>",
+							verifyAttachType(_data[i].attachType) + "<span id='deleteAnnex"+i+"' data-ID="+_data[i].attachId+" data-Array="+i+">X</span>",
+						"</div>",
+						"<img src='"+URLbase + _data[i].attachThumb+"'>",
+					"</div>"
+				].join('');
+				_string += AnnexHTML;
+				// _string += "<div class='theCar'><div>"//
+				// 	+(_data[i].attachType=='PT'?"机票":"结婚证")+"<span id='deleteAnnex"//
+				// 	+i+"' data-ID="//
+				// 	+_data[i].attachId+" data-Array="//
+				// 	+i+">X</span></div><img src='"//
+				// 	+URLbase + _data[i].attachThumb+"'></div>"
+			}
+			function verifyAttachType(data) {
+				if (data == "PT1") {
+					return "出国航班机票截图"
+				}else if (data == "PT2") {
+					return "回国航班机票截图"
+				}else if (data == "PT3") {
+					return "到达斗湖航班机票截图"
+				}else if (data == "PT4") {
+					return "离开斗湖航班机票截图"
+				}
 			}
 			$("#annex").html(_string);
 			for (var j = 0; j < _data.length; j++) {
@@ -543,32 +547,33 @@ var pageSecond = (function(){
 		}
 		renderAnnex();
 	}
+	var showModal = false;
 	// 进入下一页
 	function nextPage() {
-		loding.show();
 		// 进行判断是否可以下一页
 		for(var _cardperson in dataAllow){
 			if (dataAllow[_cardperson].allow == false) {
 				if ( _cardperson == "signName" ) {
-					Materialize.toast("预定人姓名(中文)为必填", 4000);
+					myToast("预定人姓名(中文)为必填");
 					$("#signName").next().text("必填");
 					return
 				}else if (_cardperson == "pinyinName" ) {
-					Materialize.toast("预定人姓名(英文)为必填", 4000);
+					myToast("预定人姓名(拼音)为必填");
 					$("#BasicPhone").next().text("有误");
 					return
 				}else if (_cardperson == "mobile" ) {
-					Materialize.toast("预定人手机号码/电话为必填", 4000);
+					myToast("预定人手机号码/电话为必填");
 					$("#BasicPhone").next().text("有误");
 					return
 				}else if (_cardperson == "email" ) {
-					Materialize.toast("预定人邮箱为必填", 4000);
+					myToast("预定人邮箱为必填");
 					$("#BasicEmail").next().text("有误");
 					return
 				}
 				return
 			}
 		}
+		loding.show();
 		// 如果验证完毕 可以下一页，那么将数据并入主数据！
 		for(var _cardperson2 in dataAllow){
 			finaldata[_cardperson2] = dataAllow[_cardperson2].data
@@ -580,9 +585,20 @@ var pageSecond = (function(){
 		$("#returnPageSecond").css('display', 'inline-block');
 		$("#toPageFourth").css('display', 'inline-block');
 		// 跳转到下一页
-		$('ul.tabs').tabs('select_tab', 'test3');
 		if (_first == true) {
-			$("#addTravelers1").trigger("click");
+			inforData.save();
+		}
+		$('ul.tabs').tabs('select_tab', 'test3');
+		if (_first == true && showModal == false) {
+			showModal = true;
+			// 如果达到最大人数，则取消点击
+			var roomnum = 0;
+			for (var i = 0; i < finaldata.roomInfoList.length; i++) {
+				roomnum += allRoom[i].customerInfoList.length
+			}
+			if (roomnum < loaddata.peopleNum) {
+				$("#addTravelers1").trigger("click");
+			}
 			$("#liveName").val(dataAllow.signName.data);
 			$("#livePhone").val(dataAllow.mobile.data);
 			$("#liveEmail").val(dataAllow.email.data);

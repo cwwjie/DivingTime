@@ -6,10 +6,10 @@
   {{ include ("./../basehead") }}
 
   <link rel="stylesheet" type="text/css" href="./bootstrap-datetimepicker.min.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="./main.css?file_version=2.05">
+  <link rel="stylesheet" type="text/css" href="./main.css?file_version=3.00">
   <script type="text/javascript" src="./bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
   <script type="text/javascript" src="./bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-  <script type="text/javascript" src="./main.js?file_version=2.05"></script>
+  <script type="text/javascript" src="./main.js?file_version=3.00"></script>
 
 
 </head>

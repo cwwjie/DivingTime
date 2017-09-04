@@ -4,6 +4,7 @@ import {} from 'antd-mobile';
 import assign from 'lodash.assign'
 
 import URL from './../method/URL.jsx';
+import inforData from './../method/inforData.jsx';
 
 
 class App extends React.Component {
@@ -46,11 +47,11 @@ class App extends React.Component {
           teskData.roomInfoList.push(newroomInfo());
         }
         _this.props.dispatch({type:'inti_infor',data:teskData});
-        router = "/s1";
+        _this.props.router.push("/s1");
       }else {
         teskData = {"adultNum":1,"calMethod":"4500","childNum":0,"orderDesc":"订单描述","payStatus":1,"productAmount":500,"flightNote":"","infoId":1,"isRead":"Y","readTime":null,"orderSn":"2017082701","orderSrc":"TB","template":1,"orderName":"四人间","roomNum":2,"peopleNum":3,"checkIn":1507564800000,"checkOut":1507651200000,"orderAmount":4500,"discount":0,"payAmount":500,"notPayAmount":4000,"present":"","signName":null,"payAccount":null,"mobile":null,"email":null,"outboundNum":null,"landTime":null,"landDate":null,"inboundNum":null,"takeoffTime":null,"takeoffDate":null,"inHarbourNum":null,"hLandTime":null,"hLandDate":null,"outHarbourNum":null,"hTakeoffTime":null,"hTakeoffDate":null,"roomInfoList":[]};
         teskData.isRead = "Y";
-        teskData.template = 3;
+        teskData.template = 8;
         teskData.roomNum = 2;
         teskData.present = "";
         function newroomInfo() {
@@ -65,10 +66,9 @@ class App extends React.Component {
         for (let i = 0; i < 2; i++) {
           teskData.roomInfoList.push(newroomInfo());
         }
-        router = "/index";
+        _this.props.dispatch({type:'inti_infor',data:teskData});
+        _this.props.router.push("/index");
       }
-      _this.props.dispatch({type:'inti_infor',data:teskData});
-      _this.props.router.push(router);
       return
     }
     let loginSuccessful = JSON.parse(localStorage.getItem('loginSuccessful'));
@@ -140,8 +140,17 @@ class App extends React.Component {
           }
           _this.props.dispatch({type:'inti_infor',data:_obj});
           _this.props.router.push('/s1');
-
-        // 表示已填写多次
+          // 获取是否有临时数据
+          var myTempData = inforData.get();
+          if (myTempData) {
+            myTempData.isRead = "N";
+            if (confirm('你有一份数据尚未填写完毕,请问你要继续填写这份数据吗?')) {
+              _this.props.dispatch({type:'inti_infor',data:myTempData});
+            }else {
+              inforData.clear();
+            }
+          }
+          // 表示已填写多次
         }else {
           _this.props.dispatch({type:'inti_infor',data:json.data});
           _this.props.router.push('/index');

@@ -35,7 +35,7 @@ $(document).ready(function() {
 
 
 	sessionStorage.setItem('AllUrl',window.location.href);
-    THERUL = localStorage.getItem('_uniqueKey');
+  THERUL = localStorage.getItem('_uniqueKey');
 
 	loginSuccessful = JSON.parse(localStorage.getItem('loginSuccessful'));
 
@@ -112,15 +112,33 @@ $(document).ready(function() {
 							_obj.roomInfoList.push(newroomInfo());
 						}
 						// ES5 深层复制
-						loaddata =JSON.parse(JSON.stringify(_obj));
-						finaldata = JSON.parse(JSON.stringify(_obj));
+						var myTempData = inforData.get();
+						if (myTempData) {
+							if (confirm('你有一份数据尚未填写完毕,请问你要继续填写这份数据吗?')) {
+								loaddata = myTempData;
+								finaldata = myTempData;
+								initAll();
+								$("#allllllll").css('display', 'block');
+							}else {
+								loaddata = JSON.parse(JSON.stringify(_obj));
+								finaldata = JSON.parse(JSON.stringify(_obj));
+								initAll();
+								$("#allllllll").css('display', 'block');
+								inforData.clear();
+							}
+						}else {
+							loaddata = JSON.parse(JSON.stringify(_obj));
+							finaldata = JSON.parse(JSON.stringify(_obj));
+							initAll();
+							$("#allllllll").css('display', 'block');
+						}
 					}else{
 						// ES5 深层复制
 						loaddata = JSON.parse(JSON.stringify(message.data));
 						finaldata = JSON.parse(JSON.stringify(message.data));
+						initAll();
+						$("#allllllll").css('display', 'block');
 					}
-					initAll();
-					$("#allllllll").css('display', 'block');
 				}else{
 					Materialize.toast('信息收集初页面始化失败，原因:发生未知错误-'+message.message, 4000);
 				}

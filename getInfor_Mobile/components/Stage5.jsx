@@ -7,6 +7,7 @@ import moment from 'moment';
 import topicon from './../icon/order.png';
 import dateTime from './../method/dateTime.jsx';
 import URL from './../method/URL.jsx';
+import inforData from './../method/inforData.jsx';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -171,7 +172,13 @@ class Stage5 extends React.Component {
           </List>
 
           <div style={{"display":this.state.disOutbound}}>
-            <List renderHeader={() => '马来西亚抵达航班'} className="my-list">
+            <List renderHeader={function() {
+              if (this.props.infor.loaddata.template == 9) {
+                return '山打根抵达航班';
+              }else {
+                return '马来西亚抵达航班';
+              }
+            }.bind(this)} className="my-list">
               <InputItem
                 type="text"
                 placeholder="请输入航班号"
@@ -290,7 +297,13 @@ class Stage5 extends React.Component {
           </List>
 
           <div style={{"display":this.state.disInbound}}>
-            <List renderHeader={() => '马来西亚离开航班'} className="my-list">
+            <List renderHeader={function() {
+              if (this.props.infor.loaddata.template == 9) {
+                return '山打根离开航班';
+              }else {
+                return '马来西亚离开航班';
+              }
+            }.bind(this)} className="my-list">
               <InputItem
                 type="text"
                 placeholder="请输入航班号"
@@ -520,8 +533,10 @@ class Stage5 extends React.Component {
                     <Accordion.Panel header="温馨提示，爱的建议">
                       <div className="List">
                         <List className="my-list">
-                          <Item wrap>① 当天上岛的客人请尽量预订最早航班到达斗湖。</Item>
-                          <Item wrap>② 离岛航班推荐：乘6：30的船离岛买10点半后的航班，乘9：30的船离岛买13：30后的航班，乘13：30点的船离岛买17：30后的航班。</Item>
+                          <Item wrap>当天上岛的客人请尽量预订最早航班到达斗湖。</Item>
+                          <Item wrap>离岛航班推荐：乘6：30的船离岛买10点半后的航班</Item>
+                          <Item wrap>乘9：30的船离岛买13：30后的航班，乘13：30点的船离岛买17：30后的航班。</Item>
+                          <Item wrap>乘13：30点的船离岛买17：30后的航班。</Item>
                         </List>
                       </div>
                     </Accordion.Panel>
@@ -573,7 +588,9 @@ class Stage5 extends React.Component {
                     <Accordion.Panel header="离岛航班推荐">
                       <div className="List">
                         <List className="my-list">
-                          <Item wrap>乘9：30点的船离岛买13：30点后的航班，乘13：30点的船离岛买17：30点后的航班。提前&离岛后一天均无航班接送。</Item>
+                          <Item wrap>乘9：30点的船离岛买13：30点后的航班</Item>
+                          <Item wrap>乘13：30点的船离岛买17：30点后的航班</Item>
+                          <Item wrap>提前&离岛后一天均无航班接送</Item>
                         </List>
                       </div>
                     </Accordion.Panel>
@@ -625,7 +642,9 @@ class Stage5 extends React.Component {
                     <Accordion.Panel header="离岛航班推荐">
                       <div className="List">
                         <List className="my-list">
-                          <Item wrap>乘6点的船离岛买10点后的航班，乘11点的船离岛买15点后的航班，乘13：30的船离岛买17：30后的航班。</Item>
+                          <Item wrap>乘6点的船离岛买10点后的航班</Item>
+                          <Item wrap>乘11点的船离岛买15点后的航班</Item>
+                          <Item wrap>乘13：30的船离岛买17：30后的航班</Item>
                         </List>
                       </div>
                     </Accordion.Panel>
@@ -673,7 +692,9 @@ class Stage5 extends React.Component {
                     <Accordion.Panel header="离岛航班推荐">
                       <div className="List">
                         <List className="my-list">
-                          <Item wrap>乘6：30的船离岛买10：30后的航班，乘9：30的船离岛买13：30后的航班，乘13：30的船离岛买17：30后的航班。</Item>
+                          <Item wrap>乘6：30的船离岛买10：30后的航班，</Item>
+                          <Item wrap>乘9：30的船离岛买13：30后的航班</Item>
+                          <Item wrap>乘13：30的船离岛买17：30后的航班</Item>
                         </List>
                       </div>
                     </Accordion.Panel>
@@ -725,7 +746,9 @@ class Stage5 extends React.Component {
                     <Accordion.Panel header="离岛航班推荐">
                       <div className="List">
                         <List className="my-list">
-                          <Item wrap>乘6点的船离岛买10点后的航班，乘11点的船离岛买15点后的航班，乘13：30的船离岛买17：30后的航班。</Item>
+                          <Item wrap>乘6点的船离岛买10点后的航班</Item>
+                          <Item wrap>乘11点的船离岛买15点后的航班</Item>
+                          <Item wrap>乘13：30的船离岛买17：30后的航班</Item>
                         </List>
                       </div>
                     </Accordion.Panel>
@@ -921,6 +944,7 @@ class Stage5 extends React.Component {
                     _data.takeoffTime = Date.parse(_this.state.takeoffTime._d) - birtoday - 28800000;
                   }
 
+			            inforData.save(_data);
                   _this.props.dispatch({type:'change_infor',data:_data});
 
                   Toast.loading('Loading...', 0.5, () => {

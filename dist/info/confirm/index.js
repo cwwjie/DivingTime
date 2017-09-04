@@ -153,10 +153,14 @@ function fullamount() {
       }else {
         Gender = '女';
       }
+      var _passportNo = "";
+      if (mainInfo.roomInfoList[i].customerInfoList[j].passportNo != null) {
+        _passportNo = mainInfo.roomInfoList[i].customerInfoList[j].passportNo;
+      }
       PersonalInformation += "<div class='part5-content'><div class='content-title'>"
         +"<div>"+PersonalNum+"</div><span>旅客信息"+PersonalNum+"</span>"
         +"</div><div class='row'><div class='row-left'>"
-        +"<div class='row-top'>护照号码<span>"+(mainInfo.roomInfoList[i].customerInfoList[j].passportNo:""?mainInfo.roomInfoList[i].customerInfoList[j].passportNo)+"</span></div>"
+        +"<div class='row-top'>护照号码<span>"+_passportNo+"</span></div>"
         +"<div class='row-bottom'>Passport No<span></span></div></div><div class='row-right'>"
         +"<div class='row-top'>姓名<span>"+mainInfo.roomInfoList[i].customerInfoList[j].chineseName+"</span></div>"
         +"<div class='row-bottom'>Name<span></span></div></div></div><div class='row'><div class='row-left'>"

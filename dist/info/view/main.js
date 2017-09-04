@@ -271,7 +271,7 @@ function renderMain() {
 	if (documentDate.template == 3) {
 		$("#EmergencyCT").css('display', 'block');
 		$("#_ugName").html(documentDate.roomInfoList[0].iceName);
-		$("#_ugRelation").html(roomInfoList[0].iceRelation);
+		$("#_ugRelation").html(documentDate.roomInfoList[0].iceRelation);
 		$("#_ugPhone").html(documentDate.roomInfoList[0].iceMobile);
 		$("#_ugEmail").html(documentDate.roomInfoList[0].iceEmail);
 	}
@@ -407,7 +407,6 @@ function initPanel() {
 		}
 		// if (panelShow == 'false') {
 		// 	event.currentTarget.setAttribute('data-show','true');
-		// 	console.log(event.currentTarget.childNodes[3])
 		// 	event.currentTarget.childNodes[1].childNodes["0"].innerHTML = '▼';
 		// 	event.currentTarget.childNodes[3].setAttribute('style','display: block;');
 		// }else {

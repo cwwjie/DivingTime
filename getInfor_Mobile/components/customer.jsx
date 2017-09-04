@@ -63,6 +63,16 @@ const NationaList = [
     value: 'PHILIPPINE'
   }
 ];
+const diveList = [
+  {
+    label: '浮潜',
+    value: "N"
+  },
+  {
+    label: '深潜',
+    value: "Y"
+  }
+];
 const genderList = [
   {
     label: '男',
@@ -108,8 +118,9 @@ class customer extends React.Component {
       "email":null,
         emailError:false,
         emailErrorT:'中文名为必填',
-      "Dive":true,
-      "isDive":"N",// 是否深潜？ "N" "Y"
+      "divePicker":["N"],
+      "Dive":false, // 控制是否显示深潜列表
+      "isDive":"N",// 是否深潜？ "N" "Y" 最终上传的数据
       "DiveName":'浮潜',
       "divingRank":null,
       "divingCount":null,
@@ -153,13 +164,15 @@ class customer extends React.Component {
       _date.birthday = stampToFormat(customerInfo.birthday);
       _date.mobile = customerInfo.mobile;
       _date.email = customerInfo.email;
-      _date.isDive = customerInfo.isDive;
+       _date.isDive = customerInfo.isDive;
       if (customerInfo.isDive == "Y") {
+        _date.DiveName = "深潜";
+        _date.DivedivePicker = ["Y"];
+        _date.Dive = true;
+      }else {
+        _date.DivedivePicker = ["N"];
         _date.Dive = false;
         _date.DiveName = "浮潜";
-      }else {
-        _date.Dive = true;
-        _date.DiveName = "深潜";
       }
       let divingRank = [];
       divingRank.push(customerInfo.divingRank);
@@ -239,7 +252,7 @@ class customer extends React.Component {
 
             <InputItem
               type="text"
-              placeholder="请输入英文姓名"
+              placeholder="请输入姓名拼音"
               error={this.state.pinyinNameError}
               onErrorClick={function(){
                 Toast.fail(this.state.pinyinNameErrorT, 1);
@@ -251,7 +264,7 @@ class customer extends React.Component {
                 this.setState(_data,()=>{verify(_this)});
               }.bind(this)}
               value={this.state.pinyinName}
-            >姓名(英文)</InputItem>
+            >姓名(拼音)</InputItem>
 
             <Picker
               data={genderList} cols={1} className="forss"
@@ -316,28 +329,33 @@ class customer extends React.Component {
               value={this.state.email}
             >邮箱</InputItem>
 
-            <List.Item
-              extra={<Switch
-                checked={this.state.Dive}
-                onChange={function(value){
-                  if (value) {
-                    this.setState({
-                      Dive:true,
-                      isDive:"N",
-                      DiveName:"浮潜"
-                    });
-                  }else {
-                    this.setState({
-                      Dive:false,
-                      isDive:"Y",
-                      DiveName:"深潜"
-                    });
-                  }
-                }.bind(this)}
-              />}
-            >{this.state.DiveName}</List.Item>
+
+
+            <Picker
+              data={diveList} cols={1} className="forss"
+              value={this.state.divePicker}
+              title="请选择套餐类型"
+              onChange={function(val){
+                if (val == "N") {
+                  this.setState({
+                    divePicker:["N"],
+                    Dive:false,
+                    isDive:"N"
+                  });
+                }else {
+                  this.setState({
+                    divePicker:["Y"],
+                    Dive:true,
+                    isDive:"Y"
+                  });
+                }
+              }.bind(this)}
+            >
+              <Item arrow="horizontal">套餐类型</Item>
+            </Picker>
+
             {(function(){
-              if (this.state.Dive == false) {
+              if (this.state.Dive == true) {
                 return <div>
                   <Picker
                     data={divingList} cols={1} className="forss"

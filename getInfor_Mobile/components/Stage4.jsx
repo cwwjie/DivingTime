@@ -6,6 +6,8 @@ import {List, InputItem, Toast, ActivityIndicator} from 'antd-mobile';
 import topicon from './../icon/order.png';
 import URL from './../method/URL.jsx';
 import pinYin from './../method/pinYin.jsx';
+import inforData from './../method/inforData.jsx';
+
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -253,6 +255,7 @@ class Stage4 extends React.Component {
                   _data.payAccount = _this.state.payAccount;
                   _data.mobile = _this.state.mobile;
                   _data.email = _this.state.email;
+			            inforData.save(_data);
                   _this.props.dispatch({type:'change_infor',data:_data});
                   Toast.loading('Loading...', 0.5, () => {
                     _this.props.router.push('/s5');

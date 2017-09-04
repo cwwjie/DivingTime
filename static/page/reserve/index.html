@@ -16,7 +16,7 @@
 <script type="text/javascript" src=./../../dist/js/jquery-2.1.4.min.js></script>
 <script type="text/javascript" src=./../../dist/js/jquery.cookie.js></script>
 <script type="text/javascript" src=./../../dist/js/bootstrap.min.js></script>
-<script type="text/javascript" src=./../../dist/js/appconfig.js?file_version=2.05></script>
+<script type="text/javascript" src=./../../dist/js/appconfig.js?file_version=3.00></script>
 
 
 
@@ -509,21 +509,37 @@
             var loginTem = new LoginFun();
             loginTem.hide();
             judgLogin();
-          }else if (message.result == "10001") {
+          }else if (message.result == -9) {
             $(".input1 i").removeClass("correcticon");
             $(".input1 i").addClass("mistakeicon");
-            $(".input1 span").text(message.message);
+            $(".input1 span").text("账号未激活");
             $(".input2 i").removeClass("mistakeicon");
             $(".input2 i").removeClass("correcticon");
             $(".input2 span").text("");
             return
-          }else if (message.result == "10002"){
+          }else if (message.result == -6){
             $(".input1 i").removeClass("mistakeicon");
             $(".input1 i").addClass("correcticon");
             $(".input1 span").text("用户名正确");
             $(".input2 i").removeClass("correcticon");
             $(".input2 i").addClass("mistakeicon");
             $(".input2 span").text("密码错误");
+            return
+          }else if (message.result == -9){
+            $(".input1 i").addClass("mistakeicon");
+            $(".input1 i").removeClass("correcticon");
+            $(".input1 span").text("账户未激活");
+            $(".input2 i").removeClass("correcticon");
+            $(".input2 i").removeClass("mistakeicon");
+            $(".input2 span").text("");
+            return
+          }else if (message.result == -5){
+            $(".input1 i").addClass("mistakeicon");
+            $(".input1 i").removeClass("correcticon");
+            $(".input1 span").text("账号不存在");
+            $(".input2 i").removeClass("correcticon");
+            $(".input2 i").removeClass("mistakeicon");
+            $(".input2 span").text("");
             return
           }else {
             $(".input1 i").addClass("mistakeicon");
