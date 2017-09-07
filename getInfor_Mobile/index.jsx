@@ -41,6 +41,7 @@ import room from './components/room';
 import customer from './components/customer';
 import Stage7 from './components/Stage7';
 import Result from './components/Result';
+import MyIndexRoute from './method/MyIndexRoute';
 
 import './index.less';
 
@@ -51,6 +52,7 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <Router history={hashHistory}>
         <Route path="/" component={App}>
+          <IndexRoute component={MyIndexRoute}/>
           <Route path="/index" component={Index} />
           <Route path="s1" component={Stage1} />
           <Route path="s2" component={Stage2} />

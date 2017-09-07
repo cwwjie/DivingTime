@@ -76,14 +76,14 @@ class Stage1 extends React.Component {
           this.props.router.push('/s5');
         }.bind(this)}>
           <List>
-            <Item arrow="horizontal">航班信息</Item>
+            <Item arrow="horizontal">入住信息</Item>
           </List>
         </div>
         <div className="ListItem" onClick={function(){
           this.props.router.push('/s6');
         }.bind(this)}>
           <List>
-            <Item arrow="horizontal">入住信息</Item>
+            <Item arrow="horizontal">航班信息</Item>
           </List>
         </div>
         <div className="ListItem" onClick={function(){

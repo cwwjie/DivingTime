@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Checkbox, Toast } from 'antd-mobile';
 import assign from 'lodash.assign'
-import topicon from './../icon/order.png';
+import topicon from './../icon/returnback.png';
 
 const AgreeItem = Checkbox.AgreeItem;
 
@@ -35,17 +35,21 @@ class Stage1 extends React.Component {
     return (
       <div>
         <div className="NavTOP">
-          <div style={{
-            width: '0.7rem',
-            height: '0.7rem',
-            background: 'url('+topicon+') center center /  0.7rem 0.7rem no-repeat' }}
+          {/*<div
             onClick={function(){
               if (this.state.first == false) {
                 this.props.router.push('/index');
               }
             }.bind(this)}
-          />
-          <span>条款声明</span>
+          >
+            <div style={{
+              width: '0.7rem',
+              height: '0.7rem',
+              background: 'url('+topicon+') center center /  0.7rem 0.7rem no-repeat' }}
+            />
+            <span  className="tipName">上一步</span>
+          </div>*/}
+          <span className="NavName">条款声明</span>
         </div>
         <div className="main">
           <div className="part1">
@@ -97,9 +101,9 @@ class Stage1 extends React.Component {
                     _this.props.router.push('/s2');
                     document.body.scrollTop = document.documentElement.scrollTop = 0;
                   });
-                }}>下一步</div>
+                }}>填写订单</div>
               }else {
-                return <div className="NextPage">下一步</div>
+                return <div className="NextPage">填写订单</div>
               }
             }else {
               // 不是第一次的情况

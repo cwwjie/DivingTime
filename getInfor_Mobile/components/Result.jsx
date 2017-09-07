@@ -20,7 +20,16 @@ class ResultPage extends React.Component {
     }
     let _date = assign({},this.state);
     let _json = this.props.infor.finaldata;
-    console.log(_json);
+    let submit = this.props.infor.submit;
+    // 已提交
+    if (submit) {
+      _date.progress = 'fail';
+      _date.message = '你已经提交过一次,请勿重复提交';
+      this.setState(_date);
+      return
+    }
+
+
     // 第一次提交
     if (this.props.infor.loaddata.isRead == "N") {
       fetch(
@@ -34,6 +43,11 @@ class ResultPage extends React.Component {
         body:JSON.stringify(_json)
        }).then(function(response) {
         return response.json()
+       },function(error) {
+        let _date = assign({},_this.state);
+        _date.progress = "fail";
+        _date.message = "发生未知错误:" + error;
+        _this.setState(_date);
        }).then(function(json) {
         let _date = assign({},_this.state);
         if (json.result == "0") {
@@ -48,6 +62,12 @@ class ResultPage extends React.Component {
           _date.progress = "fail";
           _date.message = "发生未知错误:" + json.message;
         }
+        _this.props.dispatch({type:'submit_infor',data:true});
+        _this.setState(_date);
+       },function(error) {
+        let _date = assign({},_this.state);
+        _date.progress = "fail";
+        _date.message = "发生未知错误:" + error;
         _this.setState(_date);
       });
     }else {
@@ -63,6 +83,11 @@ class ResultPage extends React.Component {
         body:JSON.stringify(_json)
        }).then(function(response) {
         return response.json()
+       },function(error) {
+        let _date = assign({},_this.state);
+        _date.progress = "fail";
+        _date.message = "发生未知错误:" + error;
+        _this.setState(_date);
        }).then(function(json) {
         let _date = assign({},_this.state);
         if (json.result == "0") {
@@ -77,6 +102,12 @@ class ResultPage extends React.Component {
           _date.progress = "fail";
           _date.message = "发生未知错误:" + json.message;
         }
+        _this.props.dispatch({type:'submit_infor',data:true});
+        _this.setState(_date);
+       },function(error) {
+        let _date = assign({},_this.state);
+        _date.progress = "fail";
+        _date.message = "发生未知错误:" + error;
         _this.setState(_date);
       });
     }
@@ -92,9 +123,11 @@ class ResultPage extends React.Component {
               <Result
                 img={<Icon type="check-circle" className="icon" style={{ fill: '#1F90E6' }} />}
                 title="您的信息已成功提交"
-                message="并已邮件的形式通知客服! 请注意关注相关信息！谢谢！"
+                message="如有疑问，请及时与顾问联系，谢谢！"
                 buttonText="查看提交信息"
                 buttonClick={function(){
+                  window.location.reload();
+                  window.location.href = window.location.href+"?id="+10000*Math.random();
                   _this.props.router.push('/index');
                   document.body.scrollTop = document.documentElement.scrollTop = 0;
                 }}
@@ -105,6 +138,11 @@ class ResultPage extends React.Component {
               <Result
                 img={<Icon type="cross-circle-o" className="icon" style={{ fill: '#F13642' }} />}
                 title={this.state.message}
+                buttonText="返回"
+                buttonClick={function(){
+                  window.location.reload();
+                  window.location.href = window.location.href+"?id="+10000*Math.random();
+                }}
               />
             </div>
           }else {

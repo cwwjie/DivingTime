@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {Accordion, List} from 'antd-mobile';
 import assign from 'lodash.assign';
 
-import topicon from './../icon/order.png';
+import topicon from './../icon/returnback.png';
 import dateTime from './../method/dateTime.jsx';
 
 const Item = List.Item;
@@ -76,10 +76,7 @@ class Stage3 extends React.Component {
     return (
       <div>
         <div className="NavTOP">
-          <div style={{
-            width: '0.7rem',
-            height: '0.7rem',
-            background: 'url('+topicon+') center center /  0.7rem 0.7rem no-repeat' }}
+          {/*<div
             onClick={function(){
               if (this.state.first == false) {
                 this.props.router.push('/index');
@@ -87,8 +84,15 @@ class Stage3 extends React.Component {
                 this.props.router.push('/s2');
               }
             }.bind(this)}
-          />
-          <span>潜游时光赠送项目</span>
+          >
+            <div style={{
+              width: '0.7rem',
+              height: '0.7rem',
+              background: 'url('+topicon+') center center /  0.7rem 0.7rem no-repeat' }}
+            />
+            <span  className="tipName">上一步</span>
+          </div>*/}
+          <span className="NavName">潜游时光赠送项目</span>
         </div>
         <div className="part3">
           <div style={{"display":this.state.disGiveNote}}>
@@ -126,10 +130,19 @@ class Stage3 extends React.Component {
           {(function(){
             let _this = this;
             if (this.state.first) {
-              return <div className="NextPageActi" onClick={function(){
-                _this.props.router.push('/s4');
-                document.body.scrollTop = document.documentElement.scrollTop = 0;
-              }}>下一步</div>
+              return <div className="submitContent">
+                <div className="saveDataActive" onClick={function(){
+                  if (_this.state.first == false) {
+                    _this.props.router.push('/index');
+                  }else {
+                    _this.props.router.push('/s2');
+                  }
+                }}>上一步</div>
+                <div className="newNextPageActive" onClick={function(){
+                  _this.props.router.push('/s4');
+                  document.body.scrollTop = document.documentElement.scrollTop = 0;
+                }}>下一步</div>
+              </div>
             }else {
               return <div className="NextPageActi" onClick={function(){
                 _this.props.router.push('/index');

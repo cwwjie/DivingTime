@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Accordion, Steps, List, WhiteSpace } from 'antd-mobile';
 import assign from 'lodash.assign';
 
-import topicon from './../icon/order.png';
+import topicon from './../icon/returnback.png';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -40,10 +40,7 @@ class Stage7 extends React.Component {
     return (
       <div>
         <div className="NavTOP">
-          <div style={{
-            width: '0.7rem',
-            height: '0.7rem',
-            background: 'url('+topicon+') center center /  0.7rem 0.7rem no-repeat' }}
+          {/*<div
             onClick={function(){
               if (this.state.first == false) {
                 this.props.router.push('/index');
@@ -51,8 +48,15 @@ class Stage7 extends React.Component {
                 this.props.router.push('/s6');
               }
             }.bind(this)}
-          />
-          <span>特别注意</span>
+          >
+            <div style={{
+              width: '0.7rem',
+              height: '0.7rem',
+              background: 'url('+topicon+') center center /  0.7rem 0.7rem no-repeat' }}
+            />
+            <span  className="tipName">上一步</span>
+          </div>*/}
+          <span className="NavName">特别注意</span>
         </div>
 
         <div className="part7">
@@ -495,10 +499,19 @@ class Stage7 extends React.Component {
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
               }}>返回</div>
             }else {
-              return <div className="NextPageActi" onClick={function(){
-                _this.props.router.push('/result');
-                document.body.scrollTop = document.documentElement.scrollTop = 0;
-              }}>提交</div>
+              return <div className="submitContent">
+                <div className="saveDataActive" onClick={function(){
+                  if (_this.state.first == false) {
+                    _this.props.router.push('/index');
+                  }else {
+                    _this.props.router.push('/s6');
+                  }
+                }}>上一步</div>
+                <div className="newNextPageActive" onClick={function(){
+                  _this.props.router.push('/result');
+                  document.body.scrollTop = document.documentElement.scrollTop = 0;
+                }}>提交</div>
+              </div>
             }
             if (this.state.next) {
             }

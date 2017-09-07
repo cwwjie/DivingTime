@@ -148,7 +148,7 @@ function taobao() {
               window.open("./../info/confirm/index.html");
               location = "./../info/confirm/index.html";
             });
-            $('#confirmModal').modal({backdrop:'static'});
+            // $('#confirmModal').modal({backdrop:'static'});
           });
         }
       }

@@ -45,7 +45,7 @@ class room extends React.Component {
       return
     }
     if (this.props.room.roomID == null) {
-      this.props.router.push('/s6');
+      this.props.router.push('/s5');
       return
     }
     const roomId = this.props.room.roomID;
@@ -103,14 +103,25 @@ class room extends React.Component {
     return (
       <div>
         <div className="NavTOP">
-          <div style={{
-            width: '0.7rem',
-            height: '0.7rem',
-            background: 'url('+traveler+') center center /  0.4rem 0.4rem no-repeat' }}
+          <div
             onClick={function(){
-              this.props.router.push('/s6');
+              let infor = assign({},this.props.infor.finaldata);
+              const roomId = this.props.room.roomID;
+              if (this.state.bedType != null) {
+                infor.roomInfoList[roomId].bedType = this.state.bedType[0];
+              }
+              inforData.save(infor);
+              this.props.dispatch({type:'change_infor',data:infor});
+              this.props.router.push('/s5');
             }.bind(this)}
-          />
+          >
+            <div style={{
+              width: '0.7rem',
+              height: '0.7rem',
+              background: 'url('+traveler+') center center /  0.4rem 0.4rem no-repeat' }}
+            />
+            <span  className="tipName">上一步</span>
+          </div>
           <span>填写入住信息</span>
         </div>
 
@@ -356,7 +367,7 @@ class room extends React.Component {
             if (this.state.next) {
               return <div className="NextPageActi" onClick={function(){
                 Toast.loading('Loading...', 0.5, () => {
-                  _this.props.router.push('/s6');
+                  _this.props.router.push('/s5');
                 });
               }}>保存</div>
             }else {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {Accordion, List} from 'antd-mobile';
 import assign from 'lodash.assign';
 
-import topicon from './../icon/order.png';
+import topicon from './../icon/returnback.png';
 import dateTime from './../method/dateTime.jsx';
 
 const Item = List.Item;
@@ -93,10 +93,7 @@ class Stage2 extends React.Component {
     return (
       <div>
         <div className="NavTOP">
-          <div style={{
-            width: '0.7rem',
-            height: '0.7rem',
-            background: 'url('+topicon+') center center /  0.7rem 0.7rem no-repeat' }}
+          {/*<div
             onClick={function(){
               if (this.state.first == false) {
                 this.props.router.push('/index');
@@ -104,8 +101,15 @@ class Stage2 extends React.Component {
                 this.props.router.push('/s1');
               }
             }.bind(this)}
-          />
-          <span>订单</span>
+          >
+            <div style={{
+              width: '0.7rem',
+              height: '0.7rem',
+              background: 'url('+topicon+') center center /  0.7rem 0.7rem no-repeat' }}
+            />
+            <span  className="tipName">上一步</span>
+          </div>*/}
+          <span className="NavName">订单</span>
         </div>
         <div className="part2">
 
@@ -169,16 +173,25 @@ class Stage2 extends React.Component {
             let _this = this;
             if (this.state.first) {
               if (this.state.next) {
-                return <div className="NextPageActi" onClick={function(){
-                  // 说明没有特别赠送
-                  if (!_this.props.infor.loaddata.present) {
-                    _this.props.router.push('/s4');
-                    document.body.scrollTop = document.documentElement.scrollTop = 0;
-                  }else {
-                    _this.props.router.push('/s3');
-                    document.body.scrollTop = document.documentElement.scrollTop = 0;
-                  }
-                }}>下一步</div>
+                return <div className="submitContent">
+                  <div className="saveDataActive" onClick={function(){
+                    if (_this.state.first == false) {
+                      _this.props.router.push('/index');
+                    }else {
+                      _this.props.router.push('/s1');
+                    }
+                  }}>上一步</div>
+                  <div className="newNextPageActive" onClick={function(){
+                    // 说明没有特别赠送
+                    if (!_this.props.infor.loaddata.present) {
+                      _this.props.router.push('/s4');
+                      document.body.scrollTop = document.documentElement.scrollTop = 0;
+                    }else {
+                      _this.props.router.push('/s3');
+                      document.body.scrollTop = document.documentElement.scrollTop = 0;
+                    }
+                  }}>下一步</div>
+                </div>
               }else {
                 return <div className="NextPage">下一步</div>
               }

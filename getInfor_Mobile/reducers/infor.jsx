@@ -2,7 +2,9 @@ import assign from 'lodash.assign'
 
 let _state = {
   loaddata:null,
-  finaldata:null
+  finaldata:null,
+  submit:false,
+  inti:false
 }
 
 
@@ -15,6 +17,7 @@ const infor = (state = _state, action) => {
       let initstate = assign({},state);
       initstate.loaddata = action.data;
       initstate.finaldata = action.data;
+      initstate.inti = true;
       return initstate
 
     case 'change_infor':
@@ -22,6 +25,12 @@ const infor = (state = _state, action) => {
       let newstate = assign({},state);
       newstate.finaldata = action.data;
       return newstate
+
+    case 'submit_infor':
+      // 提交 信息收集
+      let substate = assign({},state);
+      substate.submit = true;
+      return substate
 
 
     default:

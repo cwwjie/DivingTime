@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import assign from 'lodash.assign';
 import {List, InputItem, Toast, ActivityIndicator} from 'antd-mobile';
 
-import topicon from './../icon/order.png';
+import topicon from './../icon/returnback.png';
 import URL from './../method/URL.jsx';
 import pinYin from './../method/pinYin.jsx';
 import inforData from './../method/inforData.jsx';
+import SaveInfor from './../method/SaveInfor.jsx';
 
 
 const Item = List.Item;
@@ -84,10 +85,7 @@ class Stage4 extends React.Component {
     return (
       <div>
         <div className="NavTOP">
-          <div style={{
-            width: '0.7rem',
-            height: '0.7rem',
-            background: 'url('+topicon+') center center /  0.7rem 0.7rem no-repeat' }}
+          {/*<div
             onClick={function(){
               if (this.state.first == false) {
                 this.props.router.push('/index');
@@ -102,8 +100,30 @@ class Stage4 extends React.Component {
                 }
               }
             }.bind(this)}
+          >
+          <div style={{
+            width: '0.7rem',
+            height: '0.7rem',
+            background: 'url('+topicon+') center center /  0.7rem 0.7rem no-repeat' }}
           />
-          <span>填写下单信息</span>
+            <span  className="tipName">上一步</span>
+          </div>*/}
+          <span className="NavName">填写下单信息</span>
+          <SaveInfor
+            first={this.state.first}
+            next={this.state.next}
+            data={(function(){
+              if (this.state.first && this.state.next) {
+                let data = assign({},this.props.infor.finaldata);
+                data.signName = this.state.signName;
+                data.pinyinName = this.state.pinyinName;
+                data.payAccount = this.state.payAccount;
+                data.mobile = this.state.mobile;
+                data.email = this.state.email;
+                return data;
+              }
+            }.bind(this))()}
+          />
         </div>
         <div className="part4">
           <List renderHeader={() => '预订人姓名(中文)'}>
@@ -229,7 +249,7 @@ class Stage4 extends React.Component {
                   _date.emailErrorT = "邮箱为必填";
                 }else if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value) == false) {
                   _date.emailError = true;
-                  _date.emailErrorT = "必须纯数字";
+                  _date.emailErrorT = "邮箱格式不正确";
                 }else {
                   _date.emailError = false;
                   _date.emailErrorT = "";
@@ -248,37 +268,79 @@ class Stage4 extends React.Component {
             let _this = this;
             if (this.state.first == true) {
               if (this.state.next) {
-                return <div className="NextPageActi" onClick={function(){
-                  let _data = assign({},_this.props.infor.finaldata);
-                  _data.signName = _this.state.signName;
-                  _data.pinyinName = _this.state.pinyinName;
-                  _data.payAccount = _this.state.payAccount;
-                  _data.mobile = _this.state.mobile;
-                  _data.email = _this.state.email;
-			            inforData.save(_data);
-                  _this.props.dispatch({type:'change_infor',data:_data});
-                  Toast.loading('Loading...', 0.5, () => {
-                    _this.props.router.push('/s5');
-                    document.body.scrollTop = document.documentElement.scrollTop = 0;
-                  });
-                }}>下一步</div>
+                return <div className="submitContent">
+                  <div className="saveDataActive" onClick={function(){
+                    let _data = assign({},_this.props.infor.finaldata);
+                    _data.signName = _this.state.signName;
+                    _data.pinyinName = _this.state.pinyinName;
+                    _data.payAccount = _this.state.payAccount;
+                    _data.mobile = _this.state.mobile;
+                    _data.email = _this.state.email;
+                    inforData.save(_data);
+                    _this.props.dispatch({type:'change_infor',data:_data});
+
+                    Toast.loading('Loading...', 0.5, () => {
+                      if (_this.state.first == false) {
+                        _this.props.router.push('/index');
+                      }else {
+                        // 说明没有特别赠送
+                        if (!_this.props.infor.loaddata.present) {
+                          _this.props.router.push('/s2');
+                          document.body.scrollTop = document.documentElement.scrollTop = 0;
+                        }else {
+                          _this.props.router.push('/s3');
+                          document.body.scrollTop = document.documentElement.scrollTop = 0;
+                        }
+                      }
+                    });
+                  }}>上一步</div>
+                  <div className="newNextPageActive" onClick={function(){
+                    let _data = assign({},_this.props.infor.finaldata);
+                    _data.signName = _this.state.signName;
+                    _data.pinyinName = _this.state.pinyinName;
+                    _data.payAccount = _this.state.payAccount;
+                    _data.mobile = _this.state.mobile;
+                    _data.email = _this.state.email;
+  			            inforData.save(_data);
+                    _this.props.dispatch({type:'change_infor',data:_data});
+                    Toast.loading('Loading...', 0.5, () => {
+                      _this.props.router.push('/s5');
+                      document.body.scrollTop = document.documentElement.scrollTop = 0;
+                    });
+                  }}>下一步</div>
+                </div>
               }else {
-                return <div className="NextPage" onClick={function(){
-                  let _date = assign({},_this.state);
-                  if( _this.state.nameError == false && _this.state.signName == "" ) {
-                    _date.nameError = true;
-                    _date.nameErrorT = '姓名为必填';
-                  }
-                  if( _this.state.phoneError == false && _this.state.mobile == "" ) {
-                    _date.phoneError = true;
-                    _date.phoneErrorT = '姓名为必填';
-                  }
-                  if( _this.state.emailError == false && _this.state.email == "" ) {
-                    _date.emailError = true;
-                    _date.emailErrorT = '姓名为必填';
-                  }
-                  _this.setState(_date);
-                }}>下一步</div>
+                return <div className="submitContent">
+                  <div className="saveData" style={{color:"red",border: "1px solid red"}} onClick={function(){
+                    if (_this.state.first == false) {
+                      _this.props.router.push('/index');
+                    }else {
+                      // 说明没有特别赠送
+                      if (!_this.props.infor.loaddata.present) {
+                        _this.props.router.push('/s2');
+                        document.body.scrollTop = document.documentElement.scrollTop = 0;
+                      }else {
+                        _this.props.router.push('/s3');
+                        document.body.scrollTop = document.documentElement.scrollTop = 0;
+                      }
+                    }
+                  }}>上一步</div>
+                  <div className="newNextPage" onClick={function(){
+                    let _date = assign({},_this.state);
+                    if( _this.state.nameError == false && _this.state.signName == "" ) {
+                      _date.nameError = true;
+                      _date.nameErrorT = '姓名为必填';
+                    }
+                    if( _this.state.phoneError == false && _this.state.mobile == "" ) {
+                      _date.phoneError = true;
+                      _date.phoneErrorT = '手机为必填';
+                    }
+                    if( _this.state.emailError == false && _this.state.email == "" ) {
+                      _date.emailError = true;
+                      _date.emailErrorT = '邮箱为必填';
+                    }
+                  }}>下一步</div>
+                </div>
               }
             }else {
               if (this.state.next) {
@@ -343,11 +405,11 @@ class Stage4 extends React.Component {
                   }
                   if( _this.state.phoneError == true && _this.state.mobile == "" ) {
                     _date.phoneError = true;
-                    _date.phoneErrorT = '姓名为必填';
+                    _date.phoneErrorT = '手机为必填';
                   }
                   if( _this.state.emailError == true && _this.state.email == "" ) {
                     _date.emailError = true;
-                    _date.emailErrorT = '姓名为必填';
+                    _date.emailErrorT = '邮箱为必填';
                   }
                   _this.setState(_date);
                 }}>保存</div>

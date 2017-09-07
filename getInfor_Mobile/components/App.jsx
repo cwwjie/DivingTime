@@ -23,6 +23,14 @@ class App extends React.Component {
       });
       return
     }
+    if (this.props.infor.inti) {
+      if (this.props.infor.loaddata.isRead == "N") {
+        this.props.router.push('/s1');
+      }else {
+        this.props.router.push('/index');
+      }
+      return
+    }
 
     /* 正式环境 */
     // localStorage.setItem('_token','f8928b80-0f61-4b84-8465-c117c2e593e2');
@@ -37,13 +45,13 @@ class App extends React.Component {
         teskData = {"adultNum":1,"calMethod":"4500","childNum":0,"orderDesc":"订单描述","payStatus":1,"productAmount":500,"flightNote":"","infoId":null,"isRead":"N","readTime":null,"orderSn":"2017082701","orderSrc":"TB","template":1,"orderName":"四人间","roomNum":1,"peopleNum":3,"checkIn":1507564800000,"checkOut":1507651200000,"orderAmount":4500,"discount":0,"payAmount":500,"notPayAmount":4000,"present":"","signName":null,"payAccount":null,"mobile":null,"email":null,"outboundNum":null,"landTime":null,"landDate":null,"inboundNum":null,"takeoffTime":null,"takeoffDate":null,"inHarbourNum":null,"hLandTime":null,"hLandDate":null,"outHarbourNum":null,"hTakeoffTime":null,"hTakeoffDate":null,"roomInfoList":[]};
         teskData.isRead = "N";
         teskData.template = 3;
-        teskData.roomNum = 2;
+        teskData.roomNum = 1;
         teskData.present = "";
         function newroomInfo() {
           let roomInfo = {"roomId":null,"iceName":null,"iceRelation":null,"iceMobile":null,"iceEmail":null,"bedType":null,"infoId":null,"customerInfoList":[]};
           return roomInfo
         }
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 1; i++) {
           teskData.roomInfoList.push(newroomInfo());
         }
         _this.props.dispatch({type:'inti_infor',data:teskData});
@@ -146,6 +154,7 @@ class App extends React.Component {
             myTempData.isRead = "N";
             if (confirm('你有一份数据尚未填写完毕,请问你要继续填写这份数据吗?')) {
               _this.props.dispatch({type:'inti_infor',data:myTempData});
+              _this.props.router.push('/s1');
             }else {
               inforData.clear();
             }

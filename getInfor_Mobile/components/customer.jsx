@@ -192,14 +192,18 @@ class customer extends React.Component {
     return (
       <div>
         <div className="NavTOP">
+          <div
+            onClick={function(){
+              this.props.router.push('/room');
+            }.bind(this)}
+          >
           <div style={{
             width: '0.7rem',
             height: '0.7rem',
             background: 'url('+traveler+') center center /  0.4rem 0.4rem no-repeat' }}
-            onClick={function(){
-              this.props.router.push('/room');
-            }.bind(this)}
           />
+            <span  className="tipName">上一步</span>
+          </div>
           <span>填写入住信息</span>
         </div>
 
