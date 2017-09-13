@@ -236,7 +236,7 @@ function initAll() {
 	$("#flightNote").next().attr('class', 'value active');
 
 	// 声明条款一
-	if ( loaddata.template == 1 || loaddata.template == 2 || loaddata.template == 4 || loaddata.template == 5 || loaddata.template == 6 || loaddata.template == 7 || loaddata.template == 8 ) {
+	if ( loaddata.template == 1 || loaddata.template == 2 || loaddata.template == 4 || loaddata.template == 5 || loaddata.template == 7 || loaddata.template == 8 ) {
 		// 只有 2 个 航班
 		$("#outboundclass").css('display', 'none');
 		$("#inboundclass").css('display', 'none');
@@ -336,7 +336,7 @@ function initAll() {
 
 	$.ajax({
 		type:"GET",
-		url:URLbase + URLversion + "/admin/"+loginSuccessful.createBy+"/getAdminInfo.do",
+		url:URLbase + URLversion + "/admin/"+loginSuccessful.belongId+"/getAdminInfo.do",
 		contentType:"application/json; charset=utf-8",
 		success: function (val) {
 			if (val.result == "0") {

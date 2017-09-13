@@ -9,7 +9,7 @@ var pageThird = (function(){
 
 	// 初始化模态框使用到的最初数据
 	function initiModal() {
-		var obj = {"mobile":{allow:false,data:null},"email":{allow:false,data:null},"passportNo":{allow:true,data:null},"nationality":{allow:false,data:null},"chineseName":{allow:false,data:null},"pinyinName":{allow:false,data:null},"gender":{allow:true,data:1},"birthday":{allow:false,data:null},"isDive":{allow:true,data:"N"},"divingRank":{allow:true,data:null},"divingCount":{allow:true,data:null},"lastDiveTime":{allow:true,data:null},"anamnesis":{allow:true,data:"无"},"roomId":{allow:true,data:null},"divingNo":{allow:true,data:null}}
+		var obj = {"isKid":{allow:true,data:'N'},"mobile":{allow:true,data:null},"email":{allow:true,data:null},"passportNo":{allow:true,data:null},"nationality":{allow:false,data:null},"chineseName":{allow:false,data:null},"pinyinName":{allow:false,data:null},"gender":{allow:true,data:1},"birthday":{allow:false,data:null},"isDive":{allow:true,data:"N"},"divingRank":{allow:true,data:null},"divingCount":{allow:true,data:null},"lastDiveTime":{allow:true,data:null},"anamnesis":{allow:true,data:"无"},"roomId":{allow:true,data:null},"divingNo":{allow:true,data:null}}
 		return obj
 	}
 	function init() {
@@ -19,7 +19,7 @@ var pageThird = (function(){
 		 // 一间空房子
 		 function outputRoom() {
 		 	// 如果是模板 3 紧急联系人是必填
-		 	if ( loaddata.template == 3 ) {
+		 	if ( loaddata.template == 3 || loaddata.template == 9 ) {
 				var obj = {
 					"roomId":{allow:true,data:null},
 					"bedType":{allow:false,data:null},
@@ -48,26 +48,27 @@ var pageThird = (function(){
 		 // 一个空顾客
 		 function outputCustomer() {
 			var obj = {
-	            "customerId":{allow:false,data:null},
-	            "passportNo":{allow:false,data:null},
-	            "nationality":{allow:false,data:null},
-	            "chineseName":{allow:false,data:null},
-	            "pinyinName":{allow:false,data:null},
-	            "gender":{allow:false,data:null},
-	            "birthday":{allow:false,data:null},
-	            "mobile":{allow:false,data:null},
-	            "email":{allow:false,data:null},
-	            "isDive":{allow:false,data:null},
-	            "divingRank":{allow:false,data:null},
-	            "divingCount":{allow:false,data:null},
-	            "lastDiveTime":{allow:false,data:null},
-	            "anamnesis":{allow:false,data:"无"},
-	            "roomId":{allow:true,data:null},
-	            "divingNo":{allow:true,data:null}
+				"customerId":{allow:false,data:null},
+				"passportNo":{allow:false,data:null},
+				"nationality":{allow:false,data:null},
+				"chineseName":{allow:false,data:null},
+				"pinyinName":{allow:false,data:null},
+				"gender":{allow:false,data:null},
+				"birthday":{allow:false,data:null},
+				"mobile":{allow:false,data:null},
+				"email":{allow:false,data:null},
+				"isDive":{allow:false,data:null},
+				"divingRank":{allow:false,data:null},
+				"divingCount":{allow:false,data:null},
+				"lastDiveTime":{allow:false,data:null},
+				"anamnesis":{allow:false,data:"无"},
+				"roomId":{allow:true,data:null},
+				"divingNo":{allow:true,data:null},
+				"isKid":{allow:true,data:'N'}
 			}
 			return obj
 		 }
-		 // 当传进来的数据为空，渲染房间数！
+		 // 当传进来的数据为空(第一次填写)，渲染房间数据
 		 if (loaddata.roomInfoList.length == 0) {
 			var _Array = [];
 			for (var i = 0; i < loaddata.roomNum; i++) {
@@ -133,11 +134,12 @@ var pageThird = (function(){
 		 _Num = loginSuccessful.peopleNum - _Num;
 		 $("#_RoomNumber").text( "还可入住" + _Num + "人" )
 
-		 // 渲染房间
+		 // 根据数据 初始化渲染房间
 		 RenderRoom();
-		if (loaddata.roomInfoList.length!= 0) {
-			if (loaddata.isRead == "N") {
-			}else {
+
+		 // 初始化紧急联系人
+		 if (loaddata.roomInfoList.length!= 0) {
+			if (loaddata.isRead != "N") {
 				$("#_ugName").val(allRoom[0].iceName.data);
 				$("#_ugRelation").val(allRoom[0].iceRelation.data);
 				$("#_ugPhone").val(allRoom[0].iceMobile.data);
@@ -499,11 +501,21 @@ var pageThird = (function(){
 	function clearModal() {
 		// 清空数据
 		dataModal = initiModal();
-
 		// 通用清空样式
 		$("#RoomInformation input").val("");
 		$("#RoomInformation input").removeClass('invalid');
 		$("#RoomInformation input").removeClass('valid');
+		
+		$("#PassportNumber").next().html("");
+		$("#_liveCountry").next().html("");
+		$("#livePinyin").next().html("");
+		$("#liveName").next().html("");
+		$("#livePhone").next().html("");
+		$("#liveEmail").next().html("");
+
+		$("#showAdultData").show();
+		$("#livePhone").next().next().html('手机号码/电话');
+		$("#liveEmail").next().next().html('邮箱');
 
 		// 初始化国籍
 		$("#_liveCountry").val("0")
@@ -543,7 +555,11 @@ var pageThird = (function(){
 					"<div class='card-title _title'>",
 						"房间"+ (i+1), 
 						"<a id='addTravelers"+ (i+1) +"' class='waves-effect waves-light btn tooltipped right addTravelers' data-position='bottom' data-delay='50' data-tooltip='点击添加旅客信息'>",
-							"旅客信息",
+							"添加成人",
+							"<i class='mdi-content-add'></i>",
+						"</a>",
+						"<a id='addChild"+ (i+1) +"' class='waves-effect waves-light btn tooltipped right addTravelers' style='margin-right:10px;'>",
+							"添加儿童",
 							"<i class='mdi-content-add'></i>",
 						"</a>",
 					"</div>",
@@ -560,7 +576,7 @@ var pageThird = (function(){
 		$('ul.tabs').tabs(); // 初始化导航栏
 
 		// 如果 模板 3 ，不需要填写紧急联系人信息
-		if (loaddata.template != 3) {
+		if (loaddata.template != 3 && loaddata.template != 9) {
 			$(".EmergencyCT").css("display","none");
 		}
 
@@ -576,19 +592,95 @@ var pageThird = (function(){
 			RenderCard(i);
 			// 初始化添加旅客信息
 			$("#addTravelers"+(i+1)).attr('data-RoomID',i);
+			$("#addChild"+(i+1)).attr('data-RoomID',i);
 			$("#addTravelers"+(i+1)).click(function(event) {
-				var num = 0;
+				// var num = 0;
+				// for (var i = 0; i < allRoom.length; i++) {
+				// 	num += allRoom[i].customerInfoList.length
+				// }
+				// // 判断是否达到最大人数，如果是，不给继续添加！
+				// if (num >= loaddata.peopleNum) {
+				// 	myToast('达到最大人数', 4000);
+				// 	return
+				// }
+				var allNum = 0,
+					childNum = 0,
+					adultNum = 0;
 				for (var i = 0; i < allRoom.length; i++) {
-					num += allRoom[i].customerInfoList.length
+					var thisRoomCustomerNum = allRoom[i].customerInfoList.length;
+					allNum += thisRoomCustomerNum;
+					for (var j = 0; j < thisRoomCustomerNum; j++) {
+						var myCustomer = allRoom[i].customerInfoList[j];
+						if (myCustomer.isKid == 'N') {
+							childNum++;
+						}else {
+							adultNum++;
+						}
+					}
 				}
-				// 判断是否达到最大人数，如果是，不给继续添加！
-				if (num >= loaddata.peopleNum) {
-					myToast('达到最大人数', 4000);
+				if (adultNum >= loaddata.adultNum) {
+					myToast('成人已达到最大人数');
 					return
 				}
 				// 初始化模态框数据，指向新的数据、
 				dataModal = initiModal();
 				dataModal.roomId.data = allRoom[event.target.getAttribute("data-Roomid")].roomId.data;
+				dataModal.email.allow = false;
+				dataModal.mobile.allow = false;
+				$("#showAdultData").show();
+				$("#CloseTraModal").next().html("入住成人信息");
+				$("#livePhone").next().next().html('手机号码/电话(必填)');
+				$("#liveEmail").next().next().html('邮箱(必填)');
+				// 判断 编辑还是添加 旅客信息
+				$("#colseModal").attr('data-type','add');
+				// 判断 修改的是哪间房的 旅客信息
+				$("#colseModal").attr('data-RoomID',event.target.getAttribute("data-Roomid"));
+				// 打开模态框
+				$('#RoomInformation').openModal({
+					dismissible: false
+				});
+				SetModalHeight();
+			});
+			$("#addChild"+(i+1)).click(function(event) {
+				// var num = 0;
+				// for (var i = 0; i < allRoom.length; i++) {
+				// 	num += allRoom[i].customerInfoList.length
+				// }
+				// // 判断是否达到最大人数，如果是，不给继续添加！
+				// if (num >= loaddata.peopleNum) {
+				// 	myToast('达到最大人数', 4000);
+				// 	return
+				// }
+				var allNum = 0,
+					childNum = 0,
+					adultNum = 0;
+				for (var i = 0; i < allRoom.length; i++) {
+					var thisRoomCustomerNum = allRoom[i].customerInfoList.length;
+					allNum += thisRoomCustomerNum;
+					for (var j = 0; j < thisRoomCustomerNum; j++) {
+						var myCustomer = allRoom[i].customerInfoList[j];
+						if (myCustomer.isKid == 'N') {
+							childNum++;
+						}else {
+							adultNum++;
+						}
+					}
+				}
+				if (childNum >= loaddata.childNum) {
+					myToast('儿童已达到最大人数');
+					return
+				}
+				// 初始化模态框数据，指向新的数据、
+				dataModal = initiModal();
+				dataModal.roomId.data = allRoom[event.target.getAttribute("data-Roomid")].roomId.data;
+				// 初始化儿童
+				dataModal.email = {allow:true,data:finaldata.email};
+				dataModal.mobile = {allow:true,data:finaldata.mobile};
+				dataModal.isKid = {allow:true,data:'N'};;
+				$("#showAdultData").hide();
+				$("#CloseTraModal").next().html("入住儿童信息");
+				$("#livePhone").next().next().html('手机号码/电话');
+				$("#liveEmail").next().next().html('邮箱');
 				// 判断 编辑还是添加 旅客信息
 				$("#colseModal").attr('data-type','add');
 				// 判断 修改的是哪间房的 旅客信息
@@ -731,36 +823,85 @@ var pageThird = (function(){
 		var _carString = ""
 		for (var i = 0; i < allCard.length; i++) {
 			// 判断 深潜
-			var _chack;
+			var _chack,cardIsKid,cardTitle;
 			if (allCard[i].isDive.data=="Y") {
 				_chack = "block"
 			}else {
 				_chack = "none"
 			}
+			if (allCard[i].isKid.data == 'N') {
+				cardTitle = '儿童信息';
+				cardIsKid = "none"
+			}else {
+				cardTitle = '旅客信息';
+				cardIsKid = "block"
+			}
+			
+			_carString += [
+				"<div class='card-panel _part' id='card-panel"+i+"'>",
+					"<div class='row delete'>",
+						"<a class='title'>" + cardTitle + (i+1) + "</a>",
+						"<i id='delete" + i + "Room" + roomNum + "' class='mdi-navigation-close right'></i>",
+					"</div>",
+					"<div class='row'>",
+						"<div class='input-field col s6'>护照号:<span>"+testDataNull(allCard[i].passportNo.data)+ "</span></div>",
+						"<div class='input-field col s6'>国籍:<span>"+testDataNull(allCard[i].nationality.data)+"</span></div>",
+					"</div>",
+					"<div class='row'>",
+						"<div class='input-field col s6'>姓名(中文):<span>"+testDataNull(allCard[i].chineseName.data)+"</span></div>",
+						"<div class='input-field col s6'>姓名(拼音):<span>"+testDataNull(allCard[i].pinyinName.data)+"</span></div>",
+					"</div>",
+					"<div class='row'>",
+						"<div class='input-field col s6'>性别:<span>"+(allCard[i].gender.data==1?"男":"女")+"</span></div>",
+						"<div class='input-field col s6'>生日:<span>"+returnDate(testDataNull(allCard[i].birthday.data))+"</span></div>",
+					"</div>",
+					"<div class='row' style='display:"+cardIsKid+";'>",
+						"<div class='input-field col s6'>手机(电话):<span>"+testDataNull(allCard[i].mobile.data)+"</span></div>",
+						"<div class='input-field col s6'>邮箱:<span>"+testDataNull(allCard[i].email.data)+"</span></div>",
+					"</div>",
+					"<div class='row'>",
+						"<div class='input-field col s6'>是否深潜:<span>"+((allCard[i].isDive.data=="Y")?"深潜":"浮潜")+"</span></div>",
+						"<div class='input-field col s6' style='display:"+_chack+";'>潜水证号:<span>"+testDataNull(allCard[i].divingNo.data)+"</span></div>",
+					"</div>",
+					"<div class='row'>",
+						"<div class='input-field col s6' style='display:"+_chack+";'>潜水级别:<span>"+DivelevelToChinese(allCard[i].divingRank.data)+"</span></div>",
+						"<div class='input-field col s6' style='display:"+_chack+";'>潜水次数:<span>"+testDataNull(allCard[i].divingCount.data)+"</span></div>",
+					"</div>",
+					"<div class='row'>",
+						"<div class='input-field col s12' style='display:"+_chack+";'>上次潜水:<span>"+((allCard[i].lastDiveTime.data==""||allCard[i].lastDiveTime.data==null)?"未填写":returnDate(allCard[i].lastDiveTime.data))+"</span></div>",
+					"</div>",
+					"<div class='row'>",
+						"<div class='input-field col s12'>重大病史:<span>"+((allCard[i].anamnesis.data==null||allCard[i].anamnesis.data=="")?"无":allCard[i].anamnesis.data)+"</span></div>",
+					"</div>",
+					"<div class='_editTravelers'>",
+						"<button id='_editTravelers"+i+"Room"+roomNum+"' class='btn waves-effect waves-light right'>编辑</button>",
+					"</div>",
+				"</div>"
+				].join("");
 			// 渲染
-			_carString += "<div class='card-panel _part' id='card-panel"//
-				+i+"'><div class='row delete'><a class='title'>旅客信息"//
-				+(i+1)+"</a><i id='delete"//
-				+i+"Room"+roomNum+"' class='mdi-navigation-close right'></i></div><div class='row'><div class='input-field col s6'>护照号:<span>"//
-				+testDataNull(allCard[i].passportNo.data)+ "</span></div><div class='input-field col s6'>国籍:<span>"//
-				+testDataNull(allCard[i].nationality.data)+"</span></div></div><div class='row'><div class='input-field col s6'>姓名(中文):<span>"//
-				+testDataNull(allCard[i].chineseName.data)+"</span></div><div class='input-field col s6'>姓名(拼音):<span>"//
-				+testDataNull(allCard[i].pinyinName.data)+"</span></div></div><div class='row'><div class='input-field col s6'>性别:<span>"//
-				+(allCard[i].gender.data==1?"男":"女")+"</span></div><div class='input-field col s6'>生日:<span>"//
-				+returnDate(testDataNull(allCard[i].birthday.data))+"</span></div></div><div class='row'><div class='input-field col s6'>手机(电话):<span>"//
-				+testDataNull(allCard[i].mobile.data)+"</span></div><div class='input-field col s6'>邮箱:<span>"//
-				+testDataNull(allCard[i].email.data)+"</span></div></div><div class='row'><div class='input-field col s6'>是否深潜:<span>"//
-				+((allCard[i].isDive.data=="Y")?"深潜":"浮潜")+"</span></div><div class='input-field col s6' style='display:"//
-				+_chack+";'>潜水证号:<span>"//
-				+testDataNull(allCard[i].divingNo.data)+"</span></div></div><div class='row'><div class='input-field col s6' style='display:"//
-				+_chack+";'>潜水级别:<span>"//
-				+DivelevelToChinese(allCard[i].divingRank.data)+"</span></div><div class='input-field col s6' style='display:"//
-				+_chack+";'>潜水次数:<span>"//
-				+testDataNull(allCard[i].divingCount.data)+"</span></div></div><div class='row'><div class='input-field col s12' style='display:"//
-				+_chack+";'>上次潜水:<span>"//
-				+((allCard[i].lastDiveTime.data==""||allCard[i].lastDiveTime.data==null)?"未填写":returnDate(allCard[i].lastDiveTime.data))+"</span></div></div><div class='row'><div class='input-field col s12'>重大病史:<span>"//
-				+((allCard[i].anamnesis.data==null||allCard[i].anamnesis.data=="")?"无":allCard[i].anamnesis.data)+"</span></div></div><div class='_editTravelers'><button id='_editTravelers"//
-				+i+"Room"+roomNum+"' class='btn waves-effect waves-light right'>编辑</button></div></div>"
+			// _carString += "<div class='card-panel _part' id='card-panel"//
+			// 	+i+"'><div class='row delete'><a class='title'>旅客信息"//
+			// 	+(i+1)+"</a><i id='delete"//
+			// 	+i+"Room"+roomNum+"' class='mdi-navigation-close right'></i></div><div class='row'><div class='input-field col s6'>护照号:<span>"//
+			// 	+testDataNull(allCard[i].passportNo.data)+ "</span></div><div class='input-field col s6'>国籍:<span>"//
+			// 	+testDataNull(allCard[i].nationality.data)+"</span></div></div><div class='row'><div class='input-field col s6'>姓名(中文):<span>"//
+			// 	+testDataNull(allCard[i].chineseName.data)+"</span></div><div class='input-field col s6'>姓名(拼音):<span>"//
+			// 	+testDataNull(allCard[i].pinyinName.data)+"</span></div></div><div class='row'><div class='input-field col s6'>性别:<span>"//
+			// 	+(allCard[i].gender.data==1?"男":"女")+"</span></div><div class='input-field col s6'>生日:<span>"//
+			// 	+returnDate(testDataNull(allCard[i].birthday.data))+"</span></div></div><div class='row'><div class='input-field col s6'>手机(电话):<span>"//
+			// 	+testDataNull(allCard[i].mobile.data)+"</span></div><div class='input-field col s6'>邮箱:<span>"//
+			// 	+testDataNull(allCard[i].email.data)+"</span></div></div><div class='row'><div class='input-field col s6'>是否深潜:<span>"//
+			// 	+((allCard[i].isDive.data=="Y")?"深潜":"浮潜")+"</span></div><div class='input-field col s6' style='display:"//
+			// 	+_chack+";'>潜水证号:<span>"//
+			// 	+testDataNull(allCard[i].divingNo.data)+"</span></div></div><div class='row'><div class='input-field col s6' style='display:"//
+			// 	+_chack+";'>潜水级别:<span>"//
+			// 	+DivelevelToChinese(allCard[i].divingRank.data)+"</span></div><div class='input-field col s6' style='display:"//
+			// 	+_chack+";'>潜水次数:<span>"//
+			// 	+testDataNull(allCard[i].divingCount.data)+"</span></div></div><div class='row'><div class='input-field col s12' style='display:"//
+			// 	+_chack+";'>上次潜水:<span>"//
+			// 	+((allCard[i].lastDiveTime.data==""||allCard[i].lastDiveTime.data==null)?"未填写":returnDate(allCard[i].lastDiveTime.data))+"</span></div></div><div class='row'><div class='input-field col s12'>重大病史:<span>"//
+			// 	+((allCard[i].anamnesis.data==null||allCard[i].anamnesis.data=="")?"无":allCard[i].anamnesis.data)+"</span></div></div><div class='_editTravelers'><button id='_editTravelers"//
+			// 	+i+"Room"+roomNum+"' class='btn waves-effect waves-light right'>编辑</button></div></div>"
 		}
 		var RenderID = roomNum + 1 ;
 		$("#Render"+RenderID).html(_carString);
@@ -819,7 +960,7 @@ var pageThird = (function(){
 				if (_roomInfo == "customerInfoList") {
 					// 将忽略掉 customerInfoList 客户信息验证
 				}else{
-					if (allRoom[i][_roomInfo].allow == false) {
+						if (allRoom[i][_roomInfo].allow == false) {
 						// 如果有一个验证不通过，不让通过
 						if (_roomInfo == "bedType") {
 							$(".bedtype .showError").html("每间房间必须选择床型");
@@ -852,6 +993,7 @@ var pageThird = (function(){
 							// 忽略掉 roomId
 						}else{
 							if (allRoom[i].customerInfoList[j][_customerInfo].allow == false) {
+								_toast = "房间"+ ( i + 1 ) + "下，旅客信息" + ( j + 1 ) + '下：' + _customerInfo + '信息有误。'
 								// 如果有一个验证不通过，不让通过
 								_allow = false;
 							}

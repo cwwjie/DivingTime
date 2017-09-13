@@ -1,31 +1,84 @@
 // 旅客信息
 function client() {
+	var clientData = [];
 	// 渲染(所有用户信息)
 	function renderClient() {
 		function render(data) {
 			var string = "";
 			$("#lengthClient").text(data.length);
 			for (var i = 0; i < data.length; i++) {
-				string += "<div class='line'><div class='line-boder'><div class='title'>用户信息</div><div class='delete' title='"//
-					+ data[i].userinfoId + "'>X</div><div class='content'><div class='row'><div class='left'>姓名(中文):</div><div class='right'>"//
-					+ data[i].chineseName+"</div></div><div class='row'><div class='left'>姓名(拼音):</div><div class='right'>"//
-					+ data[i].pinyinName+"</div></div><div class='row'><div class='left'>性别:</div><div class='right'>"//
-					+ returnGender(data[i].gender)+"</div></div><div class='row'><div class='left'>出生日期:</div><div class='right' title='"//
-					+ data[i].birthday + "'>"+getTimestamp(data[i].birthday)+"</div></div><div class='row'><div class='left'>年龄:</div><div class='right'>"//
-					+ data[i].age+"</div></div><div class='row'><div class='left'>手机号码:</div><div class='right'>"//
-					+ data[i].mobile+"</div></div><div class='row'><div class='left'>邮箱:</div><div class='right'>"//
-					+ data[i].email+"</div></div><div class='row'><div class='left'>护照号:</div><div class='right'>"//
-					+ ((data[i].passportNo==null)?"":data[i].passportNo)+"</div></div><div class='row'><div class='left'>潜水等级:</div><div class='right'>"//
-					+ ChangeDiving(data[i].divingRank)+"</div></div><div class='row'><div class='left'>潜水次数:</div><div class='right'>"//
-					+ ((data[i].divingCount==null)?"":data[i].divingCount)+"</div></div></div><div class='edit' title='"//
-					+ data[i].userinfoId + "'>编辑</div></div></div>";
+				string += [
+				"<div class='line'>",
+					"<div class='line-boder'>",
+						"<div class='title'>用户信息</div>",
+						"<div class='delete' title='" + data[i].userinfoId + "'>X</div>",
+						"<div class='content'>",
+							"<div class='row'>",
+								"<div class='left'>姓名(中文):</div>",
+								"<div class='right'>"+ data[i].chineseName+"</div>",
+							"</div>",
+							"<div class='row'>",
+								"<div class='left'>姓名(拼音):</div>",
+								"<div class='right'>"+ data[i].pinyinName+"</div>",
+							"</div>",
+							"<div class='row'>",
+								"<div class='left'>性别:</div>",
+								"<div class='right'>"+ returnGender(data[i].gender)+"</div>",
+							"</div>",
+							"<div class='row'>",
+								"<div class='left'>出生日期:</div>",
+								"<div class='right' title='"+ data[i].birthday + "'>"+getTimestamp(data[i].birthday)+"</div>",
+							"</div>",
+							"<div class='row'>",
+								"<div class='left'>年龄:</div>",
+								"<div class='right'>"+ data[i].age+"</div>",
+							"</div>",
+							"<div class='row'>",
+								"<div class='left'>手机号码:</div>",
+								"<div class='right'>"+ data[i].mobile+"</div>",
+							"</div>",
+							"<div class='row'>",
+								"<div class='left'>邮箱:</div>",
+								"<div class='right'>"+ data[i].email+"</div>",
+							"</div>",
+							"<div class='row'>",
+								"<div class='left'>护照号:</div>",
+								"<div class='right'>"+ ((data[i].passportNo==null)?"":data[i].passportNo)+"</div>",
+							"</div>",
+							"<div class='row'>",
+								"<div class='left'>潜水等级:</div>",
+								"<div class='right'>"+ ChangeDiving(data[i].divingRank)+"</div>",
+							"</div>",
+							"<div class='row'>",
+								"<div class='left'>潜水次数:</div>",
+								"<div class='right'>"+ ((data[i].divingCount==null)?"":data[i].divingCount)+"</div>",
+							"</div>",
+						"</div>",
+						"<div class='edit' title='"+ data[i].userinfoId + "' data-ID='"+i+"'>编辑</div>",
+					"</div>",
+				"</div>",
+				].join('');
+				// string += "<div class='line'><div class='line-boder'><div class='title'>用户信息</div><div class='delete' title='"//
+				// 	+ data[i].userinfoId + "'>X</div><div class='content'><div class='row'><div class='left'>姓名(中文):</div><div class='right'>"//
+				// 	+ data[i].chineseName+"</div></div><div class='row'><div class='left'>姓名(拼音):</div><div class='right'>"//
+				// 	+ data[i].pinyinName+"</div></div><div class='row'><div class='left'>性别:</div><div class='right'>"//
+				// 	+ returnGender(data[i].gender)+"</div></div><div class='row'><div class='left'>出生日期:</div><div class='right' title='"//
+				// 	+ data[i].birthday + "'>"+getTimestamp(data[i].birthday)+"</div></div><div class='row'><div class='left'>年龄:</div><div class='right'>"//
+				// 	+ data[i].age+"</div></div><div class='row'><div class='left'>手机号码:</div><div class='right'>"//
+				// 	+ data[i].mobile+"</div></div><div class='row'><div class='left'>邮箱:</div><div class='right'>"//
+				// 	+ data[i].email+"</div></div><div class='row'><div class='left'>护照号:</div><div class='right'>"//
+				// 	+ ((data[i].passportNo==null)?"":data[i].passportNo)+"</div></div><div class='row'><div class='left'>潜水等级:</div><div class='right'>"//
+				// 	+ ChangeDiving(data[i].divingRank)+"</div></div><div class='row'><div class='left'>潜水次数:</div><div class='right'>"//
+				// 	+ ((data[i].divingCount==null)?"":data[i].divingCount)+"</div></div></div><div class='edit' title='"//
+				// 	+ data[i].userinfoId + "'>编辑</div></div></div>";
 			}
 			$("#renderAddres").html(string);
 			$("#renderAddres .delete").click(function(event){
 				deleteClient(event.target.title);
 			});
 			$("#renderAddres .edit").click(function(event){
-				editClient(event);
+				var myDataId = $(this).attr('data-ID')
+				editClient(event,myDataId);
 			});
 		}
 		$.ajax({
@@ -38,6 +91,7 @@ function client() {
 			},
 			success: function (message) {
 				if (message.result == "0" ) {
+					clientData = message.data;
 					render(message.data);
 				}
 			}
@@ -188,31 +242,29 @@ function client() {
 		});
 	}
 	// 点击(编辑) (data:event) => 渲染(模态框)
-	function editClient(data) {
+	function editClient(data,ID) {
+		var myModalData = clientData[ID];
 		popModal();
 		$("#confirm").css("display","none");
-		$("#modifyAddres").attr("title",data.target.title)
+		$("#modifyAddres").attr("title",data.target.title);
 		$("#confirmClient .title").text("修改用户信息");
-		$('.line input[name=ChineseName]').val(data.currentTarget.previousElementSibling.children[0].children[1].textContent);
-		$('.line input[name=EnglishName]').val(data.currentTarget.previousElementSibling.children[1].children[1].textContent);
-		judgeGender(data.currentTarget.previousElementSibling.children[2].children[1].textContent);
-		var datetime = new Date(parseInt(data.currentTarget.previousElementSibling.children[3].childNodes[1].title));
-		$(".sel_year").val(datetime.getFullYear());
-		$(".sel_month").val(datetime.getMonth()+1);
-		$(".sel_day").val(datetime.getDate());
-		$('.line input[name=Age]').val(data.currentTarget.previousElementSibling.children[4].children[1].textContent);
-		$('.line input[name=PhoneNumber]').val(data.currentTarget.previousElementSibling.children[5].children[1].textContent);
-		$('.line input[name=Mailbox]').val(data.currentTarget.previousElementSibling.children[6].children[1].textContent);
-		$('.line input[name=Passport]').val(data.currentTarget.previousElementSibling.children[7].children[1].textContent);
+		$('.line input[name=ChineseName]').val(myModalData.chineseName);
+		$('.line input[name=EnglishName]').val(myModalData.pinyinName);
+		judgeGender(myModalData.gender);
+		$('.line input[name=Age]').val(myModalData.age);
+		$('.line input[name=PhoneNumber]').val(myModalData.mobile);
+		$('.line input[name=Mailbox]').val(myModalData.email);
+		$('.line input[name=Passport]').val(myModalData.passportNo);
 		// 渲染潜水等级
-		if ( data.currentTarget.previousElementSibling.children[8].children[1].textContent == 'OW(初级潜水员)' ) {
-			$('.line select[name=Divelevel]').val('1');
-		}else if (data.currentTarget.previousElementSibling.children[8].children[1].textContent == 'AO以上(初级潜水员以上)') {
-			$('.line select[name=Divelevel]').val('2');
-		}else {
-			$('.line select[name=Divelevel]').val('null');
-		}
-		$('.line input[name=DiveTimes]').val(data.currentTarget.previousElementSibling.children[9].children[1].textContent);
+		$('.line select[name=Divelevel]').val(myModalData.divingRank);
+		$('.line input[name=DiveTimes]').val(myModalData.divingCount);
+		var datetime = new Date(myModalData.birthday);
+		$(".sel_year").val(datetime.getFullYear());
+		$(".sel_year").trigger('change');
+		$(".sel_month").val(datetime.getMonth()+1);
+		$(".sel_month").trigger('change');
+		$(".sel_day").val(datetime.getDate());
+		$(".sel_day").trigger('change');
 	}
 	// 提交(编辑)
 	function editPush() {

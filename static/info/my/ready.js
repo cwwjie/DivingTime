@@ -35,7 +35,7 @@ $(document).ready(function() {
 
 
 	sessionStorage.setItem('AllUrl',window.location.href);
-  THERUL = localStorage.getItem('_uniqueKey');
+	THERUL = localStorage.getItem('_uniqueKey');
 
 	loginSuccessful = JSON.parse(localStorage.getItem('loginSuccessful'));
 
@@ -85,6 +85,8 @@ $(document).ready(function() {
 							"payAmount":loginSuccessful.payAmount,
 							"notPayAmount":loginSuccessful.notPayAmount,
 							"present":loginSuccessful.present,
+							"remark":loginSuccessful.remark,
+							"kidsAge":loginSuccessful.kidsAge,
 							"payAccount":null,
 							"signName":null,
 							"pinyinName":null,
@@ -113,7 +115,7 @@ $(document).ready(function() {
 						}
 						// ES5 深层复制
 						var myTempData = inforData.get();
-						if (myTempData) {
+						if ( myTempData && myTempData.orderDesc == loginSuccessful.orderDesc ) {
 							if (confirm('你有一份数据尚未填写完毕,请问你要继续填写这份数据吗?')) {
 								loaddata = myTempData;
 								finaldata = myTempData;

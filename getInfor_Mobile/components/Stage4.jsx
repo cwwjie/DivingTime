@@ -8,6 +8,7 @@ import URL from './../method/URL.jsx';
 import pinYin from './../method/pinYin.jsx';
 import inforData from './../method/inforData.jsx';
 import SaveInfor from './../method/SaveInfor.jsx';
+import Autocomplete from './../method/Autocomplete.jsx';
 
 
 const Item = List.Item;
@@ -28,7 +29,7 @@ class Stage4 extends React.Component {
 
       emailError: false,
       emailErrorT: "",
-
+      Autocomplete:false,
 
       signName:'',
       pinyinName:'',
@@ -247,12 +248,15 @@ class Stage4 extends React.Component {
                 if (value == "") {
                   _date.emailError = true;
                   _date.emailErrorT = "邮箱为必填";
+                  _date.Autocomplete = true;
                 }else if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value) == false) {
                   _date.emailError = true;
                   _date.emailErrorT = "邮箱格式不正确";
+                  _date.Autocomplete = true;
                 }else {
                   _date.emailError = false;
                   _date.emailErrorT = "";
+                  _date.Autocomplete = false;
                 }
                 _date.email = value;
                 this.setState(_date,()=>{
@@ -262,6 +266,23 @@ class Stage4 extends React.Component {
               value={this.state.email}
             >邮箱</InputItem>
           </List>
+          <Autocomplete
+              show={this.state.Autocomplete}
+              onChange={function(val){
+                let _this = this;
+                let myEmail = this.state.email;
+                let stateDate = assign({},this.state);
+                stateDate.email = myEmail + val;
+                stateDate.Autocomplete = false;
+                if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(myEmail + val)) {
+                  stateDate.emailError = false;
+                  stateDate.emailErrorT = "";
+                }
+                this.setState(stateDate,()=>{
+                  verifyAll(_this);
+                });
+              }.bind(this)}
+          />
         </div>
         <div className="NavBottom">
           {(function(){
@@ -339,6 +360,7 @@ class Stage4 extends React.Component {
                       _date.emailError = true;
                       _date.emailErrorT = '邮箱为必填';
                     }
+                    _this.setState(_date);
                   }}>下一步</div>
                 </div>
               }
@@ -462,4 +484,3 @@ function verifyAll(_this) {
     _this.setState({next:false});
   }
 }
-

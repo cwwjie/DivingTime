@@ -37,7 +37,7 @@ class App extends React.Component {
     // localStorage.setItem('_digest','405fc83c-f9fa-4f1e-a83c-324b90b19edf');
     // localStorage.setItem('_uniqueKey','b5164e71-605a-4d3a-bf48-5d06311eaf92');
 
-    if(process.env.NODE_ENV=="tesk") {
+    if(process.env.NODE_ENV == "tesk") {
       localStorage.setItem('loginSuccessful',JSON.stringify({adultNum:2,calMethod:"去啊啊收费的",checkIn:1506528000000,checkOut:1506614400000,childNum:0,confirmStatus:null,createBy:1,createTime:1503885124000,discount:2,infoId:96,insuranceBegin:null,insuranceEnd:null,isComplete:"N",isConfirmed:"N",isLocked:"N",isValid:"Y",linkId:131,notPayAmount:498,operationStatus:0,orderAmount:998,orderDesc:"asdf",orderName:"园景房",orderSn:"AK456",orderSrc:"TB",payAmount:500,payStatus:2,peopleNum:2,pinyinName:"Zhe Ge Ren ",present:"",productAmount:1000,roomNum:2,signName:"这个人",submitTime:1503886181000,template:1,transfersInfo:"",uniqueKey:"ed140d83-8012-4f1c-aa55-6b97a500191e",updateBy:1,updateTime:1503886152000,userId:72}) );
       let router = "";
       let teskData = {};
@@ -66,7 +66,7 @@ class App extends React.Component {
           let roomInfo = {
             "roomId":null,"iceName":"你好","iceRelation":"父母","iceMobile":15976713287,"iceEmail":"454766952@qq.com","bedType":"大床","infoId":1,"customerInfoList":
             [
-              {"passportNo":1123,"nationality":"CHINA","chineseName":"你好","pinyinName":"nihao","gender":1,"birthday":-410256000000,"mobile":15976713287,"email":"455544554@qq.com","isDive":"N","divingRank":null,"divingCount":null,"lastDiveTime":null,"divingNo":null,"anamnesis":null,}
+              {"isKid":false,"passportNo":1123,"nationality":"CHINA","chineseName":"你好","pinyinName":"nihao","gender":1,"birthday":-410256000000,"mobile":15976713287,"email":"455544554@qq.com","isDive":"N","divingRank":null,"divingCount":null,"lastDiveTime":null,"divingNo":null,"anamnesis":null,}
             ]
           };
           return roomInfo
@@ -120,6 +120,8 @@ class App extends React.Component {
             "payAmount":loginSuccessful.payAmount,
             "notPayAmount":loginSuccessful.notPayAmount,
             "present":loginSuccessful.present,
+            "remark":loginSuccessful.remark,
+            "kidsAge":loginSuccessful.kidsAge,
             "signName":null,
             "pinyinName":null,
             "payAccount":null,
@@ -150,7 +152,7 @@ class App extends React.Component {
           _this.props.router.push('/s1');
           // 获取是否有临时数据
           var myTempData = inforData.get();
-          if (myTempData) {
+          if ( myTempData && myTempData.orderDesc == loginSuccessful.orderDesc ) {
             myTempData.isRead = "N";
             if (confirm('你有一份数据尚未填写完毕,请问你要继续填写这份数据吗?')) {
               _this.props.dispatch({type:'inti_infor',data:myTempData});

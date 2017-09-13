@@ -4,10 +4,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>潜游时光-客户信息收集</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<link rel="stylesheet" href="css/materialize.min.css">
-	<link rel="stylesheet" href="css/materialize.clockpicker.css">
-	<link rel="stylesheet" type="text/css" href="./css/index.css?file_version=3.00">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="./css/materialize.min.css">
+	<link rel="stylesheet" href="./css/materialize.clockpicker.css">
+	<link rel="stylesheet" type="text/css" href="./css/index.css?file_version=3.02">
 </head>
 <body>
 
@@ -621,7 +621,7 @@
 												<input id="liveBirthday" value=""yyyy-MM-dd"" data-value="1972/01/01" type="date" class="datepicker" data-ID="liveBirthday" placeholder="生日(与护照一致,必填)">
 											</div>
 										</div>
-										<div class="row">
+										<div class="row" id="showAdultData">
 											<div class="newInput input-field col s6">
 												<input id="livePhone" name="livePhone" placeholder="  " type="tel" data-ID="livePhone" placeholder='手机号码/电话(必填)'>
 												<div></div>
@@ -903,6 +903,7 @@
 									<p id="_END">正在提交您的信息请稍等..</p>
 									<p id="_ENDADD" style="font-size: 18px;display:none;">请注意关注相关信息！谢谢！</p>
 									<p id="_ENDBTN" style="display:none;"><a class="waves-effect waves-light btn">查看提交信息</a></p>
+									<p id="errorMessage" style="display:none;"><a class="waves-effect waves-light btn">返回</a></p>
 								</div>
 								<!-- 已废弃 -->
 								<div class="ContactUS" style="display: none;">
@@ -956,16 +957,16 @@
 	<script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="./js/fetch.js"></script>
 	<script type="text/javascript" src="./js/jQuery.Hz2Py-min.js"></script>
-	<script type="text/javascript" src="./../dist/js/appconfig.js?file_version=3.00"></script>
-	<script type="text/javascript" src="./js/materialize.min.js?file_version=3.00"></script>
-	<script type="text/javascript" src="./js/materialize.clockpicker.js?file_version=3.00"></script>
+	<script type="text/javascript" src="./../dist/js/appconfig.js?file_version=3.02"></script>
+	<script type="text/javascript" src="./js/materialize.min.js?file_version=3.02"></script>
+	<script type="text/javascript" src="./js/materialize.clockpicker.js?file_version=3.02"></script>
 
-	<script type="text/javascript" src="./my/init.js?file_version=3.00"></script>
-	<script type="text/javascript" src="./my/page1.js?file_version=3.00"></script>
-	<script type="text/javascript" src="./my/page2.js?file_version=3.00"></script>
-	<script type="text/javascript" src="./my/page3.js?file_version=3.00"></script>
-	<script type="text/javascript" src="./my/page4.js?file_version=3.00"></script>
-	<script type="text/javascript" src="./my/page5.js?file_version=3.00"></script>
-	<script type="text/javascript" src="./my/ready.js?file_version=3.00"></script>
+	<script type="text/javascript" src="./my/init.js?file_version=3.02"></script>
+	<script type="text/javascript" src="./my/page1.js?file_version=3.02"></script>
+	<script type="text/javascript" src="./my/page2.js?file_version=3.02"></script>
+	<script type="text/javascript" src="./my/page3.js?file_version=3.02"></script>
+	<script type="text/javascript" src="./my/page4.js?file_version=3.02"></script>
+	<script type="text/javascript" src="./my/page5.js?file_version=3.02"></script>
+	<script type="text/javascript" src="./my/ready.js?file_version=3.02"></script>
 
 </html>

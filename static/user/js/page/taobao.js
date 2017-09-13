@@ -8,24 +8,7 @@ var _clientWidth = 1170;
 function taobao() {
   // 初始化
   (function () {
-    $.ajax({
-      type: "GET", 
-      url: URLbase+URLversion+"/gather/link/listOrder.do", 
-      contentType: "application/json; charset=utf-8", 
-      headers: {
-        'token':$.cookie('token'),
-        'digest':$.cookie('digest')
-      },
-      success: function (val) {
-        if (val.result == "0") {
-          allTaobaoList = val.data;
-          Rendering();
-        }else {
-          alert("获取订单失败,原因:"+val.message);
-        }
-      }
-    });
-
+    ajaxGetData();
     // 初始化侧边栏
     _clientWidth = document.body.clientWidth;
     if (_clientWidth < 500) {
@@ -47,6 +30,29 @@ function taobao() {
       $(".Sidebar").animate({right:'0'},70);
     });
   })();
+  // 获取数据
+  function ajaxGetData() {
+    $.ajax({
+      type: "GET", 
+      url: URLbase+URLversion+"/gather/link/listOrder.do", 
+      contentType: "application/json; charset=utf-8", 
+      headers: {
+        'token':$.cookie('token'),
+        'digest':$.cookie('digest')
+      },
+      success: function (val) {
+        setTimeout(function(){
+          ajaxGetData();
+        },3000);
+        if (val.result == "0") {
+          allTaobaoList = val.data;
+          Rendering();
+        }else {
+          alert("获取订单失败,原因:"+val.message);
+        }
+      }
+    });
+  }
   // 渲染所有订单
   function Rendering() {
     if (allTaobaoList.length == 0) {

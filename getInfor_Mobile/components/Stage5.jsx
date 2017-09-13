@@ -106,7 +106,7 @@ class Stage6 extends React.Component {
     }
 
     // 初始化紧急联系人
-    if (this.props.infor.loaddata.template == 3) {
+    if (this.props.infor.loaddata.template == 3 || this.props.infor.loaddata.template == 9) {
       let _this = this;
       _date.emergencyContact = "block";
       _date.iceName = this.props.infor.finaldata.roomInfoList[0].iceName;
@@ -200,7 +200,7 @@ class Stage6 extends React.Component {
                       </Card.Body>
                       <Card.Footer content={_this.state.customerRestDesc} extra={<div onClick={function(){
                         let inforData = assign({},_this.props.infor.finaldata);
-                        if (_this.props.infor.loaddata.template == 3) {
+                        if (_this.props.infor.loaddata.template == 3 || _this.props.infor.loaddata.template == 9 ) {
                           for (let j = 0; j < inforData.roomInfoList.length; j++) {
                             inforData.roomInfoList[j].iceName = _this.state.iceName;
                             if (_this.state.iceRelation == null) {
@@ -242,7 +242,7 @@ class Stage6 extends React.Component {
                       </Card.Body>
                       <Card.Footer content={_this.state.customerRestDesc} extra={<div onClick={function(){
                         let inforData = assign({},_this.props.infor.finaldata);
-                        if (_this.props.infor.loaddata.template == 3) {
+                        if ( _this.props.infor.loaddata.template == 3 || _this.props.infor.loaddata.template == 9 ) {
                           for (let j = 0; j < inforData.roomInfoList.length; j++) {
                             inforData.roomInfoList[j].iceName = _this.state.iceName;
                             if (_this.state.iceRelation == null) {

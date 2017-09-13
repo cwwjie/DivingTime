@@ -81,7 +81,8 @@ class Stage5 extends React.Component {
       this.props.infor.loaddata.template == 5 ||
       this.props.infor.loaddata.template == 6 ||
       this.props.infor.loaddata.template == 7 ||
-      this.props.infor.loaddata.template == 8
+      this.props.infor.loaddata.template == 8 ||
+      this.props.infor.loaddata.template == 9
     ) {
       _date.disOutbound = "none";
       _date.disInbound = "none";
@@ -961,12 +962,53 @@ class Stage5 extends React.Component {
                 return <div className="submitContent">
                   <div className="saveDataActive" onClick={function(){
                     let _data = assign({},_this.props.infor.finaldata);
-                    inforData.save(_data);
-                    if (_this.state.first) {
-                      _this.props.router.push('/s5');
-                    }else {
-                      _this.props.router.push('/index');
+
+                    let today = new Date();
+                    let birtoday = Date.parse( new Date( today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0 ) );
+
+                    // 马来西亚抵达航班
+                    _data.outboundNum = _this.state.outboundNum;
+                    if (_this.state.landDate != null) {
+                      _data.landDate = Date.parse(_this.state.landDate._d);
                     }
+                    if (_this.state.landTime != null) {
+                      _data.landTime = Date.parse(_this.state.landTime._d) - birtoday - 28800000;
+                    }
+
+                    // 斗湖抵达航班
+                    _data.inHarbourNum = _this.state.inHarbourNum;
+                    if (_this.state.hLandDate != null) {
+                      _data.hLandDate = Date.parse(_this.state.hLandDate._d);
+                    }
+                    if (_this.state.hLandTime != null) {
+                      _data.hLandTime = Date.parse(_this.state.hLandTime._d) - birtoday - 28800000;
+                    }
+
+                    // 斗湖离开航班
+                    _data.outHarbourNum = _this.state.outHarbourNum;
+                    if (_this.state.hTakeoffDate != null) {
+                      _data.hTakeoffDate = Date.parse(_this.state.hTakeoffDate._d);
+                    }
+                    if (_this.state.hTakeoffTime != null) {
+                      _data.hTakeoffTime = Date.parse(_this.state.hTakeoffTime._d) - birtoday - 28800000;
+                    }
+
+                    // 马来西亚离开航班
+                    _data.inboundNum = _this.state.inboundNum;
+                    if (_this.state.takeoffDate != null) {
+                      _data.takeoffDate = Date.parse(_this.state.takeoffDate._d);
+                    }
+                    if (_this.state.takeoffTime != null) {
+                      _data.takeoffTime = Date.parse(_this.state.takeoffTime._d) - birtoday - 28800000;
+                    }
+
+                    inforData.save(_data);
+                    _this.props.dispatch({type:'change_infor',data:_data});
+
+                    Toast.loading('Loading...', 0.5, () => {
+                      _this.props.router.push('/s5');
+                      document.body.scrollTop = document.documentElement.scrollTop = 0;
+                    });
                   }}>上一步</div>
                   <div className="newNextPageActive" onClick={function(){
                     let _data = assign({},_this.props.infor.finaldata);

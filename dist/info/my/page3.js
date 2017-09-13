@@ -19,7 +19,7 @@ var pageThird = (function(){
 		 // 一间空房子
 		 function outputRoom() {
 		 	// 如果是模板 3 紧急联系人是必填
-		 	if ( loaddata.template == 3 ) {
+		 	if ( loaddata.template == 3 || loaddata.template == 9 ) {
 				var obj = {
 					"roomId":{allow:true,data:null},
 					"bedType":{allow:false,data:null},
@@ -560,7 +560,7 @@ var pageThird = (function(){
 		$('ul.tabs').tabs(); // 初始化导航栏
 
 		// 如果 模板 3 ，不需要填写紧急联系人信息
-		if (loaddata.template != 3) {
+		if (loaddata.template != 3 && loaddata.template != 9) {
 			$(".EmergencyCT").css("display","none");
 		}
 

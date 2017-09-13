@@ -75,7 +75,11 @@ function earnest() {
   // 淘宝订单号
   $("#orderSn").html(mainInfo.orderSn);
   // 订房码
-  $("#reservationCode").html(mainInfo.reservationCode);
+  if (mainInfo.reservationCode) {
+    $("#reservationCode").html(mainInfo.reservationCode);
+  }else {
+    $("#reservationCode").html("无");
+  }
   // 入住人数
   $("#Occupancy").html(mainInfo.adultNum+"成人/"+mainInfo.childNum+"儿童");
   $("#OccupancyEN").html(mainInfo.adultNum+"adult，"+mainInfo.childNum+"kids");
@@ -181,6 +185,11 @@ function fullamount() {
   );
   $("#part7").html("<img src='./img/map1.png'>");
   $(".part8-Email").html(loademail);
+
+  // 如果没有订房码,则显示无
+  if (!mainInfo.reservationCode) {
+    mainInfo.reservationCode = '无';
+  }
 
   // 马达京
   if (template == 1) {

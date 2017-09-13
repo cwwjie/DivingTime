@@ -1,16 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Switch, DatePicker, InputItem, List, Picker, Toast} from 'antd-mobile';
+import {Switch, DatePicker, InputItem, List, Picker, Toast, Modal} from 'antd-mobile';
 import assign from 'lodash.assign';
 import moment from 'moment';
 
 import traveler from './../icon/traveler.png';
 import dateTime from './../method/dateTime.jsx';
 import pinYin from './../method/pinYin.jsx';
+import Autocomplete from './../method/Autocomplete.jsx';
 
 const Item = List.Item;
 const Brief = Item.Brief;
-
+const alert = Modal.alert;
 
 let minDate = new Date(-410227200000);
 minDate = dateTime.dateToFormat(minDate)+' +0800';
@@ -99,6 +100,7 @@ class customer extends React.Component {
     super(props);
     this.state = {
       next:false,
+      "travelerType":'adult',//child adult
 
       "alert":"请填写相关信息",
 
@@ -118,6 +120,7 @@ class customer extends React.Component {
       "email":null,
         emailError:false,
         emailErrorT:'中文名为必填',
+        Autocomplete:false,
       "divePicker":["N"],
       "Dive":false, // 控制是否显示深潜列表
       "isDive":"N",// 是否深潜？ "N" "Y" 最终上传的数据
@@ -135,17 +138,64 @@ class customer extends React.Component {
       return
     }
     if (this.props.room.roomID == null) {
-      this.props.router.push('/s6');
+      this.props.router.push('/s5');
       return
     }
     if (this.props.room.customerId == null) {
       this.props.router.push('/room');
       return
     }
-    let _date = assign({},this.state);
-    const roomId = this.props.room.roomID;
-    const customerId = this.props.room.customerId;
-    let customerInfo = this.props.infor.finaldata.roomInfoList[roomId].customerInfoList[customerId];
+    let _this = this,
+      _date = assign({},this.state),
+      roomId = this.props.room.roomID,
+      customerId = this.props.room.customerId,
+      customerInfo = this.props.infor.finaldata.roomInfoList[roomId].customerInfoList[customerId],
+      allNum = 0,
+      childNum = 0,
+      adultNum = 0,
+      allRoom = this.props.infor.finaldata.roomInfoList,
+      MaxAdultNum = this.props.infor.finaldata.adultNum,
+      MaxChildNum = this.props.infor.finaldata.childNum;
+
+    for (let i = 0; i < allRoom.length; i++) {
+      let thisRoomCustomerNum = allRoom[i].customerInfoList.length;
+      allNum += thisRoomCustomerNum;
+      for (let j = 0; j < thisRoomCustomerNum; j++) {
+        let myCustomer = allRoom[i].customerInfoList[j];
+        if (myCustomer.isKid == 'N') {
+          childNum++;
+        }else {
+          adultNum++;
+        }
+      }
+    }
+    // 如果成人与小孩都有余，就提问
+    if ( childNum < MaxChildNum && adultNum < MaxAdultNum ) {
+      alert('旅客类型', '请问您要添加成人还是小孩?', [
+        { text: '小孩', onPress: function(){
+          _this.setState({
+            "travelerType":'child',
+            "mobile":_this.props.infor.finaldata.mobile,
+            "email":_this.props.infor.finaldata.email
+          });
+        } },
+        { text: '成人', onPress: function(){
+          _this.setState({"travelerType":'adult'});
+        } },
+      ]);
+    // 如果小孩有余
+    }else if (adultNum >= MaxAdultNum && childNum < MaxChildNum) {
+      _date.travelerType = 'child';
+      _date.mobile = this.props.infor.finaldata.mobile;
+      _date.email = this.props.infor.finaldata.email;
+    // 如果成人有余
+    }else if (childNum < MaxChildNum && adultNum >= MaxAdultNum) {
+      _date.travelerType = 'adult';
+    // 如果都不是,默认成人
+    }else {
+      _date.travelerType = 'adult';
+    }
+
     if (customerInfo == undefined) {
       // 表示是新增
     }else {
@@ -300,40 +350,76 @@ class customer extends React.Component {
             >
               <Item arrow="horizontal">生日</Item>
             </DatePicker>
+            <div style={(function(){
+              if (this.state.travelerType == 'child') {
+                return {
+                  'display':'none'
+                }
+              }else {
+                return {
+                  'display':'bolck'
+                }
+              }
+            }.bind(this))()}>
+              <InputItem
+                type="number"
+                placeholder="请输入手机/电话号码"
+                error={this.state.mobileError}
+                onErrorClick={function(){
+                  Toast.fail(this.state.mobileErrorT, 1);
+                }.bind(this)}
+                onChange={function(value){
+                  const _this = this;
+                  let _data = assign({},this.state);
+                  _data.mobile = value;
+                  this.setState(_data,()=>{verify(_this)});
+                }.bind(this)}
+                value={this.state.mobile}
+              >手机/电话</InputItem>
 
-            <InputItem
-              type="number"
-              placeholder="请输入手机/电话号码"
-              error={this.state.mobileError}
-              onErrorClick={function(){
-                Toast.fail(this.state.mobileErrorT, 1);
-              }.bind(this)}
-              onChange={function(value){
-                const _this = this;
-                let _data = assign({},this.state);
-                _data.mobile = value;
-                this.setState(_data,()=>{verify(_this)});
-              }.bind(this)}
-              value={this.state.mobile}
-            >手机/电话</InputItem>
+              <InputItem
+                type="text"
+                placeholder="请输入邮箱号码"
+                error={this.state.emailError}
+                onErrorClick={function(){
+                  Toast.fail(this.state.emailErrorT, 1);
+                }.bind(this)}
+                onChange={function(value){
+                  const _this = this;
+                  let _data = assign({},this.state);
+                  if (
+                    !/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test( value ) ||
+                    value == null ||
+                    value == ""
+                  ) {
+                    _data.Autocomplete = true;
+                  }else {
+                    _data.Autocomplete = false;
+                  }
+                  _data.email = value;
+                  this.setState(_data,()=>{verify(_this)});
+                }.bind(this)}
+                value={this.state.email}
+              >邮箱</InputItem>
 
-            <InputItem
-              type="text"
-              placeholder="请输入邮箱号码"
-              error={this.state.emailError}
-              onErrorClick={function(){
-                Toast.fail(this.state.emailErrorT, 1);
-              }.bind(this)}
-              onChange={function(value){
-                const _this = this;
-                let _data = assign({},this.state);
-                _data.email = value;
-                this.setState(_data,()=>{verify(_this)});
-              }.bind(this)}
-              value={this.state.email}
-            >邮箱</InputItem>
-
-
+              <Autocomplete
+                show={this.state.Autocomplete}
+                onChange={function(val){
+                  let _this = this;
+                  let myEmail = this.state.email;
+                  let stateDate = assign({},this.state);
+                  stateDate.email = myEmail + val;
+                  stateDate.Autocomplete = false;
+                  if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(myEmail + val)) {
+                    stateDate.emailError = false;
+                    stateDate.emailErrorT = "";
+                  }
+                  this.setState(stateDate,()=>{
+                    verify(_this);
+                  });
+                }.bind(this)}
+              />
+            </div>
 
             <Picker
               data={diveList} cols={1} className="forss"
@@ -448,6 +534,11 @@ class customer extends React.Component {
                 }else {
                   json.customerId = _this.state.customerId;
                   json.roomId = _this.state.roomId;
+                }
+                if (_this.state.travelerType == 'child') {
+                  json.isKid = 'N';
+                }else {
+                  json.isKid = 'Y';
                 }
 
                 json.passportNo = _this.state.passportNo;
@@ -572,24 +663,26 @@ function verify(_this) {
     _data.next = false;
   }
 
-  if (_this.state.mobile == null || _this.state.mobile == "" ) {
-    _data.alert = "手机不能为空";
-    _data.mobileError = true;
-    _data.mobileErrorT = "手机不能为空";
-    _data.next = false;
-  }
+  if (_this.state.travelerType == 'adult') {
+    if (_this.state.mobile == null || _this.state.mobile == "" ) {
+      _data.alert = "手机不能为空";
+      _data.mobileError = true;
+      _data.mobileErrorT = "手机不能为空";
+      _data.next = false;
+    }
 
-  if ( (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test( _this.state.email ) ) == false ) {
-    _data.alert = "邮箱格式错误";
-    _data.emailError = true;
-    _data.emailErrorT = "邮箱格式错误";
-    _data.next = false;
-  }
-  if (_this.state.email == null || _this.state.email == "" ) {
-    _data.alert = "邮箱不能为空";
-    _data.emailError = true;
-    _data.emailErrorT = "邮箱不能为空";
-    _data.next = false;
+    if ( (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test( _this.state.email ) ) == false ) {
+      _data.alert = "邮箱格式错误";
+      _data.emailError = true;
+      _data.emailErrorT = "邮箱格式错误";
+      _data.next = false;
+    }
+    if (_this.state.email == null || _this.state.email == "" ) {
+      _data.alert = "邮箱不能为空";
+      _data.emailError = true;
+      _data.emailErrorT = "邮箱不能为空";
+      _data.next = false;
+    }
   }
   _this.setState(_data);
 }

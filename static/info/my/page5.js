@@ -41,6 +41,9 @@ var pageFourth = (function(){
 						$("#_END").text("发生未知错误，"+message.message);
 						$("#_ENDiconError").css('display', 'block');
 
+						$("#errorMessage").css('display', 'block');
+
+
 						$("#_ENDiconNo").css('display', 'none');
 					}
 				},
@@ -48,6 +51,7 @@ var pageFourth = (function(){
 					$("#_END").text("发生未知错误，"+ errorThrown);
 					$("#_ENDiconError").css('display', 'block');
 
+					$("#errorMessage").css('display', 'block');
 					$("#_ENDiconNo").css('display', 'none');
 				}
 			});
@@ -88,6 +92,7 @@ var pageFourth = (function(){
 						$("#_END").text("发生未知错误，"+message.message);
 						$("#_ENDiconError").css('display', 'block');
 
+						$("#errorMessage").css('display', 'block');
 						$("#_ENDiconNo").css('display', 'none');
 					}
 				},
@@ -95,12 +100,16 @@ var pageFourth = (function(){
 					$("#_END").text("发生未知错误，"+ errorThrown);
 					$("#_ENDiconError").css('display', 'block');
 
+					$("#errorMessage").css('display', 'block');
 					$("#_ENDiconNo").css('display', 'none');
 				}
 			});
 		}
+		$("#errorMessage").click(function(){
+			location = "./../user/account.html#taobao";
+		});
 		$("#_ENDBTN").click(function(event) {
-        	location = "./view/index.html";
+			location = "./view/index.html";
 			// window.location = sessionStorage.getItem('AllUrl');
 		});
 	}
