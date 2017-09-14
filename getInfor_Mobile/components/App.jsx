@@ -42,7 +42,7 @@ class App extends React.Component {
       let router = "";
       let teskData = {};
       if (confirm("这是测试环境,请问你是第一次填写吗?")){
-        teskData = {"adultNum":1,"calMethod":"4500","childNum":0,"orderDesc":"订单描述","payStatus":1,"productAmount":500,"flightNote":"","infoId":null,"isRead":"N","readTime":null,"orderSn":"2017082701","orderSrc":"TB","template":1,"orderName":"四人间","roomNum":1,"peopleNum":3,"checkIn":1507564800000,"checkOut":1507651200000,"orderAmount":4500,"discount":0,"payAmount":500,"notPayAmount":4000,"present":"","signName":null,"payAccount":null,"mobile":null,"email":null,"outboundNum":null,"landTime":null,"landDate":null,"inboundNum":null,"takeoffTime":null,"takeoffDate":null,"inHarbourNum":null,"hLandTime":null,"hLandDate":null,"outHarbourNum":null,"hTakeoffTime":null,"hTakeoffDate":null,"roomInfoList":[]};
+        teskData = {"adultNum":1,"childNum":0,"calMethod":"4500","orderDesc":"订单描述","payStatus":1,"productAmount":500,"flightNote":"","infoId":null,"isRead":"N","readTime":null,"orderSn":"2017082701","orderSrc":"TB","template":1,"orderName":"四人间","roomNum":1,"peopleNum":3,"checkIn":1507564800000,"checkOut":1507651200000,"orderAmount":4500,"discount":0,"payAmount":500,"notPayAmount":4000,"present":"","signName":null,"payAccount":null,"mobile":null,"email":null,"outboundNum":null,"landTime":null,"landDate":null,"inboundNum":null,"takeoffTime":null,"takeoffDate":null,"inHarbourNum":null,"hLandTime":null,"hLandDate":null,"outHarbourNum":null,"hTakeoffTime":null,"hTakeoffDate":null,"roomInfoList":[]};
         teskData.isRead = "N";
         teskData.template = 3;
         teskData.roomNum = 1;
@@ -57,7 +57,7 @@ class App extends React.Component {
         _this.props.dispatch({type:'inti_infor',data:teskData});
         _this.props.router.push("/s1");
       }else {
-        teskData = {"adultNum":1,"calMethod":"4500","childNum":0,"orderDesc":"订单描述","payStatus":1,"productAmount":500,"flightNote":"","infoId":1,"isRead":"Y","readTime":null,"orderSn":"2017082701","orderSrc":"TB","template":1,"orderName":"四人间","roomNum":2,"peopleNum":3,"checkIn":1507564800000,"checkOut":1507651200000,"orderAmount":4500,"discount":0,"payAmount":500,"notPayAmount":4000,"present":"","signName":null,"payAccount":null,"mobile":null,"email":null,"outboundNum":null,"landTime":null,"landDate":null,"inboundNum":null,"takeoffTime":null,"takeoffDate":null,"inHarbourNum":null,"hLandTime":null,"hLandDate":null,"outHarbourNum":null,"hTakeoffTime":null,"hTakeoffDate":null,"roomInfoList":[]};
+        teskData = {"peopleNum":4,"adultNum":2,"childNum":2,"calMethod":"4500","orderDesc":"订单描述","payStatus":1,"productAmount":500,"flightNote":"","infoId":1,"isRead":"Y","readTime":null,"orderSn":"2017082701","orderSrc":"TB","template":1,"orderName":"四人间","roomNum":2,"checkIn":1507564800000,"checkOut":1507651200000,"orderAmount":4500,"discount":0,"payAmount":500,"notPayAmount":4000,"present":"","signName":null,"payAccount":null,"mobile":null,"email":null,"outboundNum":null,"landTime":null,"landDate":null,"inboundNum":null,"takeoffTime":null,"takeoffDate":null,"inHarbourNum":null,"hLandTime":null,"hLandDate":null,"outHarbourNum":null,"hTakeoffTime":null,"hTakeoffDate":null,"roomInfoList":[]};
         teskData.isRead = "Y";
         teskData.template = 8;
         teskData.roomNum = 2;

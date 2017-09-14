@@ -8,7 +8,7 @@ var loginSuccessful = {},
 
 // 判断成功 初始化页面
 function initAll() {
-	// loaddata.template = 9;
+	// loaddata.template = 3;
 	// loaddata.present = "1";
 	/**
 	 * 下面是常规的初始化(技术相关)

@@ -106,7 +106,7 @@ class Stage6 extends React.Component {
     }
 
     // 初始化紧急联系人
-    if (this.props.infor.loaddata.template == 3 || this.props.infor.loaddata.template == 9) {
+    if (this.props.infor.loaddata.template == 3) {
       let _this = this;
       _date.emergencyContact = "block";
       _date.iceName = this.props.infor.finaldata.roomInfoList[0].iceName;
@@ -328,25 +328,27 @@ class Stage6 extends React.Component {
                 value={this.state.iceMobile}
               >手机(电话)</InputItem>
 
-              <InputItem
-                type="text"
-                placeholder="请输入紧急联系人邮箱"
-                error={this.state.emailError}
-                onErrorClick={function(){
-                  Toast.fail(this.state.emailErrorDesc, 1);
-                }.bind(this)}
-                onChange={function(value){
-                  let self = this;
-                  this.setState(
-                    {
-                      iceEmail:value
-                    },()=>{
-                      verifyData(self);
-                    }
-                  );
-                }.bind(this)}
-                value={this.state.iceEmail}
-              >邮箱</InputItem>
+              <div style={{display:'none'}}>
+                <InputItem
+                  type="text"
+                  placeholder="请输入紧急联系人邮箱"
+                  error={this.state.emailError}
+                  onErrorClick={function(){
+                    Toast.fail(this.state.emailErrorDesc, 1);
+                  }.bind(this)}
+                  onChange={function(value){
+                    let self = this;
+                    this.setState(
+                      {
+                        iceEmail:value
+                      },()=>{
+                        verifyData(self);
+                      }
+                    );
+                  }.bind(this)}
+                  value={this.state.iceEmail}
+                >邮箱</InputItem>
+              </div>
             </List>
           </div>
 
@@ -355,49 +357,70 @@ class Stage6 extends React.Component {
         <div className="NavBottom">
           {(function(){
             let _this = this;
+            // 并非第一次提交
             if (this.state.first == false) {
-                return <div className="submitContent">
-                  <div className="subData" onClick={function(){
-                    let finaldata = assign({},_this.props.infor.finaldata);
-                    // 提交信息
-                    _this.setState({animating:true});
-                    // 如果信息有改变则提交
-                    if (true) {
-                      fetch(
-                        URL.base + URL.version + "/gather/"+localStorage.getItem('_uniqueKey')+"/updateForm.do",{
-                        method: "POST",
-                        headers:{
-                          "Content-Type": "application/json; charset=utf-8",
-                          'token':localStorage.getItem('_token'),
-                          'digest':localStorage.getItem('_digest')
-                        },
-                        body:JSON.stringify(finaldata)
-                      }).then(function(response) {
-                        return response.json()
-                      }).then(function(json) {
-                        let _date = assign({},_this.state);
-                        if (json.result == "0") {
-                          _date.animating = false;
-                        }else if (json.result == "2") {
-                          _date.animating = false;
-                          alert("非常抱歉，该链接已经失效");
-                        }else if (json.result == "3") {
-                          _date.animating = false;
-                          alert("非常抱歉，无法进行数据修改");
+                if (_this.state.next) {
+                  return <div className="submitContent">
+                    <div className="subData" onClick={function(){
+                      let finaldata = assign({},_this.props.infor.finaldata);
+                      for (let j = 0; j < finaldata.roomInfoList.length; j++) {
+                        finaldata.roomInfoList[j].iceName = _this.state.iceName;
+                        if (_this.state.iceRelation == null) {
+                          finaldata.roomInfoList[j].iceRelation = null;
                         }else {
-                          _date.animating = false;
-                          alert("发生未知错误:" + json.message);
+                          finaldata.roomInfoList[j].iceRelation = _this.state.iceRelation[0];
                         }
-                        _this.setState(_date);
-                        _this.props.router.push('/index');
-                        document.body.scrollTop = document.documentElement.scrollTop = 0;
-                      });
-                    }
-                  }}>保存</div>
-                  <div className="abanData" onClick={function(){
-                    _this.props.router.push('/index');
-                  }}>返回</div>
-                </div>
+                        finaldata.roomInfoList[j].iceMobile = _this.state.iceMobile;
+                        finaldata.roomInfoList[j].iceEmail = _this.state.iceEmail;
+                      }
+                      // 提交信息
+                      _this.setState({animating:true});
+                      // 如果信息有改变则提交
+                      if (true) {
+                        fetch(
+                          URL.base + URL.version + "/gather/"+localStorage.getItem('_uniqueKey')+"/updateForm.do",{
+                          method: "POST",
+                          headers:{
+                            "Content-Type": "application/json; charset=utf-8",
+                            'token':localStorage.getItem('_token'),
+                            'digest':localStorage.getItem('_digest')
+                          },
+                          body:JSON.stringify(finaldata)
+                        }).then(function(response) {
+                          return response.json()
+                        }).then(function(json) {
+                          let _date = assign({},_this.state);
+                          if (json.result == "0") {
+                            _date.animating = false;
+                          }else if (json.result == "2") {
+                            _date.animating = false;
+                            alert("非常抱歉，该链接已经失效");
+                          }else if (json.result == "3") {
+                            _date.animating = false;
+                            alert("非常抱歉，无法进行数据修改");
+                          }else {
+                            _date.animating = false;
+                            alert("发生未知错误:" + json.message);
+                          }
+                          _this.setState(_date);
+                          _this.props.router.push('/index');
+                          document.body.scrollTop = document.documentElement.scrollTop = 0;
+                        });
+                      }
+                    }}>保存</div>
+                    <div className="abanData" onClick={function(){
+                      _this.props.router.push('/index');
+                    }}>返回</div>
+                  </div>
+                }else {
+                  return <div className="submitContent">
+                    <div className="saveData" style={{color:"red",border: "1px solid red"}} onClick={function(){
+                    }}>保存</div>
+                    <div className="newNextPageActive" onClick={function(){
+                      _this.props.router.push('/index');
+                    }}>返回</div>
+                  </div>
+                }
             }else {
               if (this.state.next) {
                 return <div className="submitContent">
@@ -543,20 +566,20 @@ function verifyData(self) {
     stateDate.mobileErrorDesc = "";   
   }
 
-  if (self.state.iceEmail == null || self.state.iceEmail == "") {
-    stateDate.emailError = true;
-    stateDate.emailErrorDesc = "紧急联系人邮箱不能为空";    
-    stateDate.nextStepDesc = "紧急联系人邮箱不能为空"; 
-    verifysuccess = false;
-  }else if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(self.state.iceEmail) == false) {
-    stateDate.emailError = true;
-    stateDate.emailErrorDesc = "紧急联系人邮箱格式不正确";    
-    stateDate.nextStepDesc = "紧急联系人邮箱格式不正确"; 
-    verifysuccess = false;
-  }else {
-    stateDate.emailError = false;
-    stateDate.emailErrorDesc = "";   
-  }
+  // if (self.state.iceEmail == null || self.state.iceEmail == "") {
+  //   stateDate.emailError = true;
+  //   stateDate.emailErrorDesc = "紧急联系人邮箱不能为空";    
+  //   stateDate.nextStepDesc = "紧急联系人邮箱不能为空"; 
+  //   verifysuccess = false;
+  // }else if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(self.state.iceEmail) == false) {
+  //   stateDate.emailError = true;
+  //   stateDate.emailErrorDesc = "紧急联系人邮箱格式不正确";    
+  //   stateDate.nextStepDesc = "紧急联系人邮箱格式不正确"; 
+  //   verifysuccess = false;
+  // }else {
+  //   stateDate.emailError = false;
+  //   stateDate.emailErrorDesc = "";   
+  // }
 
   if (verifysuccess == false) {
     stateDate.next = false;

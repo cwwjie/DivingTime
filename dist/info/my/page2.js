@@ -318,6 +318,17 @@ var pageSecond = (function(){
 				dataAllow.mobile.allow = false;
 				return
 			}
+			// if (event.target.value == "" || event.target.value.trim() == null) {
+			// }else {
+			// 	if ( !(/^[0-9]*$/.test(parseInt(event.target.value.trim()))) ) {
+			// 		setTimeout(function(){
+			// 			event.target.setAttribute("class","validate invalid");
+			// 		},100);
+			// 		$("#BasicPhone").next().text("必须纯数字");
+			// 		dataAllow.mobile.allow = false;
+			// 		return
+			// 	}
+			// }
 			$("#BasicPhone").next().text("");
 			dataAllow.mobile.data = event.target.value.trim();
 			dataAllow.mobile.allow = true;
@@ -330,8 +341,7 @@ var pageSecond = (function(){
 				$("#BasicEmail").next().text("不能为空");
 				dataAllow.email.allow = false;
 				return
-			}
-			if (!(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(event.target.value.trim()))) {
+			}else if (!(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(event.target.value.trim()))) {
 				setTimeout(function(){
 					event.target.setAttribute("class","validate invalid");
 				},100);
@@ -339,6 +349,17 @@ var pageSecond = (function(){
 				dataAllow.email.allow = false;
 				return
 			}
+			// if (event.target.value.trim() == "" || event.target.value.trim() == null) {
+			// }else {
+			// 	if (!(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(event.target.value.trim()))) {
+			// 		setTimeout(function(){
+			// 			event.target.setAttribute("class","validate invalid");
+			// 		},100);
+			// 		$("#BasicEmail").next().text("邮箱不正确");
+			// 		dataAllow.email.allow = false;
+			// 		return
+			// 	}
+			// }
 			$("#BasicEmail").next().text("");
 			dataAllow.email.data = event.target.value.trim();
 			dataAllow.email.allow = true;

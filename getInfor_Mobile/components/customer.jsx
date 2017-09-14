@@ -162,7 +162,7 @@ class customer extends React.Component {
       allNum += thisRoomCustomerNum;
       for (let j = 0; j < thisRoomCustomerNum; j++) {
         let myCustomer = allRoom[i].customerInfoList[j];
-        if (myCustomer.isKid == 'N') {
+        if (myCustomer.isKid == 'Y') {
           childNum++;
         }else {
           adultNum++;
@@ -175,8 +175,8 @@ class customer extends React.Component {
         { text: '小孩', onPress: function(){
           _this.setState({
             "travelerType":'child',
-            "mobile":_this.props.infor.finaldata.mobile,
-            "email":_this.props.infor.finaldata.email
+            "mobile":"",
+            "email":""
           });
         } },
         { text: '成人', onPress: function(){
@@ -189,7 +189,7 @@ class customer extends React.Component {
       _date.mobile = this.props.infor.finaldata.mobile;
       _date.email = this.props.infor.finaldata.email;
     // 如果成人有余
-    }else if (childNum < MaxChildNum && adultNum >= MaxAdultNum) {
+    }else if (childNum >= MaxChildNum && adultNum < MaxAdultNum) {
       _date.travelerType = 'adult';
     // 如果都不是,默认成人
     }else {
@@ -377,6 +377,7 @@ class customer extends React.Component {
                 value={this.state.mobile}
               >手机/电话</InputItem>
 
+              <div style={{display: 'none'}}>
               <InputItem
                 type="text"
                 placeholder="请输入邮箱号码"
@@ -419,6 +420,7 @@ class customer extends React.Component {
                   });
                 }.bind(this)}
               />
+              </div>
             </div>
 
             <Picker
@@ -536,9 +538,9 @@ class customer extends React.Component {
                   json.roomId = _this.state.roomId;
                 }
                 if (_this.state.travelerType == 'child') {
-                  json.isKid = 'N';
-                }else {
                   json.isKid = 'Y';
+                }else {
+                  json.isKid = 'N';
                 }
 
                 json.passportNo = _this.state.passportNo;
@@ -671,18 +673,18 @@ function verify(_this) {
       _data.next = false;
     }
 
-    if ( (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test( _this.state.email ) ) == false ) {
-      _data.alert = "邮箱格式错误";
-      _data.emailError = true;
-      _data.emailErrorT = "邮箱格式错误";
-      _data.next = false;
-    }
-    if (_this.state.email == null || _this.state.email == "" ) {
-      _data.alert = "邮箱不能为空";
-      _data.emailError = true;
-      _data.emailErrorT = "邮箱不能为空";
-      _data.next = false;
-    }
+    // if ( (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test( _this.state.email ) ) == false ) {
+    //   _data.alert = "邮箱格式错误";
+    //   _data.emailError = true;
+    //   _data.emailErrorT = "邮箱格式错误";
+    //   _data.next = false;
+    // }
+    // if (_this.state.email == null || _this.state.email == "" ) {
+    //   _data.alert = "邮箱不能为空";
+    //   _data.emailError = true;
+    //   _data.emailErrorT = "邮箱不能为空";
+    //   _data.next = false;
+    // }
   }
   _this.setState(_data);
 }

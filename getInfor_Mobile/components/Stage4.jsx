@@ -368,6 +368,8 @@ class Stage4 extends React.Component {
               if (this.state.next) {
                 return <div className="submitContent">
                   <div className="subData" onClick={function(){
+                    if (_this.state.next === false) { return }
+
                     let inforDate = assign({},_this.props.infor.finaldata);
                     inforDate.signName = _this.state.signName;
                     inforDate.payAccount = _this.state.payAccount;

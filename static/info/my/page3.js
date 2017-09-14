@@ -19,29 +19,29 @@ var pageThird = (function(){
 		 // 一间空房子
 		 function outputRoom() {
 		 	// 如果是模板 3 紧急联系人是必填
-		 	if ( loaddata.template == 3 || loaddata.template == 9 ) {
+		 	if ( loaddata.template == 3 ) {
 				var obj = {
-					"roomId":{allow:true,data:null},
-					"bedType":{allow:false,data:null},
-					"iceName":{allow:false,data:null},
-					"iceRelation":{allow:false,data:null},
-					"iceMobile":{allow:false,data:null},
-					"iceEmail":{allow:false,data:null},
-					"infoId":{allow:true,data:null},
-					"customerInfoList":[]
+					"roomId": {allow: true, data: null}, 
+					"bedType": {allow: false, data: null}, 
+					"iceName": {allow: false, data: null}, 
+					"iceRelation": {allow: false, data: null}, 
+					"iceMobile": {allow: false, data: null}, 
+					"iceEmail": {allow: true, data: null}, 
+					"infoId": {allow: true, data: null}, 
+					"customerInfoList": []
 				};
 				return obj
 		 	}else {
 				var obj = {
-					"roomId":{allow:true,data:null},
-					"bedType":{allow:false,data:null},
-					"iceName":{allow:true,data:null},
-					"iceRelation":{allow:true,data:null},
-					"iceMobile":{allow:true,data:null},
-					"iceEmail":{allow:true,data:null},
-					"infoId":{allow:true,data:null},
-					"customerInfoList":[]
-				};
+					"roomId": {allow: true, data: null}, 
+					"bedType": {allow: false, data: null}, 
+					"iceName": {allow: true, data: null}, 
+					"iceRelation": {allow: true, data: null}, 
+					"iceMobile": {allow: true, data: null}, 
+					"iceEmail": {allow: true, data: null}, 
+					"infoId": {allow: true, data: null}, 
+					"customerInfoList": []
+				}
 				return obj
 		 	}
 		 }
@@ -56,7 +56,7 @@ var pageThird = (function(){
 				"gender":{allow:false,data:null},
 				"birthday":{allow:false,data:null},
 				"mobile":{allow:false,data:null},
-				"email":{allow:false,data:null},
+				"email":{allow:true,data:null},
 				"isDive":{allow:false,data:null},
 				"divingRank":{allow:false,data:null},
 				"divingCount":{allow:false,data:null},
@@ -147,8 +147,6 @@ var pageThird = (function(){
 			}
 		}
 
-
-
 		/**
 		 * 下方是事件的初始化
 		 */
@@ -222,28 +220,38 @@ var pageThird = (function(){
 		});
 		// 紧急联系人邮箱并入到主数据
 		$("#_ugEmail").blur(function(event) {
-			allRoom[0].iceEmail.allow= false;
-			if (event.target.value.trim() == "" || event.target.value.trim() == null) {
-				setTimeout(function(){
-					event.target.setAttribute("class","validate invalid");
-				},100);
-				$("#_ugEmailText").text('不能为空');
-				return
-			}
-			if (!(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(event.target.value))) {
-			// 邮箱不正确
-				setTimeout(function(){
-					event.target.setAttribute("class","validate invalid");
-				},100);
-				$("#_ugEmailText").text('格式不正确');
-				return
+			// allRoom[0].iceEmail.allow= false;
+			// if (event.target.value.trim() == "" || event.target.value.trim() == null) {
+			// 	setTimeout(function(){
+			// 		event.target.setAttribute("class","validate invalid");
+			// 	},100);
+			// 	$("#_ugEmailText").text('不能为空');
+			// 	return
+			// }
+			// if (!(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(event.target.value))) {
+			// // 邮箱不正确
+			// 	setTimeout(function(){
+			// 		event.target.setAttribute("class","validate invalid");
+			// 	},100);
+			// 	$("#_ugEmailText").text('格式不正确');
+			// 	return
+			// }
+			var thisValue = $(this).val().trim() || ''
+			if (thisValue !== '') {
+				if(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(thisValue) === false) {
+					setTimeout(function () {
+						event.target.setAttribute("class","validate invalid")
+					}, 100)
+					$("#_ugEmailText").text('格式不正确')
+					return
+				}
 			}
 			$("#_ugEmailText").text('');
 			for (var i = 0; i < allRoom.length; i++) {
-				allRoom[i].iceEmail.allow= true;
-				allRoom[i].iceEmail.data = event.target.value.trim();
+				allRoom[i].iceEmail.allow = true
+				allRoom[i].iceEmail.data = thisValue
 			}
-		});
+		})
 
 		// 初始化 模态框保存
 		$("#colseModal").click(function(event) {
@@ -377,21 +385,32 @@ var pageThird = (function(){
 		})
 		// 判断 邮箱 是否正确
 		$("#liveEmail").blur(function(event){
-			if (event.target.value == "" || event.target.value.trim() == null) {
-				$(this).next().html('不能为空');
-				dataModal.email.allow = false;
-				return
-			}else if (!(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(event.target.value.trim()))) {
-				// 邮箱不正确
-				$(this).next().html('邮箱不正确');
-				setTimeout(function(){
-					event.target.setAttribute("class","validate invalid");
-				},100);
-				dataModal.email.allow = false;
-				return
+			// if (event.target.value == "" || event.target.value.trim() == null) {
+			// 	$(this).next().html('不能为空');
+			// 	dataModal.email.allow = false;
+			// 	return
+			// }else if (!(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(event.target.value.trim()))) {
+			// 	// 邮箱不正确
+			// 	$(this).next().html('邮箱不正确');
+			// 	setTimeout(function(){
+			// 		event.target.setAttribute("class","validate invalid");
+			// 	},100);
+			// 	dataModal.email.allow = false;
+			// 	return
+			// }
+			var myEmailValue = $(this).val().trim() || ''
+			if (myEmailValue !== '') {
+				if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(myEmailValue) === false) {
+					$(this).next().html('邮箱不正确');
+					setTimeout(function () {
+						$(this).attr('class', 'validate invalid')
+					}, 100)
+					dataModal.email.allow = false
+					return
+				}
 			}
 			$(this).next().html('');
-			dataModal.email.data = event.target.value.trim();
+			dataModal.email.data = myEmailValue;
 			dataModal.email.allow = true;
 		})
 
@@ -576,7 +595,7 @@ var pageThird = (function(){
 		$('ul.tabs').tabs(); // 初始化导航栏
 
 		// 如果 模板 3 ，不需要填写紧急联系人信息
-		if (loaddata.template != 3 && loaddata.template != 9) {
+		if (loaddata.template != 3) {
 			$(".EmergencyCT").css("display","none");
 		}
 
@@ -674,9 +693,9 @@ var pageThird = (function(){
 				dataModal = initiModal();
 				dataModal.roomId.data = allRoom[event.target.getAttribute("data-Roomid")].roomId.data;
 				// 初始化儿童
-				dataModal.email = {allow:true,data:finaldata.email};
-				dataModal.mobile = {allow:true,data:finaldata.mobile};
-				dataModal.isKid = {allow:true,data:'N'};;
+				dataModal.email = {allow:true,data:""};
+				dataModal.mobile = {allow:true,data:""};
+				dataModal.isKid = {allow:true,data:'Y'};;
 				$("#showAdultData").hide();
 				$("#CloseTraModal").next().html("入住儿童信息");
 				$("#livePhone").next().next().html('手机号码/电话');
@@ -824,23 +843,23 @@ var pageThird = (function(){
 		for (var i = 0; i < allCard.length; i++) {
 			// 判断 深潜
 			var _chack,cardIsKid,cardTitle;
-			if (allCard[i].isDive.data=="Y") {
+			if (allCard[i].isDive.data == "Y") {
 				_chack = "block"
 			}else {
 				_chack = "none"
 			}
 			if (allCard[i].isKid.data == 'N') {
-				cardTitle = '儿童信息';
-				cardIsKid = "none"
-			}else {
-				cardTitle = '旅客信息';
+				cardTitle = '成人';
 				cardIsKid = "block"
+			}else {
+				cardTitle = '儿童';
+				cardIsKid = "none"
 			}
 			
 			_carString += [
 				"<div class='card-panel _part' id='card-panel"+i+"'>",
 					"<div class='row delete'>",
-						"<a class='title'>" + cardTitle + (i+1) + "</a>",
+						"<a class='title' style='color: #000;'>旅客信息"  + (i + 1) + ' - ' +cardTitle + "</a>",
 						"<i id='delete" + i + "Room" + roomNum + "' class='mdi-navigation-close right'></i>",
 					"</div>",
 					"<div class='row'>",
@@ -856,8 +875,8 @@ var pageThird = (function(){
 						"<div class='input-field col s6'>生日:<span>"+returnDate(testDataNull(allCard[i].birthday.data))+"</span></div>",
 					"</div>",
 					"<div class='row' style='display:"+cardIsKid+";'>",
-						"<div class='input-field col s6'>手机(电话):<span>"+testDataNull(allCard[i].mobile.data)+"</span></div>",
-						"<div class='input-field col s6'>邮箱:<span>"+testDataNull(allCard[i].email.data)+"</span></div>",
+						"<div class='input-field col s12'>手机(电话):<span>"+testDataNull(allCard[i].mobile.data)+"</span></div>",
+						// "<div class='input-field col s6'>邮箱:<span>"+testDataNull(allCard[i].email.data)+"</span></div>",
 					"</div>",
 					"<div class='row'>",
 						"<div class='input-field col s6'>是否深潜:<span>"+((allCard[i].isDive.data=="Y")?"深潜":"浮潜")+"</span></div>",
@@ -960,13 +979,14 @@ var pageThird = (function(){
 				if (_roomInfo == "customerInfoList") {
 					// 将忽略掉 customerInfoList 客户信息验证
 				}else{
-						if (allRoom[i][_roomInfo].allow == false) {
+					if (allRoom[i][_roomInfo].allow === false) {
+						
 						// 如果有一个验证不通过，不让通过
 						if (_roomInfo == "bedType") {
 							$(".bedtype .showError").html("每间房间必须选择床型");
 							_toast = '每间房间必须选择床型';
 						}else if (_roomInfo == "iceEmail") {
-							$("#_ugNameText").text('填写有误');
+							$("#_ugEmailText").text('填写有误');
 							_toast = '每间房间必须填写紧急联系人邮箱'
 						}else if (_roomInfo == "iceRelation") {
 							$("#_ugRelationText").text('填写有误');
@@ -975,7 +995,7 @@ var pageThird = (function(){
 							$("#_ugPhoneText").text('填写有误');
 							_toast = '每间房间必须填写紧急联系人的手机'
 						}else if (_roomInfo == "iceName") {
-							$("#_ugEmailText").text('填写有误');
+							$("#_ugNameText").text('填写有误');
 							_toast = '每间房间必须填写紧急联系人姓名'
 						}
 						_allow = false;

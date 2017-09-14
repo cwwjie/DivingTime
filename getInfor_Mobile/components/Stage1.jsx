@@ -10,9 +10,9 @@ class Stage1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      first:false,
-      next:false,
-      AgreeItem:false
+      first: false,
+      next: false,
+      AgreeItem: false
     };
   }
   componentDidMount() {

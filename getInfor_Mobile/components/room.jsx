@@ -281,10 +281,12 @@ class room extends React.Component {
                       value={mobile}
                       editable={false}
                     >手机(电话)</InputItem>
-                    <InputItem
-                      value={email}
-                      editable={false}
-                    >邮箱</InputItem>
+                    <div style={{display:'none'}}>
+                      <InputItem
+                        value={email}
+                        editable={false}
+                      >邮箱</InputItem>
+                    </div>
                     <InputItem
                       value={isDive}
                       editable={false}
