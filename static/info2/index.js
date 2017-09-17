@@ -4,22 +4,24 @@ var loaddata = {},
 window.onload = function() {
   if ( versionSupport.checkAll() === false ) { return }
 
-  myData.get()
-    .then(
-      function(response) {
-        return response.json()
-      },function(error) {
-        alert('加载数据错误, 错误代码: ' + error)
-      }
-    )
-    .then(function(json) {
-      if (json.result === '0') {
-        loaddata = myData.dealwith(json.data)
-      }else {
-        alert('加载数据失败, 原因: ' + json.message)
-      }
-    })
+  // myData.get()
+  //   .then(
+  //     function(response) {
+  //       return response.json()
+  //     },function(error) {
+  //       alert('加载数据错误, 错误代码: ' + error)
+  //     }
+  //   )
+  //   .then(function(json) {
+  //     if (json.result === '0') {
+  //       loaddata = myData.dealwith(json.data)
+  //     }else {
+  //       alert('加载数据失败, 原因: ' + json.message)
+  //     }
+  //   })
 }
+
+
 
 // 判断浏览器是否支持方法
 var versionSupport = {
@@ -61,14 +63,14 @@ var versionSupport = {
 var myData = {
   get:function() {
     var uniqueKey = localStorage.getItem('_uniqueKey')
-    return fetch(URLbase + URLversion + '/gather/link/' + uniqueKey + '/getGatherInfo.do',{
-      method: 'POST',
-      headers: {
-        token: localStorage.getItem('_token'),
-        digest: localStorage.getItem('_digest')
-      },
-      body: uploadForm
-    })
+    // return fetch(URLbase + URLversion + '/gather/link/' + uniqueKey + '/getGatherInfo.do',{
+    //   method: 'POST',
+    //   headers: {
+    //     token: localStorage.getItem('_token'),
+    //     digest: localStorage.getItem('_digest')
+    //   },
+    //   body: uploadForm
+    // })
   },
   dealwith:function(data) {
     if (data) {

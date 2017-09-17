@@ -644,7 +644,7 @@ var pageThird = (function(){
 				// 初始化模态框数据，指向新的数据、
 				dataModal = initiModal();
 				dataModal.roomId.data = allRoom[event.target.getAttribute("data-Roomid")].roomId.data;
-				dataModal.email.allow = false;
+				// dataModal.email.allow = false;
 				dataModal.mobile.allow = false;
 				$("#showAdultData").show();
 				$("#CloseTraModal").next().html("入住成人信息");

@@ -1,0 +1,19 @@
+{{ set (homeURL = "./../../") }}
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  {{ include("./../../basehead") }}
+  <link rel="stylesheet" type="text/css" href="./index.css?file_version=3.03">
+</head>
+<body>
+  {{ include("./../../navheader") }}
+
+  <div style="height:1110px;"></div>
+
+  {{ include("./../../navbottom") }}
+</body>
+  <script src="./../../dist/js/appconfig.js?file_version=3.03"></script>
+  <script src="./../javascript/es6-promise.min.js"></script>
+  <script src="./index.js?file_version=3.03"></script>
+</html>

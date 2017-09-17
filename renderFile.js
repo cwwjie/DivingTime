@@ -1,7 +1,7 @@
 const xtpl = require('xtpl');
 const Files = require('fs');
 
-
+// 首页
 xtpl.renderFile('./static/index.xtpl', {}, function(error, content) {
     Files.writeFile('./static/index.html', content, 'utf8', function() {
         console.log('index.html - OK')
@@ -11,6 +11,7 @@ xtpl.renderFile('./static/index.xtpl', {}, function(error, content) {
     })
 });
 
+// 详情页面
 xtpl.renderFile('./static/page/index.xtpl', {}, function(error, content) {
     Files.writeFile('./static/page/index.html', content, 'utf8', function() {
         console.log('page.html - OK')
@@ -18,16 +19,16 @@ xtpl.renderFile('./static/page/index.xtpl', {}, function(error, content) {
     Files.writeFile('./dist/page/index.html', content, 'utf8', function() {
         console.log('page.html - OK')
     })
-});
-xtpl.renderFile('./static/page/reserve/index.xtpl', {}, function(error, content) {
+ });
+ xtpl.renderFile('./static/page/reserve/index.xtpl', {}, function(error, content) {
     Files.writeFile('./static/page/reserve/index.html', content, 'utf8', function() {
         console.log('reserve.html - OK')
     })
     Files.writeFile('./dist/page/reserve/index.html', content, 'utf8', function() {
         console.log('reserve.html - OK')
     })
-});
-xtpl.renderFile('./static/page/payment/index.xtpl', {}, function(error, content) {
+ });
+ xtpl.renderFile('./static/page/payment/index.xtpl', {}, function(error, content) {
     Files.writeFile('./static/page/payment/index.html', content, 'utf8', function() {
         console.log('payment.html - OK')
     })
@@ -36,7 +37,7 @@ xtpl.renderFile('./static/page/payment/index.xtpl', {}, function(error, content)
     })
 });
 
-
+// other 其他页面
 xtpl.renderFile('./static/other/aboutus.xtpl', {}, function(error, content) {
     Files.writeFile('./static/other/aboutus.html', content, 'utf8', function() {
         console.log('aboutus.html - OK')
@@ -44,45 +45,55 @@ xtpl.renderFile('./static/other/aboutus.xtpl', {}, function(error, content) {
     Files.writeFile('./dist/other/aboutus.html', content, 'utf8', function() {
         console.log('aboutus.html - OK')
     })
-});
-xtpl.renderFile('./static/other/teamstory.xtpl', {}, function(error, content) {
+ });
+ xtpl.renderFile('./static/other/teamstory.xtpl', {}, function(error, content) {
     Files.writeFile('./static/other/teamstory.html', content, 'utf8', function() {
         console.log('teamstory.html - OK')
     })
     Files.writeFile('./dist/other/teamstory.html', content, 'utf8', function() {
         console.log('teamstory.html - OK')
     })
-});
-xtpl.renderFile('./static/other/joinus.xtpl', {}, function(error, content) {
+ });
+ xtpl.renderFile('./static/other/joinus.xtpl', {}, function(error, content) {
     Files.writeFile('./static/other/joinus.html', content, 'utf8', function() {
         console.log('joinus.html - OK')
     })
     Files.writeFile('./dist/other/joinus.html', content, 'utf8', function() {
         console.log('joinus.html - OK')
     })
-});
-xtpl.renderFile('./static/other/help.xtpl', {}, function(error, content) {
+ });
+ xtpl.renderFile('./static/other/help.xtpl', {}, function(error, content) {
     Files.writeFile('./static/other/help.html', content, 'utf8', function() {
         console.log('help.html - OK')
     })
     Files.writeFile('./dist/other/help.html', content, 'utf8', function() {
         console.log('help.html - OK')
     })
-});
-xtpl.renderFile('./static/other/privacy.xtpl', {}, function(error, content) {
+ });
+ xtpl.renderFile('./static/other/privacy.xtpl', {}, function(error, content) {
     Files.writeFile('./static/other/privacy.html', content, 'utf8', function() {
         console.log('privacy.html - OK')
     })
     Files.writeFile('./dist/other/privacy.html', content, 'utf8', function() {
         console.log('privacy.html - OK')
     })
-});
-xtpl.renderFile('./static/other/policy.xtpl', {}, function(error, content) {
+ });
+ xtpl.renderFile('./static/other/policy.xtpl', {}, function(error, content) {
     Files.writeFile('./static/other/policy.html', content, 'utf8', function() {
         console.log('policy.html - OK')
     })
     Files.writeFile('./dist/other/policy.html', content, 'utf8', function() {
         console.log('policy.html - OK')
+    })
+});
+
+// 度假村直定页面
+xtpl.renderFile('./static/village/index.xtpl', {}, function(error, content) {
+    Files.writeFile('./static/village/index.html', content, 'utf8', function() {
+        console.log('village/index.html - OK')
+    })
+    Files.writeFile('./dist/village/index.html', content, 'utf8', function() {
+        console.log('village/index.html - OK')
     })
 });
 
