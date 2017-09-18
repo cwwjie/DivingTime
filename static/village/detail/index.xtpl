@@ -4,16 +4,114 @@
 <html lang="zh">
 <head>
   {{ include("./../../basehead") }}
+  <link rel="stylesheet" type="text/css" href="./../dist/css/bootstrap-datetimepicker.min.css" media="screen">
+  <script type="text/javascript" src="./../dist/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="./../dist/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
   <link rel="stylesheet" type="text/css" href="./index.css?file_version=3.03">
 </head>
 <body>
   {{ include("./../../navheader") }}
+
+  <div id="myCarousel" class="myCarousel">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators" id="carouselIndicators">
+        <!-- <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li> -->
+      </ol>
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" id="carouselInner" role="listbox">
+        <!-- <div class="item active">
+          <img src="http://192.168.0.100:8080/source/image/product/8f217c44-f783-408a-9cc1-9c230c680769.JPG">
+          <div class="carousel-caption">
+          </div>
+        </div> -->
+      </div>
+      <!-- Controls -->
+      <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="sr-only">Previous</span>
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        <i class="left-btn allbtn"></i>
+      </a>
+      <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="sr-only">Next</span>
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        <i class="right-btn allbtn"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="part1" id="part1">
+    <div class="part1-content">
+      <div class="part1-content-left">
+        <h1 id="brandName">正在加载... <span><!-- 潜游双人套餐 --></span></h1>
+        <div class="village-description" id="villageDesc">
+          <p>正在加载...</p>
+        </div>
+      </div>
+      <div class="part1-aside">
+        <div id="apartmentTotalPrice">预定价格<span>正在加载... RMB</span></div>
+      </div>
+      <div class="part1-main">
+        <div class="apartmentReserveDate">
+          <div id="startDate"></div>
+          <div id="endDate"></div>
+        </div>
+        <div class="datetimepicker-all" id="datetimepicker" style="display: none"></div>
+        <div id="apartmentList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="boxline" id="part1">
+    <div class="MainContent">
+      <div class="MContent-L">
+        <h1 id="productName">正在加载... <span><!-- 潜游双人套餐 --></span></h1>
+        <p id="productDesc">正在加载...<!-- 马达京度假村是一个潜水，度假，蜜月，深海，探索的最佳选择。酒店房间精致典雅，让你度假时享受异国请调的浪漫，更受情侣们的喜爱。 --></p>
+      </div>
+      <div class="MContent-R">
+        <div class="Order" id="Order">
+          <div class="OrderContent">
+            <div class="OrderDate" id="OrderDate" title="">出发日期</div>
+            <div class="datetimepicker-all" id="datetimepicker" style="display:none;"></div>
+            <div class="packagNumber" id="packagNumber">
+              <div class="slideS sL">-</div>
+              <div class="center" data-price="">套餐数量 <span>1</span> 份</div>
+              <div class="slideS sR">+</div>
+            </div>
+            <div class="totalPrice" id="totalPrice">
+              <div class="tleft">总价<i title="暂无套餐说明"></i></div>
+              <div class="tright">合计<span>正在计算...</span>RMB</div>
+            </div>
+            <div class="OrderConfirm" id="OrderConfirm">预订套餐</div>
+          </div>
+          <div class="ContactUS" id="ContactUS">
+            <div class="CUS-L">
+              <div class="ContactUS_content">
+                <div><span></span><a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&touid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&siteid=cntaobao&status=1&charset=utf-8"><img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&site=cntaobao&s=1&charset=utf-8" alt="" title="" /></a></div>
+                <div><span></span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2546623187&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2546623187:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a></div>
+                <div><span></span>
+                <article>微信号：
+                <div>divingtimehailang</div>
+                <div class="weixinQRcode"><i></i></div>
+                </article>
+                </div>
+              </div>
+            </div>
+            <div class="CUS-R">
+              <div>客服咨询</div>
+              <p>联系我们</p><p>收悉您的需求后，</p><p>我们会第一时间与您联系！</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div style="height:1110px;"></div>
 
   {{ include("./../../navbottom") }}
 </body>
   <script src="./../../dist/js/appconfig.js?file_version=3.03"></script>
-  <script src="./../javascript/es6-promise.min.js"></script>
+  <script src="./../../dist/js/es6-promise.min.js"></script>
   <script src="./index.js?file_version=3.03"></script>
 </html>

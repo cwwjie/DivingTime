@@ -62,6 +62,10 @@ const NationaList = [
   {
     label: '菲律宾 PHILIPPINE',
     value: 'PHILIPPINE'
+  },
+  {
+    label: '俄罗斯 RUSSIA',
+    value: 'RUSSIA'
   }
 ];
 const diveList = [

@@ -95,6 +95,14 @@ xtpl.renderFile('./static/village/index.xtpl', {}, function(error, content) {
     Files.writeFile('./dist/village/index.html', content, 'utf8', function() {
         console.log('village/index.html - OK')
     })
+ });
+ xtpl.renderFile('./static/village/detail/index.xtpl', {}, function(error, content) {
+    Files.writeFile('./static/village/detail/index.html', content, 'utf8', function() {
+        console.log('village/index.html - OK')
+    })
+    Files.writeFile('./dist/village/detail/index.html', content, 'utf8', function() {
+        console.log('village/index.html - OK')
+    })
 });
 
 
