@@ -4,9 +4,9 @@
 <html lang="zh">
 <head>
   {{ include("./../../basehead") }}
-  <link rel="stylesheet" type="text/css" href="./../dist/css/bootstrap-datetimepicker.min.css" media="screen">
-  <script type="text/javascript" src="./../dist/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
-  <script type="text/javascript" src="./../dist/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+  <link rel="stylesheet" type="text/css" href="./../../dist/css/bootstrap-datetimepicker.min.css" media="screen">
+  <script type="text/javascript" src="./../../dist/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="./../../dist/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
   <link rel="stylesheet" type="text/css" href="./index.css?file_version=3.03">
 </head>
 <body>
@@ -56,13 +56,19 @@
           <div id="startDate"></div>
           <div id="endDate"></div>
         </div>
-        <div class="datetimepicker-all" id="datetimepicker" style="display: none"></div>
-        <div id="apartmentList"></div>
+        <div class="datetimepicker" id="starDatePicker">
+          <input type="text" style="display: none">
+        </div>
+        <div class="datetimepicker" id="endDatePicker">
+          <input type="text" style="display: none">
+        </div>
+        <div id="apartmentList">
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="boxline" id="part1">
+  <div class="boxline" id="part1" style="display: none">
     <div class="MainContent">
       <div class="MContent-L">
         <h1 id="productName">正在加载... <span><!-- 潜游双人套餐 --></span></h1>

@@ -13,7 +13,7 @@ const Item = List.Item;
 const Brief = Item.Brief;
 const alert = Modal.alert;
 
-let minDate = new Date(-410227200000);
+let minDate = new Date(-1041379200000);
 minDate = dateTime.dateToFormat(minDate)+' +0800';
 minDate = moment(minDate,'YYYY-MM-DD Z');
 

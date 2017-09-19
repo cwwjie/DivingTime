@@ -12,8 +12,10 @@ $(document).ready(function() {
       alert(error);
     });
 
-  myData.startDate = new Date();
-  myData.endDate = new Date(Date.parse(new Date()) + 86400000);
+  // 精确到日
+  var nowDate = new Date();
+  myData.startDate = new Date(nowDate.getFullYear(),nowDate.getMonth(),nowDate.getDate());
+  myData.endDate = new Date(Date.parse(myData.startDate) + 86400000);
 
   myData.searchApartmentAjax()
     .then(function(val) {
@@ -98,9 +100,31 @@ var myData = {
         reject('非常抱歉，你查询的房型未传入具体时间。');
       }
     });
+  },
+
+  checkLogin: function() {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        type: "GET", 
+        url: appConfig.getUserInfo, 
+        contentType: "application/json; charset=utf-8", 
+        headers: {
+          'token':$.cookie('token'),
+          'digest':$.cookie('digest')
+        },
+        success: function (value) {
+          if (value.result == "0" ) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+          reject('查询登录发生错误, 原因: ' + errorThrown);
+        }
+      });
+    });
   }
-
-
 }
 
 var myCarousel = {
@@ -172,6 +196,7 @@ var myApartment = {
   'data': {
     'list': [
       // {
+      //   'select': 0, // 已选房间数 (自己加进去的  
       //   'adultMax': 2,
       //   'adultMin': 1,
       //   'adultPrices': '3000.00',
@@ -237,10 +262,9 @@ var myApartment = {
     // 'updateBy': null,
     // 'updateTime': null
   },
+
   init: function() {
     var data = this.data,
-      startDate = myData.startDate,
-      endDate = myData.endDate,
       myVillage = this.village;
 
     $('#brandName').html(myVillage.brandName + '<span>' + myVillage.label + '</span>');
@@ -248,8 +272,237 @@ var myApartment = {
 
     $('#apartmentTotalPrice').html('预定价格<span>' + myVillage.earnest + ' RMB');
 
+    this.initTimePicker();
+    this.renderApartmentList();
+  },
+
+  initTimePicker: function() {
+    var _this = this,
+      startDate = myData.startDate,
+      endDate = myData.endDate,
+
+      apartmentList = $('#apartmentList'),
+
+      startDateDOM = $('#startDate'),
+      starDatePicker = $('#starDatePicker'),
+      starDateInput = $('#starDatePicker input'),
+
+      endDateDOM = $('#endDate'),
+      endDatePicker = $('#endDatePicker'),
+      endDateInput = $('#endDatePicker input');
+
+    starDatePicker.hide();
+    endDatePicker.hide();
+    
+    this.renderTimePicker();
+
+    startDateDOM.click(function() {
+      $(this).addClass('select');
+      endDateDOM.removeClass('select');
+
+      starDatePicker.show();
+      endDatePicker.hide();
+
+      apartmentList.hide();
+    });
+
+    starDatePicker.datetimepicker({
+      initialDate: utilities.dateToYYYYMMDDFormat(startDate),
+      startDate: utilities.dateToYYYYMMDDFormat(startDate),
+      format: "yyyy MM dd", //格式
+      autoclose: true, //自动关闭
+      todayBtn: true, //今天
+      minuteStep: 10, //用于选择分钟
+      language: 'zh-CN',
+      weekStart: 1, //周一从那天开始
+      todayHighlight: false, //高亮今天
+      startView: 2, //日期时间选择器打开之后首先显示的视图
+      minView: 2, //日期时间选择器打开之后最小的视图
+    }).on('changeDate', function(ev) {
+      var selectDate = new Date(ev.date),
+        selectTimeStamp = Date.parse(new Date(ev.date)),
+        endDateTimeStamp = Date.parse(myData.endDate);
+
+      if (selectTimeStamp >= endDateTimeStamp) {
+        myData.startDate = selectDate;
+        myData.endDate = new Date(Date.parse(new Date(selectDate)) + 86400000);
+      } else {
+        myData.startDate = selectDate;
+      }
+      _this.renderTimePicker();
+
+      endDatePicker.datetimepicker('update');
+
+      startDateDOM.removeClass('select');
+      endDateDOM.addClass('select');
+
+      starDatePicker.hide();
+      endDatePicker.show();
+    });
+
+    endDateDOM.click(function() {
+      startDateDOM.removeClass('select');
+      $(this).addClass('select');
+
+      starDatePicker.hide();
+      endDatePicker.show();
+
+      apartmentList.hide();
+    });
+
+    endDatePicker.datetimepicker({
+      initialDate: utilities.dateToYYYYMMDDFormat(endDate),
+      startDate: utilities.dateToYYYYMMDDFormat(endDate),
+      format: "yyyy MM dd", //格式
+      autoclose: true, //自动关闭
+      todayBtn: false, //今天
+      minuteStep: 10, //用于选择分钟
+      language: 'zh-CN',
+      weekStart: 1, //周一从那天开始
+      todayHighlight: false, //高亮今天
+      startView: 2, //日期时间选择器打开之后首先显示的视图
+      minView: 2, //日期时间选择器打开之后最小的视图
+    }).on('changeDate', function(ev) {
+      var starDateTimeStamp = Date.parse(myData.startDate),
+        selectDate = new Date(ev.date),
+        selectTimeStamp = Date.parse(new Date(ev.date));
+
+      if (selectTimeStamp <= starDateTimeStamp) {
+        myData.startDate = new Date(Date.parse(new Date(selectDate)) - 86400000);
+        myData.endDate = selectDate;
+      } else {
+        myData.endDate = selectDate;
+      }
+      _this.renderTimePicker();
+
+      starDatePicker.datetimepicker('update');
+
+      startDateDOM.removeClass('select');
+      endDateDOM.removeClass('select');
+
+      starDatePicker.hide();
+      endDatePicker.hide();
+
+      apartmentList.show();
+      apartmentList.html('<div class="loader--audioWave"></div>');
+
+      myData.searchApartmentAjax()
+        .then(function(val) {
+          _this.data = val;
+          _this.renderApartmentList();
+        }, function(error) {
+          alert(error);
+        });
+    });
+  },
+
+  renderTimePicker: function() {
+    var startDate = myData.startDate,
+      endDate = myData.endDate;
+
     $('#startDate').html(utilities.dateToYYYYMMDDFormat(startDate));
     $('#endDate').html(utilities.dateToYYYYMMDDFormat(endDate));
+
+    $('#starDatePicker input').val(utilities.dateToYYYYMMDDFormat(startDate));
+    $('#endDatePicker input').val(utilities.dateToYYYYMMDDFormat(endDate));
+  },
+
+  renderApartmentList: function() {
+    var _this = this,
+      dataList = this.data.list,
+      apartmentList = $('#apartmentList');
+
+    if (dataList.length === 0) {
+      apartmentList.html([
+        '<div class="apartmentList-infor">',
+          '当前时间暂无可选房型<br/>可拨打 400-9688-768 咨询',
+        '</div>',
+        '<div class="apartmentList-submit failure">预定度假村</div>'
+      ].join(''));
+    } else {
+      var myDomString = '';
+
+      for (var i = 0; i < dataList.length; i++) {
+        var data = dataList[i];
+
+        _this.data.list[i].select = 0;
+        myDomString += [
+          '<div class="apartment">',
+            '<span class="cut">-</span>',
+            '<div>' + data.apartmentName + ' <span class="apartmentNum">0</span> 间</div>',
+            '<span class="add">+</span>',
+          '</div>'
+        ].join('');
+      }
+      myDomString += '<div id="orderApartment" class="apartmentList-submit">预定度假村</div>'
+
+      apartmentList.html(myDomString);
+
+      var apartmenNodeList = $('#apartmentList .apartment');
+      for (var i = 0; i < dataList.length; i++) {(function(i) {
+        var data = dataList[i],
+          myNode = $(apartmenNodeList[i]);
+        var selectDOM = myNode.find('.apartmentNum');
+
+        myNode.find('.cut').click(function() {
+          var mySelect = data.select;
+          if (mySelect === 0) {
+            return
+          }
+          mySelect--;
+          selectDOM.html(mySelect);
+        });
+        myNode.find('.add').click(function() {
+          var mySelect = data.select,
+            mySkuNum = data.skuNum || 0;
+
+          if (data.isSaleOut === 'Y') {
+            alert('非常抱歉，该房型已售罄。');
+            return
+          } else if (mySelect >= mySkuNum) {
+            alert('非常抱歉，已达到该房型的上限。');
+            return
+          }
+
+          mySelect++;
+          selectDOM.html(mySelect);
+        });
+      })(i)}
+
+      $('#orderApartment').click(function() {
+        var allApartmentNum = 0
+
+        for (var i = 0; i < dataList.length; i++) {
+          allApartmentNum += dataList[i].select;
+        }
+
+        if (allApartmentNum === 0) {
+          alert('请选择房型!');
+        }
+
+        myData.checkLogin()
+          .then(function (data) {
+            if (data === true) {
+              nextStep();
+            } else {
+              $("#loginModal").modal('show');
+              $(".input1 input").val("");
+              $(".input1 span").text("");
+              $(".input1 i").removeClass("mistakeicon");
+              $(".input1 i").removeClass("correcticon");
+              $(".input2 input").val("");
+              $(".input2 span").text("");
+              $(".input2 i").removeClass("mistakeicon");
+              $(".input2 i").removeClass("correcticon");
+            }
+          }, function (error) {
+            alert(error);
+          })
+        function nextStep() {
+
+        }
+      })
+    }
   }
 }
 
