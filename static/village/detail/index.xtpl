@@ -52,60 +52,46 @@
         <div id="apartmentTotalPrice">预定价格<span>正在加载... RMB</span></div>
       </div>
       <div class="part1-main">
-        <div class="apartmentReserveDate">
-          <div id="startDate"></div>
-          <div id="endDate"></div>
-        </div>
-        <div class="datetimepicker" id="starDatePicker">
-          <input type="text" style="display: none">
-        </div>
-        <div class="datetimepicker" id="endDatePicker">
-          <input type="text" style="display: none">
-        </div>
-        <div id="apartmentList">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="boxline" id="part1" style="display: none">
-    <div class="MainContent">
-      <div class="MContent-L">
-        <h1 id="productName">正在加载... <span><!-- 潜游双人套餐 --></span></h1>
-        <p id="productDesc">正在加载...<!-- 马达京度假村是一个潜水，度假，蜜月，深海，探索的最佳选择。酒店房间精致典雅，让你度假时享受异国请调的浪漫，更受情侣们的喜爱。 --></p>
-      </div>
-      <div class="MContent-R">
-        <div class="Order" id="Order">
-          <div class="OrderContent">
-            <div class="OrderDate" id="OrderDate" title="">出发日期</div>
-            <div class="datetimepicker-all" id="datetimepicker" style="display:none;"></div>
-            <div class="packagNumber" id="packagNumber">
-              <div class="slideS sL">-</div>
-              <div class="center" data-price="">套餐数量 <span>1</span> 份</div>
-              <div class="slideS sR">+</div>
-            </div>
-            <div class="totalPrice" id="totalPrice">
-              <div class="tleft">总价<i title="暂无套餐说明"></i></div>
-              <div class="tright">合计<span>正在计算...</span>RMB</div>
-            </div>
-            <div class="OrderConfirm" id="OrderConfirm">预订套餐</div>
+        <div id="myApartment">
+          <div id="apartmentTitle" class="apartmentTitle">正在加载...</div>
+          <div class="apartmentReserveDate">
+            <div id="startDate"></div>
+            <div id="endDate"></div>
           </div>
-          <div class="ContactUS" id="ContactUS">
-            <div class="CUS-L">
-              <div class="ContactUS_content">
-                <div><span></span><a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&touid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&siteid=cntaobao&status=1&charset=utf-8"><img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&site=cntaobao&s=1&charset=utf-8" alt="" title="" /></a></div>
-                <div><span></span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2546623187&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2546623187:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a></div>
-                <div><span></span>
-                <article>微信号：
-                <div>divingtimehailang</div>
-                <div class="weixinQRcode"><i></i></div>
-                </article>
+          <div class="datetimepicker" id="starDatePicker">
+            <input type="text" style="display: none">
+          </div>
+          <div class="datetimepicker" id="endDatePicker">
+            <input type="text" style="display: none">
+          </div>
+          <div id="apartmentList">
+          </div>
+          <div class="container" id="ContactUS">
+            <div class="container-left">
+              <div class="container-content">
+                <div>
+                  <span></span>
+                  <a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&touid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&siteid=cntaobao&status=1&charset=utf-8"><img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&site=cntaobao&s=1&charset=utf-8" alt="" title="" /></a>
+                </div>
+                <div>
+                  <span></span>
+                  <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2546623187&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2546623187:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>
+                </div>
+                <div>
+                  <span></span>
+                  <article>
+                    微信号：
+                    <div class="weixinAccount">divingtimehailang</div>
+                    <div class="weixinQRcode"><i></i></div>
+                  </article>
                 </div>
               </div>
             </div>
-            <div class="CUS-R">
+            <div class="container-right">
               <div>客服咨询</div>
-              <p>联系我们</p><p>收悉您的需求后，</p><p>我们会第一时间与您联系！</p>
+              <p>联系我们</p>
+              <p>收悉您的需求后，</p>
+              <p>我们会第一时间与您联系！</p>
             </div>
           </div>
         </div>
@@ -113,11 +99,68 @@
     </div>
   </div>
 
-  <div style="height:1110px;"></div>
+  <div class="part2">
+    <div class="part2-content">
+      <div class="part2-title">房型详情</div>
+      <div id="apartmentDetail">
+          <!-- <div class="apartment-block">
+            <div class="apartment-content">
+              <img src="http://192.168.0.100:8080/source/image/product/thum/thum_8f217c44-f783-408a-9cc1-9c230c680769.JPG" />
+              <div class="apartment-depiction">
+                <div class="apartment-title">潜游沙巴·仙本那</div>
+                <div class="apartment-introduction"><p>111111111111111111</p></div>
+                <div class="apartment-price">预定价格: <span>111RMB</span> 起</div>
+                <div class="apartment-confirm">预定度假村</div>
+              </div>
+            </div>
+            <div class="apartment-line"></div>
+          </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="part2-modal">
+    <div id="myApartmentModal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div id="myApartmentModalContent" class="modal-content">
+          <!-- <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">园景房apartmentName</h4>
+          </div>
+          <img src="http://192.168.0.100:8080/source/image/product/thum/thum_17f9b08b-b21e-4638-aaec-67bd2ce913f7.jpg" />
+          <div class="modal-depiction">
+            <h3>房型信息</h3>
+              <p>apartmentDesc房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息</p>
+            <h3>费用说明</h3>
+            <div class="row">
+              <div class="col-xs-6">成人价格:3000 adultUnitPrice</div>
+              <div class="col-xs-6">儿童价格:1500 childUnitPrice</div>
+            </div>
+            <h3>入住规格</h3>
+            <div class="row">
+              <div class="col-xs-6">入住成人数:1-2人</div>
+              <div class="col-xs-6">入住儿童人数:0-2人</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-6">最大入住人数:4人</div>
+              <div class="col-xs-6">建议入住人数:2人</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">床型:大床,双人床,单床,蜜月大床</div>
+            </div>
+            <h3>入住须知</h3>
+              <p>notice房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息</p>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   {{ include("./../../navbottom") }}
 </body>
   <script src="./../../dist/js/appconfig.js?file_version=3.03"></script>
   <script src="./../../dist/js/es6-promise.min.js"></script>
+  <script src="./js/jquery.smooth-scroll.js"></script>
   <script src="./index.js?file_version=3.03"></script>
 </html>

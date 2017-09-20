@@ -14,7 +14,7 @@ $(document).ready(function() {
 
   // 精确到日
   var nowDate = new Date();
-  myData.startDate = new Date(nowDate.getFullYear(),nowDate.getMonth(),nowDate.getDate());
+  myData.startDate = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
   myData.endDate = new Date(Date.parse(myData.startDate) + 86400000);
 
   myData.searchApartmentAjax()
@@ -271,9 +271,12 @@ var myApartment = {
     $('#villageDesc').html(myVillage.resortDesc + myVillage.recommendation);
 
     $('#apartmentTotalPrice').html('预定价格<span>' + myVillage.earnest + ' RMB');
+    $('#apartmentTitle').html(myVillage.brandName);
 
     this.initTimePicker();
     this.renderApartmentList();
+    this.renderApartmentDetail();
+    this.initScroll();
   },
 
   initTimePicker: function() {
@@ -390,6 +393,7 @@ var myApartment = {
         .then(function(val) {
           _this.data = val;
           _this.renderApartmentList();
+          _this.renderApartmentDetail();
         }, function(error) {
           alert(error);
         });
@@ -426,13 +430,24 @@ var myApartment = {
         var data = dataList[i];
 
         _this.data.list[i].select = 0;
-        myDomString += [
-          '<div class="apartment">',
-            '<span class="cut">-</span>',
-            '<div>' + data.apartmentName + ' <span class="apartmentNum">0</span> 间</div>',
-            '<span class="add">+</span>',
-          '</div>'
-        ].join('');
+        if (data.isSaleOut === 'Y') {
+          myDomString += [
+            '<div class="apartment">',
+              '<span class="cut">-</span>',
+              '<div>' + data.apartmentName + ' (已售罄)<span class="apartmentNum"></span></div>',
+              '<span class="add">+</span>',
+            '</div>'
+          ].join('');
+        }else {
+          myDomString += [
+            '<div class="apartment">',
+              '<span class="cut">-</span>',
+              '<div>' + data.apartmentName + ' <span class="apartmentNum">0</span> 间</div>',
+              '<span class="add">+</span>',
+            '</div>'
+          ].join('');
+        }
+
       }
       myDomString += '<div id="orderApartment" class="apartmentList-submit">预定度假村</div>'
 
@@ -444,6 +459,19 @@ var myApartment = {
           myNode = $(apartmenNodeList[i]);
         var selectDOM = myNode.find('.apartmentNum');
 
+        myNode.find('div').click(function() {
+          $.smoothScroll({
+            offset: -125,
+            direction: 'top',
+            scrollTarget: $('#apartmentDetail .apartment-block')[i],
+            afterScroll: function() {
+              $($('#apartmentDetail .apartment-block')[i]).addClass('isHover');
+              setTimeout(function() {
+                $($('#apartmentDetail .apartment-block')[i]).removeClass('isHover');
+              }, 3000);
+            }
+          });
+        });
         myNode.find('.cut').click(function() {
           var mySelect = data.select;
           if (mySelect === 0) {
@@ -457,7 +485,6 @@ var myApartment = {
             mySkuNum = data.skuNum || 0;
 
           if (data.isSaleOut === 'Y') {
-            alert('非常抱歉，该房型已售罄。');
             return
           } else if (mySelect >= mySkuNum) {
             alert('非常抱歉，已达到该房型的上限。');
@@ -478,12 +505,13 @@ var myApartment = {
 
         if (allApartmentNum === 0) {
           alert('请选择房型!');
+          return
         }
 
         myData.checkLogin()
           .then(function (data) {
             if (data === true) {
-              nextStep();
+              return true
             } else {
               $("#loginModal").modal('show');
               $(".input1 input").val("");
@@ -494,15 +522,122 @@ var myApartment = {
               $(".input2 span").text("");
               $(".input2 i").removeClass("mistakeicon");
               $(".input2 i").removeClass("correcticon");
+              return false
             }
           }, function (error) {
             alert(error);
+            return false
           })
-        function nextStep() {
-
-        }
+          .then(function (next) {
+            if (next) {
+            }
+          })
       })
     }
+  },
+
+  renderApartmentDetail: function() {
+    var _this = this,
+      dataList = this.data.list,
+      apartmentDetailDOM = $('#apartmentDetail');
+
+    if (dataList.length === 0) {
+      apartmentDetailDOM.html('<div class="message-infor">当前时间暂无可选房型<br/>可拨打 400-9688-768 咨询</div>');
+    } else {
+      var myDomString = '';
+      for (var i = 0; i < dataList.length; i++) {
+        var data = dataList[i];
+
+        myDomString += [
+        '<div class="apartment-block">',
+          '<div class="apartment-content">',
+            '<img src="' + URLbase + data.apartmentThumb + '" />',
+            '<div class="apartment-depiction">',
+              '<div class="apartment-title">' + data.apartmentName + '</div>',
+              '<div class="apartment-introduction">' + data.apartmentDesc + '</div>',
+              '<div class="apartment-price">预定价格: <span>' + (data.initiatePrice || '暂无' ) + '</span> &nbsp; 库存: <span>' + (data.skuNum || '0') + '</span></div>',
+              '<div class="apartment-confirm">查看详情</div>',
+            '</div>',
+          '</div>',
+          '<div class="apartment-line"></div>',
+        '</div>',
+        ].join('');
+      }
+      apartmentDetailDOM.html(myDomString);
+    }
+
+    var apartmenDetailNodeList = $('#apartmentDetail .apartment-block');
+    for (var i = 0; i < dataList.length; i++) {(function(i) {
+      var data = dataList[i],
+        myNode = $(apartmenDetailNodeList[i]);
+
+        myNode.click(function() {
+          $('#myApartmentModal').modal('show');
+          $('#myApartmentModalContent').html([
+            '<div class="modal-header">',
+              '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>',
+              '<h4 class="modal-title">' + data.apartmentName + '</h4>',
+            '</div>',
+            '<img src="' + URLbase + data.apartmentImg + '" />',
+            '<div class="modal-depiction">',
+              '<h3>房型信息</h3>',
+              '<p>' + data.apartmentDesc + '</p>',
+              '<h3>费用说明</h3>',
+              '<div class="row">',
+                '<div class="col-xs-6">成人价格: ' + (data.adultUnitPrice || '暂无') + '</div>',
+                '<div class="col-xs-6">儿童价格: ' + (data.childUnitPrice || '暂无') + '</div>',
+              '</div>',
+              '<h3>入住规格</h3>',
+              '<div class="row">',
+                '<div class="col-xs-12">床型: ' + data.bedType + '</div>',
+              '</div>',
+              '<div class="row">',
+                '<div class="col-xs-6">入住成人数: ' + data.adultMin + '-' + data.adultMax + '人</div>',
+                '<div class="col-xs-6">入住儿童人数: ' + data.childrenMin + '-' + data.childrenMax + '人</div>',
+              '</div>',
+              '<div class="row">',
+                '<div class="col-xs-6">最大入住人数: ' + data.peopleMax + '人</div>',
+                '<div class="col-xs-6">建议入住人数: ' + data.suggestedNum + '人</div>',
+              '</div>',
+              '<h3>入住须知</h3>',
+              '<p>' + data.notice + '</p>',
+            '</div>'
+          ].join(''));
+        });
+    })(i)}
+
+
+  },
+
+  initScroll: function() {
+    var apartmentIsFlex = false,
+      apartmentOffsetTop = $('#part1').offset().top - 50,
+      apartmentDOM = $('#myApartment'),
+      apartmentTitle = $('#apartmentTitle'),
+      LoginDOM = $('#login'),
+      tellHeader = $('.tell-header');
+
+    $(window).scroll(function() {
+      var distance = $(window).scrollTop()
+
+      if (distance > apartmentOffsetTop) {
+        if (apartmentIsFlex === false) {
+          apartmentDOM.addClass('scrollFlex');
+          apartmentTitle.show();
+          LoginDOM.hide();
+          tellHeader.hide();
+          apartmentIsFlex = true;
+        }
+      } else {
+        if (apartmentIsFlex) {
+          apartmentDOM.removeClass('scrollFlex');
+          apartmentTitle.hide();
+          LoginDOM.show();
+          tellHeader.show();
+          apartmentIsFlex = false;
+        }          
+      }
+    });
   }
 }
 
