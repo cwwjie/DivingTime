@@ -28,8 +28,8 @@ $(document).ready(function() {
 });
 
 var myData = {
-  startDate: '',
-  endDate: '',
+  startDate: new Date(),
+  endDate: new Date(),
 
   isSupport: function() {
     var testKey = 'test',
@@ -46,7 +46,7 @@ var myData = {
   getCarouselAjax: function() {
     var resortId = localStorage.getItem('resortId');
 
-
+    
     return new Promise(function (resolve, reject) {
       if (resortId === null) {
         location = "./../index.html";
@@ -196,7 +196,7 @@ var myApartment = {
   'data': {
     'list': [
       // {
-      //   'select': 0, // 已选房间数 (自己加进去的  
+      //   'selectNum': 0, // 已选房间数 (自己加进去的  
       //   'adultMax': 2,
       //   'adultMin': 1,
       //   'adultPrices': '3000.00',
@@ -270,7 +270,7 @@ var myApartment = {
     $('#brandName').html(myVillage.brandName + '<span>' + myVillage.label + '</span>');
     $('#villageDesc').html(myVillage.resortDesc + myVillage.recommendation);
 
-    $('#apartmentTotalPrice').html('预定价格<span>' + myVillage.earnest + ' RMB');
+    $('#apartmentTotalPrice').html('预定价格<span>' + myVillage.earnest + ' RMB 起</span>');
     $('#apartmentTitle').html(myVillage.brandName);
 
     this.initTimePicker();
@@ -429,7 +429,7 @@ var myApartment = {
       for (var i = 0; i < dataList.length; i++) {
         var data = dataList[i];
 
-        _this.data.list[i].select = 0;
+        _this.data.list[i].selectNum = 0;
         if (data.isSaleOut === 'Y') {
           myDomString += [
             '<div class="apartment">',
@@ -473,17 +473,21 @@ var myApartment = {
           });
         });
         myNode.find('.cut').click(function() {
-          var mySelect = data.select;
+          var mySelect = _this.data.list[i].selectNum;
+
           if (mySelect === 0) {
             return
           }
-          mySelect--;
-          selectDOM.html(mySelect);
-        });
-        myNode.find('.add').click(function() {
-          var mySelect = data.select,
-            mySkuNum = data.skuNum || 0;
 
+          _this.data.list[i].selectNum = mySelect - 1;
+          selectDOM.html(mySelect - 1);
+          _this.renderReferPrice();
+        });
+
+        myNode.find('.add').click(function() {
+          var mySelect = _this.data.list[i].selectNum,
+            mySkuNum = data.skuNum || 0;
+          
           if (data.isSaleOut === 'Y') {
             return
           } else if (mySelect >= mySkuNum) {
@@ -491,8 +495,9 @@ var myApartment = {
             return
           }
 
-          mySelect++;
-          selectDOM.html(mySelect);
+          _this.data.list[i].selectNum = mySelect + 1;
+          selectDOM.html(mySelect + 1);
+          _this.renderReferPrice();
         });
       })(i)}
 
@@ -500,7 +505,7 @@ var myApartment = {
         var allApartmentNum = 0
 
         for (var i = 0; i < dataList.length; i++) {
-          allApartmentNum += dataList[i].select;
+          allApartmentNum += dataList[i].selectNum;
         }
 
         if (allApartmentNum === 0) {
@@ -530,10 +535,37 @@ var myApartment = {
           })
           .then(function (next) {
             if (next) {
+              var mydate = {
+                startDate: myData.startDate,
+                endDate: myData.endDate
+              };
+
+              localStorage.setItem('mydate',JSON.stringify(mydate));
+              localStorage.setItem('apartmentList',JSON.stringify(myApartment.data.list));
+              localStorage.setItem('village',JSON.stringify(myApartment.village));
+              location = "./../submit/index.html";
             }
           })
       })
     }
+  },
+
+  renderReferPrice: function () {
+    var _this = this,
+      dataList = this.data.list,
+      earnest = this.village.earnest,
+      selectNum = 0,
+      apartmentTotalPrice = $('#apartmentTotalPrice');
+
+    for (var i = 0; i < dataList.length; i++) {
+      var mySelectNum = dataList[0].selectNum || 0;
+
+      if (mySelectNum !== 0) {
+        selectNum += mySelectNum;
+      }
+    }
+
+    apartmentTotalPrice.html('预定价格<span>' + (earnest * selectNum) + ' RMB');
   },
 
   renderApartmentDetail: function() {
@@ -605,8 +637,6 @@ var myApartment = {
           ].join(''));
         });
     })(i)}
-
-
   },
 
   initScroll: function() {

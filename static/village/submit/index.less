@@ -1,0 +1,186 @@
+* {
+	padding: 0px;
+	margin: 0px;
+	color:#4d5d77;
+	font-family: '微软雅黑';
+
+	body {
+		width: 100%;
+		height: 100%;
+    background: #F9F9F9;
+	}
+
+	a {
+		text-decoration: none;
+		color: #000;
+	}
+
+	a:hover {
+		text-decoration: none;
+		color: #000;
+	}
+}
+
+header {
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	min-height: 50px;
+	font-size: 14px;
+	color: #4d5d77;
+	background: #fff;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.26);
+	z-index: 100;
+
+	> div {
+    line-height: 50px;
+    float: right;
+    margin-right: 20px;
+  }
+
+	a i {
+    display: block;
+    width: 150px;
+    height: 35px;
+    float: left;
+    margin-top: 8px;
+    margin-left: 10px;
+    background: url("./../../dist/img/ico.png");
+    background-position: -150px 0px;
+  }
+}
+
+.orders-navigation {
+	width: 970px;
+	margin: 0 auto;
+	padding-top: 80px;
+	padding-bottom: 30px;
+	overflow: hidden;
+	
+	li {
+		display: block;
+		float: left;
+		padding-left: 20px;
+		font-size: 16px;
+		line-height: 40px;
+	}
+
+	.navigation-before {
+		width: 303px;
+		background:#01B969;
+		color: #eee;
+	}
+	.navigation-active {
+		width: 303px;
+		background: #01B969;
+		color: #eee;
+	}
+	.navigation-after {
+		width: 303px;
+		text-align: center;
+		position: relative;
+		background: #ebebeb;
+		color: #4d5d77;
+	}
+	.navigation-after::before {
+		content: "";
+		display: inline-block;
+		position: absolute;
+		width: 0px;
+		height: 0px;
+		left: 0px;
+		border-width: 20px;
+		border-color: transparent transparent transparent #01B969;
+		border-style: solid;
+		overflow: hidden;
+	}
+}
+
+.main {
+	width: 970px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.main-title {
+	padding-bottom: 15px;
+	font-size: 24px;
+	font-weight: normal;
+	color: #404A5A;
+
+	span {
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 30px;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    background: #404A5A;
+    color: #eee;
+    display: block;
+	}
+}
+
+.orders-content {
+	padding: 30px;
+	background: #fff;
+	border: solid 1px #DBDBDB;
+
+	.orders-title {
+		font-size: 20px;
+		padding-bottom: 10px;
+	}
+
+	.orders-date {
+		padding-top: 10px;
+		font-size: 16px;
+	}
+
+	.orders-table {
+		padding-top: 20px;
+		.orders-table-title {
+			font-size: 16px;
+		}
+
+		.row {
+			>div {
+				>div {
+					padding-left: 20px;
+					padding-top: 10px;
+					padding-bottom: 10px;
+				}
+			}
+			.col-3 {
+				>div {
+					padding-right: 20px;
+					float: right;
+				}
+			}
+		}
+
+		.orders-table-content {
+			border: solid 1px #DBDBDB;
+		}
+
+		.orders-table-item {
+			border-bottom: solid 1px #DBDBDB;
+		}
+
+		.orders-table-total {
+			background-color: #e1e1e1;
+		}
+	}
+}
+
+.customer {
+	padding-top: 50px;
+	
+	.customer-content {
+		padding: 30px;
+		background: #fff;
+		border: solid 1px #DBDBDB;
+
+	}
+}

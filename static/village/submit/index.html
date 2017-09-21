@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>【潜游时光】马来西亚_卡帕莱_出境游_自由行_潜水度假村-潜游时光，让您的旅行有温度</title>
+  <meta name="keywords" content="潜游时光，马来西亚，卡帕莱，出境游，自由行，潜水度假村，旅游攻略" />
+  <meta name="description" content="【潜游时光】专业的旅游行程定制,全新的服务体验,最佳的旅游度假体验,为您提供一站式潜水度假村预定服务,为出国旅游者提供最佳的旅游攻略和服务,让您的旅行有温度。" />
+  <meta name="author" content="潜游时光" />
+  <link rel="stylesheet" type="text/css" href="./../../dist/css/row.min.css">
+  <link rel="stylesheet" type="text/css" href="./index.css?file_version=3.03">
+</head>
+<body>
+  <header>
+    <a href="./../../index.html"><i></i></a>
+    <div class="tell-header">服务咨询 :<a href="tel://4006709078"> 400-9688-768</a></div>
+  </header>
+  <div class="orders-navigation">
+    <ol>
+      <li class="navigation-before">1 · 选择度假产品</li>
+      <li class="navigation-active">2 · 确认订单填写客户信息</li>
+      <li class="navigation-after">3 · 提交订单</li>
+    </ol>
+  </div>
+  <div class="main">
+    <div id="ordersDetail" class="orders-detail">
+      <div class="main-title"><span>1</span>订单详情</div>
+      <div class="orders-content">
+        <div class="orders-title">
+          {{ordersTitle}}
+        </div>
+        <div class="orders-date row">
+          <div class="col-5">入住日期: {{startDate}}</div>
+          <div class="col-4">退房日期: {{endDate}}</div>
+        </div>
+        <div class="orders-table">
+          <div class="orders-table-title row">
+            <div class="col-5"><div>项目</div></div>
+            <div class="col-4"><div>数量</div></div>
+            <div class="col-3"><div>价格</div></div>
+          </div>
+          <div class="orders-table-content">
+            <div v-for="orderItem in ordersList" class="orders-table-item row">
+              <div class="col-5"><div>{{orderItem.name}}</div></div>
+              <div class="col-4"><div>{{orderItem.count}}</div></div>
+              <div class="col-3"><div>{{orderItem.price}}</div></div>
+            </div>
+            <div class="orders-table-total row">
+              <div class="col-5"><div>合计</div></div>
+              <div class="col-4"><div>{{orderscount}}</div></div>
+              <div class="col-3"><div>{{ordersprice}}</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="ordersDetail" class="orders-detail">
+      <div class="main-title"><span>2</span>顾客信息</div>
+    </div>
+  </div>
+</body>
+  <!-- 生产环境记得替换vue.min.js -->
+  <script src="./../../dist/js/vue.min.js"></script>
+  <script src="./../../dist/js/es6-promise.min.js"></script>
+  <script src="./../../dist/js/fetch.min.js"></script>
+  <script src="./../../dist/js/appconfig.js?file_version=3.03"></script>
+  <script src="./index.js?file_version=3.03"></script>
+</html>
