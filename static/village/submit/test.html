@@ -59,17 +59,141 @@
     <div id="customerInfo" class="customer">
       <div class="main-title"><span>2</span>顾客信息</div>
       <div class="customer-content">
-
-        gogogoogo
-
+        <div class="customer-title">
+          旅客信息 <span> 注: 至少提供一人信息</span>
+        </div>
+        <div class="customer-add" v-on:click="listModalIsShow = !listModalIsShow">选择旅客信息</div>
+        <transition name="customer-modal-transition">
+          <div
+            v-if="listModalIsShow"
+            v-bind:class="listModalIsShow ? 'customer-list-modal-content' : 'customer-list-modal-none'"
+          >
+            <div class="customer-list-modal">
+              <div class="customer-list-modal-title">
+                添加旅客信息<span v-on:click="listModalIsShow = !listModalIsShow">X</span>
+              </div>
+              <div class="customer-list">
+                <div
+                  v-for="item in list"
+                  v-bind:class="['customer-list-item', item.isSelect ? 'customer-list-itemIsSelect' : '']"
+                  v-on:click="item.isSelect = (item.isSelect ? false : true )"
+                >
+                  <div class="customer-list-item-select">{{(item.isSelect ? '√' : 'X')}}</div>
+                  <div class="customer-list-item-name">{{item.name}}</div>
+                  <div class="customer-list-item-separate"></div>
+                  <div class="customer-list-item-detail"> {{item.age}}岁 - {{item.gender}} - {{item.mobile}} </div>
+                  <div class="customer-list-item-modify">修改</div>
+                </div>
+              </div>
+              <div class="customer-list-add">
+                <div
+                  v-on:click="itemModalIsShow = true;"
+                  >新增用户信息</div>
+              </div>
+              <div class="customer-list-confirm">
+                <div>保存并且添加</div>
+              </div>
+            </div>
+          </div>
+        </transition>
+        <transition name="customer-modal-transition">
+          <div
+            v-if="itemModalIsShow"
+            v-bind:class="itemModalIsShow ? 'customer-detail-modal-content' : 'customer-detail-modal-none'"
+          >
+            <div class="customer-detail-modal">
+                <div class="customer-detail-modal-title">
+                  {{itemTitle}}
+                  <span v-on:click="itemModalIsShow = !itemModalIsShow">X</span>
+                </div>
+              <div class="customer-detail">
+                <div class="row">
+                  <div class="col-6">
+                    <div><span class="red">*</span>姓名(中文)</div>
+                    <div><input type="text" v-model="item.chineseName"></div>
+                    <div class="error">{{item.chineseNameError}}</div>
+                  </div>
+                  <div class="col-6">
+                    <div><span class="red">*</span>姓名(拼音)</div>
+                    <div><input type="text" v-model="item.pinyinName"></div>
+                    <div class="error">{{item.pinyinNameError}}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div>护照号码</div>
+                    <div><input type="text"></div>
+                  </div>
+                  <div class="col-6">
+                    <div>性别</div>
+                    <div class="customer-detail-sex">
+                      <input type="radio" name="sex" value="1" v-model="item.gender" id="male"><label for="male">男</label>
+                      <input type="radio" name="sex" value="2" v-model="item.gender" id="female"><label for="female">女</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div><span class="red">*</span>出生日期</div>
+                    <div class="datepicker"><datepicker max='2018-01-01' language="ch" v-model="item.birthday"></datepicker></div>
+                    <div class="error">{{item.birthdayError}}</div>
+                  </div>
+                  <div class="col-6">
+                    <div><span>*</span>年龄</div>
+                    <div><input type="text" v-model="item.age" disable disabled="disabled"></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div><span class="red">*</span>手机号码</div>
+                    <div><input type="text" v-model="item.mobile"></div>
+                    <div class="error">{{item.mobileError}}</div>
+                  </div>
+                  <div class="col-6">
+                    <div><span class="red">*</span>邮箱</div>
+                    <div><input type="text" v-model="item.email"></div>
+                    <div class="error">{{item.emailError}}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div>潜水等级</div>
+                    <div>
+                      <select v-model="item.divingCount">
+                        <option selected="selected" disabled="disabled" value="">请选择</option>
+                        <option value="1">OW(初级潜水员)</option>
+                        <option value="2">OW以上</option>
+                        <option value="">无</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div>潜水次数(请填写100以下次数)</div>
+                    <div><input type="text" v-model="item.divingRank"></div>
+                    <div class="error">{{item.divingRankError}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="customer-detail-confirm">
+                <div v-on:click="saveItem">{{itemBTN}}</div>
+              </div>
+            </div>
+          </div>
+        </transition>
+        <div class="customer-result"></div>
+        <div class="customer-submit">
+          <div class="customer-submit-btn">确认订单</div>
+        </div>
       </div>
     </div>
   </div>
 </body>
   <!-- 生产环境记得替换vue.min.js -->
   <script src="./../../dist/js/vue.js"></script>
+  <script src="./js/date-picker.js"></script>
   <script src="./../../dist/js/es6-promise.min.js"></script>
   <script src="./../../dist/js/fetch.min.js"></script>
+  <script src="./../../dist/js/ChineseHelper.js"></script>
   <script src="./../../dist/js/appconfig.js?file_version=3.03"></script>
   <script src="./index.js?file_version=3.03"></script>
 </html>
