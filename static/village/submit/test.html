@@ -62,7 +62,7 @@
         <div class="customer-title">
           旅客信息 <span> 注: 至少提供一人信息</span>
         </div>
-        <div class="customer-add" v-on:click="listModalIsShow = !listModalIsShow">选择旅客信息</div>
+        <div class="customer-add" v-on:click="listModalIsShow = true">选择旅客信息</div>
         <transition name="customer-modal-transition">
           <div
             v-if="listModalIsShow"
@@ -70,28 +70,25 @@
           >
             <div class="customer-list-modal">
               <div class="customer-list-modal-title">
-                添加旅客信息<span v-on:click="listModalIsShow = !listModalIsShow">X</span>
+                选择旅客信息<span v-on:click="listModalIsShow = false">X</span>
               </div>
               <div class="customer-list">
                 <div
                   v-for="item in list"
                   v-bind:class="['customer-list-item', item.isSelect ? 'customer-list-itemIsSelect' : '']"
-                  v-on:click="item.isSelect = (item.isSelect ? false : true )"
                 >
-                  <div class="customer-list-item-select">{{(item.isSelect ? '√' : 'X')}}</div>
-                  <div class="customer-list-item-name">{{item.name}}</div>
-                  <div class="customer-list-item-separate"></div>
-                  <div class="customer-list-item-detail"> {{item.age}}岁 - {{item.gender}} - {{item.mobile}} </div>
-                  <div class="customer-list-item-modify">修改</div>
+                  <div class="customer-list-item-select" v-on:click="item.isSelect = (item.isSelect ? false : true )">{{(item.isSelect ? '√' : 'X')}}</div>
+                  <div class="customer-list-item-name" v-on:click="item.isSelect = (item.isSelect ? false : true )">{{item.name}}</div>
+                  <div class="customer-list-item-separate" v-on:click="item.isSelect = (item.isSelect ? false : true )"></div>
+                  <div class="customer-list-item-detail" v-on:click="item.isSelect = (item.isSelect ? false : true )"> {{item.age}}岁 - {{item.gender}} - {{item.mobile}} </div>
+                  <div class="customer-list-item-modify" v-on:click="showModifyItem(item.id)">修改</div>
                 </div>
               </div>
               <div class="customer-list-add">
-                <div
-                  v-on:click="itemModalIsShow = true;"
-                  >新增用户信息</div>
+                <div v-on:click="showAddItem">新增用户信息</div>
               </div>
               <div class="customer-list-confirm">
-                <div>保存并且添加</div>
+                <div v-on:click="addRenderList">保存并且添加</div>
               </div>
             </div>
           </div>
@@ -103,7 +100,7 @@
           >
             <div class="customer-detail-modal">
                 <div class="customer-detail-modal-title">
-                  {{itemTitle}}
+                  {{itemType === 'add' ? '新增旅客信息' : '修改旅客信息'}}
                   <span v-on:click="itemModalIsShow = !itemModalIsShow">X</span>
                 </div>
               <div class="customer-detail">
@@ -175,14 +172,69 @@
                 </div>
               </div>
               <div class="customer-detail-confirm">
-                <div v-on:click="saveItem">{{itemBTN}}</div>
+                <div v-on:click="saveItem(itemType)">{{itemBTN}}</div>
               </div>
             </div>
           </div>
         </transition>
-        <div class="customer-result"></div>
+        <div class="customer-result" v-for="item in renderList">
+          <div class="customer-result-title">旅客</div>
+          <div class="customer-result-delete" v-on:click="removeRenderitem(item.id)">X</div>
+          <div class="customer-result-content">
+            <div class="row">
+              <div class="col-2">护照号码:</div>
+              <div class="col-3"><input type="text" v-model="item.passportNo" disabled></div>
+              <div class="col-1"></div>
+              <div class="col-6 notice">请确保护照的有效期在出行前6个月以上。</div>
+            </div>
+            <div class="row">
+              <div class="col-2">姓名(中文):</div>
+              <div class="col-3"><input type="text" v-model="item.chineseName" disabled></div>
+              <div class="col-1"></div>
+              <div class="col-6 notice">请依照护照姓名中文输入。例，张三</div>
+            </div>
+            <div class="row">
+              <div class="col-2">姓名(拼音):</div>
+              <div class="col-3"><input type="text" v-model="item.pinyinName" disabled></div>
+              <div class="col-1"></div>
+              <div class="col-6 notice">请依照护照拼音输入。例，ZHANGSAN</div>
+            </div>
+            <div class="row">
+              <div class="col-2">性别:</div>
+              <div class="col-10 customer-result-sex" v-if="item.gender === 1">
+                <input type="radio" checked disabled><label>男</label>
+                <input type="radio" disabled><label>女</label>
+              </div>
+              <div class="col-10 customer-result-sex" v-else>
+                <input type="radio" disabled><label>男</label>
+                <input type="radio" checked disabled><label>女</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-2">出生日期:</div>
+              <div class="col-3"><input type="text" v-model="item.birthday" disabled></div>
+              <div class="col-1"></div>
+              <div class="col-1">年龄:</div>
+              <div class="col-3"><input type="text" v-model="item.age" disabled></div>
+            </div>
+            <div class="row">
+              <div class="col-2">手机号码:</div>
+              <div class="col-3"><input type="text" v-model="item.mobile" disabled></div>
+              <div class="col-1"></div>
+              <div class="col-1">邮箱:</div>
+              <div class="col-3"><input type="text" v-model="item.email" disabled></div>
+            </div>
+            <div class="row">
+              <div class="col-2">潜水等级:</div>
+              <div class="col-3"><input type="text" v-model="item.divingRank" disabled></div>
+              <div class="col-1"></div>
+              <div class="col-1">潜次:</div>
+              <div class="col-3"><input type="text" v-model="item.divingCount" disabled></div>
+            </div>
+          </div>
+        </div>
         <div class="customer-submit">
-          <div class="customer-submit-btn">确认订单</div>
+          <div class="customer-submit-btn" v-on:click="submit">确认订单</div>
         </div>
       </div>
     </div>

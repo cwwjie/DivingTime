@@ -214,7 +214,7 @@ var myData = {
     this.submitData.billItemList = billItemList;
   },
 
-  checkLogin: function() {
+  checkLogin: function () {
     var token = utilities.getCookie('token'),
       digest = utilities.getCookie('digest');
     
@@ -225,6 +225,23 @@ var myData = {
         'digest': digest
       }
     });
+  },
+
+  submitData: function () {
+    var mySubmitData = this.submitData,
+      token = utilities.getCookie('token'),
+      digest = utilities.getCookie('digest');
+
+    // return fetch(URLbase + URLversion + "/order/", {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json; charset=utf-8',
+    //     'token': token,
+    //     'digest': digest
+    //   },
+    //   body: JSON.stringify(mySubmitData)
+    // })
+
   }
 }
 
@@ -274,7 +291,7 @@ var customerInfo = {
       digest = utilities.getCookie('digest');
 
     return fetch(appConfig.userinfoFindByUserId, {
-      method: "GET",
+      method: 'GET',
       headers: {
         'token': token,
         'digest': digest
@@ -282,17 +299,69 @@ var customerInfo = {
     });
   },
 
-  dataToVueList: function () {
-    var data = this.data,
+  updateCustomerData: function (data, type) {
+    var _this = this,
+      url = '',
+      token = utilities.getCookie('token'),
+      digest = utilities.getCookie('digest');
+
+    if (type === 'add') {
+      url = appConfig.userinfoAdd;
+    } else {
+      url = appConfig.userupdate;
+    }
+
+    return new Promise(function(resolve, reject){
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'token': token,
+          'digest': digest
+        },
+        body: JSON.stringify(data)
+      }).then(function (response) {
+        return response.json()
+      },function (error) {
+        reject('数据提交发生错误, 原因:' + error);
+      }).then(function(val) {
+        if (val.result === '0') {
+          _this.fetchCustomerData()
+            .then(function (response) {
+              return response.json();
+            }, function (error) {
+              reject('数据提交成功, 但获取顾客信息出错！原因:' + error);
+              return false;
+            })
+            .then(function (fetchValue) {
+              if (fetchValue === false) { return }
+
+              if (fetchValue.result === '0') {
+                _this.data = fetchValue.data;
+                resolve(fetchValue.data);
+              } else {
+                reject('数据提交成功, 但获取顾客信息出错！原因:' + fetchValue.message);
+              }
+            });
+        } else {
+          reject('数据提交发生错误, 原因:' + val.message);
+        }
+      });
+    });
+  },
+
+  dataToVueList: function (data) {
+    var myData = data || this.data,
       vueList = [];
 
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < myData.length; i++) {
       var vueListitem = {
+        id: i,
         isSelect: false,
-        name: data[i].chineseName,
-        age: data[i].age,
-        gender: (data[i].gender === 1 ? '男' : '女'),
-        mobile: data[i].mobile
+        name: myData[i].chineseName,
+        age: myData[i].age,
+        gender: (myData[i].gender === 1 ? '男' : '女'),
+        mobile: myData[i].mobile
       };
       vueList.push(vueListitem);
     }
@@ -300,9 +369,42 @@ var customerInfo = {
     return vueList;
   },
 
+  createVueItem: function () {
+    return {
+      chineseName: '',
+      chineseNameError: '',
+
+      pinyinName: '',
+      pinyinNameError: '',
+
+      passportNo: '',
+
+      gender: 1,
+
+      birthday: '',
+      birthdayError: '',
+
+      age: '',
+
+      mobile: '',
+      mobileError: '',
+
+      email: '',
+      emailError: '',
+      
+      divingCount: '',
+
+      divingRank: '',
+      divingRankError: ''
+    };
+  },
+
   initVue: function () {
     var _this = this,
-      data = this.data;
+      defaultInspect = true,
+      isSubmit = false,
+      selectID = 0;
+
 
     return new Vue({
       'el': '#customerInfo',
@@ -311,42 +413,40 @@ var customerInfo = {
         listModalIsShow: false,
         list: _this.dataToVueList(),
 
-        itemModalIsShow: true,
-        itemTitle: '新增旅客信息',
-        itemBTN: '添加',
-        item: {
-          chineseName: '',
-          chineseNameError: '',
+        itemModalIsShow: false,
+        itemType: 'add', // update
+        itemBTN: '保存',
+        item: _this.createVueItem(),
 
-          pinyinName: '',
-          pinyinNameError: '',
-
-          passportNo: '',
-
-          gender: 1,
-
-          birthday: '',
-          birthdayError: '',
-
-          age: '',
-
-          mobile: '',
-          mobileError: '',
-
-          email: '',
-          emailError: '',
-          
-          divingCount: '',
-
-          divingRank: '',
-          divingRankError: ''
-        },
+        renderList: [
+          // {
+          //   'id': 0,
+          //   'listId': 0,
+          //   'passportNo': '',
+          //   'chineseName': '曾杰杰',
+          //   'pinyinName': 'Rejiejay',
+          //   'gender': 1,
+          //   'birthday': 1485964800000,
+          //   'age': 24,
+          //   'mobile': 159767132587,
+          //   'email': '454766952@qq.com',
+          //   'divingRank': 1,
+          //   'divingCount': 0
+          // }
+        ]
       },
 
       watch: {
         item: {
           handler: function (val, oldVal) {
             var data = oldVal;
+
+            // 如果 默认的检测 是 不检测.
+            if (defaultInspect === false) {
+              // 则终止此次的检测.
+              defaultInspect = true;
+              return
+            }
 
             if (data.chineseName === '') {
               this.item.chineseNameError = '姓名不能为空';
@@ -390,7 +490,7 @@ var customerInfo = {
               this.item.emailError = '';
             }
   
-            if (data.divingRank !== '') {
+            if (data.divingRank !== '' && data.divingRank !== null) {
               if (/^[0-9]*$/.test(data.divingRank) === false) {
                 this.item.divingRankError = '请输入数字';
               } else if ( parseInt(data.divingRank) >= 100) {
@@ -406,7 +506,49 @@ var customerInfo = {
       },
 
       methods: {
-        saveItem: function () {
+        showAddItem: function() {
+          this.itemModalIsShow = true;
+          this.itemType = 'add';
+          defaultInspect = false;
+          this.item = _this.createVueItem();
+        },
+
+        showModifyItem: function (id) {
+          var data = _this.data[id];
+
+          selectID = id;
+          this.itemModalIsShow = true;
+          this.itemType = 'update';
+          this.item = {
+            'chineseName': data.chineseName,
+            'chineseNameError': '',
+      
+            'pinyinName': data.pinyinName,
+            'pinyinNameError': '',
+      
+            'passportNo': data.passportNo,
+      
+            'gender': data.gender,
+      
+            'birthday': utilities.dateToYYYYMMDDFormat(new Date(data.birthday)),
+            'birthdayError': '',
+      
+            'age': data.age,
+      
+            'mobile': data.mobile,
+            'mobileError': '',
+      
+            'email': data.email,
+            'emailError': '',
+            
+            'divingCount': data.divingCount,
+      
+            'divingRank': data.divingRank,
+            'divingRankError': ''
+          };
+        },
+
+        saveItem: function (type) {
           var data = this.item;
           
           if (data.chineseName === '') {
@@ -468,8 +610,124 @@ var customerInfo = {
             }
           }
 
+          this.itemBTN = '正在提交...';
+
+          var submitData = {
+            'chineseName': data.chineseName,
+            'pinyinName': data.pinyinName,
+            'passportNo': data.passportNo,
+            'gender': data.gender,
+            'birthday': utilities.YYYYMMDDFormatToTimestamp(data.birthday),
+            'age': data.age,
+            'mobile': data.mobile,
+            'email': data.email,
+            'divingRank': data.divingRank,
+            'divingCount': data.divingCount,
+          }
+
+          if (type === 'update') {
+            submitData.userinfoId = _this.data[selectID].userinfoId;
+          }
+
+          var thisVue = this;
+
+          _this.updateCustomerData(submitData, type)
+            .then(function (data) {
+              thisVue.list = _this.dataToVueList(data);
+              thisVue.item = _this.createVueItem();
+              thisVue.itemBTN = '保存';
+              thisVue.listModalIsShow = true;
+              thisVue.itemModalIsShow = false;
+            }, function (error) {
+              thisVue.itemBTN = '保存';
+              alert(error);
+            });
+        },
+
+        addRenderList: function () {
+          var selectCount = 0;
+            mySelectList = this.list,
+            myRenderList = [];
+
+          for (var i = 0; i < mySelectList.length; i++) {
+            if (mySelectList[i].isSelect) {
+              var myId = myRenderList.length;
+                mySelectItemData = _this.data[mySelectList[i].id],
+              divingRank = '';
+
+              selectCount++;
+              if (mySelectItemData.divingRank === 1) {
+                divingRank = 'OW(初级潜水员)';
+              } else if (mySelectItemData.divingRank === 2) {
+                divingRank = 'OW以上';
+              }
+              myRenderList.push({
+                'id': myId,
+                'listId': mySelectList[i].id,
+                'passportNo': mySelectItemData.passportNo,
+                'chineseName': mySelectItemData.chineseName,
+                'pinyinName': mySelectItemData.pinyinName,
+                'gender': mySelectItemData.gender,
+                'birthday': utilities.dateToYYYYMMDDFormat(new Date(mySelectItemData.birthday)),
+                'age': mySelectItemData.age,
+                'mobile': mySelectItemData.mobile,
+                'email': mySelectItemData.email,
+                'divingRank': divingRank,
+                'divingCount': mySelectItemData.divingCount
+              });
+            }
+          }
+
+          if (selectCount === 0) {
+            alert('至少选择一人信息!');
+            return
+          }
+
+          this.renderList = myRenderList;
+          this.listModalIsShow = false;
+        },
+
+        removeRenderitem: function (id) {
+          var _this = this;
+  
+          if(window.confirm('你确定要删除吗?')){
+            _this.renderList.splice(id, 1);
+          }
+        },
+
+        submit: function () {
+          var userInfoList = [];
+
+          if (isSubmit) { return }
+
+          if (this.renderList.length === 0) {
+            alert('至少提供一旅客信息!');
+            return
+          }
 
 
+          for (var i = 0; i < this.renderList.length; i++) {
+            var myUserInfoItem = _this.data[this.renderList[i].listId];
+            userInfoList.push({
+              'relId': null,
+              'orderId': null,
+              'chineseName': myUserInfoItem.chineseName,
+              'pinyinName': myUserInfoItem.pinyinName,
+              'gender': myUserInfoItem.gender,
+              'passportNo': myUserInfoItem.passportNo,
+              'email': myUserInfoItem.email,
+              'divingCount': myUserInfoItem.divingCount,
+              'divingRank': myUserInfoItem.divingRank,
+              'birthday': myUserInfoItem.birthday,
+              'age': myUserInfoItem.age,
+              'mobile': myUserInfoItem.mobile
+            });
+
+            myData.userInfoList = userInfoList;
+
+            isSubmit = true;
+            myData.submitData();
+          }
         }
       },
 
