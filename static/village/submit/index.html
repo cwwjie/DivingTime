@@ -34,22 +34,54 @@
           <div class="col-5">入住日期: {{startDate}}</div>
           <div class="col-4">退房日期: {{endDate}}</div>
         </div>
+        <div class="orders-title">房间</div>
+        <div class="orders-apartment">
+          <div class="orders-apartment-content" v-for="apartmentItem in apartmentList">
+            <div class="orders-apartment-title">{{apartmentItem.apartmentName}}</div>
+            <div class="row">
+              <div class="col-2">床型</div>
+              <div class="col-10">
+                <select v-model='apartmentItem.bedType'>
+                  <option v-for="option in apartmentItem.bedTypeList" v-bind:value="option">{{option}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-2">成人数</div>
+              <div class="col-2 button">
+                <button type="button" v-on:click="reduceAdult(apartmentItem.id)">-</button>
+                <span>{{apartmentItem.adult}}</span>
+                <button type="button" v-on:click="addAdult(apartmentItem.id)">+</button>
+              </div>
+              <div class="col-2">儿童数</div>
+              <div class="col-2 button">
+                <button type="button" v-on:click="reducechildren(apartmentItem.id)">-</button>
+                <span>{{apartmentItem.children}}</span>
+                <button type="button" v-on:click="addchildren(apartmentItem.id)">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="orders-title">统计</div>
         <div class="orders-table">
           <div class="orders-table-title row">
-            <div class="col-5"><div>项目</div></div>
-            <div class="col-4"><div>数量</div></div>
-            <div class="col-3"><div>价格</div></div>
+            <div class="col-3"><div>项目</div></div>
+            <div class="col-3"><div>房间数</div></div>
+            <div class="col-3"><div>人数</div></div>
+            <div class="col-3 price"><div>价格</div></div>
           </div>
           <div class="orders-table-content">
             <div v-for="orderItem in ordersList" class="orders-table-item row">
-              <div class="col-5"><div>{{orderItem.name}}</div></div>
-              <div class="col-4"><div>{{orderItem.count}}</div></div>
-              <div class="col-3"><div>{{orderItem.price}}</div></div>
+              <div class="col-3"><div>{{orderItem.name}}</div></div>
+              <div class="col-3"><div>{{orderItem.roomCount}}</div></div>
+              <div class="col-3"><div>{{orderItem.personCount}}</div></div>
+              <div class="col-3 price"><div>{{orderItem.price}}</div></div>
             </div>
             <div class="orders-table-total row">
-              <div class="col-5"><div>合计</div></div>
-              <div class="col-4"><div>{{orderscount}}</div></div>
-              <div class="col-3"><div>{{ordersprice}}</div></div>
+              <div class="col-3"><div>合计</div></div>
+              <div class="col-3"><div>{{ordersRoomCount}}</div></div>
+              <div class="col-3"><div>{{ordersPersonCount}}</div></div>
+              <div class="col-3 price"><div>{{ordersprice}}</div></div>
             </div>
           </div>
         </div>
@@ -234,7 +266,7 @@
           </div>
         </div>
         <div class="customer-submit">
-          <div class="customer-submit-btn" v-on:click="submit">确认订单</div>
+          <div class="customer-submit-btn" v-on:click="submit">{{submitBTN}}</div>
         </div>
       </div>
     </div>

@@ -33,10 +33,13 @@ var myData = {
   'submitData': {
     'billItemList': [
       // {
-      //   'itemId': null,
-      //   'itemNum': null,
-      //   'itemCode': '',
-      //   'itemName': ''
+      //   adultNum: 1,
+      //   childNum: 0,
+      //   itemCode: "KPLyjf",
+      //   itemId: null,
+      //   itemName: "园景房",
+      //   itemNum: null,
+      //   itemSize: "大床"
       // }
     ],
     'userInfoList': [
@@ -119,6 +122,7 @@ var myData = {
     // 'updateBy': null,
     // 'updateTime': null
   },
+  'myVue': {},
   
   init: function() {
     var _this = this,
@@ -136,8 +140,7 @@ var myData = {
         }
         _this.apartmentList = JSON.parse(myApartmentList);
         _this.village = JSON.parse(myVillage);
-        _this.initSubmitData();
-        _this.initOrdersDetail();
+        _this.initOrdersDetailVue();
         // localStorage.removeItem('apartmentList');
         // localStorage.removeItem('village');
         resolve();
@@ -147,15 +150,31 @@ var myData = {
     });
   },
 
-  initOrdersDetail: function () {
+  initOrdersDetailVue: function () {
     var ordersList = [
         // {
         //   name: '',
-        //   count: 0,
+        //   roomCount: 0,
+        //   personCount: 0,
         //   price: 0
         // }
       ],
-      orderscount = 0,
+      apartmentList = [
+        // {
+        //   'id': 0,
+        //   'ordersListId': 0,
+        //   'itemCode': 'KPLyjf',
+        //   'apartmentName': '园景房',
+        //   'bedTypeList': ['大床','双人床','单床','蜜月大床'],
+        //   'bedType': '大床',
+        //   'adult': 1,
+        //   'adultMax': 2,
+        //   'children': 0,
+        //   'childrenMax': 2,
+        // }
+      ],
+      ordersRoomCount = 0,
+      ordersPersonCount = 0,
       ordersprice = 0,
       ordersTitle = this.village.brandName,
       startDate = utilities.dateToYYYYMMDDFormat(this.date.startDate),
@@ -164,51 +183,135 @@ var myData = {
     for (var i = 0; i < this.apartmentList.length; i++) {
       var apartment = this.apartmentList[i];
 
+      for (var j = 0; j < this.apartmentList[i].selectNum; j++) {
+        var apartmentItem = {
+          'id': ordersRoomCount,
+          'ordersListId': i,
+          'itemCode': this.apartmentList[i].apartmentCode,
+          'apartmentName': this.apartmentList[i].apartmentName,
+          'bedTypeList': this.apartmentList[i].bedType.split(','),
+          'bedType': this.apartmentList[i].bedType.split(',')[0],
+          'adult': 1,
+          'adultMax': this.apartmentList[i].adultMax,
+          'children': 0,
+          'childrenMax': this.apartmentList[i].childrenMax,
+        };
+
+        apartmentList.push(apartmentItem);
+
+        ordersRoomCount++;
+        ordersPersonCount++;
+      }
+
       var ordersItem = {
-        name: apartment.apartmentName,
-        count: apartment.selectNum,
-        price: (apartment.selectNum * apartment.initiatePrice)
+        'name': apartment.apartmentName,
+        'roomCount': apartment.selectNum,
+        'personCount': apartment.selectNum,
+        'price': (apartment.selectNum * apartment.initiatePrice)
       };
 
       ordersList.push(ordersItem);
-      orderscount += apartment.selectNum;
+
       ordersprice += (apartment.selectNum * apartment.initiatePrice);
     }
 
-    new Vue({
+    this.myVue = new Vue({
       'el': '#ordersDetail',
+
       'data': {
         'ordersTitle': ordersTitle,
         'startDate': startDate,
         'endDate': endDate,
+
+        'apartmentList': apartmentList,
+
         'ordersList': ordersList,
-        'orderscount': orderscount,
+        'ordersRoomCount': ordersRoomCount,
+        'ordersPersonCount': ordersPersonCount,
         'ordersprice': ordersprice
+      },
+      
+      'watch': {
+        ordersList: {
+          handler: function (val, oldVal) {
+            var myOrdersList = oldVal,
+              myCount = 0;
+
+            for (var i = 0; i < myOrdersList.length; i++) {
+              myCount += myOrdersList[i].personCount;
+            }
+
+            this.ordersPersonCount = myCount;
+          },
+          deep: true
+        }
+      },
+
+      'methods': {
+        reduceAdult: function(id) {
+          var dataNum = this.apartmentList[id].adult,
+            ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
+        
+          if (dataNum <= 1) { return }
+
+          this.apartmentList[id].adult = dataNum - 1;
+          this.apartmentList[id].personCount = dataNum - 1;
+          this.ordersList[this.apartmentList[id].ordersListId].personCount = ordersItemPersonNum - 1;
+        },
+
+        addAdult: function(id) {
+          var dataNum = this.apartmentList[id].adult,
+            maxNum = this.apartmentList[id].adultMax,
+            ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
+
+          if (dataNum >= maxNum) { return }
+            
+          this.apartmentList[id].adult = dataNum + 1;
+          this.ordersList[this.apartmentList[id].ordersListId].personCount = ordersItemPersonNum + 1;
+        },
+
+        reducechildren: function(id) {
+          var dataNum = this.apartmentList[id].children,
+          ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
+
+          if (dataNum <= 0) { return }
+
+          this.apartmentList[id].children = dataNum - 1,
+          ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
+          this.ordersList[this.apartmentList[id].ordersListId].personCount = ordersItemPersonNum - 1;
+        },
+
+        addchildren: function(id) {
+          var dataNum = this.apartmentList[id].children,
+            maxNum = this.apartmentList[id].childrenMax,
+            ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
+         
+          if (dataNum >= maxNum) { return }
+
+          this.apartmentList[id].children = dataNum + 1;
+          this.ordersList[this.apartmentList[id].ordersListId].personCount = ordersItemPersonNum + 1;
+        },
       }
     });
   },
 
-  initSubmitData: function () {
+  initBillItemList: function () {
     var billItemList = [],
-      apartmentListNum = this.apartmentList.length,
-      apartmentList = this.apartmentList;
+      apartmentListNum = this.myVue.$data.apartmentList.length,
+      apartmentList = this.myVue.$data.apartmentList;
 
     for (var i = 0; i < apartmentListNum; i++) {
-      var apartment = apartmentList[i],
-        apartmentNum = apartmentList[i].selectNum;
+      var apartment = apartmentList[i];
 
-      for (var j = 0; j < apartmentNum; j++) {
-        billItemList.push(createbillItem());
-      }
-
-      function createbillItem() {
-        return {
-          'itemId': null,
-          'itemNum': null,
-          'itemCode': apartment.resortCode,
-          'itemName': apartment.resortName
-        };
-      }
+      billItemList.push({
+        'itemId': null,
+        'itemNum': null,
+        'itemCode': apartment.itemCode,
+        'itemName': apartment.apartmentName,
+        'itemSize': apartment.bedType,
+        'adultNum': apartment.adult,
+        'childNum': apartment.children,
+      });
     }
 
     this.submitData.billItemList = billItemList;
@@ -227,21 +330,26 @@ var myData = {
     });
   },
 
-  submitData: function () {
-    var mySubmitData = this.submitData,
+  submit: function () {
+    var _this = this,
+      mySubmitData = this.submitData,
+      resortCode = this.village.resortCode,
+      checkInDate = utilities.dateToYYYYMMDDString(this.date.startDate),
+      leaveDate = utilities.dateToYYYYMMDDString(this.date.endDate),
       token = utilities.getCookie('token'),
       digest = utilities.getCookie('digest');
 
-    // return fetch(URLbase + URLversion + "/order/", {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json; charset=utf-8',
-    //     'token': token,
-    //     'digest': digest
-    //   },
-    //   body: JSON.stringify(mySubmitData)
-    // })
-
+    this.initBillItemList();
+    console.log(mySubmitData);
+    return fetch(URLbase + URLversion + '/order/' + resortCode + '/' + checkInDate + '/' + leaveDate + '/custom.do', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'token': token,
+        'digest': digest
+      },
+      body: JSON.stringify(mySubmitData)
+    })
   }
 }
 
@@ -418,6 +526,7 @@ var customerInfo = {
         itemBTN: '保存',
         item: _this.createVueItem(),
 
+        submitBTN: '确认订单',
         renderList: [
           // {
           //   'id': 0,
@@ -696,7 +805,8 @@ var customerInfo = {
         },
 
         submit: function () {
-          var userInfoList = [];
+          var Vuethis = this,
+            userInfoList = [];
 
           if (isSubmit) { return }
 
@@ -723,10 +833,32 @@ var customerInfo = {
               'mobile': myUserInfoItem.mobile
             });
 
-            myData.userInfoList = userInfoList;
+            myData.submitData.userInfoList = userInfoList;
 
             isSubmit = true;
-            myData.submitData();
+            this.submitBTN = '正在提交...';
+
+            myData.submit()
+              .then(function (response) {
+                return response.json();
+              }, function (error) {
+                isSubmit = false;
+                Vuethis.submitBTN = '确认订单';
+                alert('非常抱歉，提交信息出错！原因: ' + error);
+                return false;
+              })
+              .then(function (val) {
+                if (val === false) { return }
+                if (val.result === '0') {
+                  isSubmit = false;
+                  Vuethis.submitBTN = '确认订单';
+                  window.location = './../../user/account.html#Orders';
+                } else {
+                  isSubmit = false;
+                  Vuethis.submitBTN = '确认订单';
+                  alert('非常抱歉，提交信息出错！原因: ' + val.message);
+                }
+              });
           }
         }
       },
@@ -737,6 +869,18 @@ var customerInfo = {
 }
 
 var utilities = {
+  dateToYYYYMMDDString: function(data) {
+    var yyyy = data.getFullYear();
+
+    var mm = data.getMonth() + 1;
+    mm = mm < 10 ? '0' + mm : mm;
+
+    var dd = data.getDate();
+    dd = dd < 10 ? '0' + dd : dd;
+
+    return '' + yyyy + mm + dd;
+  },
+
   dateToYYYYMMDDFormat: function(data) {
     var yyyy = data.getFullYear();
 
