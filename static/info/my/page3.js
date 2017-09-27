@@ -322,10 +322,10 @@ var pageThird = (function(){
 			dataModal.chineseName.allow  = true;
 			dataModal.chineseName.data = event.target.value.trim();
 
-			$("#livePinyin").val($(this).toPinyin());
+			$("#livePinyin").val(ConvertPinyin($(this).val()));
 			$("#livePinyin").next().attr('class', 'value active');
 			dataModal.pinyinName.allow = true;
-			dataModal.pinyinName.data  = $(this).toPinyin();
+			dataModal.pinyinName.data  = ConvertPinyin($(this).val());
 		})
 		// 姓名(拼音)
 		$("#livePinyin").blur(function(event){

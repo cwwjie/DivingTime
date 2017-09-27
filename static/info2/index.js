@@ -19,9 +19,8 @@ window.onload = function() {
   //       alert('加载数据失败, 原因: ' + json.message)
   //     }
   //   })
+  
 }
-
-
 
 // 判断浏览器是否支持方法
 var versionSupport = {
@@ -60,8 +59,9 @@ var versionSupport = {
     return true
   }
 }
+
 var myData = {
-  get:function() {
+  get: function () {
     var uniqueKey = localStorage.getItem('_uniqueKey')
     // return fetch(URLbase + URLversion + '/gather/link/' + uniqueKey + '/getGatherInfo.do',{
     //   method: 'POST',
@@ -72,7 +72,7 @@ var myData = {
     //   body: uploadForm
     // })
   },
-  dealwith:function(data) {
+  dealwith: function (data) {
     if (data) {
       isFirst = false
       return data

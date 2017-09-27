@@ -8,8 +8,8 @@ class ResultPage extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      progress:'loading',// loading submit fail
-      message:'',
+      progress: 'loading',// loading submit fail
+      message: '',
     };
   }
   componentWillMount(){
@@ -37,13 +37,13 @@ class ResultPage extends React.Component {
         method: "POST",
         headers:{
           "Content-Type": "application/json; charset=utf-8",
-          'token':localStorage.getItem('_token'),
-          'digest':localStorage.getItem('_digest')
+          'token': localStorage.getItem('_token'),
+          'digest': localStorage.getItem('_digest')
         },
         body:JSON.stringify(_json)
        }).then(function(response) {
         return response.json()
-       },function(error) {
+       }, function(error) {
         let _date = assign({},_this.state);
         _date.progress = "fail";
         _date.message = "发生未知错误:" + error;
@@ -64,21 +64,21 @@ class ResultPage extends React.Component {
         }
         _this.props.dispatch({type:'submit_infor',data:true});
         _this.setState(_date);
-       },function(error) {
+       }, function(error) {
         let _date = assign({},_this.state);
         _date.progress = "fail";
         _date.message = "发生未知错误:" + error;
         _this.setState(_date);
       });
-    }else {
+    } else {
       // 更新
       fetch(
         URL.base + URL.version + "/gather/"+localStorage.getItem('_uniqueKey')+"/updateForm.do",{
         method: "POST",
         headers:{
           "Content-Type": "application/json; charset=utf-8",
-          'token':localStorage.getItem('_token'),
-          'digest':localStorage.getItem('_digest')
+          'token': localStorage.getItem('_token'),
+          'digest': localStorage.getItem('_digest')
         },
         body:JSON.stringify(_json)
        }).then(function(response) {

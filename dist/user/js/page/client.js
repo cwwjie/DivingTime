@@ -332,7 +332,7 @@ function client() {
 				judge();
 			});
 			$("#ChineseName").blur(function(event) {
-				$("#EnglishName").val($(this).toPinyin());
+				$("#EnglishName").val(ConvertPinyin($(this).val()));
 				$("#EnglishName").trigger("blur");
 				judge();
 			});

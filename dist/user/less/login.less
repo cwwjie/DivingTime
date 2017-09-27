@@ -1,34 +1,35 @@
-@icon:url("./../../dist/img/ico.png");
-@FontFamily:Helvetica,Arial,"Hiragino Sans GB","Microsoft YaHei",sans-serif;
+@icon:url('./../../dist/img/ico.png');
+@FontFamily:Helvetica,Arial,'Hiragino Sans GB','Microsoft YaHei',sans-serif;
 *{
 	padding:0px;
 	margin:0px;
 	font-family:@FontFamily;
+	body {
+		width: 100%;
+		height: 100%;
+		background: #f9f9f9;
+	}
+	a {
+		text-decoration: none;
+		color: #4d5d77;
+		font-family: '微软雅黑';
+	}
+	a:hover {
+		text-decoration: none;
+		color: #4d5d77;
+		font-family: '微软雅黑';
+	}
 }
-body{
-	width: 100%;
-	height: 100%;
-	background:#f9f9f9;
-}
-a {
-	text-decoration: none;
-	color:#4d5d77;
-	font-family:"微软雅黑";
-}
-a:hover {
-	text-decoration: none;
-	color:#4d5d77;
-	font-family:"微软雅黑";
-}
+
 header {
 	position: fixed;
 	overflow: hidden;
-	width:100%;
-	background:#fff;
-	height:50px;
+	width: 100%;
+	background: #fff;
+	height: 50px;
 	box-shadow: 0 1px 1px rgba(0,0,0,.26);
-	font-size:14px;
-	font-family:"微软雅黑";
+	font-size: 14px;
+	font-family:'微软雅黑';
 	line-height:50px;
 	z-index: 100;
 	color:#4d5d77;
@@ -47,14 +48,24 @@ header {
 		margin-right:20px;
 	}
 }
+
 .content {
-	padding:0px 5px;
+	padding: 20px 20px 0px 20px;
 	position: relative;
 	top: 150px;
 	max-width: 320px;
 	margin:0px auto;
 	height: 250px;
-	color:rgba(0, 0, 0, 0.56);
+	color: rgba(0, 0, 0, 0.56);
+	border-radius: 5px;
+	background: #fff;
+	border: 1px solid #dbdbdb;
+
+	@media (max-width:970px) {
+		background: #f9f9f9;
+		border: none;
+	}
+
 	.title {
 		overflow: hidden;
 		height: 31px;
@@ -89,7 +100,7 @@ header {
 			display: inline-block;
 			width: 16px;
 			height: 16px;
-			background:url("./../../dist/img/ico.png");
+			background:url('./../../dist/img/ico.png');
 			background-position: -48px -99px;
 		}
 		.mistakeicon {
@@ -99,7 +110,7 @@ header {
 			display: inline-block;
 			width: 16px;
 			height: 16px;
-			background:url("./../../dist/img/ico.png");
+			background:url('./../../dist/img/ico.png');
 			background-position: -64px -99px;
 		}
 	}
@@ -110,7 +121,7 @@ header {
 			right: 10px;
 			width: 32px;
 			height: 32px;
-			background:url("./../../dist/img/ico.png");
+			background:url('./../../dist/img/ico.png');
 			cursor: pointer;
 		}
 		.Show{
@@ -153,5 +164,41 @@ header {
 	.Btn:hover {
 		color: #fff;
 		background:rgb(0, 144, 121);
+	}
+}
+
+.advertising {
+	position: relative;
+	top: 180px;
+	max-width: 360px;
+	margin: 0px auto;
+
+	
+	@media (max-width:970px) {
+		padding: 0px 20px;
+	}
+
+	> div {
+		position: relative;
+		border-radius: 5px;
+		background: #fff;
+		border: 1px solid #dbdbdb;
+
+		span {
+			position: absolute;
+			bottom: 0px;
+			width: 100%;
+			height: 25px;
+			line-height: 25px;
+			text-align: center;
+			background: rgba( 0, 0, 0, 0.46);
+			color: #fff;
+		}
+	}
+
+	img {
+		display: block;
+		margin: 0 auto;
+		width: 100%;
 	}
 }

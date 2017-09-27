@@ -25,6 +25,7 @@ router.get('/other/joinus.html', function*() { yield this.render('other/joinus')
 router.get('/other/help.html', function*() { yield this.render('other/help') });
 router.get('/other/privacy.html', function*() { yield this.render('other/privacy') });
 router.get('/other/policy.html', function*() { yield this.render('other/policy') });
+  router.get('/other/advertising/index.html', function*() { yield this.render('other/advertising/index') });
 
 router.get('/village/index.html', function*() { yield this.render('village/index') });
 router.get('/village/detail/index.html', function*() { yield this.render('village/detail/index') });

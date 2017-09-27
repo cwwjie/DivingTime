@@ -1,0 +1,17 @@
+{{ set (homeURL = "./../../") }}
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  {{ include ("./../../basehead") }}
+  <link rel="stylesheet" type="text/css" href="./main.css" media="screen">
+</head>
+<body>
+  {{ include ("./../../navheader") }}
+	<div class="main">
+
+    
+  </div>
+  {{ include ("./../../navbottom") }}
+</body>
+</html>

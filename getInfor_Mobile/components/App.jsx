@@ -86,8 +86,8 @@ class App extends React.Component {
       method: 'GET',
       contentType: "application/json; charset=utf-8",
       headers:{
-        token:localStorage.getItem('_token'),
-        digest:localStorage.getItem('_digest')
+        token: localStorage.getItem('_token'),
+        digest: localStorage.getItem('_digest')
       }
      }).then(function(response) {
       return response.json()

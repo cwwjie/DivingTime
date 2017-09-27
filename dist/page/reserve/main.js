@@ -162,7 +162,7 @@ var UserInfor = function() {
             judge();
         });
         $("#ChineseName").blur(function(event) {
-            $("#EnglishName").val($(this).toPinyin());
+            $("#EnglishName").val(ConvertPinyin($(this).val()));
             $("#EnglishName").trigger("blur");
             judge();
         });
@@ -586,7 +586,7 @@ var initPage = {
                 _Day = _birthday.getDate();
 
             _string = "<div class='col-md-4'><select class='sel_year'disabled='disabled'><option value ='" //
-                + _Year + "'>" + _Year + "</option></select><span>年</span><select class='sel_month'disabled='disabled'><option value ='" //
+                + _Year + "'>" + _Year + "</option></select><span>年</span><select class='sel_month' disabled='disabled'><option value ='" //
                 + _Month + "'>" + _Month + "</option></select><span>月</span><select class='sel_day' disabled='disabled'><option value ='" //
                 + _Day + "'>" + _Day + "</option></select><span>日</span></div>"
 

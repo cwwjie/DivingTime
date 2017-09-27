@@ -85,6 +85,14 @@ xtpl.renderFile('./static/other/aboutus.xtpl', {}, function(error, content) {
     Files.writeFile('./dist/other/policy.html', content, 'utf8', function() {
         console.log('policy.html - OK')
     })
+ });
+    xtpl.renderFile('./static/other/advertising/index.xtpl', {}, function(error, content) {
+        Files.writeFile('./static/other/advertising/index.html', content, 'utf8', function() {
+            console.log('index.html - OK')
+        })
+        Files.writeFile('./dist/other/advertising/index.html', content, 'utf8', function() {
+            console.log('policy.html - OK')
+        })
 });
 
 // 度假村直定页面
@@ -121,27 +129,24 @@ xtpl.renderFile('./static/village/index.xtpl', {}, function(error, content) {
     renderFile("./static/page/payment/main.css","./dist/page/payment/main.css");
     renderFile("./static/page/payment/main.js","./dist/page/payment/main.js");
     // other 其他页面
-    copyDir("./static/other/img","./dist/other/img", function(err){
-        console.log("other/img - OK");
-    })
+    copyDir("./static/other/img","./dist/other/img", function (err) { console.log("other/img - OK"); })
+    renderFile("./static/other/main.css","./dist/other/main.css");
+        // 广告页面
+        copyDir("./static/other/advertising/img","./dist/other/advertising/img", function (err) { console.log(err) })
+        renderFile("./static/other/advertising/index.css","./dist/other/advertising/index.css");
+        renderFile("./static/other/advertising/h5.html","./dist/other/advertising/h5.html");
+
     // 用户中心
-    copyDir("./static/user","./dist/user", function(err){
-        console.log("user/ - OK");
-    })
+    copyDir("./static/user","./dist/user", function(err){  console.log("user/ - OK") })
+
     // PC 信息收集
     renderFile("./static/info/gather.html","./dist/info/gather.html");
     renderFile("./static/info/css/index.css","./dist/info/css/index.css");
-    copyDir("./static/info/my","./dist/info/my", function(err){
-        console.log("info/my - OK");
-    })
+    copyDir("./static/info/my","./dist/info/my", function(err){ console.log("info/my - OK") })
         // 确认函
-        copyDir("./static/info/confirm","./dist/info/confirm", function(err){
-            console.log("info/confirm - OK");
-        })
+        copyDir("./static/info/confirm","./dist/info/confirm", function(err){ console.log("info/confirm - OK") })
         // PC 查看
-        copyDir("./static/info/view","./dist/info/view", function(err){
-            console.log("info/view - OK");
-        })
+        copyDir("./static/info/view","./dist/info/view", function(err){ console.log("info/view - OK") })
         renderFile("./static/info/css/view.css","./dist/info/css/view.css");
 
 

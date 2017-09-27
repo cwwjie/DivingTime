@@ -1,7 +1,8 @@
 $(document).ready(function(){
 	Check();
 	log();
-	showPassword()
+	showPassword();
+	advertising();
 });
 function Check() {
 	$("#User").change(function(){
@@ -157,4 +158,9 @@ function log() {
 			});
 		}
 	}); 
+}
+function advertising() {
+	$('#advertising').click(function () {
+		window.location = './../other/advertising/index.html';
+	});
 }

@@ -322,10 +322,10 @@ var pageThird = (function(){
 			dataModal.chineseName.allow  = true;
 			dataModal.chineseName.data = event.target.value.trim();
 
-			$("#livePinyin").val($(this).toPinyin());
+			$("#livePinyin").val(ConvertPinyin($(this).val()));
 			$("#livePinyin").next().attr('class', 'value active');
 			dataModal.pinyinName.allow = true;
-			dataModal.pinyinName.data  = $(this).toPinyin();
+			dataModal.pinyinName.data  = ConvertPinyin($(this).val());
 		})
 		// 姓名(拼音)
 		$("#livePinyin").blur(function(event){
@@ -644,7 +644,7 @@ var pageThird = (function(){
 				// 初始化模态框数据，指向新的数据、
 				dataModal = initiModal();
 				dataModal.roomId.data = allRoom[event.target.getAttribute("data-Roomid")].roomId.data;
-				dataModal.email.allow = false;
+				// dataModal.email.allow = false;
 				dataModal.mobile.allow = false;
 				$("#showAdultData").show();
 				$("#CloseTraModal").next().html("入住成人信息");
