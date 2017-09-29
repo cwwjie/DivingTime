@@ -16,9 +16,23 @@
 <script type="text/javascript" src=./../../dist/js/jquery-2.1.4.min.js></script>
 <script type="text/javascript" src=./../../dist/js/jquery.cookie.js></script>
 <script type="text/javascript" src=./../../dist/js/bootstrap.min.js></script>
-<script type="text/javascript" src=./../../dist/js/appconfig.js?file_version=3.03></script>
+<script type="text/javascript" src=./../../dist/js/appconfig.js?file_version=3.04></script>
 
-  <link rel="stylesheet" type="text/css" href="./main.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="./index.css" media="screen">
+
+  <script>
+    var winWidth = null;
+    if (window.innerWidth) {
+      winWidth = window.innerWidth;
+    } else if ((document.body) && (document.body.clientWidth)) {
+      winWidth = document.body.clientWidth;
+    }
+
+    if (winWidth !== null && winWidth <= 970) {
+      window.location = './h5.html';
+    }
+  </script>
+
 </head>
 <body>
   <header>
@@ -583,9 +597,15 @@
   }
 </script>
 
-	<div class="main">
-
-    
+	<div class="pc-main">
+    <img src="./img/1.jpg">
+    <img src="./img/2.jpg">
+    <img src="./img/3.jpg">
+    <img src="./img/4.jpg">
+    <img src="./img/5.jpg">
+    <img src="./img/6.jpg">
+    <img src="./img/7.jpg">
+    <img src="./img/8.jpg">
   </div>
   <footer>
   <div class="F-Content" id="FFFhomeURL" data-homeURL=./../../>

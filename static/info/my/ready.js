@@ -56,7 +56,6 @@ $(document).ready(function() {
 				'digest':localStorage.getItem('_digest')
 			},
 			success: function (message) {
-				console.log(message)
 				if (message.result == "0") {
 					// 如果 data 不存在
 					if (!message.data) {

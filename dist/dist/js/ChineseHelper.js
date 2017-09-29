@@ -20,7 +20,6 @@ function ConvertPinyin(l1) {
     }
     return I1;
 }
-
 // 在对象中搜索  
 function arraySearch(l1, l2) {
     for (var name in PinYin) {
@@ -39,4 +38,3 @@ function ucfirst(l1) {
         // return first;  
     }
 }
-export default ConvertPinyin

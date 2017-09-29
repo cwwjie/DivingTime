@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import traveler from './../icon/traveler.png';
 import dateTime from './../method/dateTime.jsx';
-import pinYin from './../method/pinYin.jsx';
+import pinYin from './../method/ChineseHelper.jsx';
 import Autocomplete from './../method/Autocomplete.jsx';
 
 const Item = List.Item;

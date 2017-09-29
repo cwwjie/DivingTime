@@ -6,6 +6,8 @@
   <link rel="stylesheet" type="text/css" href="./main.css" media="screen">
 </head>
 <body>
+
+  {{ include ("./../navheader") }}
   <div class="main">
     <div class="main_img">
       <img src="./img/bar.jpg">

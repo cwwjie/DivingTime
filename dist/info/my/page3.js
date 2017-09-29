@@ -630,7 +630,7 @@ var pageThird = (function(){
 					allNum += thisRoomCustomerNum;
 					for (var j = 0; j < thisRoomCustomerNum; j++) {
 						var myCustomer = allRoom[i].customerInfoList[j];
-						if (myCustomer.isKid == 'N') {
+						if (myCustomer.isKid.data == 'Y') {
 							childNum++;
 						}else {
 							adultNum++;
@@ -646,6 +646,7 @@ var pageThird = (function(){
 				dataModal.roomId.data = allRoom[event.target.getAttribute("data-Roomid")].roomId.data;
 				// dataModal.email.allow = false;
 				dataModal.mobile.allow = false;
+				dataModal.isKid = {allow:true, data:'N'};
 				$("#showAdultData").show();
 				$("#CloseTraModal").next().html("入住成人信息");
 				$("#livePhone").next().next().html('手机号码/电话(必填)');
@@ -678,7 +679,7 @@ var pageThird = (function(){
 					allNum += thisRoomCustomerNum;
 					for (var j = 0; j < thisRoomCustomerNum; j++) {
 						var myCustomer = allRoom[i].customerInfoList[j];
-						if (myCustomer.isKid == 'N') {
+						if (myCustomer.isKid.data == 'Y') {
 							childNum++;
 						}else {
 							adultNum++;
@@ -693,9 +694,9 @@ var pageThird = (function(){
 				dataModal = initiModal();
 				dataModal.roomId.data = allRoom[event.target.getAttribute("data-Roomid")].roomId.data;
 				// 初始化儿童
-				dataModal.email = {allow:true,data:""};
-				dataModal.mobile = {allow:true,data:""};
-				dataModal.isKid = {allow:true,data:'Y'};;
+				dataModal.email = {allow:true, data:""};
+				dataModal.mobile = {allow:true, data:""};
+				dataModal.isKid = {allow:true, data:'Y'};
 				$("#showAdultData").hide();
 				$("#CloseTraModal").next().html("入住儿童信息");
 				$("#livePhone").next().next().html('手机号码/电话');

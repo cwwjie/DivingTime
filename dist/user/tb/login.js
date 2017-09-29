@@ -7,8 +7,10 @@ $(document).ready(function(){
 	}
 	Check();
 	log();
-	showPassword()
+	showPassword();
+	advertising();
 });
+
 function Check() {
 	$("#User").change(function(){
 		if(!(/^1[34578]\d{9}$/.test($("#User").val())) && !(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test($("#User").val()))){
@@ -43,6 +45,7 @@ function Check() {
 		}
 	})
 }
+
 function showPassword(){
 	$("#ShowPassword").click(function(){
 		if ($("#password").attr('type') == "password") {
@@ -56,6 +59,7 @@ function showPassword(){
 		}
 	})
 }
+
 function log() {
 	function ready(){
 		$("#Btn").attr("title","ready");
@@ -163,4 +167,10 @@ function log() {
 			});
 		}
 	}); 
+}
+
+function advertising() {
+	$('#advertising').click(function () {
+		window.location = './../../other/advertising/index.html';
+	});
 }
