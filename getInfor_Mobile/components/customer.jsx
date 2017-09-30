@@ -116,7 +116,7 @@ class customer extends React.Component {
       "pinyinName":null,
         pinyinNameError:false,
         pinyinNameErrorT:'中文名为必填',
-      "gender":null,
+      "gender":[null],
       "birthday":null,
       "mobile":null,
         mobileError:false,
@@ -129,7 +129,7 @@ class customer extends React.Component {
       "Dive":false, // 控制是否显示深潜列表
       "isDive":"N",// 是否深潜？ "N" "Y" 最终上传的数据
       "DiveName":'浮潜',
-      "divingRank":null,
+      "divingRank":[null],
       "divingCount":null,
       "lastDiveTime":null,
       "divingNo":null,
@@ -555,12 +555,12 @@ class customer extends React.Component {
                 json.mobile = _this.state.mobile;
                 json.email = _this.state.email;
                 json.isDive = _this.state.isDive;
-                json.divingRank = _this.state.divingRank;
+                json.divingRank = _this.state.divingRank[0];
                 json.divingCount = _this.state.divingCount;
                 json.divingNo = _this.state.divingNo;
                 json.anamnesis = _this.state.anamnesis;
 
-                json.birthday = Date.parse(_this.state.birthday._d);
+                json.birthday = dateTime.dateToFormat(_this.state.birthday._d);
                 if (_this.state.lastDiveTime != null) {
                   json.lastDiveTime = Date.parse(_this.state.lastDiveTime._d);
                 }else {

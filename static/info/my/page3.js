@@ -360,6 +360,7 @@ var pageThird = (function(){
 			})
 		// 生日
 		$("#liveBirthday").change(function(event){
+			var dete = $(this).val();
 			if (event.target.value == "") {
 				setTimeout(function(){
 					event.target.setAttribute("class","validate invalid");
@@ -370,7 +371,8 @@ var pageThird = (function(){
 			}
 			dataModal.birthday.allow = true;
 			document.getElementById('liveBirthday').setAttribute("class", "");
-			dataModal.birthday.data = returnDatestamp(event.target.value);
+			
+			dataModal.birthday.data = dete.split(' ').join("-");
 		});
 		// 判断 手机号码 是否正确
 		$("#livePhone").blur(function(event){

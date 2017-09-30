@@ -279,33 +279,81 @@ function renderMain() {
 	// 渲染房间
 	var roomInfoString = '';
 	for (var i = 0; i < documentDate.roomInfoList.length; i++) {
-		roomInfoString +="<div class='room'><div class='room-title'>房间1</div><div class='room-content'><div class='row bed'><div class='col-12'>床型:<span>"//
-			+documentDate.roomInfoList[i].bedType+"</span></div></div>";
+		roomInfoString +=[
+			"<div class='room'>",
+				"<div class='room-title'>房间" + (i+1) + "</div>",
+				"<div class='room-content'>",
+					"<div class='row bed'>",
+						"<div class='col-12'>床型:<span>" + documentDate.roomInfoList[i].bedType + "</span></div>",
+					"</div>"
+		].join("");
+
 		for (var j = 0; j < documentDate.roomInfoList[i].customerInfoList.length; j++) {
-			roomInfoString += "<div class='room-panel' data-show='false'><div class='show'><span class='provision-btn'>▶</span><span class='provision-click'>旅客信息"//
-				+(j+1)+"</span></div><div class='hide'><div class='row'><div class='col-6'>护照号:<span>"//
-				+testDataNull(documentDate.roomInfoList[i].customerInfoList[j].passportNo)+"</span></div><div class='col-6'>国籍:<span>"//
-				+testDataNull(documentDate.roomInfoList[i].customerInfoList[j].nationality)+"</span></div></div><div class='row'><div class='col-6'>姓名(中文):<span>"//
-				+testDataNull(documentDate.roomInfoList[i].customerInfoList[j].chineseName)+"</span></div><div class='col-6'>姓名(拼音):<span>"//
-				+testDataNull(documentDate.roomInfoList[i].customerInfoList[j].pinyinName)+"</span></div></div><div class='row'><div class='col-6'>性别:<span>"//
-				+(documentDate.roomInfoList[i].customerInfoList[j].gender==1?"男":"女")+"</span></div><div class='col-6'>生日:<span>"//
-				+returnDate(documentDate.roomInfoList[i].customerInfoList[j].birthday)+"</span></div></div><div class='row'><div class='col-6'>手机(电话):<span>"//
-				+documentDate.roomInfoList[i].customerInfoList[j].mobile+"</span></div><div class='col-6'>邮箱:<span>"//
-				+documentDate.roomInfoList[i].customerInfoList[j].email+"</span></div></div>";
-			if (documentDate.roomInfoList[i].customerInfoList[j].isDive == "Y") {
-				roomInfoString += "<div class='row'><div class='col-6'>是否深潜:<span>深潜</span></div><div class='col-6'>潜水证号:<span>"//
-					+testDataNull(documentDate.roomInfoList[i].customerInfoList[j].divingNo)+"</span></div></div><div class='row'><div class='col-6'>潜水级别:<span>"//
-					+testDataNull(documentDate.roomInfoList[i].customerInfoList[j].divingRank)+"</span></div><div class='col-6'>潜水次数:<span>"//
-					+testDataNull(documentDate.roomInfoList[i].customerInfoList[j].divingCount)+"</span></div></div><div class='row'><div class='col-12'>上次潜水:<span>"//
-					+returnDate(documentDate.roomInfoList[i].customerInfoList[j].lastDiveTime)+"</span></div></div>";
-			}else {
-				roomInfoString += "<div class='row'><div class='col-12'>是否深潜:<span>浮潜</span></div></div>";
+			var myroomInforData = documentDate.roomInfoList[i].customerInfoList[j];
+
+			roomInfoString += [
+				'<div class="room-panel" data-show="false">',
+					'<div class="show">',
+						'<span class="provision-btn">▶</span>',
+						'<span class="provision-click">旅客信息' + (j+1) + '</span>',
+					'</div>',
+					'<div class="hide">',
+						'<div class="row">',
+							'<div class="col-6">护照号:<span>' + testDataNull(myroomInforData.passportNo) + '</span></div>',
+							'<div class="col-6">国籍:<span>' + testDataNull(myroomInforData.nationality) + '</span></div>',
+						'</div>',
+						'<div class="row">',
+							'<div class="col-6">姓名(中文):<span>' + testDataNull(myroomInforData.chineseName) + '</span></div>',
+							'<div class="col-6">姓名(拼音):<span>' + testDataNull(myroomInforData.pinyinName) + '</span></div>',
+						'</div>',
+						'<div class="row">',
+							'<div class="col-6">性别:<span>' + (myroomInforData.gender === 1 ? '男' : '女' ) + '</span></div>',
+							'<div class="col-6">生日:<span>' + returnDate(myroomInforData.birthday) + '</span></div>',
+						'</div>',
+						'<div class="row">',
+							'<div class="col-6">手机(电话):<span>' + myroomInforData.mobile + '</span></div>',
+							'<div class="col-6">邮箱:<span>' + myroomInforData.email + '</span></div>',
+						'</div>',
+			].join('');
+
+			if (myroomInforData.isDive == "Y") {
+				roomInfoString += [
+						"<div class='row'>",
+							"<div class='col-6'>是否深潜:<span>深潜</span></div>",
+							"<div class='col-6'>潜水证号:<span>"+testDataNull(myroomInforData.divingNo)+"</span></div>",
+						"</div>",
+						"<div class='row'>",
+							"<div class='col-6'>潜水级别:<span>"+testDataNull(myroomInforData.divingRank)+"</span></div>",
+							"<div class='col-6'>潜水次数:<span>"+testDataNull(myroomInforData.divingCount)+"</span></div>",
+						"</div>",
+						"<div class='row'>",
+							"<div class='col-12'>上次潜水:<span>"+returnDate(myroomInforData.lastDiveTime)+"</span></div>",
+						"</div>"
+				].join("");
+			} else {
+				roomInfoString += [
+						"<div class='row'>",
+							"<div class='col-12'>是否深潜:<span>浮潜</span></div>",
+						"</div>"
+				].join("");
 			}
-			roomInfoString += "<div class='row'><div class='col-12'>重大病史:<span>"//
-				+documentDate.roomInfoList[i].customerInfoList[j].anamnesis+"</span></div></div></div></div>";
+
+			roomInfoString += [
+						"<div class='row'>",
+							"<div class='col-12'>重大病史:<span>"+ myroomInforData.anamnesis+ "</span></div>",
+						"</div>",
+					"</div>",
+				"</div>"
+			].join("");
 		}
+
+		roomInfoString += [
+					'<div class="panel-bottom"></div>',
+				'</div>',
+			'</div>'
+		].join("");
 	}
-	roomInfoString +='<div class="panel-bottom"></div></div></div>';
+
 	$("#renderRoom").html(roomInfoString);
 	initPanel();
 

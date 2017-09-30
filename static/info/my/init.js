@@ -722,4 +722,3 @@ var inforData = {
 		localStorage.setItem("Final_DATA","");
 	}
 }
-

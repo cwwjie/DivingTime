@@ -975,9 +975,6 @@ header .Center:hover .dropdown {
     padding-left: 20px;
   }
 }
-.ContainR {
-  overflow: auto;
-}
 .ContainR .Account .line {
   margin-bottom: 10px;
   background: #eee;

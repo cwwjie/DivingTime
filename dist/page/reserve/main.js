@@ -260,7 +260,7 @@ var UserInfor = function() {
         $('.line input[name=ChineseName]').val(_data.chineseName);
         $('.line input[name=EnglishName]').val(_data.pinyinName);
         judgeGender(returnGender(_data.gender));
-        var datetime = new Date(UTC2LocalTime(parseInt(_data.birthday)));
+        var datetime = new Date(_data.birthday);
         $(".sel_year").val(datetime.getFullYear());
         $(".sel_month").val(datetime.getMonth() + 1);
         $(".sel_day").val(datetime.getDate());
@@ -670,9 +670,17 @@ function gender() {
  * 201x-xx-xx => 时间戳
  */
 function changeTime() {
-    var this_date = new Date(parseInt($("select[class=sel_year]").val()), (parseInt($("select[class=sel_month]").val()) - 1), parseInt($("select[class=sel_day]").val()));
-    var birthday = Date.parse(this_date);
-    return birthday
+    var myDate = new Date(parseInt($("select[class=sel_year]").val()), (parseInt($("select[class=sel_month]").val())-1), parseInt($("select[class=sel_day]").val()));
+
+    var yyyy = myDate.getFullYear();
+
+    var mm = myDate.getMonth() + 1;
+    mm = mm < 10 ? '0' + mm : mm;
+
+    var dd = myDate.getDate();
+    dd = dd < 10 ? '0' + dd : dd;
+
+    return '' + yyyy + '-' + mm + '-' + dd;
 }
 /*
  * 判断是否为空

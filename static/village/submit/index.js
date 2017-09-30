@@ -726,7 +726,7 @@ var customerInfo = {
             'pinyinName': data.pinyinName,
             'passportNo': data.passportNo,
             'gender': data.gender,
-            'birthday': utilities.YYYYMMDDFormatToTimestamp(data.birthday),
+            'birthday': data.birthday,
             'age': data.age,
             'mobile': data.mobile,
             'email': data.email,

@@ -79,6 +79,19 @@ function Person() {
 		Render();
 	});
 	loadInfo(WritePerson);
+
+	function dateToYYYYMMDDFormat(data) {
+		var yyyy = data.getFullYear();
+
+		var mm = data.getMonth() + 1;
+		mm = mm < 10 ? '0' + mm : mm;
+
+		var dd = data.getDate();
+		dd = dd < 10 ? '0' + dd : dd;
+
+		return '' + yyyy + '-' + mm + '-' + dd;
+	}
+
 	//修改信息
 	function userUpdate(){
 		$(".Save").click(function(event) {
@@ -102,16 +115,17 @@ function Person() {
 					return chack
 				}
 			}
-			var birthday = new Date(parseInt($("select[class=sel_year]").val()),(parseInt($("select[class=sel_month]").val())-1),parseInt($("select[class=sel_day]").val()));
-				json = {
-					"userName":chacknull($("#realName").val()),
-					"nickname": chacknull($("#name").val()),
-					"gender":gender,
-					"birthday":Date.parse(birthday),
-					"telephone":chacknull($("#Phone").val()),
-					"qq":chacknull($("#qq").val()),
-					"webchat":chacknull($("#weixin").val())
-				}
+
+			var json = {
+				"userName": chacknull($("#realName").val()),
+				"nickname":  chacknull($("#name").val()),
+				"gender": gender,
+				"birthday": dateToYYYYMMDDFormat( new Date(parseInt($("select[class=sel_year]").val()), (parseInt($("select[class=sel_month]").val())-1), parseInt($("select[class=sel_day]").val())) ),
+				"telephone": chacknull($("#Phone").val()),
+				"qq": chacknull($("#qq").val()),
+				"webchat": chacknull($("#weixin").val())
+			};
+
 			$.ajax({
 				type: "POST", 
 				url: appConfig.updateUser, 
@@ -131,3 +145,5 @@ function Person() {
 	}
 	userUpdate();
 }
+
+

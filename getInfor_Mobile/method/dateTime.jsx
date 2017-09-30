@@ -1,6 +1,6 @@
 const time = {
   // Date 转换 xxxx-xx-xx 字符串
-  dateToFormat:function(_data) {
+  dateToFormat: function(_data) {
     const year = _data.getFullYear();//获取完整的年份(4位,1970)
 
     let month = _data.getMonth()+1;//获取月份(0-11,0代表1月,用的时候记得加上1)
@@ -17,8 +17,9 @@ const time = {
 
     return year+"-"+month+"-"+date;
   },
+
   // Timestamp 转换 xxxx-xx-xx 字符串
-  stampToFormat:function(stamp) {
+  stampToFormat: function(stamp) {
     let _data = new Date(stamp);
 
     //获取四位数字返回年份。
@@ -39,7 +40,7 @@ const time = {
     return year+"-"+month+"-"+date;
   },
   // Date 转换 YYYY-MM-DD HH:mm
-  dateToMoment:function(_data) {
+  dateToMoment: function(_data) {
 
     //获取四位数字返回年份。
     const year = _data.getFullYear();

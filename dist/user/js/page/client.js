@@ -56,21 +56,8 @@ function client() {
 						"</div>",
 						"<div class='edit' title='"+ data[i].userinfoId + "' data-ID='"+i+"'>编辑</div>",
 					"</div>",
-				"</div>",
+				"</div>"
 				].join('');
-				// string += "<div class='line'><div class='line-boder'><div class='title'>用户信息</div><div class='delete' title='"//
-				// 	+ data[i].userinfoId + "'>X</div><div class='content'><div class='row'><div class='left'>姓名(中文):</div><div class='right'>"//
-				// 	+ data[i].chineseName+"</div></div><div class='row'><div class='left'>姓名(拼音):</div><div class='right'>"//
-				// 	+ data[i].pinyinName+"</div></div><div class='row'><div class='left'>性别:</div><div class='right'>"//
-				// 	+ returnGender(data[i].gender)+"</div></div><div class='row'><div class='left'>出生日期:</div><div class='right' title='"//
-				// 	+ data[i].birthday + "'>"+getTimestamp(data[i].birthday)+"</div></div><div class='row'><div class='left'>年龄:</div><div class='right'>"//
-				// 	+ data[i].age+"</div></div><div class='row'><div class='left'>手机号码:</div><div class='right'>"//
-				// 	+ data[i].mobile+"</div></div><div class='row'><div class='left'>邮箱:</div><div class='right'>"//
-				// 	+ data[i].email+"</div></div><div class='row'><div class='left'>护照号:</div><div class='right'>"//
-				// 	+ ((data[i].passportNo==null)?"":data[i].passportNo)+"</div></div><div class='row'><div class='left'>潜水等级:</div><div class='right'>"//
-				// 	+ ChangeDiving(data[i].divingRank)+"</div></div><div class='row'><div class='left'>潜水次数:</div><div class='right'>"//
-				// 	+ ((data[i].divingCount==null)?"":data[i].divingCount)+"</div></div></div><div class='edit' title='"//
-				// 	+ data[i].userinfoId + "'>编辑</div></div></div>";
 			}
 			$("#renderAddres").html(string);
 			$("#renderAddres .delete").click(function(event){
@@ -361,11 +348,19 @@ function client() {
 				thisString = newdate.getFullYear() + "-" + (newdate.getMonth() + 1) + "-" + newdate.getDate();
 			return thisString
 		}
-		// 201x-xx-xx => 时间戳
+		// 201x-xx-xx => yyyyMMdd
 		function changeTime() {
-			var this_date = new Date(parseInt($("select[class=sel_year]").val()),(parseInt($("select[class=sel_month]").val())-1),parseInt($("select[class=sel_day]").val()));
-			var birthday = Date.parse(this_date);
-			return birthday
+			var myDate = new Date(parseInt($("select[class=sel_year]").val()), (parseInt($("select[class=sel_month]").val())-1), parseInt($("select[class=sel_day]").val()));
+
+		    var yyyy = myDate.getFullYear();
+
+		    var mm = myDate.getMonth() + 1;
+		    mm = mm < 10 ? '0' + mm : mm;
+
+		    var dd = myDate.getDate();
+		    dd = dd < 10 ? '0' + dd : dd;
+
+		    return '' + yyyy + '-' + mm + '-' + dd;
 		}
 		// 性别(保密 => 0 , 先生 => 1 , 女士 => 2)
 		function gender() {

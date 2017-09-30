@@ -7,7 +7,7 @@
   <link rel="stylesheet" type="text/css" href="./../../dist/css/bootstrap-datetimepicker.min.css" media="screen">
   <script type="text/javascript" src="./../../dist/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
   <script type="text/javascript" src="./../../dist/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-  <link rel="stylesheet" type="text/css" href="./index.css?file_version=3.04">
+  <link rel="stylesheet" type="text/css" href="./index.css?file_version=3.05">
 </head>
 <body>
   {{ include("./../../navheader") }}
@@ -161,5 +161,5 @@
 </body>
   <script src="./../../dist/js/es6-promise.min.js"></script>
   <script src="./js/jquery.smooth-scroll.js"></script>
-  <script src="./index.js?file_version=3.04"></script>
+  <script src="./index.js?file_version=3.05"></script>
 </html>
