@@ -66,6 +66,10 @@ const NationaList = [
   {
     label: '俄罗斯 RUSSIA',
     value: 'RUSSIA'
+  },
+  {
+    label: '荷兰 NETHERLANDS ',
+    value: 'NETHERLANDS'
   }
 ];
 const diveList = [

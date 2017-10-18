@@ -149,7 +149,38 @@ function Orders() {
 				string_Userinfo += "<div class='detail_title'>尚未填写旅客信息</div>";
 			}else{
 				for (var i = 0; i < data.length; i++) {
-					string_Userinfo += "<div class='detail_title'>旅客"+(i+1)+"</div><div class='line'><div class='one' id='productName'><span>护照号码:</span>"+CkNull(data[i].passportNo)+"</div></div><div class='line'><div id='apartment'><span>中文姓名:</span>"+CkNull(data[i].chineseName)+"</div><div id='bedType'><span>英文姓名:</span>"+CkNull(data[i].pinyinName)+"</div><div id='productNum'><span>手机号码:</span>"+CkNull(data[i].mobile)+"</div></div><div class='line'><div id='bedType'><span>潜水等级:</span>"+CkNull(data[i].divingRank)+"</div><div id='productNum'><span>潜水次数:</span>"+CkNull(data[i].divingCount)+"</div><div id='apartment'><span>出生日期:</span>"+getdate(UTC2LocalTime(data[i].birthday))+"</div></div><div class='line'><div id='apartment'><span>年龄:</span>"+CkNull(data[i].age)+"</div><div id='bedType'><span>性别:</span>"+returnGender(data[i].gender)+"</div><div id='productNum'><span>邮箱:</span>"+CkNull(data[i].email)+"</div></div>";
+					string_Userinfo += [
+						"<div class='detail_title'>旅客"+(i+1)+"</div>",
+
+						"<div class='line'>",
+						  "<div class='one' id='productName'>",
+						  "<span>护照号码:</span>"+CkNull(data[i].passportNo)+"</div>",
+						"</div>",
+
+						"<div class='line'>",
+						  "<div id='apartment'>",
+						    "<span>中文姓名:</span>"+CkNull(data[i].chineseName)+"</div>",
+						  "<div id='bedType'>",
+						    "<span>英文姓名:</span>"+CkNull(data[i].pinyinName)+"</div>",
+						  "<div id='productNum'>",
+						    "<span>手机号码:</span>"+CkNull(data[i].mobile)+"</div>",
+						"</div>",
+
+						"<div class='line'>",
+						  "<div id='bedType'>",
+						    "<span>潜水等级:</span>"+CkNull(data[i].divingRank)+"</div>",
+						  "<div id='productNum'>",
+						    "<span>潜水次数:</span>"+CkNull(data[i].divingCount)+"</div>",
+						  "<div id='apartment'>",
+						    "<span>出生日期:</span>"+dateToYYYmmDD(data[i].birthday)+"</div>",
+						"</div>",
+
+						"<div class='line'>",
+						  "<div id='apartment' style='display: none;'><span>年龄:</span>"+CkNull(data[i].age)+"</div>",
+						  "<div id='bedType'><span>性别:</span>"+returnGender(data[i].gender)+"</div>",
+						  "<div id='productNum'><span>邮箱:</span>"+CkNull(data[i].email)+"</div>",
+						"</div>"
+					].join('');
 				}
 			}
 			$("#OrderUserinfo").html(string_Userinfo);
@@ -410,9 +441,9 @@ function Orders() {
 		if (data == 0) {
 			return "保密"
 		}else if (data == 1) {
-			return "先生"
+			return "男"
 		}else if (data == 2) {
-			return "女士"
+			return "女"
 		}
 	}
 	// 方法 - 时间差  timestamp -> 时间戳
@@ -432,6 +463,12 @@ function Orders() {
 	// 方法 - 获取时间返回201x-xx-xx
 	function getdate(date) {
 		var newdate = new Date(UTC2LocalTime(date)),
+			thisString = newdate.getFullYear() + "-" + (newdate.getMonth() + 1) + "-" + newdate.getDate();
+		return thisString
+	}
+	// 方法 - 获取时间返回201x-xx-xx
+	function dateToYYYmmDD(date) {
+		var newdate = new Date(date),
 			thisString = newdate.getFullYear() + "-" + (newdate.getMonth() + 1) + "-" + newdate.getDate();
 		return thisString
 	}
