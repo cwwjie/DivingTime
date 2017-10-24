@@ -322,7 +322,7 @@ function Orders() {
 					+data[i].orderSn+"</div><div class='ding_dan_zhuang_tai'><span>订单状态 : </span>"//
 					+orderStatus(data[i].orderStatus,data[i].countDown)+"</div><div class='fu_kuan_zhuan_tai'><span>付款状态 : </span>"//
 					+chackStatus(data[i].paymentInfo.payStatus)+"</div><div class='can_pin_ming_cheng'>"//
-					+renderProductName(data[i].orderItemList)+"</div><div class='hiden chu_fa_riq'>"//
+					+data[i].orderName+"</div><div class='hiden chu_fa_riq'>"//
 					+getnoUTCdate(data[i].departureDate)+"</div><div class='hiden fan_hui_ri_qi'>"//
 					+getnoUTCdate(data[i].leaveDate)+"</div><div class='time'><span>时间 : </span>"//
 					+getnoUTCdate(data[i].departureDate)+"至"+getnoUTCdate(data[i].leaveDate)+"</div><div class='ji_tian_ji_wan'><span>周期 : </span>"//
@@ -363,9 +363,10 @@ function Orders() {
 			success: function (message) {
 				if (message.result == "0") {
 					render(message.data);
-					setTimeout(function(){
-						renderOrders();
-					},5000);
+					if (isOrderTimeout === false) {
+						isOrderTimeout = true;
+						mySetInterval();
+					}
 					$("._cover").click(function(event){
 						showdetail(event);
 					});
@@ -374,8 +375,11 @@ function Orders() {
 		});
 	}
 
-
-
+	function mySetInterval() {
+		this.setInterval(function(){
+			renderOrders();
+		},5000);
+	}
 
 
 
@@ -582,3 +586,4 @@ function Orders() {
 	bindEvents();
 	renderOrders();
 }
+var isOrderTimeout = false;

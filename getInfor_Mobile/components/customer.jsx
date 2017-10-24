@@ -336,7 +336,7 @@ class customer extends React.Component {
                 const _this = this;
                 let _data = assign({},this.state);
                 _data.gender = val;
-                this.setState(_data,()=>{verify(_this)});
+                this.setState(_data, ()=>{verify(_this)});
               }.bind(this)}
             >
               <Item arrow="horizontal">性别</Item>

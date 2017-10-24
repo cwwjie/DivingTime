@@ -176,7 +176,7 @@ var myData = {
       ordersRoomCount = 0,
       ordersPersonCount = 0,
       ordersprice = 0,
-      ordersTitle = this.village.brandName,
+      ordersTitle = this.village.resortName,
       startDate = utilities.dateToYYYYMMDDFormat(this.date.startDate),
       endDate = utilities.dateToYYYYMMDDFormat(this.date.endDate);
 

@@ -41,9 +41,10 @@ function taobao() {
         'digest':$.cookie('digest')
       },
       success: function (val) {
-        setTimeout(function(){
-          ajaxGetData();
-        },3000);
+        if (isTaobaoTimeout === false) {
+          isTaobaoTimeout = true;
+          mySetInterval();
+        }
         if (val.result == "0") {
           allTaobaoList = val.data;
           Rendering();
@@ -53,6 +54,13 @@ function taobao() {
       }
     });
   }
+
+	function mySetInterval() {
+		this.setInterval(function(){
+			ajaxGetData();
+		},5000);
+	}
+
   // 渲染所有订单
   function Rendering() {
     if (allTaobaoList.length == 0) {
@@ -221,9 +229,7 @@ function taobao() {
   }
 }
 
-
-
-
+var isTaobaoTimeout = false;
 
 // stamp 转换 xxxx-xx-xx 字符串
 function dateToFormat(stamp) {
