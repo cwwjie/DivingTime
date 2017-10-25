@@ -19,7 +19,7 @@ $(document).ready(function() {
 
   myData.searchApartmentAjax()
     .then(function(val) {
-      myApartment.data = val;
+      myApartment.data = utilities.addSelectNum(val);
       myApartment.village = JSON.parse(localStorage.getItem('village'));
       myApartment.init();
     }, function(error) {
@@ -391,7 +391,7 @@ var myApartment = {
 
       myData.searchApartmentAjax()
         .then(function(val) {
-          _this.data = val;
+          _this.data = utilities.addSelectNum(val);
           _this.renderApartmentList();
           _this.renderApartmentDetail();
         }, function(error) {
@@ -424,32 +424,42 @@ var myApartment = {
         '<div class="apartmentList-submit failure">预定度假村</div>'
       ].join(''));
     } else {
-      var myDomString = '';
+      var myDomString = ''
+          myCount = 0;
 
       for (var i = 0; i < dataList.length; i++) {
         var data = dataList[i];
 
-        _this.data.list[i].selectNum = 0;
-        if (data.isSaleOut === 'Y') {
+        if (data.selectNum > 0) {
+          myCount += data.selectNum;
           myDomString += [
             '<div class="apartment">',
               '<span class="cut">-</span>',
-              '<div>' + data.apartmentName + ' (已售罄)<span class="apartmentNum"></span></div>',
+              '<div>' + data.apartmentName + ' <span class="apartmentNum">' + data.selectNum + '</span> 间</div>',
               '<span class="add">+</span>',
             '</div>'
           ].join('');
-        }else {
+        } else {
           myDomString += [
-            '<div class="apartment">',
+            '<div class="apartment" style="display: none;">',
               '<span class="cut">-</span>',
-              '<div>' + data.apartmentName + ' <span class="apartmentNum">0</span> 间</div>',
+              '<div>' + data.apartmentName + ' <span class="apartmentNum">' + data.selectNum + '</span> 间</div>',
               '<span class="add">+</span>',
             '</div>'
           ].join('');
         }
-
       }
-      myDomString += '<div id="orderApartment" class="apartmentList-submit">预定度假村</div>'
+
+      if (myCount === 0) {
+        myDomString += [
+          '<div class="apartmentList-infor">',
+            '请在房型详情中选择你的房型',
+          '</div>',
+          '<div id="orderApartment" class="apartmentList-submit">预定度假村</div>'
+        ].join('')
+      } else {
+        myDomString += '<div id="orderApartment" class="apartmentList-submit">预定度假村</div>';
+      }
 
       apartmentList.html(myDomString);
 
@@ -482,6 +492,11 @@ var myApartment = {
           _this.data.list[i].selectNum = mySelect - 1;
           selectDOM.html(mySelect - 1);
           _this.renderReferPrice();
+
+          if ((mySelect - 1) === 0) {
+            _this.renderApartmentList();
+            _this.renderApartmentDetail();
+          }
         });
 
         myNode.find('.add').click(function() {
@@ -589,6 +604,7 @@ var myApartment = {
               '<div class="apartment-introduction">' + data.apartmentDesc + '</div>',
               '<div class="apartment-price">预定价格: <span>' + (data.initiatePrice || '暂无' ) + '</span> &nbsp; 库存: <span>' + (data.skuNum || '0') + '</span></div>',
               '<div class="apartment-confirm">查看详情</div>',
+              '<div class=' + ( dataList[i].selectNum > 0 ? "apartment-selected" : "apartment-select" ) + '>选择</div>',
             '</div>',
           '</div>',
           '<div class="apartment-line"></div>',
@@ -598,12 +614,15 @@ var myApartment = {
       apartmentDetailDOM.html(myDomString);
     }
 
-    var apartmenDetailNodeList = $('#apartmentDetail .apartment-block');
+    var nodeListDetail = $('#apartmentDetail .apartment-confirm'),
+        nodeListSelect = $('#apartmentDetail .apartment-select');
+
     for (var i = 0; i < dataList.length; i++) {(function(i) {
       var data = dataList[i],
-        myNode = $(apartmenDetailNodeList[i]);
+        myDetail = $(nodeListDetail[i]),
+        mySelect = $(nodeListSelect[i]);
 
-        myNode.click(function() {
+        myDetail.click(function() {
           $('#myApartmentModal').modal('show');
           $('#myApartmentModalContent').html([
             '<div class="modal-header">',
@@ -636,6 +655,15 @@ var myApartment = {
             '</div>'
           ].join(''));
         });
+
+        mySelect.click(function() {
+          if (dataList[i].selectNum > 0) { return }
+          $(this).addClass('apartment-selected');
+          $(this).removeClass('apartment-select');
+          $(this).html('已选');
+          _this.data.list[i].selectNum = 1;
+          _this.renderApartmentList();
+        })
     })(i)}
   },
 
@@ -695,6 +723,14 @@ var utilities = {
     dd = dd < 10 ? '0' + dd : dd;
 
     return '' + yyyy + '-' + mm + '-' + dd;
-  }
+  },
+
+  addSelectNum: function(data) {
+    for (var i = 0; i < data.list.length; i++) {
+      data.list[i].selectNum = 0;
+    }
+
+    return data
+  } 
 }
 

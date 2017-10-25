@@ -204,6 +204,7 @@
 			.apartment {
 				width: 100%;
 				height: 40px;
+				margin-bottom: 20px;
 				line-height: 40px;
 				overflow: hidden;
 				border-top: #dbdbdb solid 1px;
@@ -412,21 +413,38 @@
 						}
 					}
 	
-					.apartment-confirm {
+					.apartment-confirm,.apartment-select,.apartment-selected {
 						position: absolute;
-						color: #fff;
-						line-height: 40px;
+						bottom: 0px;
 						height: 40px;
-						width: 120px;
+						line-height: 40px;
 						font-size: 16px;
 						text-align: center;
-						right: 0px;
-						bottom: 0px;
+						color: #fff;
+					}
+
+					.apartment-confirm {
+						right: 85px;
+						width: 120px;
 						border: solid 1px rgba(25, 163, 220, 0.87);
 						background: rgba(25, 163, 220, 0.87);
 					}
+
+					.apartment-select {
+						right: 0px;
+						width: 75px;
+						border: solid 1px rgba(25, 163, 220, 0.87);
+						background: rgba(25, 163, 220, 0.87);
+					}
+
+					.apartment-selected {
+						right: 0px;
+						width: 75px;
+						border: solid 1px #01b969;
+						background: #01b969;
+					}
 	
-					.apartment-confirm:hover {
+					.apartment-confirm:hover,.apartment-select:hover {
 						background: #fff;
 						color: rgba(25, 163, 220, 0.87);
 					}

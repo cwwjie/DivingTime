@@ -210,7 +210,9 @@ var myData = {
         'price': (apartment.selectNum * apartment.initiatePrice)
       };
 
-      ordersList.push(ordersItem);
+      if (this.apartmentList[i].selectNum > 0) {
+        ordersList.push(ordersItem);
+      }
 
       ordersprice += (apartment.selectNum * apartment.initiatePrice);
     }
