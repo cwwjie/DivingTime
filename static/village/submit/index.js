@@ -159,7 +159,7 @@ var myData = {
         //   price: 0
         // }
       ],
-      apartmentList = [
+      myapartmentList = [
         // {
         //   'id': 0,
         //   'ordersListId': 0,
@@ -169,8 +169,11 @@ var myData = {
         //   'bedType': '大床',
         //   'adult': 1,
         //   'adultMax': 2,
+        //   'adultUnitPrice': 1200,
         //   'children': 0,
         //   'childrenMax': 2,
+        //   'childUnitPrice': 1200,
+        //   'suggestedNum': 2,
         // }
       ],
       ordersRoomCount = 0,
@@ -193,26 +196,30 @@ var myData = {
           'bedType': this.apartmentList[i].bedType.split(',')[0],
           'adult': 1,
           'adultMax': this.apartmentList[i].adultMax,
+          'adultUnitPrice': this.apartmentList[i].adultUnitPrice,
           'children': 0,
           'childrenMax': this.apartmentList[i].childrenMax,
+          'childUnitPrice': this.apartmentList[i].childUnitPrice,
+          'suggestedNum': this.apartmentList[i].suggestedNum,
         };
 
-        apartmentList.push(apartmentItem);
+        myapartmentList.push(apartmentItem);
 
         ordersRoomCount++;
         ordersPersonCount++;
       }
-
+        
       var ordersItem = {
+        'id': i,
+        'isShow': (apartment.selectNum > 0 ? true : false),
         'name': apartment.apartmentName,
         'roomCount': apartment.selectNum,
         'personCount': apartment.selectNum,
-        'price': (apartment.selectNum * apartment.initiatePrice)
+        'initiatePrice': apartment.initiatePrice,
+        'ordersprice': (apartment.initiatePrice * apartment.selectNum)
       };
 
-      if (this.apartmentList[i].selectNum > 0) {
-        ordersList.push(ordersItem);
-      }
+      ordersList.push(ordersItem);
 
       ordersprice += (apartment.selectNum * apartment.initiatePrice);
     }
@@ -225,7 +232,7 @@ var myData = {
         'startDate': startDate,
         'endDate': endDate,
 
-        'apartmentList': apartmentList,
+        'apartmentList': myapartmentList,
 
         'ordersList': ordersList,
         'ordersRoomCount': ordersRoomCount,
@@ -267,7 +274,6 @@ var myData = {
             ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
 
           if (dataNum >= maxNum) { return }
-            
           this.apartmentList[id].adult = dataNum + 1;
           this.ordersList[this.apartmentList[id].ordersListId].personCount = ordersItemPersonNum + 1;
         },

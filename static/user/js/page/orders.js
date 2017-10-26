@@ -1,5 +1,7 @@
 // 我的订单
 function Orders() {
+	var OrdersList;
+
 	// 渲染(订单详情) data -> 订单ID
 	function renderDetail(data,countDown) {
 		// 获取(订单详情)
@@ -95,6 +97,8 @@ function Orders() {
 			// 订单信息
 			$("#orderSn").html("<span>订单编号:</span>"+data.orderSn);
 			$("#orderSn").attr('data-orderId',data.orderId);
+			$("#orderSn").attr('data-orderType',data.orderType);
+			$("#orderSn").attr('data-orderSn',data.orderSn);
 			$("#orderTime").html("<span>下单时间:</span>"+getsecond(data.orderTime));
 			$("#productAmount").html("<span data-price='"+data.productAmount+"'>产品总额:</span>"+data.productAmount + " RMB");
 			$("#orderAmount").html("<span>订单总额:</span>"+ data.orderAmount + " RMB");
@@ -316,21 +320,25 @@ function Orders() {
 				}
 			}
 			for (var i = 0; i < data.length; i++) {
-				string +="<div class='list'><div class='_cover' data-orderid='"//
-					+data[i].orderId+"' data-countDown='"//
-					+data[i].countDown+"'></div><div class='line'><div class='ding_dan_hao'><span>订单号 : </span>"//
-					+data[i].orderSn+"</div><div class='ding_dan_zhuang_tai'><span>订单状态 : </span>"//
-					+orderStatus(data[i].orderStatus,data[i].countDown)+"</div><div class='fu_kuan_zhuan_tai'><span>付款状态 : </span>"//
-					+chackStatus(data[i].paymentInfo.payStatus)+"</div><div class='can_pin_ming_cheng'>"//
-					+data[i].orderName+"</div><div class='hiden chu_fa_riq'>"//
-					+getnoUTCdate(data[i].departureDate)+"</div><div class='hiden fan_hui_ri_qi'>"//
-					+getnoUTCdate(data[i].leaveDate)+"</div><div class='time'><span>时间 : </span>"//
-					+getnoUTCdate(data[i].departureDate)+"至"+getnoUTCdate(data[i].leaveDate)+"</div><div class='ji_tian_ji_wan'><span>周期 : </span>"//
-					+dateCycle(data[i].departureDate,data[i].leaveDate)+"</div><div class='can_ping_zhong_jia'><span>总价 : </span>"//
-					+data[i].orderAmount+"</div><div class='_BTNcontent'><div data-orderid='"//
-					+ data[i].orderId + "' "//
-					+changAttribu(data[i].orderStatus,data[i].countDown) +">"//
-					+changBtn(data[i].orderStatus,data[i].countDown)+"</div></div></div></div>";
+				string +=[
+					"<div class='list'>",
+						"<div class='_cover' data-orderid='"+data[i].orderId+"' data-countDown='"+data[i].countDown+"' data-orderType='"+data[i].orderType +"' data-orderSn='"+data[i].orderSn +"'></div>",
+						"<div class='line'>",
+							"<div class='ding_dan_hao'><span>订单号 : </span>"+data[i].orderSn+"</div>",
+							"<div class='ding_dan_zhuang_tai'><span>订单状态 : </span>"+orderStatus(data[i].orderStatus,data[i].countDown)+"</div>",
+							"<div class='fu_kuan_zhuan_tai'><span>付款状态 : </span>"+chackStatus(data[i].paymentInfo.payStatus)+"</div>",
+							"<div class='can_pin_ming_cheng'>"+data[i].orderName+"</div>",
+							"<div class='hiden chu_fa_riq'>"+getnoUTCdate(data[i].departureDate)+"</div>",
+							"<div class='hiden fan_hui_ri_qi'>"+getnoUTCdate(data[i].leaveDate)+"</div>",
+							"<div class='time'><span>时间 : </span>"+getnoUTCdate(data[i].departureDate)+"至"+getnoUTCdate(data[i].leaveDate)+"</div>",
+							"<div class='ji_tian_ji_wan'><span>周期 : </span>"+dateCycle(data[i].departureDate,data[i].leaveDate)+"</div>",
+							"<div class='can_ping_zhong_jia'><span>总价 : </span>"+data[i].orderAmount+"</div>",
+							"<div class='_BTNcontent'>",
+								"<div data-orderType='"+ data[i].orderType +"' data-orderid='"+ data[i].orderId + "' data-orderSn='"+ data[i].orderSn + "' "+changAttribu(data[i].orderStatus,data[i].countDown) +">"+changBtn(data[i].orderStatus,data[i].countDown)+"</div>",
+							"</div>",
+						"</div>",
+					"</div>"
+				].join("");
 			}
 			(string == "")?($("#renderOrders").html("商城订单为空")):$("#renderOrders").html(string);
 			// 取消订单
@@ -344,7 +352,9 @@ function Orders() {
 				}
 				event.target.setAttribute("data-cilck","doing");
 				var _orderid = event.target.getAttribute("data-orderid");
-				payConfirm(_orderid);
+				var orderType = event.target.getAttribute("data-orderType");
+				var orderSn = event.target.getAttribute("data-orderSn");
+				payConfirm(_orderid, orderType, orderSn);
 			})
 			// 申请退款
 			$(".BTN_Refund").click(function(event){
@@ -362,6 +372,7 @@ function Orders() {
 			},
 			success: function (message) {
 				if (message.result == "0") {
+					OrdersList = message.data;
 					render(message.data);
 					if (isOrderTimeout === false) {
 						isOrderTimeout = true;
@@ -535,11 +546,11 @@ function Orders() {
 		});
 	}
 	// 付款
-	function payConfirm(orderId) {
-		if ( $(document).width() < 760 ) {
+	function payConfirm(orderId, orderType, orderSn) {
+		if (orderType === 'C') {
 			$.ajax({
 				type: "GET", 
-				url:URLbase+URLversion+"/payment/alipayMob.do?orderId=" + orderId, 
+				url:URLbase + URLversion + "/payment/" + orderSn + "/E/alipay4Custom.do", 
 				contentType: "application/json; charset=utf-8", 
 				headers: {
 					'token':$.cookie('token'),
@@ -553,23 +564,42 @@ function Orders() {
 					}
 				}
 			});
-		}else{
-			$.ajax({
-				type: "GET", 
-				url:URLbase+URLversion+"/payment/alipay.do?orderId=" + orderId, 
-				contentType: "application/json; charset=utf-8", 
-				headers: {
-					'token':$.cookie('token'),
-					'digest':$.cookie('digest')
-				},
-				success: function (message) {
-					if (message == "FAILED") {
-						alert("您在30分钟内未完成付款，交易已关闭");
-					}else {
-						$("body").html(message);
+		} else {
+			if ( $(document).width() < 760 ) {
+				$.ajax({
+					type: "GET", 
+					url:URLbase+URLversion+"/payment/alipayMob.do?orderId=" + orderId, 
+					contentType: "application/json; charset=utf-8", 
+					headers: {
+						'token':$.cookie('token'),
+						'digest':$.cookie('digest')
+					},
+					success: function (message) {
+						if (message == "FAILED") {
+							alert("您在30分钟内未完成付款，交易已关闭");
+						}else {
+							$("body").html(message);
+						}
 					}
-				}
-			});
+				});
+			}else{
+				$.ajax({
+					type: "GET", 
+					url:URLbase+URLversion+"/payment/alipay.do?orderId=" + orderId, 
+					contentType: "application/json; charset=utf-8", 
+					headers: {
+						'token':$.cookie('token'),
+						'digest':$.cookie('digest')
+					},
+					success: function (message) {
+						if (message == "FAILED") {
+							alert("您在30分钟内未完成付款，交易已关闭");
+						}else {
+							$("body").html(message);
+						}
+					}
+				});
+			}
 		}
 	}
 	// 绑定事件
@@ -580,7 +610,9 @@ function Orders() {
 		// 付款
 		$("#pay_Confirm").click(function(){
 			var _orderId = $("#orderSn").attr('data-orderId');
-			payConfirm(_orderId);
+			var orderType = $("#orderSn").attr('data-orderType');
+			var orderSn = $("#orderSn").attr('data-orderSn');
+			payConfirm(_orderId, orderType, orderSn);
 		})
 	}
 	bindEvents();

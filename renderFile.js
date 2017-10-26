@@ -148,7 +148,8 @@ xtpl.renderFile('./static/village/index.xtpl', {}, function(error, content) {
         // PC 查看
         copyDir("./static/info/view","./dist/info/view", function(err){ console.log("info/view - OK") })
         renderFile("./static/info/css/view.css","./dist/info/css/view.css");
-
+    // 度假村直定页面
+    copyDir("./static/village","./dist/village", function(err){ console.log("village - OK") })
 
 // 复制单个文件
 function renderFile(prevFile,targetFile) {

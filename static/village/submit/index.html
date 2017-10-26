@@ -9,7 +9,7 @@
   <meta name="description" content="【潜游时光】专业的旅游行程定制,全新的服务体验,最佳的旅游度假体验,为您提供一站式潜水度假村预定服务,为出国旅游者提供最佳的旅游攻略和服务,让您的旅行有温度。" />
   <meta name="author" content="潜游时光" />
   <link rel="stylesheet" type="text/css" href="./../../dist/css/row.min.css">
-  <link rel="stylesheet" type="text/css" href="./index.css?file_version=3.05">
+  <link rel="stylesheet" type="text/css" href="./index.css?file_version=3.15">
 </head>
 <body>
   <header>
@@ -60,30 +60,43 @@
                 <button type="button" v-on:click="addchildren(apartmentItem.id)">+</button>
               </div>
             </div>
+            <div class="row postscript">
+              <div class="col-2">入住成人数:</div>
+              <div class="col-2">1 - {{apartmentItem.adultMax}} 人</div>
+              <div class="col-2">入住儿童数:</div>
+              <div class="col-2">0 - {{apartmentItem.childrenMax}} 人</div>
+              <div class="col-4">建议入住人数: {{apartmentItem.suggestedNum}} 人</div>
+            </div>
           </div>
         </div>
         <div class="orders-title">统计</div>
         <div class="orders-table">
           <div class="orders-table-title row">
             <div class="col-3"><div>项目</div></div>
-            <div class="col-3"><div>房间数</div></div>
-            <div class="col-3"><div>人数</div></div>
-            <div class="col-3 price"><div>价格</div></div>
+            <div class="col-2"><div>房间数</div></div>
+            <div class="col-2"><div>人数</div></div>
+            <div class="col-2"><div>单价</div></div>
+            <div class="col-3 price"><div>合计</div></div>
           </div>
           <div class="orders-table-content">
-            <div v-for="orderItem in ordersList" class="orders-table-item row">
+            <div v-for="orderItem in ordersList" v-if="orderItem.isShow" class="orders-table-item row">
               <div class="col-3"><div>{{orderItem.name}}</div></div>
-              <div class="col-3"><div>{{orderItem.roomCount}}</div></div>
-              <div class="col-3"><div>{{orderItem.personCount}}</div></div>
-              <div class="col-3 price"><div>{{orderItem.price}}</div></div>
+              <div class="col-2"><div>&nbsp&nbsp{{orderItem.roomCount}}</div></div>
+              <div class="col-2"><div>&nbsp&nbsp{{orderItem.personCount}}</div></div>
+              <div class="col-2"><div>{{orderItem.initiatePrice}}</div></div>
+              <div class="col-3 price"><div>{{orderItem.ordersprice}}</div></div>
             </div>
             <div class="orders-table-total row">
               <div class="col-3"><div>合计</div></div>
-              <div class="col-3"><div>{{ordersRoomCount}}</div></div>
-              <div class="col-3"><div>{{ordersPersonCount}}</div></div>
+              <div class="col-2"><div>&nbsp&nbsp{{ordersRoomCount}}</div></div>
+              <div class="col-2"><div>&nbsp&nbsp{{ordersPersonCount}}</div></div>
+              <div class="col-2"><div></div></div>
               <div class="col-3 price"><div>{{ordersprice}}</div></div>
             </div>
           </div>
+        </div>
+        <div class="orders-postscript">
+          <div class="row">房间实际入住总人数小于等于建议入住人数时, 一律按房间起始价格计算. 大于建议入住人数时, 订房价格按实际入住情况计算.</div>
         </div>
       </div>
     </div>
@@ -277,6 +290,6 @@
   <script src="./../../dist/js/es6-promise.min.js"></script>
   <script src="./../../dist/js/fetch.min.js"></script>
   <script src="./../../dist/js/ChineseHelper.js"></script>
-  <script src="./../../dist/js/appconfig.js?file_version=3.05"></script>
-  <script src="./index.js?file_version=3.05"></script>
+  <script src="./../../dist/js/appconfig.js?file_version=3.15"></script>
+  <script src="./index.js?file_version=3.15"></script>
 </html>

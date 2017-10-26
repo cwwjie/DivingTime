@@ -15,19 +15,23 @@
 <script type="text/javascript" src=./../dist/js/jquery-2.1.4.min.js></script>
 <script type="text/javascript" src=./../dist/js/jquery.cookie.js></script>
 <script type="text/javascript" src=./../dist/js/bootstrap.min.js></script>
-<script type="text/javascript" src=./../dist/js/appconfig.js?file_version=3.05></script>
+<script type="text/javascript" src=./../dist/js/appconfig.js?file_version=3.15></script>
 
   <link rel="stylesheet" type="text/css" href="./main.css" media="screen">
 </head>
 <body>
 
   <header>
-<a href=./../index.html><i></i></a>
-<div class="login" id="login" data-home=./../>
-  <div><a href=./../user/signup.html target="_blank">注册</a></div>
-  <div><a href="JavaScript:;" onclick="log_fun.Show()" target="_self">登录</a></div>
-</div>
-<div class="tell-header">服务咨询 :<a href="tel://4006709078"> 400-9688-768</a></div>
+  <a href=./../index.html><i></i></a>
+  <div class='header-content'>
+    <div id='headerHome'><a href=./../index.html>首页</a></div>
+    <div id='headerVillage'><a href=./../village/index.html>度假村直定</a></div>
+  </div>
+  <div class="login" id="login" data-home=./../>
+    <div><a href=./../user/signup.html target="_blank">注册</a></div>
+    <div><a href="JavaScript:;" onclick="log_fun.Show()" target="_self">登录</a></div>
+  </div>
+  <div class="tell-header">服务咨询 :<a href="tel://4006709078"> 400-9688-768</a></div>
 </header>
 
 <!-- 模态框(登录) -->
@@ -85,6 +89,34 @@
     float: left;
     width: 50px;
   }
+  header .header-content {
+    position: absolute;
+    left: 50%;
+    width: 1106px;
+    margin-left: -548px;
+    height: 50px;
+  }
+  header .header-content .isSelected a {
+    font-weight: bold;
+    color: rgba(25, 163, 220, 0.87);
+  }
+  @media (max-width: 1170px) {
+    header .header-content {
+      display: none;
+    }
+  }
+  header .header-content > div {
+    display: inline-block;
+    padding: 0px 20px;
+    cursor: pointer;
+    transition: all 0.5s;
+    -moz-transition: all 0.5s;	/* Firefox 4 */
+    -webkit-transition: all 0.5s;	/* Safari 和 Chrome */
+    -o-transition: all 0.5s;	/* Opera */
+  }
+  header .header-content > div:hover {
+    background: rgb(225, 225, 232);
+  }
   header a i {
     margin-top: 8px;
     margin-left: 10px;
@@ -93,6 +125,16 @@
     width: 150px;
     height: 35px;
     background-position: -150px 0px;
+  }
+  @media (max-width: 1370px) {
+    header a i {
+      display: none;
+    }
+  }
+  @media (max-width: 1170px) {
+    header a i {
+      display: block;
+    }
   }
   header > div {
     line-height: 50px;
@@ -322,13 +364,16 @@
   }
 </style>
 <script type="text/javascript">
-  var homeURL = $("#login").attr('data-home');
-  var _binglogin = true;
   // 入口
   $(document).ready(function() {
     judgLogin();
     login();
+    // 高亮 导航 选中方法
+    highlightSelected();
   });
+
+  var homeURL = $("#login").attr('data-home');
+  var _binglogin = true;
   // 登出方法
   function Logout() {
     homeURL = $("#login").attr('data-home');
@@ -580,6 +625,16 @@
       });
     }
     Bindevents();
+  }
+  
+  function highlightSelected() {
+    var myUrl = window.location.pathname;
+
+    if (myUrl === '/index.html' || myUrl === '/') {
+      $('#headerHome').addClass('isSelected');
+    } else if (myUrl === '/village/index.html' || myUrl === '/village' || myUrl === '/village/') {
+      $('#headerVillage').addClass('isSelected');
+    }
   }
 </script>
 

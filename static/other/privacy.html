@@ -15,7 +15,7 @@
 <script type="text/javascript" src=./../dist/js/jquery-2.1.4.min.js></script>
 <script type="text/javascript" src=./../dist/js/jquery.cookie.js></script>
 <script type="text/javascript" src=./../dist/js/bootstrap.min.js></script>
-<script type="text/javascript" src=./../dist/js/appconfig.js?file_version=3.05></script>
+<script type="text/javascript" src=./../dist/js/appconfig.js?file_version=3.15></script>
 
   <link rel="stylesheet" type="text/css" href="./main.css" media="screen">
 </head>
@@ -23,8 +23,8 @@
   <header>
   <a href=./../index.html><i></i></a>
   <div class='header-content'>
-    <div><a href=./../index.html>首页</a></div>
-    <div><a href=./../village/index.html>度假村直定</a></div>
+    <div id='headerHome'><a href=./../index.html>首页</a></div>
+    <div id='headerVillage'><a href=./../village/index.html>度假村直定</a></div>
   </div>
   <div class="login" id="login" data-home=./../>
     <div><a href=./../user/signup.html target="_blank">注册</a></div>
@@ -94,6 +94,10 @@
     width: 1106px;
     margin-left: -548px;
     height: 50px;
+  }
+  header .header-content .isSelected a {
+    font-weight: bold;
+    color: rgba(25, 163, 220, 0.87);
   }
   @media (max-width: 1170px) {
     header .header-content {
@@ -359,13 +363,16 @@
   }
 </style>
 <script type="text/javascript">
-  var homeURL = $("#login").attr('data-home');
-  var _binglogin = true;
   // 入口
   $(document).ready(function() {
     judgLogin();
     login();
+    // 高亮 导航 选中方法
+    highlightSelected();
   });
+
+  var homeURL = $("#login").attr('data-home');
+  var _binglogin = true;
   // 登出方法
   function Logout() {
     homeURL = $("#login").attr('data-home');
@@ -617,6 +624,16 @@
       });
     }
     Bindevents();
+  }
+  
+  function highlightSelected() {
+    var myUrl = window.location.pathname;
+
+    if (myUrl === '/index.html' || myUrl === '/') {
+      $('#headerHome').addClass('isSelected');
+    } else if (myUrl === '/village/index.html' || myUrl === '/village' || myUrl === '/village/') {
+      $('#headerVillage').addClass('isSelected');
+    }
   }
 </script>
 

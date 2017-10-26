@@ -1,0 +1,165 @@
+{{ set (homeURL = "./../../") }}
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  {{ include("./../../basehead") }}
+  <link rel="stylesheet" type="text/css" href="./../../dist/css/bootstrap-datetimepicker.min.css" media="screen">
+  <script type="text/javascript" src="./../../dist/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="./../../dist/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+  <link rel="stylesheet" type="text/css" href="./index.css?file_version=3.15">
+</head>
+<body>
+  {{ include("./../../navheader") }}
+
+  <div id="myCarousel" class="myCarousel">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators" id="carouselIndicators">
+        <!-- <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li> -->
+      </ol>
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" id="carouselInner" role="listbox">
+        <!-- <div class="item active">
+          <img src="http://192.168.0.100:8080/source/image/product/8f217c44-f783-408a-9cc1-9c230c680769.JPG">
+          <div class="carousel-caption">
+          </div>
+        </div> -->
+      </div>
+      <!-- Controls -->
+      <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="sr-only">Previous</span>
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        <i class="left-btn allbtn"></i>
+      </a>
+      <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="sr-only">Next</span>
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        <i class="right-btn allbtn"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="part1" id="part1">
+    <div class="part1-content">
+      <div class="part1-content-left">
+        <h1 id="brandName">正在加载... <span><!-- 潜游双人套餐 --></span></h1>
+        <div class="village-description" id="villageDesc">
+          <p>正在加载...</p>
+        </div>
+      </div>
+      <div class="part1-aside">
+        <div id="apartmentTotalPrice">预定价格<span>正在加载... RMB</span></div>
+      </div>
+      <div class="part1-main">
+        <div id="myApartment">
+          <div id="apartmentTitle" class="apartmentTitle">正在加载...</div>
+          <div class="apartmentReserveDate">
+            <div id="startDate"></div>
+            <div id="endDate"></div>
+          </div>
+          <div class="datetimepicker" id="starDatePicker">
+            <input type="text" style="display: none">
+          </div>
+          <div class="datetimepicker" id="endDatePicker">
+            <input type="text" style="display: none">
+          </div>
+          <div id="apartmentList">
+          </div>
+          <div class="container" id="ContactUS">
+            <div class="container-left">
+              <div class="container-content">
+                <div>
+                  <span></span>
+                  <a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&touid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&siteid=cntaobao&status=1&charset=utf-8"><img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&site=cntaobao&s=1&charset=utf-8" alt="" title="" /></a>
+                </div>
+                <div>
+                  <span></span>
+                  <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2546623187&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2546623187:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>
+                </div>
+                <div>
+                  <span></span>
+                  <article>
+                    微信号：
+                    <div class="weixinAccount">divingtimehailang</div>
+                    <div class="weixinQRcode"><i></i></div>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <div class="container-right">
+              <div>客服咨询</div>
+              <p>联系我们</p>
+              <p>收悉您的需求后，</p>
+              <p>我们会第一时间与您联系！</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="part2">
+    <div class="part2-content">
+      <div class="part2-title">房型详情</div>
+      <div id="apartmentDetail">
+          <!-- <div class="apartment-block">
+            <div class="apartment-content">
+              <img src="http://192.168.0.100:8080/source/image/product/thum/thum_8f217c44-f783-408a-9cc1-9c230c680769.JPG" />
+              <div class="apartment-depiction">
+                <div class="apartment-title">潜游沙巴·仙本那</div>
+                <div class="apartment-introduction"><p>111111111111111111</p></div>
+                <div class="apartment-price">预定价格: <span>111RMB</span> 起</div>
+                <div class="apartment-confirm">预定度假村</div>
+              </div>
+            </div>
+            <div class="apartment-line"></div>
+          </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="part2-modal">
+    <div id="myApartmentModal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div id="myApartmentModalContent" class="modal-content">
+          <!-- <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">园景房apartmentName</h4>
+          </div>
+          <img src="http://192.168.0.100:8080/source/image/product/thum/thum_17f9b08b-b21e-4638-aaec-67bd2ce913f7.jpg" />
+          <div class="modal-depiction">
+            <h3>房型信息</h3>
+              <p>apartmentDesc房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息</p>
+            <h3>费用说明</h3>
+            <div class="row">
+              <div class="col-xs-6">成人价格:3000 adultUnitPrice</div>
+              <div class="col-xs-6">儿童价格:1500 childUnitPrice</div>
+            </div>
+            <h3>入住规格</h3>
+            <div class="row">
+              <div class="col-xs-6">入住成人数:1-2人</div>
+              <div class="col-xs-6">入住儿童人数:0-2人</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-6">最大入住人数:4人</div>
+              <div class="col-xs-6">建议入住人数:2人</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">床型:大床,双人床,单床,蜜月大床</div>
+            </div>
+            <h3>入住须知</h3>
+              <p>notice房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息</p>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {{ include("./../../navbottom") }}
+</body>
+  <script src="./../../dist/js/es6-promise.min.js"></script>
+  <script src="./js/jquery.smooth-scroll.js"></script>
+  <script src="./index.js?file_version=3.15"></script>
+</html>
