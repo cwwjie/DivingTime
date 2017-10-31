@@ -3,7 +3,7 @@ function Orders() {
 	var OrdersList;
 
 	// 渲染(订单详情) data -> 订单ID
-	function renderDetail(data,countDown) {
+	function renderDetail(data, countDown) {
 		// 获取(订单详情)
 		$.ajax({
 			type: "GET", 
@@ -201,7 +201,7 @@ function Orders() {
 					return "已付款"
 				}
 			}
-			function orderStatus(data,countDown) {
+			function orderStatus(data, countDown) {
 				if (data == 1) {
 					return "预定中"
 				}else if (data == 2) {
@@ -362,9 +362,11 @@ function Orders() {
 			})
 		}
 		// 提交(首屏 请求)
+		var pageNum;
+		var pageSize;
 		$.ajax({
 			type: "GET", 
-			url: appConfig.getOrder, 
+			url: URLbase + URLversion + "/order/" + (pageNum ? pageNum : 1) + "/" + (pageSize ? pageSize : 10) + "/list.do?1111111111111111111111111111111111", 
 			contentType: "application/json; charset=utf-8", 
 			headers: {
 				'token':$.cookie('token'),
@@ -372,8 +374,8 @@ function Orders() {
 			},
 			success: function (message) {
 				if (message.result == "0") {
-					OrdersList = message.data;
-					render(message.data);
+					OrdersList = message.data.list;
+					render(message.data.list);
 					if (isOrderTimeout === false) {
 						isOrderTimeout = true;
 						mySetInterval();
