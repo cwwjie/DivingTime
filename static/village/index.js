@@ -13,9 +13,9 @@ var myData = {
   getAjax: function() {
     return new Promise(function(resolve, reject){
       $.ajax({
-        type: "GET",
-        url: URLbase + '/Dvt-reserve/product/resort/1/1/list.do',
-        contentType: "application/json; charset=utf-8",
+        type: 'GET',
+        url: URLbase + '/Dvt-reserve/product/resort/1/0/list.do',
+        contentType: 'application/json; charset=utf-8',
         success: function(value) {
           if (value.result === '0') {
             resolve(value.data);
@@ -103,7 +103,7 @@ var myVillage = {
     for (var i = 0; i < myDomList.length; i++) {(function(i) {
       var myData = dataList[i];
 
-      myDomList.click(function() {
+      $(myDomList[i]).click(function(event) {
         localStorage.setItem('village',JSON.stringify(myData));
         localStorage.setItem('resortCode',myData.resortCode);
         localStorage.setItem('resortId',myData.resortId);
