@@ -290,15 +290,15 @@ var myTaobaoOrder = {
   dateToFormat: function (stamp) {
     var _data = new Date(stamp);
 
-    var year = _data.getFullYear();//获取完整的年份(4位,1970)
+    var year = _data.getFullYear(); //获取完整的年份(4位,1970)
 
-    var month = _data.getMonth()+1;//获取月份(0-11,0代表1月,用的时候记得加上1)
+    var month = _data.getMonth()+1; //获取月份(0-11,0代表1月,用的时候记得加上1)
 
     if( month <= 9 ){
       month = "0"+month;
     }
 
-    var date = _data.getDate();//获取日(1-31)
+    var date = _data.getDate(); //获取日(1-31)
 
     if( date <= 9 ){
       date = "0"+date;

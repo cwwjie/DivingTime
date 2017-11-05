@@ -132,7 +132,7 @@
                       <select name="Divelevel" class="count_select">
                         <option selected="selected" disabled="disabled" value="null">请选择</option>
                         <option value="1">OW(初级潜水员)</option>
-                        <option value="2">OW以上</option>
+                        <option value="2">AOW以上</option>
                         <option value="null">无</option>
                       </select>
                     <span class="Des"></span>

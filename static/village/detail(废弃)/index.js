@@ -16,7 +16,7 @@ $(document).ready(function() {
 
   myData.searchApartmentAjax()
     .then(function(val) {
-      myApartment.data = utilities.addSelect(val);
+      myApartment.data = utilities.addSelectNum(val);
       myApartment.village = JSON.parse(localStorage.getItem('village'));
       myApartment.init();
     }, function(error) {
@@ -193,12 +193,6 @@ var myApartment = {
   'data': {
     'list': [
       // {
-      //   'select': [
-      //     {
-      //       adultNum: 1,
-      //       childNum: 0,
-      //     }
-      //   ],
       //   'selectNum': 0, // 已选房间数 (自己加进去的  
       //   'adultMax': 2,
       //   'adultMin': 1,
@@ -424,7 +418,7 @@ var myApartment = {
 
       myData.searchApartmentAjax()
         .then(function(val) {
-          _this.data = utilities.addSelect(val);
+          _this.data = utilities.addSelectNum(val);
           _this.renderApartmentList();
           _this.renderApartmentDetail();
         }, function(error) {
@@ -460,38 +454,28 @@ var myApartment = {
       var myDomString = ''
           myCount = 0;
 
-      for (var i = 0; i < dataList.length; i++) {(function (i) {
+      for (var i = 0; i < dataList.length; i++) {
         var data = dataList[i];
 
-        if (data.select.length > 0) {
-          myCount += data.select.length;
-
-          for (var j = 0; j < data.select.length; j++) {(function (j) {
-            myDomString += [
-              '<div class="apartment">',
-                '<span class="cut">-</span>',
-                '<div>' + data.apartmentName + ' <span class="apartmentNum">' + data.select.length + '</span> 间</div>',
-                '<span class="add">+</span>',
-              '</div>'
-            ].join('');
-          })(j)}
-          // myDomString += [
-          //   '<div class="apartment">',
-          //     '<span class="cut">-</span>',
-          //     '<div>' + data.apartmentName + ' <span class="apartmentNum">' + data.select.length + '</span> 间</div>',
-          //     '<span class="add">+</span>',
-          //   '</div>'
-          // ].join('');
+        if (data.selectNum > 0) {
+          myCount += data.selectNum;
+          myDomString += [
+            '<div class="apartment">',
+              '<span class="cut">-</span>',
+              '<div>' + data.apartmentName + ' <span class="apartmentNum">' + data.selectNum + '</span> 间</div>',
+              '<span class="add">+</span>',
+            '</div>'
+          ].join('');
         } else {
           myDomString += [
             '<div class="apartment" style="display: none;">',
               '<span class="cut">-</span>',
-              '<div>' + data.apartmentName + ' <span class="apartmentNum">' + data.select.length + '</span> 间</div>',
+              '<div>' + data.apartmentName + ' <span class="apartmentNum">' + data.selectNum + '</span> 间</div>',
               '<span class="add">+</span>',
             '</div>'
           ].join('');
         }
-      })(i)}
+      }
 
       if (myCount === 0) {
         myDomString += [
@@ -563,7 +547,7 @@ var myApartment = {
         var allApartmentNum = 0
 
         for (var i = 0; i < dataList.length; i++) {
-          allApartmentNum += dataList[i].select.length;
+          allApartmentNum += dataList[i].selectNum;
         }
 
         if (allApartmentNum === 0) {
@@ -616,7 +600,7 @@ var myApartment = {
       apartmentTotalPrice = $('#apartmentTotalPrice');
 
     for (var i = 0; i < dataList.length; i++) {
-      var mySelectNum = dataList[0].select.length || 0;
+      var mySelectNum = dataList[0].selectNum || 0;
 
       if (mySelectNum !== 0) {
         selectNum += mySelectNum;
@@ -643,7 +627,7 @@ var myApartment = {
           '<div class="apartment-content">',
             '<div class="img-content">',
               '<img src="' + URLbase + data.apartmentThumb + '" />',
-              '<div class="apartment-confirm '+ renderDisable(data.skuNum, dataList[i].select.length) +'">' + ( dataList[i].select.length > 0 ? "√" : "+" ) + '</div>',
+              '<div class="apartment-confirm '+ renderDisable(data.skuNum, dataList[i].selectNum) +'">' + ( dataList[i].selectNum > 0 ? "√" : "+" ) + '</div>',
             '</div>',
             '<div class="apartment-depiction">',
               '<div class="apartment-apartmentName">' + data.apartmentName + '</div>',
@@ -722,15 +706,11 @@ var myApartment = {
 
         mySelect.click(function() {
           if (!dataList[i].skuNum) { return }
-          if (dataList[i].select.length > dataList[i].skuNum) {
-            $(this).addClass('disable');
-            return
-          }
-          $(this).removeClass('disable');
-          _this.data.list[i].select.push({
-            adultNum: 1,
-            childNum: 0,
-          });
+          if (dataList[i].selectNum > 0) { return }
+          $(this).addClass('disable');
+          // $(this).removeClass('apartment-select');
+          $(this).html('√');
+          _this.data.list[i].selectNum = 1;
           _this.renderApartmentList();
         })
     })(i)}
@@ -819,9 +799,9 @@ var utilities = {
     return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
   },
 
-  addSelect: function(data) {
+  addSelectNum: function(data) {
     for (var i = 0; i < data.list.length; i++) {
-      data.list[i].select = [];
+      data.list[i].selectNum = 0;
     }
 
     return data
