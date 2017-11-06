@@ -62,29 +62,6 @@
             <input type="text" style="display: none">
           </div>
           <div id="apartmentList">
-            <!-- <div class="apartment">
-              <div class="apartment-title">
-                <div>园景房</div>
-                <div class="title-rigth">111 RMB</div>
-              </div>
-              <div class="apartment-select">
-                <div class="select-name">成人</div>
-                <div class="select-btn">
-                  <span class="cut">-</span>
-                  <div>1</div>
-                  <span class="add">+</span>
-                </div>
-              </div>
-              <div class="apartment-select">
-                <div class="select-name">儿童</div>
-                <div class="select-btn">
-                  <span class="cut">-</span>
-                  <div>1</div>
-                  <span class="add">+</span>
-                </div>
-              </div>
-              <div class="apartment-delete">删除</div>
-            </div> -->
           </div>
           <div class="container" id="ContactUS">
             <div class="container-left">
@@ -121,11 +98,9 @@
 
   <div class="part2">
     <div class="part2-content">
-      <div>
-        <div class="part2-title">度假村介绍</div>
-        <div class="village-description" id="villageDesc">
+      <div class="part2-title">度假村介绍</div>
+      <div class="village-description" id="villageDesc">
           <p>正在加载...</p>
-        </div>
       </div>
     </div>
   </div>

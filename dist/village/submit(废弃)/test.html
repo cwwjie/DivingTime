@@ -37,24 +37,28 @@
         <div class="orders-title">房间</div>
         <div class="orders-apartment">
           <div class="orders-apartment-content" v-for="apartmentItem in apartmentList">
-            <div class="apartment-title">{{apartmentItem.apartmentName}}</div>
-            <div class="apartment-prices">{{apartmentItem.prices}} RMB</div>
+            <div class="orders-apartment-title">{{apartmentItem.apartmentName}}</div>
             <div class="row">
               <div class="col-2">床型</div>
-              <div class="col-10">{{apartmentItem.bedType}}</div>
+              <div class="col-10">
+                <select v-model='apartmentItem.bedType'>
+                  <option v-for="option in apartmentItem.bedTypeList" v-bind:value="option">{{option}}</option>
+                </select>
+              </div>
             </div>
             <div class="row">
               <div class="col-2">成人数</div>
-              <div class="col-2">{{apartmentItem.adultNum}}</div>
+              <div class="col-2 button">
+                <button type="button" v-on:click="reduceAdult(apartmentItem.id)">-</button>
+                <span>{{apartmentItem.adult}}</span>
+                <button type="button" v-on:click="addAdult(apartmentItem.id)">+</button>
+              </div>
               <div class="col-2">儿童数</div>
-              <div class="col-2">{{apartmentItem.childNum}}</div>
-            </div>
-            <div class="row postscript">
-              <div class="col-2">入住成人数:</div>
-              <div class="col-2">1 - {{apartmentItem.adultMax}} 人</div>
-              <div class="col-2">入住儿童数:</div>
-              <div class="col-2">0 - {{apartmentItem.childrenMax}} 人</div>
-              <div class="col-4">建议入住人数: {{apartmentItem.suggestedNum}} 人</div>
+              <div class="col-2 button">
+                <button type="button" v-on:click="reducechildren(apartmentItem.id)">-</button>
+                <span>{{apartmentItem.children}}</span>
+                <button type="button" v-on:click="addchildren(apartmentItem.id)">+</button>
+              </div>
             </div>
           </div>
         </div>
@@ -64,25 +68,22 @@
             <div class="col-3"><div>项目</div></div>
             <div class="col-3"><div>房间数</div></div>
             <div class="col-3"><div>人数</div></div>
-            <div class="col-3 price"><div>合计</div></div>
+            <div class="col-3 price"><div>价格</div></div>
           </div>
           <div class="orders-table-content">
-            <div v-for="orderItem in ordersList" v-if="orderItem.isShow" class="orders-table-item row">
+            <div v-for="orderItem in ordersList" class="orders-table-item row">
               <div class="col-3"><div>{{orderItem.name}}</div></div>
-              <div class="col-3"><div>&nbsp&nbsp{{orderItem.roomCount}}</div></div>
-              <div class="col-3"><div>&nbsp&nbsp{{orderItem.personCount}}</div></div>
-              <div class="col-3 price"><div>{{orderItem.ordersprice}}</div></div>
+              <div class="col-3"><div>{{orderItem.roomCount}}</div></div>
+              <div class="col-3"><div>{{orderItem.personCount}}</div></div>
+              <div class="col-3 price"><div>{{orderItem.price}}</div></div>
             </div>
             <div class="orders-table-total row">
               <div class="col-3"><div>合计</div></div>
-              <div class="col-3"><div>&nbsp&nbsp{{ordersRoomCount}}</div></div>
-              <div class="col-3"><div>&nbsp&nbsp{{ordersPersonCount}}</div></div>
+              <div class="col-3"><div>{{ordersRoomCount}}</div></div>
+              <div class="col-3"><div>{{ordersPersonCount}}</div></div>
               <div class="col-3 price"><div>{{ordersprice}}</div></div>
             </div>
           </div>
-        </div>
-        <div class="orders-postscript">
-          <div class="row">房间实际入住总人数小于等于建议入住人数时, 一律按房间起始价格计算. 大于建议入住人数时, 订房价格按实际入住情况计算.</div>
         </div>
       </div>
     </div>
@@ -150,7 +151,7 @@
                 <div class="row">
                   <div class="col-6">
                     <div>护照号码</div>
-                    <div><input type="text" v-model="item.passportNo"></div>
+                    <div><input type="text"></div>
                   </div>
                   <div class="col-6">
                     <div>性别</div>
@@ -271,7 +272,8 @@
     </div>
   </div>
 </body>
-  <script src="./../../dist/js/vue.min.js"></script>
+  <!-- 生产环境记得替换vue.min.js -->
+  <script src="./../../dist/js/vue.js"></script>
   <script src="./js/date-picker.js"></script>
   <script src="./../../dist/js/es6-promise.min.js"></script>
   <script src="./../../dist/js/fetch.min.js"></script>

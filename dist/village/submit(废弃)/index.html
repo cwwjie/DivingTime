@@ -37,17 +37,28 @@
         <div class="orders-title">房间</div>
         <div class="orders-apartment">
           <div class="orders-apartment-content" v-for="apartmentItem in apartmentList">
-            <div class="apartment-title">{{apartmentItem.apartmentName}}</div>
-            <div class="apartment-prices">{{apartmentItem.prices}} RMB</div>
+            <div class="orders-apartment-title">{{apartmentItem.apartmentName}}</div>
             <div class="row">
               <div class="col-2">床型</div>
-              <div class="col-10">{{apartmentItem.bedType}}</div>
+              <div class="col-10">
+                <select v-model='apartmentItem.bedType'>
+                  <option v-for="option in apartmentItem.bedTypeList" v-bind:value="option">{{option}}</option>
+                </select>
+              </div>
             </div>
             <div class="row">
               <div class="col-2">成人数</div>
-              <div class="col-2">{{apartmentItem.adultNum}}</div>
+              <div class="col-2 button">
+                <button type="button" v-on:click="reduceAdult(apartmentItem.id)">-</button>
+                <span>{{apartmentItem.adult}}</span>
+                <button type="button" v-on:click="addAdult(apartmentItem.id)">+</button>
+              </div>
               <div class="col-2">儿童数</div>
-              <div class="col-2">{{apartmentItem.childNum}}</div>
+              <div class="col-2 button">
+                <button type="button" v-on:click="reducechildren(apartmentItem.id)">-</button>
+                <span>{{apartmentItem.children}}</span>
+                <button type="button" v-on:click="addchildren(apartmentItem.id)">+</button>
+              </div>
             </div>
             <div class="row postscript">
               <div class="col-2">入住成人数:</div>
@@ -62,21 +73,24 @@
         <div class="orders-table">
           <div class="orders-table-title row">
             <div class="col-3"><div>项目</div></div>
-            <div class="col-3"><div>房间数</div></div>
-            <div class="col-3"><div>人数</div></div>
+            <div class="col-2"><div>房间数</div></div>
+            <div class="col-2"><div>人数</div></div>
+            <div class="col-2"><div>单价</div></div>
             <div class="col-3 price"><div>合计</div></div>
           </div>
           <div class="orders-table-content">
             <div v-for="orderItem in ordersList" v-if="orderItem.isShow" class="orders-table-item row">
               <div class="col-3"><div>{{orderItem.name}}</div></div>
-              <div class="col-3"><div>&nbsp&nbsp{{orderItem.roomCount}}</div></div>
-              <div class="col-3"><div>&nbsp&nbsp{{orderItem.personCount}}</div></div>
+              <div class="col-2"><div>&nbsp&nbsp{{orderItem.roomCount}}</div></div>
+              <div class="col-2"><div>&nbsp&nbsp{{orderItem.personCount}}</div></div>
+              <div class="col-2"><div>{{orderItem.initiatePrice}}</div></div>
               <div class="col-3 price"><div>{{orderItem.ordersprice}}</div></div>
             </div>
             <div class="orders-table-total row">
               <div class="col-3"><div>合计</div></div>
-              <div class="col-3"><div>&nbsp&nbsp{{ordersRoomCount}}</div></div>
-              <div class="col-3"><div>&nbsp&nbsp{{ordersPersonCount}}</div></div>
+              <div class="col-2"><div>&nbsp&nbsp{{ordersRoomCount}}</div></div>
+              <div class="col-2"><div>&nbsp&nbsp{{ordersPersonCount}}</div></div>
+              <div class="col-2"><div></div></div>
               <div class="col-3 price"><div>{{ordersprice}}</div></div>
             </div>
           </div>

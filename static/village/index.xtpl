@@ -11,7 +11,7 @@
   
   <h2>度假村直定</h2>
   <div id="village">
-    <div class="village-block">
+    <!-- <div class="village-block">
       <div class="village-content">
         <div class="img-content">
           <img src="http://192.168.0.100:8080/source/image/product/thum/thum_8f217c44-f783-408a-9cc1-9c230c680769.JPG" />
@@ -22,7 +22,7 @@
           <div class="village-price">111 RMB起</div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <!-- <div id="village">

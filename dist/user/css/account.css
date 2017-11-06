@@ -162,7 +162,7 @@ header .Center:hover .dropdown {
   min-height: 500px;
   background: #fff;
 }
-.main .mainContain nav {
+.main .mainContain > nav {
   position: absolute;
   width: 150px;
   top: 0px;
@@ -171,17 +171,17 @@ header .Center:hover .dropdown {
   background: #fff;
   height: 100%;
 }
-.main .mainContain nav ul {
+.main .mainContain > nav ul {
   margin-bottom: 0px;
 }
-.main .mainContain nav ul li {
+.main .mainContain > nav ul li {
   cursor: pointer;
   height: 50px;
   width: 150px;
   list-style: none;
   border-bottom: 1px solid #e9e9e9;
 }
-.main .mainContain nav ul li i {
+.main .mainContain > nav ul li i {
   margin-left: 20px;
   position: relative;
   top: 10px;
@@ -189,7 +189,7 @@ header .Center:hover .dropdown {
   width: 32px;
   height: 32px;
 }
-.main .mainContain nav ul li:hover {
+.main .mainContain > nav ul li:hover {
   background: #e7e7e7;
 }
 .main .mainContain .ContainR {
@@ -309,6 +309,15 @@ header .Center:hover .dropdown {
 .Orders .content .renderOrders {
   max-height: 600px;
   overflow: auto;
+}
+.Orders .content .pageNavigation .pagination {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  padding-right: 50px;
 }
 .Orders .content .title {
   width: 100%;
@@ -719,6 +728,15 @@ header .Center:hover .dropdown {
 .taobao .List .line {
   width: 100%;
   height: 1px;
+}
+.taobao .List .pageNavigation .pagination {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  padding-right: 50px;
 }
 .taobao .List .List-item {
   position: relative;

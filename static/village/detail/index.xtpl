@@ -61,8 +61,8 @@
           <div class="datetimepicker" id="endDatePicker">
             <input type="text" style="display: none">
           </div>
-          <div id="apartmentList2">
-            <div class="apartment">
+          <div id="apartmentList">
+            <!-- <div class="apartment">
               <div class="apartment-title">
                 <div>园景房</div>
                 <div class="title-rigth">111 RMB</div>
@@ -84,9 +84,7 @@
                 </div>
               </div>
               <div class="apartment-delete">删除</div>
-            </div>
-          </div>
-          <div id="apartmentList">
+            </div> -->
           </div>
           <div class="container" id="ContactUS">
             <div class="container-left">

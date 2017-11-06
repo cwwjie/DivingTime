@@ -13,9 +13,9 @@ var myData = {
   getAjax: function() {
     return new Promise(function(resolve, reject){
       $.ajax({
-        type: "GET",
-        url: URLbase + '/Dvt-reserve/product/resort/1/1/list.do',
-        contentType: "application/json; charset=utf-8",
+        type: 'GET',
+        url: URLbase + '/Dvt-reserve/product/resort/1/0/list.do',
+        contentType: 'application/json; charset=utf-8',
         success: function(value) {
           if (value.result === '0') {
             resolve(value.data);
@@ -82,18 +82,33 @@ var myVillage = {
     return [
       '<div class="village-block">',
         '<div class="village-content">',
+        '<div class="img-content">',
           '<img src="' + URLbase + data.resortImg + '" />',
-          '<div class="village-depiction">',
-            '<div class="village-title">' + data.resortName + '</div>',
-            '<div class="village-introduction">' + data.resortDesc + '</div>',
-            '<div class="village-introduction">' + data.recommendation + '</div>',
-            '<div class="village-price">预定价格: <span>' + data.earnest + 'RMB</span> 起</div>',
-            '<div class="village-confirm">预定度假村</div>',
-          '</div>',
+          '<div class="village-label">' + data.label + '</div>',
         '</div>',
-        '<div class="village-line"></div>',
+        '<div class="village-depiction">',
+            '<div class="village-title">' + data.resortName + '</div>',
+            '<div class="village-price">' + data.earnest + 'RMB 起</div>',
+        '</div>',
+        '</div>',
       '</div>'
     ].join('');
+
+    // return [
+    //   '<div class="village-block">',
+    //     '<div class="village-content">',
+    //       '<img src="' + URLbase + data.resortImg + '" />',
+    //       '<div class="village-depiction">',
+    //         '<div class="village-title">' + data.resortName + '</div>',
+    //         '<div class="village-introduction">' + data.resortDesc + '</div>',
+    //         '<div class="village-introduction">' + data.recommendation + '</div>',
+    //         '<div class="village-price">预定价格: <span>' + data.earnest + 'RMB</span> 起</div>',
+    //         '<div class="village-confirm">预定度假村</div>',
+    //       '</div>',
+    //     '</div>',
+    //     '<div class="village-line"></div>',
+    //   '</div>'
+    // ].join('');
   },
 
   bindEvent: function() {
@@ -103,11 +118,12 @@ var myVillage = {
     for (var i = 0; i < myDomList.length; i++) {(function(i) {
       var myData = dataList[i];
 
-      myDomList.click(function() {
+      $(myDomList[i]).click(function(event) {
+        var myUrl = 'village=' + i + '&resortCode=' + myData.resortCode + '&resortId=' + myData.resortId;
         localStorage.setItem('village',JSON.stringify(myData));
         localStorage.setItem('resortCode',myData.resortCode);
         localStorage.setItem('resortId',myData.resortId);
-        location = "./detail/index.html";
+        location = './detail/index.html?' + myUrl;
       });
     })(i)}
   }

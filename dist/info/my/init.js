@@ -647,6 +647,8 @@ function correspondBedtype() {
 		return "<option value='大床'>大床</option><option value='双床'>双床</option><option value='大床+单床'>大床+单床</option><option value='双床+单床'>双床+单床</option><option value='大床+床垫'>大床+床垫</option><option value='双床+床垫'>双床+床垫</option><option value='蜜月大床'>蜜月大床(需半年内结婚证申请/含免费花瓣铺床)</option>"
 	}else if(loaddata.template == 9) {// 兰卡央
 		return "<option value='单床'>单床</option><option value='大床'>大床</option><option value='双床'>双床</option><option value='大床+单床'>大床+单床</option><option value='双床+单床'>双床+单床</option><option value='蜜月大床'>蜜月布置大床(需要支付160马币/仅限入住当天)</option>"
+	}else if(loaddata.template == 10) {// 兰卡央
+		return "<option value='单床'>单床</option><option value='大床'>大床</option><option value='双床'>双床</option><option value='大床+单床'>大床+单床</option><option value='双床+单床'>双床+单床</option><option value='蜜月大床'>蜜月布置大床(需要支付160马币/仅限入住当天)</option>"
 	}
 }
 function RenderingTime() {

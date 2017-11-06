@@ -195,8 +195,24 @@ var myApartment = {
       // {
       //   'select': [
       //     {
-      //       adultNum: 1,
-      //       childNum: 0,
+      //        apartmentName: '白珍珠海景房',
+      //        bedTypeList: ['大床', '双床'],
+      //        bedType: '大床',
+
+      //        calMethod: '1',
+      //        initiatePrice: 1200, //起始价格
+
+      //        peopleMax: 4,
+      //        suggestedNum: 2,
+
+      //        adultNum: 1,
+      //        childNum: 0,
+      //        adultMax: 2,
+      //        adultPrices: 600.00,
+      //        childrenMax: 2,
+      //        childPrices: 600.00,
+
+      //        prices: 1200.00,
       //     }
       //   ],
       //   'selectNum': 0, // 已选房间数 (自己加进去的  
@@ -460,39 +476,54 @@ var myApartment = {
       var myDomString = ''
           myCount = 0;
 
+      myDomString += '<div class="apartmentList-content">';
       for (var i = 0; i < dataList.length; i++) {(function (i) {
         var data = dataList[i];
 
         if (data.select.length > 0) {
           myCount += data.select.length;
 
+          myDomString += '<div class="apartmentList-division">';
           for (var j = 0; j < data.select.length; j++) {(function (j) {
             myDomString += [
-              '<div class="apartment">',
-                '<span class="cut">-</span>',
-                '<div>' + data.apartmentName + ' <span class="apartmentNum">' + data.select.length + '</span> 间</div>',
-                '<span class="add">+</span>',
-              '</div>'
+            '<div class="apartment">',
+              '<div class="apartment-title">',
+                '<div>' + data.select[j].apartmentName + '</div>',
+                '<div class="title-rigth" id="price' + i + "" + j + '">' + utilities.renderSelectPrice(data.select[j]) + ' RMB</div>',
+              '</div>',
+              '<div class="apartment-select">',
+                '<div class="select-name">成人</div>',
+                '<div class="select-btn">',
+                  '<span class="adultCut">-</span>',
+                  '<div class="adult" id="adult' + i + "" + j + '">' + data.select[j].adultNum + '</div>',
+                  '<span class="adultAdd">+</span>',
+                '</div>',
+              '</div>',
+              '<div class="apartment-select">',
+                '<div class="select-name">儿童</div>',
+                '<div class="select-btn">',
+                  '<span class="childrenCut">-</span>',
+                  '<div class="children" id="children' + i + "" + j + '">' + data.select[j].childNum + '</div>',
+                  '<span class="childrenAdd">+</span>',
+                '</div>',
+              '</div>',
+              '<div class="apartment-select">',
+                '<div class="select-name">床型</div>',
+                '<select>',
+                  renderSelectBedType(data.select[j].bedTypeList, data.select[j].bedType),
+                '</select>',
+              '</div>',
+              '<div class="apartment-delete">删除</div>',
+            '</div>'
             ].join('');
           })(j)}
-          // myDomString += [
-          //   '<div class="apartment">',
-          //     '<span class="cut">-</span>',
-          //     '<div>' + data.apartmentName + ' <span class="apartmentNum">' + data.select.length + '</span> 间</div>',
-          //     '<span class="add">+</span>',
-          //   '</div>'
-          // ].join('');
+          myDomString += '</div>';
         } else {
-          myDomString += [
-            '<div class="apartment" style="display: none;">',
-              '<span class="cut">-</span>',
-              '<div>' + data.apartmentName + ' <span class="apartmentNum">' + data.select.length + '</span> 间</div>',
-              '<span class="add">+</span>',
-            '</div>'
-          ].join('');
+          myDomString += '<div class="apartmentList-division"></div>';
         }
       })(i)}
-
+      myDomString += '</div>';
+      
       if (myCount === 0) {
         myDomString += [
           '<div class="apartmentList-infor">',
@@ -506,59 +537,69 @@ var myApartment = {
 
       apartmentList.html(myDomString);
 
-      var apartmenNodeList = $('#apartmentList .apartment');
+      var apartmenNodeDivision = $('#apartmentList .apartmentList-division');
       for (var i = 0; i < dataList.length; i++) {(function(i) {
         var data = dataList[i],
-          myNode = $(apartmenNodeList[i]);
-        var selectDOM = myNode.find('.apartmentNum');
+            myDivisionNode = $(apartmenNodeDivision[i]);
 
-        myNode.find('div').click(function() {
-          $.smoothScroll({
-            offset: -125,
-            direction: 'top',
-            scrollTarget: $('#apartmentDetail .apartment-block')[i],
-            afterScroll: function() {
-              $($('#apartmentDetail .apartment-block')[i]).addClass('isHover');
-              setTimeout(function() {
-                $($('#apartmentDetail .apartment-block')[i]).removeClass('isHover');
-              }, 3000);
-            }
-          });
-        });
-        myNode.find('.cut').click(function() {
-          var mySelect = _this.data.list[i].selectNum;
+        var apartmentSelect = myDivisionNode.find('.apartment');
 
-          if (mySelect === 0) {
-            return
-          }
+        if (apartmentSelect.length > 0) {
+          for (var j = 0; j < data.select.length; j++) {(function(j) {
+            var mySelect = data.select[j];
+                mySelectNode = $(apartmentSelect[j]);
 
-          _this.data.list[i].selectNum = mySelect - 1;
-          selectDOM.html(mySelect - 1);
-          _this.renderReferPrice();
+            mySelectNode.find('.adultCut').click(function() {
+              if (mySelect.adultNum <= 1) { return }
+              _this.data.list[i].select[j].adultNum--;
+              $('#adult' + i + '' + j).html(_this.data.list[i].select[j].adultNum);
+              var myPrice = utilities.renderSelectPrice(_this.data.list[i].select[j]);
+              _this.data.list[i].select[j].prices = myPrice;
+              $('#price' + i + '' + j).html(myPrice + ' RMB');
+            });
 
-          if ((mySelect - 1) === 0) {
-            _this.renderApartmentList();
-            _this.renderApartmentDetail();
-          }
-        });
+            mySelectNode.find('.adultAdd').click(function() {
+              if ((mySelect.adultNum + 1) > mySelect.adultMax) { return }
+              _this.data.list[i].select[j].adultNum++;
+              $('#adult' + i + '' + j).html(_this.data.list[i].select[j].adultNum);
+              var myPrice = utilities.renderSelectPrice(_this.data.list[i].select[j]);
+              _this.data.list[i].select[j].prices = myPrice;
+              $('#price' + i + '' + j).html(myPrice + ' RMB');
+            });
+            
+            mySelectNode.find('.childrenCut').click(function() {
+              if (mySelect.childNum < 1) { return }
+              _this.data.list[i].select[j].childNum--;
+              $('#children' + i + '' + j).html(_this.data.list[i].select[j].childNum);
+              var myPrice = utilities.renderSelectPrice(_this.data.list[i].select[j]);
+              _this.data.list[i].select[j].prices = myPrice;
+              $('#price' + i + '' + j).html(myPrice + ' RMB');
+            });
 
-        myNode.find('.add').click(function() {
-          var mySelect = _this.data.list[i].selectNum,
-            mySkuNum = data.skuNum || 0;
-          
-          if (data.isSaleOut === 'Y') {
-            return
-          } else if (mySelect >= mySkuNum) {
-            alert('非常抱歉，已达到该房型的上限。');
-            return
-          }
+            mySelectNode.find('.childrenAdd').click(function() {
+              if ((mySelect.childNum + 1) > mySelect.childrenMax) { return }
+              _this.data.list[i].select[j].childNum++;
+              $('#children' + i + '' + j).html(_this.data.list[i].select[j].childNum);
+              var myPrice = utilities.renderSelectPrice(_this.data.list[i].select[j]);
+              _this.data.list[i].select[j].prices = myPrice;
+              $('#price' + i + '' + j).html(myPrice + ' RMB');
+            });
 
-          _this.data.list[i].selectNum = mySelect + 1;
-          selectDOM.html(mySelect + 1);
-          _this.renderReferPrice();
-        });
+            mySelectNode.find('select').change(function() {
+              _this.data.list[i].select[j].bedType = $(this).val();
+            });
+            
+            mySelectNode.find('.apartment-delete').click(function() {
+              if (confirm('你确认要删除吗?')) {
+                _this.data.list[i].select.splice(j, 1);
+                _this.renderApartmentList();
+              }
+            });
+          })(j)}
+        }
       })(i)}
 
+      // 预定度假村
       $('#orderApartment').click(function() {
         var allApartmentNum = 0
 
@@ -597,14 +638,27 @@ var myApartment = {
                 startDate: myData.startDate,
                 endDate: myData.endDate
               };
-
+              
               localStorage.setItem('mydate',JSON.stringify(mydate));
               localStorage.setItem('apartmentList',JSON.stringify(myApartment.data.list));
               localStorage.setItem('village',JSON.stringify(myApartment.village));
-              location = "./../submit/index.html";
+              location = './../submit/index.html?effective=' + Date.parse(new Date());
             }
           })
       })
+
+      function renderSelectBedType(bedTypeList, bedType) {
+        var mybedString = '';
+
+        for (var i = 0; i < bedTypeList.length; i++) {
+          if (bedTypeList[i] == bedType) {
+            mybedString += '<option value="' + bedTypeList[i] + '" selected="selected" >' + bedTypeList[i] + '</option>';
+          } else {
+            mybedString += '<option value="' + bedTypeList[i] + '">' + bedTypeList[i] + '</option>';
+          }
+        }
+        return mybedString
+      }
     }
   },
 
@@ -727,10 +781,27 @@ var myApartment = {
             return
           }
           $(this).removeClass('disable');
-          _this.data.list[i].select.push({
+          var myselect = {
+            apartmentName: _this.data.list[i].apartmentName,
+            bedTypeList: _this.data.list[i].bedType.split(','),
+            bedType: _this.data.list[i].bedType.split(',')[0],
+
+            calMethod: _this.data.list[i].calMethod,
+            initiatePrice: _this.data.list[i].initiatePrice, //起始价格
+
+            peopleMax: _this.data.list[i].peopleMax,
+            suggestedNum: _this.data.list[i].suggestedNum,
+
             adultNum: 1,
             childNum: 0,
-          });
+            adultMax: _this.data.list[i].adultMax,
+            adultPrices: parseFloat(_this.data.list[i].adultPrices),
+            childrenMax: _this.data.list[i].childrenMax,
+            childPrices: parseFloat(_this.data.list[i].childPrices),
+          }
+          myselect.prices = utilities.renderSelectPrice(myselect);
+
+          _this.data.list[i].select.push(myselect);
           _this.renderApartmentList();
         })
     })(i)}
@@ -801,6 +872,49 @@ var utilities = {
     dd = dd < 10 ? '0' + dd : dd;
 
     return '' + yyyy + mm + dd;
+  },
+
+  renderSelectPrice: function (data) {
+    var calMethod = data.calMethod, // 计算方式
+      adultNum = data.adultNum, // 成人数
+      adultPrices = data.adultPrices, // 成人价格
+      childNum = data.childNum, // 儿童数
+      childPrices = data.childPrices, // 儿童价格
+      suggestedNum = data.suggestedNum, // 建议人数
+      initiatePrice = data.initiatePrice; // 起始价格
+    // 订房价格算法一：
+    // 1、一个房间至少入住1成人；
+    // 2、成人入住人数不得大于最多成人入住人数；
+    // 3、儿童入住人数不得大于最多儿童入住人数；
+    // 4、实际入住人数不得大于最多入住人数；
+    // 5、房间实际入住总人数小于等于建议入住人数时，一律按房间起始价格计算；
+    // （即订房价格=房间起始价格=成人单价*建议入住人数*晚数）
+    // 6、房间实际入住总人数大于建议入住人数，但计算金额小于房间起始价格时，则订房价格按房间起始价格计算；
+    // 7、在以上规则的基础上，房间实际入住总人数大于建议入住人数时，订房价格按实际入住情况计算。
+    // （即订房价格=成人单价*成人人数*晚数+儿童单价*儿童人数*晚数）
+    if (calMethod === '1') {
+      if ((adultNum + childNum) <= suggestedNum) { // 房间实际入住总人数小于等于建议入住人数时
+        var myPrice = (adultNum + childNum) * adultPrices;
+        return (myPrice > initiatePrice ? myPrice : initiatePrice);
+      } else { // 间实际入住总人数大于建议入住人数
+        return ( (adultPrices * adultNum) + (childPrices * childNum) );
+      }
+    // 订房价格算法二：
+    // 1、一个房间至少入住1成人；
+    // 2、成人入住人数不得大于最多成人入住人数；
+    // 3、儿童入住人数不得大于最多儿童入住人数；
+    // 4、实际入住人数不得大于最多入住人数；
+    // 5、房间起始价格作为基数（成人单价*建议入住人数*晚数）；
+    // 6、成人超出价格=成年单价*超出成人人数(入住成人人数超出建议入住人数)*晚数；
+    // 7、儿童价格=入住儿童单价*儿童人数*晚数；
+    // 8、订房价格=基数+成人超出价格+儿童价格。
+    } else {
+      if (adultNum > suggestedNum) {
+        return (initiatePrice + ((suggestedNum - adultNum) * initiatePrice) + (childPrices * childNum));
+      } else {
+        return (initiatePrice + (childPrices * childNum));
+      }
+    }
   },
 
   dateToYYYYMMDDFormat: function(data) {

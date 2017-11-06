@@ -1,25 +1,25 @@
 window.onload = function () {
   if (utilities.isSupport() === false) { return }
 
-  myData.init()
-    .then(function () {
-      myData.checkLogin()
-        .then(function (response) {
-          return response.json();
-        }, function (error) {
-          alert('非常抱歉，查询登录信息出错！原因: ' + error);
-          return false;
-        })
-        .then(function (val) {
-          if (val === false) { return }
-          if (val.result === '0') {
-            customerInfo.init();
-          } else {
-            alert('检测到您尚未登录！原因: ' + val.message);
-            window.location = './../index.html';
-          }
-        });
+  myData.checkLogin()
+    .then(function (response) {
+      return response.json();
     }, function (error) {
+      alert('非常抱歉，查询登录信息出错！原因: ' + error);
+      return false;
+    })
+    .then(function (val) {
+      if (val === false) { return }
+      if (val.result === '0') {
+        customerInfo.init();
+      } else {
+        alert('检测到您尚未登录！原因: ' + val.message);
+        window.location = './../index.html';
+      }
+    });
+
+  myData.init()
+    .then({}, function (error) {
       alert(error);
       window.location = './../index.html';
     });
@@ -62,28 +62,7 @@ var myData = {
   },
   'apartmentList': [
     // {
-    //   'select': [
-    //     {
-    //        apartmentName: '白珍珠海景房',
-    //        bedTypeList: ['大床', '双床'],
-    //        bedType: '大床',
-    //
-    //        calMethod: '1',
-    //        initiatePrice: 1200, //起始价格
-    //
-    //        peopleMax: 4,
-    //        suggestedNum: 2,
-    //
-    //        adultNum: 1,
-    //        childNum: 0,
-    //        adultMax: 2,
-    //        adultPrices: 600.00,
-    //        childrenMax: 2,
-    //        childPrices: 600.00,
-    //
-    //        prices: 1200.00,
-    //     }
-    //   ],
+    //   'selectNum': 0, // 已选房间数 (自己加进去的  
     //   'adultMax': 2,
     //   'adultMin': 1,
     //   'adultPrices': '3000.00',
@@ -148,19 +127,17 @@ var myData = {
   init: function() {
     var _this = this,
       mydate = localStorage.getItem('mydate'),
-      myEffective = utilities.loadPageVar('effective'),
       myApartmentList = localStorage.getItem('apartmentList'),
       myVillage = localStorage.getItem('village');
 
     return new Promise(function (resolve, reject) {
-      if (mydate && myApartmentList && myVillage && myEffective) {
-        // if ( Date.parse(new Date()) > ( parseInt(myEffective) + 300000 ) ) { reject('订单已失效，请重新选择。') }
+      if (mydate && myApartmentList && myVillage) {
         var jsonDate = JSON.parse(mydate);
 
         _this.date = {
           startDate: new Date(jsonDate.startDate),
           endDate: new Date(jsonDate.endDate)
-        };
+        }
         _this.apartmentList = JSON.parse(myApartmentList);
         _this.village = JSON.parse(myVillage);
         _this.initOrdersDetailVue();
@@ -207,63 +184,44 @@ var myData = {
       endDate = utilities.dateToYYYYMMDDFormat(this.date.endDate);
 
     for (var i = 0; i < this.apartmentList.length; i++) {
-      var apartment = this.apartmentList[i],
-          myPersonCount = 0;
-          myPrice = 0;
+      var apartment = this.apartmentList[i];
 
-      for (var j = 0; j < this.apartmentList[i].select.length; j++) {
+      for (var j = 0; j < this.apartmentList[i].selectNum; j++) {
         var apartmentItem = {
+          'id': ordersRoomCount,
+          'ordersListId': i,
           'itemCode': this.apartmentList[i].apartmentCode,
-          'prices': this.apartmentList[i].select[j].prices,
-
-          'apartmentName': this.apartmentList[i].select[j].apartmentName,
-
-          'bedType': this.apartmentList[i].select[j].bedType,
-          'adultNum': this.apartmentList[i].select[j].adultNum,
-          'childNum': this.apartmentList[i].select[j].childNum,
- 
-          'adultMax': this.apartmentList[i].select[j].adultMax,
-          'childrenMax': this.apartmentList[i].select[j].childrenMax,
-          'suggestedNum': this.apartmentList[i].select[j].suggestedNum,
+          'apartmentName': this.apartmentList[i].apartmentName,
+          'bedTypeList': this.apartmentList[i].bedType.split(','),
+          'bedType': this.apartmentList[i].bedType.split(',')[0],
+          'adult': 1,
+          'adultMax': this.apartmentList[i].adultMax,
+          'adultUnitPrice': this.apartmentList[i].adultUnitPrice,
+          'children': 0,
+          'childrenMax': this.apartmentList[i].childrenMax,
+          'childUnitPrice': this.apartmentList[i].childUnitPrice,
+          'suggestedNum': this.apartmentList[i].suggestedNum,
         };
-        // var apartmentItem = {
-        //   'id': ordersRoomCount,
-        //   'ordersListId': i,
-        //   'itemCode': this.apartmentList[i].apartmentCode,
-        //   'apartmentName': this.apartmentList[i].apartmentName,
-        //   'bedTypeList': this.apartmentList[i].bedType.split(','),
-        //   'bedType': this.apartmentList[i].bedType.split(',')[0],
-        //   'adult': 1,
-        //   'adultMax': this.apartmentList[i].adultMax,
-        //   'adultUnitPrice': this.apartmentList[i].adultUnitPrice,
-        //   'children': 0,
-        //   'childrenMax': this.apartmentList[i].childrenMax,
-        //   'childUnitPrice': this.apartmentList[i].childUnitPrice,
-        //   'suggestedNum': this.apartmentList[i].suggestedNum,
-        // };
 
         myapartmentList.push(apartmentItem);
 
         ordersRoomCount++;
-
-        var peopleNum = (this.apartmentList[i].select[j].adultNum + this.apartmentList[i].select[j].childNum);
-        myPersonCount += peopleNum;
-        ordersPersonCount += peopleNum;
-
-        myPrice += this.apartmentList[i].select[j].prices;
-        ordersprice += this.apartmentList[i].select[j].prices;
+        ordersPersonCount++;
       }
         
       var ordersItem = {
         'id': i,
-        'isShow': (apartment.select.length > 0 ? true : false),
+        'isShow': (apartment.selectNum > 0 ? true : false),
         'name': apartment.apartmentName,
-        'roomCount': apartment.select.length,
-        'personCount': myPersonCount,
-        'ordersprice': myPrice
+        'roomCount': apartment.selectNum,
+        'personCount': apartment.selectNum,
+        'initiatePrice': apartment.initiatePrice,
+        'ordersprice': (apartment.initiatePrice * apartment.selectNum)
       };
 
       ordersList.push(ordersItem);
+
+      ordersprice += (apartment.selectNum * apartment.initiatePrice);
     }
 
     this.myVue = new Vue({
@@ -359,8 +317,8 @@ var myData = {
         'itemCode': apartment.itemCode,
         'itemName': apartment.apartmentName,
         'itemSize': apartment.bedType,
-        'adultNum': apartment.adultNum,
-        'childNum': apartment.childNum,
+        'adultNum': apartment.adult,
+        'childNum': apartment.children,
       });
     }
 
@@ -390,7 +348,7 @@ var myData = {
       digest = utilities.getCookie('digest');
 
     this.initBillItemList();
-
+    console.log(mySubmitData);
     return fetch(URLbase + URLversion + '/order/' + resortCode + '/' + checkInDate + '/' + leaveDate + '/custom.do', {
       method: 'POST',
       headers: {
@@ -892,9 +850,13 @@ var customerInfo = {
               .then(function (response) {
                 return response.json();
               }, function (error) {
-                return {'result': '1', 'message': error};
+                isSubmit = false;
+                Vuethis.submitBTN = '确认订单';
+                alert('非常抱歉，提交信息出错！原因: ' + error);
+                return false;
               })
               .then(function (val) {
+                if (val === false) { return }
                 if (val.result === '0') {
                   isSubmit = false;
                   Vuethis.submitBTN = '确认订单';
@@ -937,10 +899,6 @@ var utilities = {
     dd = dd < 10 ? '0' + dd : dd;
 
     return '' + yyyy + '-' + mm + '-' + dd;
-  },
-  
-  loadPageVar: function(sVar) {
-    return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
   },
 
   YYYYMMDDFormatToTimestamp(data) {
