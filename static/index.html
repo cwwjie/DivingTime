@@ -634,9 +634,15 @@
   function highlightSelected() {
     var myUrl = window.location.pathname;
 
-    if (myUrl === '/index.html' || myUrl === '/') {
+    if (
+      myUrl === '/index.html' || myUrl === '/'||
+      myUrl === '/Dvt-web/' || myUrl === '/Dvt-web/index.html'
+    ) {
       $('#headerHome').addClass('isSelected');
-    } else if (myUrl === '/village/index.html' || myUrl === '/village' || myUrl === '/village/') {
+    } else if (
+        myUrl === '/village/index.html' || myUrl === '/village' || myUrl === '/village/'
+        myUrl === '/Dvt-web/village/index.html' || myUrl === '/Dvt-web/village' || myUrl === '/Dvt-web/village/'
+    ) {
       $('#headerVillage').addClass('isSelected');
     }
   }

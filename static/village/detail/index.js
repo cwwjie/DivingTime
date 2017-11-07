@@ -288,7 +288,7 @@ var myApartment = {
 
     this.getvillage()
     .then(function(value) {
-      _this.village = value.list[villageNum];
+      _this.village = value;
       _this.renderApartmentBrand();
       _this.initTimePicker();
       _this.renderApartmentList();
@@ -299,10 +299,12 @@ var myApartment = {
   },
   
   getvillage: function() {
+    var resortId = utilities.loadPageVar('resortId');
+
     return new Promise(function(resolve, reject){
       $.ajax({
         'type': 'GET',
-        'url': URLbase + '/Dvt-reserve/product/resort/1/0/list.do',
+        'url': URLbase + '/Dvt-reserve/product/resort/' + resortId + '/get.do',
         'contentType': 'application/json; charset=utf-8',
         success: function(value) {
           if (value.result === '0') {

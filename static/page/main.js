@@ -1,9 +1,8 @@
 $(document).ready(function() {
-    if (/^[0-9]*[1-9][0-9]*$/.test(window.location.hash.substr(1))) {
-        productID = parseInt(window.location.hash.substr(1));
-        sessionStorage.setItem('selectProductID', parseInt(window.location.hash.substr(1)));
+    if (loadPageVar('productId')) {
+        productID = loadPageVar('productId');
     } else {
-        productID = parseInt(sessionStorage.getItem('selectProductID'))
+        alert('非常抱歉, 订单失效!');
     }
     // BotSlide();
     // 滚动监听
@@ -17,6 +16,9 @@ $(document).ready(function() {
     // 登陆
     login();
 });
+function loadPageVar(sVar) {
+    return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+}
 // 产品 ID
 var productID;
 // 鼠标滚动监听

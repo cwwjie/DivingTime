@@ -88,7 +88,7 @@ var myVillage = {
         '</div>',
         '<div class="village-depiction">',
             '<div class="village-title">' + data.resortName + '</div>',
-            '<div class="village-price">' + data.earnest + 'RMB 起</div>',
+            '<div class="village-price">' + data.initiatePrice + 'RMB 起</div>',
         '</div>',
         '</div>',
       '</div>'
@@ -119,7 +119,7 @@ var myVillage = {
       var myData = dataList[i];
 
       $(myDomList[i]).click(function(event) {
-        var myUrl = 'village=' + i + '&resortCode=' + myData.resortCode + '&resortId=' + myData.resortId;
+        var myUrl = 'resortCode=' + myData.resortCode + '&resortId=' + myData.resortId;
         localStorage.setItem('village',JSON.stringify(myData));
         localStorage.setItem('resortCode',myData.resortCode);
         localStorage.setItem('resortId',myData.resortId);
