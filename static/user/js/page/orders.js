@@ -357,7 +357,7 @@ var myOrder = {
   },
 
   'pageNum': 1,
-  'pageSize': 10, // 10
+  'pageSize': 5, // 5
   'pages': null,
   'totalCount': null,
 
@@ -388,24 +388,51 @@ var myOrder = {
 
     for (var i = 0; i < data.length; i++) {
       string += [
-        "<div class='list'>",
-          "<div class='_cover' data-orderid='" + data[i].orderId + "' data-countDown='" + data[i].countDown + "' data-orderType='" + data[i].orderType  + "' data-orderSn='" + data[i].orderSn  + "'></div>",
-          "<div class='line'>",
-            "<div class='ding_dan_hao'><span>订单号 : </span>" + data[i].orderSn + "</div>",
-            "<div class='ding_dan_zhuang_tai'><span>订单状态 : </span>" + this.orderStatus(data[i].orderStatus,data[i].countDown) + "</div>",
-            "<div class='fu_kuan_zhuan_tai'><span>付款状态 : </span>" + this.chackStatus(data[i].paymentInfo.payStatus) + "</div>",
-            "<div class='can_pin_ming_cheng'>" + data[i].orderName + "</div>",
-            "<div class='hiden chu_fa_riq'>" + OrderUtilities.getnoUTCdate(data[i].departureDate) + "</div>",
-            "<div class='hiden fan_hui_ri_qi'>" + OrderUtilities.getnoUTCdate(data[i].leaveDate) + "</div>",
-            "<div class='time'><span>时间 : </span>" + OrderUtilities.getnoUTCdate(data[i].departureDate) + "至" + OrderUtilities.getnoUTCdate(data[i].leaveDate) + "</div>",
-            "<div class='ji_tian_ji_wan'><span>周期 : </span>" + this.dateCycle(data[i].departureDate,data[i].leaveDate) + "</div>",
-            "<div class='can_ping_zhong_jia'><span>总价 : </span>" + data[i].orderAmount + "</div>",
-            "<div class='_BTNcontent'>",
-              "<div data-orderType='" + data[i].orderType + "' data-orderid='" + data[i].orderId + "' data-orderSn='" + data[i].orderSn + "' " + this.changAttribu(data[i].orderStatus, data[i].countDown) + ">" + this.changBtn(data[i].orderStatus, data[i].countDown) + "</div>",
-            "</div>",
-          "</div>",
-        "</div>"
-      ].join("");
+        '<div class="orders-item">',
+          '<div class="item-navigation">',
+            '<span>订单号: ' + data[i].orderSn + '</span>',
+            '<span>订单状态: ' + this.orderStatus(data[i].orderStatus,data[i].countDown) + '</span>',
+          '</div>',
+          '<div class="item-content">',
+            '<div class="item-img">',
+              '<img src=' + URLbase + data[i].orderItemList[0].productThumb + '>',
+            '</div>',
+            '<div class="item-description row">',
+              '<div class="col-xs-8">',
+                  '<div class="item-orderName">产品名称: ' + data[i].orderName + '</div>',
+                  renderItemCycle(data[i]),
+                  '<div class="item-time">下单时间: ' + OrderUtilities.getnoUTCdate(data[i].orderTime) + '</div>',
+              '</div>',
+              '<div class="item-operational col-xs-4">',
+                '<div class="item-productPrice">￥' + data[i].productAmount.toFixed(2) + ' RMB</div>',
+                '<div class="item-btn">',
+                  renderBtn(data[i]),
+                '</div>',
+              '</div>',
+            '</div>',
+          '</div>',
+          '<div class="orders-masking" data-orderid="' + data[i].orderId + '" data-countDown="' + data[i].countDown + '"></div>',
+        '</div>'
+      ].join('');
+      // string += [
+      //   "<div class='list'>",
+      //     "<div class='_cover' data-orderid='" + data[i].orderId + "' data-countDown='" + data[i].countDown + "' data-orderType='" + data[i].orderType  + "' data-orderSn='" + data[i].orderSn  + "'></div>",
+      //     "<div class='line'>",
+      //       "<div class='ding_dan_hao'><span>订单号 : </span>" + data[i].orderSn + "</div>",
+      //       "<div class='ding_dan_zhuang_tai'><span>订单状态 : </span>" + this.orderStatus(data[i].orderStatus,data[i].countDown) + "</div>",
+      //       "<div class='fu_kuan_zhuan_tai'><span>付款状态 : </span>" + this.chackStatus(data[i].paymentInfo.payStatus) + "</div>",
+      //       "<div class='can_pin_ming_cheng'>" + data[i].orderName + "</div>",
+      //       "<div class='hiden chu_fa_riq'>" + OrderUtilities.getnoUTCdate(data[i].departureDate) + "</div>",
+      //       "<div class='hiden fan_hui_ri_qi'>" + OrderUtilities.getnoUTCdate(data[i].leaveDate) + "</div>",
+      //       "<div class='time'><span>时间 : </span>" + OrderUtilities.getnoUTCdate(data[i].departureDate) + "至" + OrderUtilities.getnoUTCdate(data[i].leaveDate) + "</div>",
+      //       "<div class='ji_tian_ji_wan'><span>周期 : </span>" + this.dateCycle(data[i].departureDate,data[i].leaveDate) + "</div>",
+      //       "<div class='can_ping_zhong_jia'><span>总价 : </span>" + data[i].orderAmount + "</div>",
+      //       "<div class='_BTNcontent'>",
+      //         "<div data-orderType='" + data[i].orderType + "' data-orderid='" + data[i].orderId + "' data-orderSn='" + data[i].orderSn + "' " + this.changAttribu(data[i].orderStatus, data[i].countDown) + ">" + this.changBtn(data[i].orderStatus, data[i].countDown) + "</div>",
+      //       "</div>",
+      //     "</div>",
+      //   "</div>"
+      // ].join("");
     }
     if (string === '') {
       $('#renderOrders').html('商城订单为空');
@@ -414,36 +441,94 @@ var myOrder = {
       this.renderpageNavigation();
     }
 
-    // 取消订单
-    $(".BTN_Cancel").click(function(event){
-      _this.CancelOrders(event);
-    })
-    // 付款
-    $(".BTN_Pay").click(function(event){
-      if ( event.target.getAttribute('data-cilck') == 'doing' ) { return }
-      event.target.setAttribute('data-cilck', 'doing');
-
-      _this.payConfirm(
-        event.target.getAttribute('data-orderid'),
-        event.target.getAttribute('data-orderType'),
-        event.target.getAttribute('data-orderSn')
-      );
-    });
-
-    // 申请退款
-    $(".BTN_Refund").click(function(event){
-      _this.refundOrders(event);
-    });
-    
     // 查看详情
-    $("._cover").click(function(event){
+    $(".orders-masking").click(function(event){
       orderDetail.show(
-        event.currentTarget.getAttribute("data-orderId"),
-        event.currentTarget.getAttribute("data-countDown")
+        $(this).attr('data-orderId'),
+        $(this).attr('data-countDown')
       );
       $("#content").css("display","none");
       $("aside").css("display","block");
     });
+    $('.btn-show-orders').click(function(event){
+      orderDetail.show(
+        $(this).attr('data-orderId'),
+        $(this).attr('data-countDown')
+      );
+      $("#content").css("display","none");
+      $("aside").css("display","block");
+    });
+
+    // 取消订单
+    $(".btn-cancel-orders").click(function(event){
+      if ($(this).attr('data-isSubmit') == 'true') { return }
+
+      if (confirm("确认取消订单?")) {
+        $(this).attr('data-isSubmit', 'true');
+        _this.cancelOrders($(this).attr('data-orderid'));
+      } else {
+        $(this).attr('data-isSubmit', 'false');
+      }
+    })
+
+    // 付款
+    $(".btn-pay-orders").click(function(event){
+      if ($(this).attr('data-isSubmit') == 'true') { return }
+      $(this).attr('data-isSubmit', 'true');
+
+      _this.payConfirm(
+        $(this).attr('data-orderid'),
+        $(this).attr('data-orderType'),
+        $(this).attr('data-orderSn')
+      );
+    });
+
+    // 申请退款
+    $(".btn-refund-orders").click(function(event){
+      if ($(this).attr('data-isSubmit') == 'true') { return }
+
+      if (confirm("确认申请退款?")) {
+        $(this).attr('data-isSubmit', 'true');
+        _this.refundOrders($(this).attr('data-orderid'));
+      } else {
+        $(this).attr('data-isSubmit', 'false');
+      }
+    });
+    
+    function renderBtn(item) {
+      if (item.orderStatus === 1) {
+        return ('<div class="btn-cancel-orders" data-orderid="' + item.orderId + '">取消预订</div>');
+      } else if ( item.orderStatus === 3 && item.countDown != null ) {
+        return ('<div ' + 
+          'class="btn-pay-orders" ' +
+          'data-orderid="' + item.orderId + '" ' +
+          'data-orderType="' + item.orderType + '" ' +
+          'data-orderSn="' + item.orderSn + '" ' + 
+        '>立即付款</div>');
+      } else if (item.orderStatus === 6) {
+        return ('<div class="btn-refund-orders" data-orderid="' + item.orderId + '">申请退款</div>');
+      } else {
+        return ('<div ' + 
+          'class="btn-show-orders" ' +
+          'data-orderid="' + item.orderId + '" ' +
+          'data-countDown="' + item.countDown + '" ' +
+        '>查看详情</div>');
+      }
+    }
+
+    function renderItemCycle(item) {
+      if (item.orderItemList[0].itemType === 'package') {
+        return (
+          '<div class="item-cycle">入住日期: ' + OrderUtilities.getnoUTCdate(item.departureDate) + '</div>'+
+          '<div class="item-cycle">退房日期: ' + OrderUtilities.getnoUTCdate(item.leaveDate) + '</div>'
+        );
+      } else {
+        return (
+          '<div class="item-cycle">租借日期: ' + OrderUtilities.getnoUTCdate(item.departureDate) + '</div>'+
+          '<div class="item-cycle">归还日期: ' + OrderUtilities.getnoUTCdate(item.leaveDate) + '</div>'
+        );
+      }
+    }
   },
 
   renderpageNavigation: function() {
@@ -550,27 +635,28 @@ var myOrder = {
 		$("#content").css("display","block");
 		$("aside").css("display","none");
 	},
-  
 
 	// 申请退款
-	refundOrders: function (event) {
+	refundOrders: function (orderid) {
 		if (confirm("确认申请退款?")) {
-			$("#BTN_Refund").text("正在取消");
       $.ajax({
         type: "GET", 
-        url: URLbase + URLversion + "/order/id/" + event.target.getAttribute("data-orderid") + "/refund.do", 
+        url: URLbase + URLversion + "/order/id/" + orderid + "/refund.do", 
         contentType: "application/json; charset=utf-8", 
         headers: {
-          'token':$.cookie('token'),
-          'digest':$.cookie('digest')
+          'token': $.cookie('token'),
+          'digest': $.cookie('digest')
         },
-        success: function (message) {
-          $("#BTN_Cancel").text("申请退款");
-          if (message.result == "0") {
-            alert("退款申请成功");
-            window.location.reload();
+        success: function (json) {
+          if ( json.result == '0' ) {
+            alert('退款申请成功');
             _this.getOrderList();
+          } else {
+            alert('退款申请失败, 原因:' + json.message);
           }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          alert('退款申请失败, 原因: ' + errorThrown);
         }
       });
 		}
@@ -635,30 +721,29 @@ var myOrder = {
 	},
 
 	// 取消订单
-	CancelOrders: function (event) {
+	cancelOrders: function (orderid) {
     var _this = this;
 
-		if (confirm("确认取消订单?")) {
-			$("#BTN_Cancel").text("正在取消");
-      var _orderid = event.target.getAttribute("data-orderid");
-
-      $.ajax({
-        'type': 'GET', 
-        'url': URLbase + URLversion + '/order/id/' + _orderid + '/cancelOrder.do', 
-        'contentType': 'application/json; charset=utf-8', 
-        'headers': {
-          'token': $.cookie('token'),
-          'digest': $.cookie('digest')
-        },
-        success: function (json) {
-          $('#BTN_Cancel').text('取消订单');
-          if ( json.result == '0' ) {
-            alert('订单成功取消');
-            _this.getOrderList();
-          }
+    $.ajax({
+      'type': 'GET', 
+      'url': URLbase + URLversion + '/order/id/' + orderid + '/cancelOrder.do', 
+      'contentType': 'application/json; charset=utf-8', 
+      'headers': {
+        'token': $.cookie('token'),
+        'digest': $.cookie('digest')
+      },
+      success: function (json) {
+        if ( json.result == '0' ) {
+          alert('订单成功取消');
+          _this.getOrderList();
+        } else {
+          alert('订单取消失败, 原因:' + json.message);
         }
-      });
-		}
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        alert('订单取消失败, 原因: ' + errorThrown);
+      }
+    });
 	},
 
   chackStatus: function (Status) {
@@ -752,41 +837,6 @@ var myOrder = {
     }
   },
 
-	// 根据订单状态显示按钮
-  changBtn: function (orderStatus, countDown) {
-    if (orderStatus == 1) {
-      // 预定中——————————————————————————————————————————————1
-      return "取消订单"
-    }else if (orderStatus == 2) {
-      // 预定失败
-      return "预定失败"
-    }else if (orderStatus == 3) {
-      // 待付款——————————————————————————————————————————————2
-      if (countDown == null) {
-        return "预定失败"
-      }else {
-        return "去付款"
-      }
-    }else if (orderStatus == 4) {
-      // 退订成功
-      return "退订成功"
-    }else if (orderStatus == 5) {
-      // 交易失败
-      return "交易失败"
-    }else if (orderStatus == 6) {
-      // 支付成功————————————————————————————————————————————3
-      return "申请退款"
-    }else if (orderStatus == 7) {
-      // 申请退款
-      return "正在退款"
-    }else if (orderStatus == 8) {
-      // 退款成功
-      return "退款成功"
-    }else if (orderStatus == 9) {
-      // 退款失败
-      return "退款失败"
-    }
-  },    
 }
 
 var OrderUtilities = {

@@ -1,6 +1,6 @@
 $(document).ready(function() {
-  if (loadPageVar('productId')) {
-    myProduct.id = loadPageVar('productId');
+  if (utilities.loadPageVar('productId')) {
+    myProduct.id = utilities.loadPageVar('productId');
   } else {
     alert('非常抱歉, 订单失效!');
     return
@@ -126,13 +126,16 @@ var myProduct = {
         _this.detail = val;
         _this.renderDetail();
         
-        _this.getTrip()
-          .then(function(val) {
-            _this.trip = val;
-            _this.renderTrip();
-          }, function(error) { alert(error) });
-
+        if (val.productType === 'package') {
+          _this.getTrip()
+            .then(function(val) {
+              _this.trip = val;
+              _this.renderTrip();
+            }, function(error) { alert(error) });
+        }
+        
         _this.rule.init(val.refundRuleId);
+        _this.submit.init.call(_this);
       }, function(error) { alert(error) });
 
     this.getAttribute()
@@ -151,7 +154,7 @@ var myProduct = {
     this.selectdays.init();
   },
 
-  rule: (function () {
+  'rule': (function () {
     var ruleData = {
       // 'createBy': null,
       // 'createTime': null,
@@ -250,22 +253,25 @@ var myProduct = {
     };
   })(),
 
-  selectdays: (function () {
-    function getYYYYddMM() {
-      var mydate = new Date();
-      var str = "" + mydate.getFullYear() + "-" + (mydate.getMonth() + 1) + "-" + mydate.getDate();
-      return str = str.replace(/\b(\w)\b/g, '0$1');
-
+  'selectdays': (function () {
+    function getYYYYddMM(date) {
+      var myDate = date || null;
+      var myDateFrom = new Date(myDate);
+      return ( "" + myDateFrom.getFullYear() + "-" + (myDateFrom.getMonth() + 1) + "-" + myDateFrom.getDate() ).replace(/\b(\w)\b/g, '0$1');
     }
 
     return {
       'init': function() {
+        $("#OrderDate").click(function(event) {
+            $("#datetimepicker").css("display", "block");
+            event.preventDefault();
+        });
 
         $('#datetimepicker').datetimepicker({
             format: "yyyy MM dd", //格式
             autoclose: true, //自动关闭
             todayBtn: true, //今天
-            startDate: str,
+            startDate: getYYYYddMM(),
             minuteStep: 10, //用于选择分钟
             language: 'zh-CN',
             weekStart: 1, //周一从那天开始
@@ -273,27 +279,118 @@ var myProduct = {
             startView: 2, //日期时间选择器打开之后首先显示的视图
             minView: 2, //日期时间选择器打开之后最小的视图
         }).on('changeDate', function(ev) {
-            var SelectDate = new Date(ev.date)
-            var string = "" + SelectDate.getFullYear() + "-" + (SelectDate.getMonth() + 1) + "-" + SelectDate.getDate();
-            string = string.replace(/\b(\w)\b/g, '0$1');
             $("#datetimepicker").css("display", "none");
-            $("#OrderDate").text(string);
+            $("#OrderDate").text( getYYYYddMM(ev.date) );
             $("#OrderDate").attr("data-title", ev.date);
             $("#packagNumber").css("display", "block");
             $("#totalPrice").css("display", "block");
             $("#OrderConfirm").text("预订套餐");
             event.preventDefault();
         });
-
       }
     };
   })(),
 
+  'submit': (function () {
+    var productId = null;
+
+    // 计算价格(data:"+"or"-") => 合计 && 套餐数量
+    function changePrice(data) {
+        var theNumber = parseFloat($("#packagNumber .center span").text());
+        if (data == "-" && theNumber > 1) {
+            $("#packagNumber .center span").text(theNumber - 1);
+            $("#totalPrice .tright span").text(((theNumber - 1) * (parseFloat($("#packagNumber .center").attr("data-price")) * 100)) / 100);
+        } else if (data == "+") {
+            $("#packagNumber .center span").text(theNumber + 1);
+            $("#totalPrice .tright span").text(((theNumber + 1) * (parseFloat($("#packagNumber .center").attr("data-price")) * 100)) / 100);
+        }
+    }
+    // 预定套餐
+    function orderConfirm() {
+      if ($("#OrderDate").text() == "出发日期") {
+          $("#OrderConfirm").text("请选择出发日期");
+          return
+      }
+      if ($("#OrderConfirm").attr("data-cilck") == "doing") { return }
+      $("#OrderConfirm").attr("data-cilck", "doing");
+      $("#OrderConfirm").text("正在预定");
+
+      submitData().then(function(message) {
+        $("#OrderConfirm").attr("data-cilck", "OK");
+        if (message.result == "0") {
+          window.location.href = "./reserve/index.html?productId=" + productId + "&departureDate=" + $("#OrderDate").attr("data-title") + "&productNum=" + parseInt($("#packagNumber .center span").text());
+        } else if (message.result == "401") {
+          $("#OrderConfirm").text("预定套餐");
+          log_fun.Show();
+        } else {
+          $("#OrderConfirm").text("预定失败，" + message.message);
+        }
+      }, function(error) { alert(error) });
+    }
+    
+    function submitData() {
+      return new Promise(function(resolve, reject){
+        $.ajax({
+          'type': 'GET',
+          'url': appConfig.getUserInfo,
+          'contentType': 'application/json; charset=utf-8', 
+          'headers': {
+            'token': $.cookie('token'),
+            'digest': $.cookie('digest')
+          },
+          success: function(value) {
+            resolve(value);
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            reject('提交数据发生错误, 原因: ' + errorThrown);
+          }
+        });
+      });
+    }
+
+    return {
+      'init': function() {
+        productId = this.id;
+
+        $("#packagNumber .sL").click(function() {
+            changePrice("-")
+        });
+        $("#packagNumber .sR").click(function() {
+            changePrice("+")
+        });
+        $("#OrderConfirm").click(function() {
+            orderConfirm();
+        });
+        $("#sideConfirm").click(function() {
+          // 隐藏 <nav>
+          if ($("nav").attr("data-display") == "show") {
+            $("nav").css("display", "none");
+            $("nav").attr("data-display", "hide")
+          } else if ($("nav").attr("data-display") == "hide") {
+            $("nav").css("display", "block");
+            $("nav").attr("data-display", "show")
+          }
+          if ($("#sideConfirm").attr("title") == "Confirm") {
+            $("#sideConfirm").text('预定套餐')
+            $(".MContent-R").css('display', 'none');
+            $("#sideConfirm").attr("title", "order")
+          } else if ($("#sideConfirm").attr("title") == "order") {
+            $(".MContent-R").css('display', 'block');
+            $("#sideConfirm").attr("title", "Confirm")
+            $("#sideConfirm").text('隐藏')
+          }
+        })
+      }
+    };
+  })(),
+  
   getCarousel: function() {
+    var _this = this;
+
     return new Promise(function(resolve, reject){
       $.ajax({
         'type': 'GET',
-        'url': URLbase + URLversion + '/product/relProductGallery/' + this.id + '/findByProductId.do',
+        'url': URLbase + URLversion + '/product/relProductGallery/' + _this.id + '/findByProductId.do',
         'contentType': 'application/json; charset=utf-8',
         success: function(value) {
           if (value.result === '0') {
@@ -310,10 +407,12 @@ var myProduct = {
   },
 
   getDetail: function() {
+    var _this = this;
+
     return new Promise(function(resolve, reject){
       $.ajax({
         'type': 'GET',
-        'url': URLbase + URLversion + '/product/' + this.id + '/get.do',
+        'url': URLbase + URLversion + '/product/' + _this.id + '/get.do',
         'contentType': 'application/json; charset=utf-8',
         success: function(value) {
           if (value.result === '0') {
@@ -331,10 +430,12 @@ var myProduct = {
   
   // 套餐说明，交通信息
   getAttribute: function() {
+    var _this = this;
+
     return new Promise(function(resolve, reject){
       $.ajax({
         'type': 'GET',
-        'url': URLbase + URLversion + '/product/attribute/findByProductId.do?productId=' + this.id,
+        'url': URLbase + URLversion + '/product/attribute/findByProductId.do?productId=' + _this.id,
         'contentType': 'application/json; charset=utf-8',
         success: function(value) {
           if (value.result === '0') {
@@ -352,10 +453,12 @@ var myProduct = {
   
   // 套餐行程
   getTrip: function() {
+    var _this = this;
+
     return new Promise(function(resolve, reject){
       $.ajax({
         'type': 'GET',
-        'url': URLbase + URLversion + '/product/trip/findByProductId.do?productId=' + this.id,
+        'url': URLbase + URLversion + '/product/trip/findByProductId.do?productId=' + _this.id,
         'contentType': 'application/json; charset=utf-8',
         success: function(value) {
           if (value.result === '0') {
@@ -373,10 +476,12 @@ var myProduct = {
   
   // 套餐包含
   getCostIncludes: function() {
+    var _this = this;
+
     return new Promise(function(resolve, reject){
       $.ajax({
         'type': 'GET',
-        'url': URLbase + URLversion + '/product/costIncludes/findByProductId.do?productId=' + this.id,
+        'url': URLbase + URLversion + '/product/costIncludes/findByProductId.do?productId=' + _this.id,
         'contentType': 'application/json; charset=utf-8',
         success: function(value) {
           if (value.result === '0') {
@@ -410,10 +515,12 @@ var myProduct = {
     $("#carousel").html(inner);
     $(".carousel-indicators").html(indicators);
 
-    轮播图响应式
-    // 高是 720  px
-    // 宽是 1680 px
-    // 720px/1680px = 高/宽 = 求/clientWidth
+    /**
+     * 轮播图响应式
+     * 高是 720  px
+     * 高是 720  px
+     * 720px/1680px = 高/宽 = 求/clientWidth
+     */
     var nowHeight = document.body.clientWidth * 720 / 1680;
     $(".carousel-inner .item").css('height', nowHeight);
   },
@@ -439,7 +546,7 @@ var myProduct = {
     } else {
       if (timestamp >= StartTime && timestamp <= EndTime) {
         // 表示促销
-        $("#promoteTime").html("<span>" + getdate(data.promoteStartTime) + "</span> 至 <span>" + getdate(data.promoteEndTime) + "</span>");
+        $("#promoteTime").html("<span>" + utilities.getdate(data.promoteStartTime) + "</span> 至 <span>" + utilities.getdate(data.promoteEndTime) + "</span>");
         // 计算价格
         $("#packagNumber .center").attr("data-price", data.promotePrice);
         // 计算价格(废弃)
@@ -560,7 +667,7 @@ var myProduct = {
     ].join("");
 
     $("#renderTrip .MContentform").html(myContent);
-    $("#myModal").html(Modal);
+    $("#myModal").html(myModal);
 
     function splitArray(data) {
       var dataArray = data.split(","),
@@ -629,7 +736,7 @@ var myFloatNav = {
       if (Distance > CarSelH) {
         if ($("nav").attr("data-display") == "show") {
           $("nav").css("display", "block")
-          _this.anchor();
+          anchor();
           $("#Order").addClass('NewOrder');
         } else if ($("nav").attr("data-display") == "hide") {
           $("nav").css("display", "none");
@@ -639,26 +746,26 @@ var myFloatNav = {
         $("#Order").removeClass("NewOrder");
       }
     });
-  },
 
-  anchor: function() {
-    if (Distance > part1 + topLong[0].clientHeight - 50 && Distance < part2 + topLong[0].clientHeight - 50) {
-        $(".NC-L a").css("border-bottom", "none")
-        $("#NC1").css("border-bottom", "4px solid #00a0ea");
-    } else if (Distance > part2 + topLong[0].clientHeight - 50 && Distance < part3 + topLong[0].clientHeight - 50) {
-        $(".NC-L a").css("border-bottom", "none")
-        $("#NC2").css("border-bottom", "4px solid #00a0ea");
-    } else if (Distance > part3 + topLong[0].clientHeight - 50 && Distance < part4 + topLong[0].clientHeight - 50) {
-        $(".NC-L a").css("border-bottom", "none")
-        $("#NC3").css("border-bottom", "4px solid #00a0ea");
-    } else if (Distance > part4 + topLong[0].clientHeight - 50 && Distance < part5 + topLong[0].clientHeight - 50) {
-        $(".NC-L a").css("border-bottom", "none")
-        $("#NC4").css("border-bottom", "4px solid #00a0ea");
-    } else if (Distance > part5 + topLong[0].clientHeight - 50) {
-        $(".NC-L a").css("border-bottom", "none")
-        $("#NC5").css("border-bottom", "4px solid #00a0ea");
+    function anchor() {
+      if (Distance > part1 + topLong[0].clientHeight - 50 && Distance < part2 + topLong[0].clientHeight - 50) {
+          $(".NC-L a").css("border-bottom", "none")
+          $("#NC1").css("border-bottom", "4px solid #00a0ea");
+      } else if (Distance > part2 + topLong[0].clientHeight - 50 && Distance < part3 + topLong[0].clientHeight - 50) {
+          $(".NC-L a").css("border-bottom", "none")
+          $("#NC2").css("border-bottom", "4px solid #00a0ea");
+      } else if (Distance > part3 + topLong[0].clientHeight - 50 && Distance < part4 + topLong[0].clientHeight - 50) {
+          $(".NC-L a").css("border-bottom", "none")
+          $("#NC3").css("border-bottom", "4px solid #00a0ea");
+      } else if (Distance > part4 + topLong[0].clientHeight - 50 && Distance < part5 + topLong[0].clientHeight - 50) {
+          $(".NC-L a").css("border-bottom", "none")
+          $("#NC4").css("border-bottom", "4px solid #00a0ea");
+      } else if (Distance > part5 + topLong[0].clientHeight - 50) {
+          $(".NC-L a").css("border-bottom", "none")
+          $("#NC5").css("border-bottom", "4px solid #00a0ea");
+      }
     }
-  }
+  },
 }
 
 
@@ -666,5 +773,19 @@ var myFloatNav = {
 var utilities = {
   loadPageVar: function(sVar) {
     return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
-  }
+  },
+  // 方法 - 时间差  timestamp -> 时间戳
+  UTC2LocalTime: function (timestamp) {
+      //将 服务器UTC时间戳 转为Date
+      var d = new Date(timestamp);
+      //服务器UTC时间 与 GMT时间的时间 偏移差
+      var offset = d.getTimezoneOffset() * 60000;
+      return new Date(timestamp - offset);
+  },
+  // 方法 - 获取时间返回201x-xx-xx
+  getdate: function (date) {
+      var newdate = new Date(this.UTC2LocalTime(date)),
+          thisString = newdate.getFullYear() + "-" + (newdate.getMonth() + 1) + "-" + newdate.getDate();
+      return thisString
+  },
 }

@@ -546,6 +546,83 @@ header .Center:hover .dropdown {
     float: left;
   }
 }
+.Orders .orders-render .orders-item {
+  position: relative;
+  margin-bottom: 25px;
+  min-width: 960px;
+  border: 1px solid #e9e9e9;
+}
+.Orders .orders-render .orders-item .item-navigation {
+  width: 100%;
+  padding-left: 15px;
+  line-height: 32px;
+  background: #e9e9e9;
+}
+.Orders .orders-render .orders-item .item-navigation span {
+  padding-right: 15px;
+}
+.Orders .orders-render .orders-item .item-content {
+  position: relative;
+  padding: 15px;
+}
+.Orders .orders-render .orders-item .item-img {
+  width: 230px;
+  height: 120px;
+}
+.Orders .orders-render .orders-item .item-img img {
+  width: 100%;
+  height: 100%;
+}
+.Orders .orders-render .orders-item .item-description {
+  position: absolute;
+  width: 700px;
+  height: 120px;
+  top: 15px;
+  left: 270px;
+  font-size: 18px;
+  color: #e9e9e9;
+}
+.Orders .orders-render .orders-item .item-description > div {
+  height: 120px;
+}
+.Orders .orders-render .orders-item .item-description .item-operational {
+  text-align: right;
+}
+.Orders .orders-render .orders-item .item-description .item-orderName {
+  padding-bottom: 5px;
+}
+.Orders .orders-render .orders-item .item-description .item-cycle {
+  font-size: 16px;
+}
+.Orders .orders-render .orders-item .item-description .item-time,
+.Orders .orders-render .orders-item .item-description .item-btn {
+  position: absolute;
+  bottom: 0px;
+  font-size: 16px;
+}
+.Orders .orders-render .orders-item .item-description .item-btn {
+  right: 15px;
+  z-index: 10;
+  cursor: pointer;
+}
+.Orders .orders-render .orders-item .item-description .item-btn > div {
+  color: #009755;
+}
+.Orders .orders-render .orders-item .item-description .item-btn > div:hover {
+  color: #fb8f1c;
+}
+.Orders .orders-render .orders-item .orders-masking {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  cursor: pointer;
+}
+.Orders .orders-render .orders-item:hover {
+  border: 1px solid #a5b8d4;
+}
 .Orders aside {
   display: none;
   position: relative;

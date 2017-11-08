@@ -899,6 +899,10 @@ var customerInfo = {
                   isSubmit = false;
                   Vuethis.submitBTN = '确认订单';
                   window.location = './../../user/account.html#Orders';
+                } else if (val.result === '-11') {
+                  isSubmit = false;
+                  Vuethis.submitBTN = '确认订单';
+                  alert('非常抱歉，提交信息出错！原因: 库存不足');
                 } else {
                   isSubmit = false;
                   Vuethis.submitBTN = '确认订单';

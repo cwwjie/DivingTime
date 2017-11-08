@@ -565,6 +565,103 @@ header {
 			}
 		}
 	}
+
+	.orders-content {
+	}
+
+	.orders-render {
+		.orders-item {
+			position: relative;
+			margin-bottom: 25px;
+			min-width: 960px;
+			border: 1px solid #e9e9e9;
+
+			.item-navigation {
+				width: 100%;
+				padding-left: 15px;
+				line-height: 32px;
+				background: #e9e9e9;
+
+				span {
+					padding-right: 15px;
+				}
+			}
+
+			.item-content {
+				position: relative;
+				padding: 15px;
+			}
+
+			.item-img {
+				width: 230px;
+				height: 120px;
+				
+				img {
+					width: 100%;
+					height: 100%;
+				}
+			}
+
+			.item-description {
+				position: absolute;
+				width: 700px;
+				height: 120px;
+				top: 15px;
+				left: 270px;
+				font-size: 18px;
+				color: #e9e9e9;
+
+				> div {
+					height: 120px;
+				}
+
+				.item-operational {
+					text-align: right;
+				}
+
+				.item-orderName {
+					padding-bottom: 5px;
+				}
+
+				.item-cycle {
+					font-size: 16px;
+				}
+				
+				.item-time, .item-btn {
+					position: absolute;
+					bottom: 0px;
+					font-size: 16px;
+				}
+
+				.item-btn {
+					right: 15px;
+					z-index: 10;
+					cursor: pointer;
+
+					>div {
+						color: #009755;
+					}
+					>div:hover {
+						color: #fb8f1c;
+					}
+				}
+			}
+
+			.orders-masking {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				height: 100%;
+				z-index: 1;
+				cursor: pointer;
+			}
+		}
+
+		.orders-item:hover{
+			border: 1px solid #a5b8d4;
+		}
+	}
 	aside {
 		display: none;
 		position: relative;
