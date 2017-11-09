@@ -32,37 +32,77 @@ function carousel() {
         }
     });
 }
-// 渲染(所有)
+// 渲染主页面
 function renderMain() {
     function renderProduct(data) {
         var stringOut = "";
         for (var i = 0; i < data.length; i++) {
+
             // 大标题部分
-            stringOut += "<div class='" //
-                + ((i % 2 == 0) ? 'block' : 'block interval') + "'><h2>" //
-                + data[i].catName + "<span><a href='https://divet.taobao.com/?spm=a1z10.1-c.0.0.8cxl3q' target='_blank'>更多</a></span></h2><div class='blockContain'>";
+            stringOut += [
+                "<div class='"+ ((i % 2 == 0) ? 'block' : 'block interval') + "'>",
+                    "<h2>" + data[i].catName + "<span>",
+                        "<a href='https://divet.taobao.com/?spm=a1z10.1-c.0.0.8cxl3q' target='_blank'>更多</a>",
+                    "</span></h2>",
+                "<div class='blockContain'>"
+            ].join("");
+
             // 标题下方内容部分
             var thing = data[i].productList;
             for (var j = 0; j < thing.length; j++) {
+
                 if (thing.length % 3 == 0) {
-                    stringOut += "<div class='line separate3'><a href='./page/index.html#" + thing[j].productId + "'><div class='img'><div class='Masking'></div><img src='" + URLbase + thing[j].productThumb + "' /><div class='imgContain'><div class='title'>" + thing[j].productName + "</div><div class='Content'><div class='cover " + label(thing[j].isNew, thing[j].promoteEndTime, thing[j].promoteStartTime, thing[j].promotePrice) + "</div><div class='price'>" + newproMotPriTOP(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + "RMB</div></div></div></div></a><div class='Text'><div class='TextT'><a href='./page/index.html#" + thing[j].productId + "'><div class='left' title='" + thing[j].productName + "'>" + thing[j].productName + "</div></a><div class='right'>" + newproMotPriTOP(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + " RMB</div></div><div class='TextB'><div class='left'>" + thing[j].apartment + "</div><div class='right' " + newlineThrough(thing[j].promoteEndTime, thing[j].promoteStartTime, thing[j].productPrice) + ">" + newproMotPriBOT(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + "</div></div></div></div>";
+                    stringOut += productItemString('isLineThree', thing, j);
                 } else if (thing.length % 3 == 2) {
                     if (j < (thing.length - 2)) {
-                        stringOut += "<div class='line separate3'><a href='./page/index.html#" + thing[j].productId + "'><div class='img'><div class='Masking'></div><img src='" + URLbase + thing[j].productThumb + "' /><div class='imgContain'><div class='title'>" + thing[j].productName + "</div><div class='Content'><div class='cover " + label(thing[j].isNew, thing[j].promoteEndTime, thing[j].promoteStartTime, thing[j].promotePrice) + "</div><div class='price'>" + newproMotPriTOP(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + "RMB</div></div></div></div></a><div class='Text'><div class='TextT'><a href='./page/index.html#" + thing[j].productId + "'><div class='left' title='" + thing[j].productName + "'>" + thing[j].productName + "</div></a><div class='right'>" + newproMotPriTOP(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + " RMB</div></div><div class='TextB'><div class='left'>" + thing[j].apartment + "</div><div class='right' " + newlineThrough(thing[j].promoteEndTime, thing[j].promoteStartTime, thing[j].productPrice) + ">" + newproMotPriBOT(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + "</div></div></div></div>";
+                        stringOut += productItemString('isLineThree', thing, j);
                     } else {
-                        stringOut += "<div class='line separate2'><a href='./page/index.html#" + thing[j].productId + "'><div class='img'><div class='Masking'></div><img src='" + URLbase + thing[j].productThumb + "' /><div class='imgContain'><div class='title'>" + thing[j].productName + "</div><div class='Content'><div class='cover " + label(thing[j].isNew, thing[j].promoteEndTime, thing[j].promoteStartTime, thing[j].promotePrice) + "</div><div class='price'>" + newproMotPriTOP(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + "RMB</div></div></div></div></a><div class='Text'><div class='TextT'><a href='./page/index.html#" + thing[j].productId + "'><div class='left' title='" + thing[j].productName + "'>" + thing[j].productName + "</div></a><div class='right'>" + newproMotPriTOP(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + " RMB</div></div><div class='TextB'><div class='left'>" + thing[j].apartment + "</div><div class='right' " + newlineThrough(thing[j].promoteEndTime, thing[j].promoteStartTime, thing[j].productPrice) + ">" + newproMotPriBOT(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + "</div></div></div></div>";
+                        stringOut += productItemString('isLineTow', thing, j);
                     }
                 } else if (thing.length % 3 == 1) {
                     if (j < (thing.length - 4)) {
-                        stringOut += "<div class='line separate3'><a href='./page/index.html#" + thing[j].productId + "'><div class='img'><div class='Masking'></div><img src='" + URLbase + thing[j].productThumb + "' /><div class='imgContain'><div class='title'>" + thing[j].productName + "</div><div class='Content'><div class='cover " + label(thing[j].isNew, thing[j].promoteEndTime, thing[j].promoteStartTime, thing[j].promotePrice) + "</div><div class='price'>" + newproMotPriTOP(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + "RMB</div></div></div></div></a><div class='Text'><div class='TextT'><a href='./page/index.html#" + thing[j].productId + "'><div class='left' title='" + thing[j].productName + "'>" + thing[j].productName + "</div></a><div class='right'>" + newproMotPriTOP(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + " RMB</div></div><div class='TextB'><div class='left'>" + thing[j].apartment + "</div><div class='right' " + newlineThrough(thing[j].promoteEndTime, thing[j].promoteStartTime, thing[j].productPrice) + ">" + newproMotPriBOT(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + "</div></div></div></div>";
+                        stringOut += productItemString('isLineThree', thing, j);
                     } else {
-                        stringOut += "<div class='line separate2'><a href='./page/index.html#" + thing[j].productId + "'><div class='img'><div class='Masking'></div><img src='" + URLbase + thing[j].productThumb + "' /><div class='imgContain'><div class='title'>" + thing[j].productName + "</div><div class='Content'><div class='cover " + label(thing[j].isNew, thing[j].promoteEndTime, thing[j].promoteStartTime, thing[j].promotePrice) + "</div><div class='price'>" + newproMotPriTOP(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + "RMB</div></div></div></div></a><div class='Text'><div class='TextT'><a href='./page/index.html#" + thing[j].productId + "'><div class='left' title='" + thing[j].productName + "'>" + thing[j].productName + "</div></a><div class='right'>" + newproMotPriTOP(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + " RMB</div></div><div class='TextB'><div class='left'>" + thing[j].apartment + "</div><div class='right' " + newlineThrough(thing[j].promoteEndTime, thing[j].promoteStartTime, thing[j].productPrice) + ">" + newproMotPriBOT(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + "</div></div></div></div>";
+                        stringOut += productItemString('isLineTow', thing, j);
                     }
                 }
             }
             stringOut += "</div></div>";
         }
         $("#mainContent").html(stringOut);
+
+        // 渲染每个Item
+        function productItemString(isLineTow, thing, j) {
+            return [
+                (isLineTow === 'isLineTow' ? "<div class='line separate2'>" : "<div class='line separate3'>"),
+                    "<a href='./page/index.html?productId=" + thing[j].productId + "'>",
+                        "<div class='img'>",
+                            "<div class='Masking'></div>",
+                            "<img src='" + URLbase + thing[j].productThumb + "' />",
+                            "<div class='imgContain'>",
+                                "<div class='title'>" + thing[j].productName + "</div>",
+                                "<div class='Content'>",
+                                    "<div class='cover " + label(thing[j].isNew, thing[j].promoteEndTime, thing[j].promoteStartTime, thing[j].promotePrice) + "</div>",
+                                    "<div class='price'>" + newproMotPriTOP(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + "RMB</div>",
+                                "</div>",
+                            "</div>",
+                        "</div>",
+                    "</a>",
+                    "<div class='Text'>",
+                        "<div class='TextT'>",
+                            "<a href='./page/index.html#" + thing[j].productId + "'>",
+                                "<div class='left' title='" + thing[j].productName + "'>" + thing[j].productName + "</div>",
+                            "</a>",
+                            "<div class='right'>" + newproMotPriTOP(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + " RMB</div>",
+                        "</div>",
+                        "<div class='TextB'>",
+                            "<div class='left'>" + (thing[j].productType === "package" ? thing[j].apartment : '') + "</div>",
+                            "<div class='right' " + newlineThrough(thing[j].promoteEndTime, thing[j].promoteStartTime, thing[j].productPrice) + ">" + newproMotPriBOT(thing[j].promotePrice, thing[j].productPrice, thing[j].promoteEndTime, thing[j].promoteStartTime) + "</div>",
+                        "</div>",
+                    "</div>",
+                "</div>",
+            ].join("");
+        }
 
         // 促销价(data:promotePrice) => 空(null) ? 返回CSS横线
         function lineThrough(data) {

@@ -192,11 +192,11 @@ var myProduct = {
             if (value.result === '0') {
               resolve(value.data);
             } else {
-              reject('接收的轮播图数据有误, 原因: ' + value.message);
+              reject('接收的规则数据有误, 原因: ' + value.message);
             }
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
-            reject('请求轮播图发生错误, 原因: ' + errorThrown);
+            reject('请求规则发生错误, 原因: ' + errorThrown);
           }
         });
       });

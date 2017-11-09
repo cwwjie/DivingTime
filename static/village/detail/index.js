@@ -189,6 +189,95 @@ var myCarousel = {
   }
 }
 
+var myRule = {
+  'data': {
+    // 'createBy': null,
+    // 'createTime': null,
+    // 'isDelete': null,
+    // 'refundCode': "refund2",
+    // 'refundDesc': "其他度假村退订规则",
+    // 'refundName': "其他度假村退订规则",
+    // 'refundRuleId': 30,
+    // 'ruleItemList': [
+    //   {
+    //     'beginDay': 46,
+    //     'createBy': null,
+    //     'createTime': null,
+    //     'deductionRatio': "12%",
+    //     'endDay': -1,
+    //     'isDelete': null,
+    //     'refundRuleId': null,
+    //     'ruleDesc': "手续费500元/人，预定成功后不可退；余款：入住前46天需补齐余款",
+    //     'ruleItemId': 39,
+    //     'updateBy': null,
+    //     'updateTime': null,
+    //   }
+    // ],
+    // 'updateBy': null,
+    // 'updateTime': null,
+  },
+
+  init: function(id) {
+    var _this = this;
+
+    if (!id) {
+      $('#part5').css('display', 'none');
+      return
+    }
+
+    this.getRuleData(id)
+      .then(function(val) {
+        _this.data = val;
+        _this.render();
+      }, function(error) { alert(error) });
+  },
+
+  getRuleData: function(id) {
+    return new Promise(function(resolve, reject){
+      $.ajax({
+        'type': 'GET',
+        'url': URLbase + URLversion + '/product/refundrule/' + id + '/item/list.do',
+        'contentType': 'application/json; charset=utf-8',
+        success: function(value) {
+          if (value.result === '0') {
+            resolve(value.data);
+          } else {
+            reject('接收的规则数据有误, 原因: ' + value.message);
+          }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          reject('请求规则发生错误, 原因: ' + errorThrown);
+        }
+      });
+    });
+  },
+
+  render: function() {
+    var data = this.data,
+        ruleItemList = this.data.ruleItemList,
+        rulestring = '',
+        myRuleDesc = '';
+
+    for (var i = 0; i < ruleItemList.length; i++) {
+      var j = 1 - i * (1 / ruleItemList.length);
+
+      rulestring += "<div style='width:" + j * 100 + "%;background:rgba(69, 90, 100," //
+        + (i + 1) * (1 / ruleItemList.length) + ");'><span style='color:#4d5d77'>" //
+        + this.judgDay(ruleItemList[i]) + "</span><a style='color:#fff;position:absolute;z-index:2;top:2px;left:4px;'>扣" //
+        + ruleItemList[i].deductionRatio + "</a></div>";
+
+      myRuleDesc += "<p>" + ruleItemList[i].ruleDesc + "</p>";
+    }
+
+    $("#ruleItemList").html(rulestring);
+    $("#ruleDesc").html(myRuleDesc);
+  },
+
+  judgDay: function(data) {
+    return data.endDay < 0 ? (data.beginDay + '天以上') : (data.endDay + '天');
+  }
+}
+
 var myApartment = {
   'data': {
     'list': [
@@ -290,9 +379,10 @@ var myApartment = {
     .then(function(value) {
       _this.village = value;
       _this.renderApartmentBrand();
-      _this.initTimePicker();
-      _this.renderApartmentList();
       _this.renderApartmentDetail();
+      myRule.init(value.refundRuleId);
+      _this.initTimePicker();
+      _this.renderSideApartment();
       _this.initScroll();
     }, function(error) { alert(error) });
 
@@ -325,6 +415,7 @@ var myApartment = {
     
     $('#brandName').html(myVillage.resortName + '<span>' + myVillage.label + '</span>');
     $('#villageDesc').html(myVillage.resortDesc + myVillage.recommendation);
+    $('#villageRecommendation').html(myVillage.recommendation);
 
     $('#apartmentTotalPrice').html('预定价格<span>' + myVillage.earnest + ' RMB 起</span>');
     $('#apartmentTitle').html(myVillage.brandName);
@@ -443,7 +534,7 @@ var myApartment = {
       myData.searchApartmentAjax()
         .then(function(val) {
           _this.data = utilities.addSelect(val);
-          _this.renderApartmentList();
+          _this.renderSideApartment();
           _this.renderApartmentDetail();
         }, function(error) {
           alert(error);
@@ -462,7 +553,8 @@ var myApartment = {
     $('#endDatePicker input').val(utilities.dateToYYYYMMDDFormat(endDate));
   },
 
-  renderApartmentList: function() {
+  // 侧边栏上面的房型
+  renderSideApartment: function() {
     var _this = this,
       dataList = this.data.list,
       apartmentList = $('#apartmentList');
@@ -475,7 +567,8 @@ var myApartment = {
         '<div class="apartmentList-submit failure">预定度假村</div>'
       ].join(''));
     } else {
-      var myDomString = ''
+      var myDomString = '',
+          allPrice = 0,
           myCount = 0;
 
       myDomString += '<div class="apartmentList-content">';
@@ -487,11 +580,14 @@ var myApartment = {
 
           myDomString += '<div class="apartmentList-division">';
           for (var j = 0; j < data.select.length; j++) {(function (j) {
+            var mySelectPrice = utilities.renderSelectPrice(data.select[j]);
+
+            allPrice += mySelectPrice;
             myDomString += [
             '<div class="apartment">',
               '<div class="apartment-title">',
                 '<div>' + data.select[j].apartmentName + '</div>',
-                '<div class="title-rigth" id="price' + i + "" + j + '">' + utilities.renderSelectPrice(data.select[j]) + ' RMB</div>',
+                '<div class="title-rigth" id="price' + i + "" + j + '">' + mySelectPrice + ' RMB</div>',
               '</div>',
               '<div class="apartment-select">',
                 '<div class="select-name">成人</div>',
@@ -534,7 +630,12 @@ var myApartment = {
           '<div id="orderApartment" class="apartmentList-submit">预定度假村</div>'
         ].join('')
       } else {
-        myDomString += '<div id="orderApartment" class="apartmentList-submit">预定度假村</div>';
+        myDomString += [
+          '<div id="allSelectPrice" class="apartmentList-infor">',
+            '合计: ' + allPrice + ' RMB',
+          '</div>',
+          '<div id="orderApartment" class="apartmentList-submit">预定度假村</div>'
+        ].join('')
       }
 
       apartmentList.html(myDomString);
@@ -558,6 +659,7 @@ var myApartment = {
               var myPrice = utilities.renderSelectPrice(_this.data.list[i].select[j]);
               _this.data.list[i].select[j].prices = myPrice;
               $('#price' + i + '' + j).html(myPrice + ' RMB');
+              $('#allSelectPrice').html('合计: ' + renderAllSelectPrice() + ' RMB');
             });
 
             mySelectNode.find('.adultAdd').click(function() {
@@ -567,6 +669,7 @@ var myApartment = {
               var myPrice = utilities.renderSelectPrice(_this.data.list[i].select[j]);
               _this.data.list[i].select[j].prices = myPrice;
               $('#price' + i + '' + j).html(myPrice + ' RMB');
+              $('#allSelectPrice').html('合计: ' + renderAllSelectPrice() + ' RMB');
             });
             
             mySelectNode.find('.childrenCut').click(function() {
@@ -576,6 +679,7 @@ var myApartment = {
               var myPrice = utilities.renderSelectPrice(_this.data.list[i].select[j]);
               _this.data.list[i].select[j].prices = myPrice;
               $('#price' + i + '' + j).html(myPrice + ' RMB');
+              $('#allSelectPrice').html('合计: ' + renderAllSelectPrice() + ' RMB');
             });
 
             mySelectNode.find('.childrenAdd').click(function() {
@@ -585,6 +689,7 @@ var myApartment = {
               var myPrice = utilities.renderSelectPrice(_this.data.list[i].select[j]);
               _this.data.list[i].select[j].prices = myPrice;
               $('#price' + i + '' + j).html(myPrice + ' RMB');
+              $('#allSelectPrice').html('合计: ' + renderAllSelectPrice() + ' RMB');
             });
 
             mySelectNode.find('select').change(function() {
@@ -594,7 +699,8 @@ var myApartment = {
             mySelectNode.find('.apartment-delete').click(function() {
               if (confirm('你确认要删除吗?')) {
                 _this.data.list[i].select.splice(j, 1);
-                _this.renderApartmentList();
+                _this.renderSideApartment();
+                _this.renderApartmentDetail();
               }
             });
           })(j)}
@@ -649,6 +755,19 @@ var myApartment = {
           })
       })
 
+      function renderAllSelectPrice() {
+        var dataList = _this.data.list,
+            myallPrice = 0;
+        
+        for (var i = 0; i < dataList.length; i++) {
+          for (var j = 0; j < dataList[i].select.length; j++) {
+            myallPrice += utilities.renderSelectPrice(dataList[i].select[j]);
+          }
+        }
+        
+        return myallPrice;
+      }
+
       function renderSelectBedType(bedTypeList, bedType) {
         var mybedString = '';
 
@@ -682,6 +801,7 @@ var myApartment = {
     apartmentTotalPrice.html('预定价格<span>' + (earnest * selectNum) + ' RMB');
   },
 
+  // 主页上面的房型
   renderApartmentDetail: function() {
     var _this = this,
       dataList = this.data.list,
@@ -699,13 +819,14 @@ var myApartment = {
           '<div class="apartment-content">',
             '<div class="img-content">',
               '<img src="' + URLbase + data.apartmentThumb + '" />',
-              '<div class="apartment-confirm '+ renderDisable(data.skuNum, dataList[i].select.length) +'">' + ( dataList[i].select.length > 0 ? "√" : "+" ) + '</div>',
+              '<div class="apartment-confirm '+ renderDisable(data.skuNum, dataList[i].select.length) +'">+</div>',
             '</div>',
             '<div class="apartment-depiction">',
               '<div class="apartment-apartmentName">' + data.apartmentName + '</div>',
               '<div class="apartment-introduction">',
                 '<div class="apartment-suggestedNum">建议入住: ' + data.suggestedNum + '人</div>',
                 '<div class="apartment-bedType">床型: ' + renderBedType(data.bedType) + '</div>',
+                '<div class="apartment-skuNum">' + ((data.skuNum - dataList[i].select.length) > 0 ? ('库存: ' + (data.skuNum - dataList[i].select.length) + '间') :'') + '</div>',
                 '<div class="apartment-price">' + (data.initiatePrice ? ( data.initiatePrice + ' RMB 起' ) : '暂无价格') + '</div>',
               '</div>',
               '<div class="apartment-Desc">' + data.apartmentDesc + '</div>',
@@ -794,7 +915,7 @@ var myApartment = {
             peopleMax: _this.data.list[i].peopleMax,
             suggestedNum: _this.data.list[i].suggestedNum,
 
-            adultNum: 1,
+            adultNum: _this.data.list[i].suggestedNum,
             childNum: 0,
             adultMax: _this.data.list[i].adultMax,
             adultPrices: parseFloat(_this.data.list[i].adultPrices),
@@ -804,7 +925,8 @@ var myApartment = {
           myselect.prices = utilities.renderSelectPrice(myselect);
 
           _this.data.list[i].select.push(myselect);
-          _this.renderApartmentList();
+          _this.renderSideApartment();
+          _this.renderApartmentDetail();
         })
     })(i)}
 
@@ -819,12 +941,10 @@ var myApartment = {
     }
 
     function renderDisable(skuNum, selectNum) {
-      if (skuNum) {
-        if (selectNum > 0) {
-          return 'disable';
-        }
-      } else {
+      if ((skuNum - selectNum) <= 0) {
         return 'disable';
+      } else {
+        return '';
       }
 
     }

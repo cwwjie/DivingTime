@@ -37,6 +37,32 @@
 	}
 }
 
+.part {
+	color: #797979;
+	padding: 25px 0px;
+	border-bottom: 1px solid #f1f1f1;
+
+	.part-content {
+		width: 1170px;
+		margin: 0px auto;
+
+		> div {
+			width: 820px;
+		}
+	}
+
+	.part-title {
+		padding-bottom: 20px;
+		font-size: 30px;
+		margin: 0;
+		font-weight: normal;
+	}	
+}
+
+.interval {
+	background: #f9f9f9;
+}
+
 .part1 {
 	position: relative;
 	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
@@ -450,18 +476,18 @@
 	}
 }
 
-.part2 {
+.part2, .part4 {
 	background: #f9f9f9;
 	color: #797979;
 	padding: 25px 0px;
 	border-bottom: 1px solid #f1f1f1;
 
-	.part2-content {
+	.part2-content, .part4-content {
 		> div {
 			width: 820px;
 		}
 
-		.part2-title {
+		.part2-title, .part4-title {
 			padding-bottom: 20px;
 			font-size: 30px;
 			margin: 0;
@@ -471,12 +497,17 @@
 		width: 1170px;
 		margin: 0px auto;
 	}
+	
+	.part4-content {
+		padding-bottom: 75px;
+	}
 }
 
 .part3 {
 	padding-top: 25px;
 	min-height: 700px;
 	color: #797979;
+	border-bottom: 1px solid #f1f1f1;
 	
 	.part3-content {
 		width: 1170px;
@@ -531,16 +562,16 @@
 						font-size: 36px;
 						color: #fff;
 						background: rgb(1, 185, 105);
-						cursor: pointer;
 						-webkit-touch-callout: none;
 						-webkit-user-select: none;
 						-khtml-user-select: none;
 						-moz-user-select: none;
 						-ms-user-select: none;
 						user-select: none;
+						cursor: pointer;
 					}
 
-					.apartment-confirm:active, .apartment-confirm:hover {
+					.apartment-confirm:active {
 						background: #fb8f1c;
 					}
 
@@ -569,6 +600,12 @@
 							right: 0px;
 							bottom: 0px;
 						}
+					
+						.apartment-skuNum {
+							position: absolute;
+							right: 0px;
+							top: 0px;
+						}
 					}
 
 					.apartment-Desc {
@@ -579,6 +616,7 @@
 						-webkit-line-clamp: 2;
 						overflow: hidden;
 					}
+					
 				}
 				
 				.apartment-line {
@@ -749,6 +787,59 @@
 			h3 {
 				color: #303030;
 				font-size: 22px;
+			}
+		}
+	}
+}
+
+.part5 {
+	.part-content {
+		
+		.rule-content{
+			overflow: hidden;
+			padding-top:20px;
+
+			.rule-color{
+				height: 25px;
+				width: 100%;
+
+				a {
+					font-size: 10px;
+				}
+
+				> div {
+					position: absolute;
+					right: 0px;
+					top: 0px;
+					height: 25px;
+
+					span{
+						position: absolute;
+						top: -20px;
+					}
+				}
+			}
+
+			.rule-left {
+				word-break:break-all;
+				word-wrap:break-word;
+				float: left;
+				width: 20%;
+				color:#8d8d8d;
+
+				@media (max-width:750px) {
+					float:none;
+					padding-bottom: 20px;
+				}
+			}
+			.rule-right {
+				position: relative;
+				float: left;
+				width: 70%;
+
+				@media (max-width:750px) {
+					width:100%;
+				}
 			}
 		}
 	}

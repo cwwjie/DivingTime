@@ -209,13 +209,36 @@
     </div>
   </div>
 
-  <div class="part4">
+  <div class="part4 interval">
     <div class="part4-content">
       <div>
         <div class="part4-title">关于度假村</div>
-        <!-- <div class="village-description" id="villageDesc">
+        <div class="village-recommendation" id="villageRecommendation">
           <p>正在加载...</p>
-        </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="part part5">
+    <div class="part-content">
+      <div>
+        <div class="part-title">退定规则</div>
+        <div class="rule-content">
+          <div class="rule-left">&nbsp;</div>
+          <div class="rule-right">
+            <div class="rule-color" id="ruleItemList">
+              正在加载...
+            </div>
+          </div>
+        </div>
+        <div></div>
+        <div class="rule-content">
+          <div class="rule-left">&nbsp;</div>
+          <div class="rule-right" id="ruleDesc">
+              正在加载...
+          </div>
+        </div>
       </div>
     </div>
   </div>

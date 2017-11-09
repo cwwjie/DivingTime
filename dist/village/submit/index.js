@@ -563,7 +563,6 @@ var customerInfo = {
       isSubmit = false,
       selectID = 0;
 
-
     return new Vue({
       'el': '#customerInfo',
 
@@ -899,6 +898,22 @@ var customerInfo = {
                   isSubmit = false;
                   Vuethis.submitBTN = '确认订单';
                   window.location = './../../user/account.html#Orders';
+                } else if (val.result === '-11') {
+                  isSubmit = false;
+                  Vuethis.submitBTN = '确认订单';
+                  
+                  var notEnoughTermName = '',
+                      notEnoughTermList = val.data.split(',');
+                  for (var i = 0; i < myData.apartmentList.length; i++) {
+                    for (var j = 0; j < notEnoughTermList.length; j++) {
+                      if (myData.apartmentList[i].apartmentCode ==  notEnoughTermList[j]) {
+                        notEnoughTermName += myData.apartmentList[i].apartmentName;
+                        notEnoughTermName += '、 ';
+                      }
+                    }
+                  }
+                  
+                  alert('非常抱歉，提交信息出错！原因: ' + notEnoughTermName + '库存不足');
                 } else {
                   isSubmit = false;
                   Vuethis.submitBTN = '确认订单';
