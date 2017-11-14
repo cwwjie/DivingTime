@@ -5,10 +5,12 @@ function Orders() {
 var orderDetail = {
   'orderId': null,
   'countDown': null,
+  'itemType': null,
 
-  show: function (orderId, countDown) {
+  show: function (orderId, countDown, itemType) {
     this.orderId = orderId;
-    this.countDown = countDown;
+    this.countDown = countDown || null;
+    this.itemType = itemType;
     this.getOrderById();
     this.findByOrderId();
   },
@@ -58,7 +60,7 @@ var orderDetail = {
       $("#NavAfter").addClass('NavAfter');
       $("#NavActive").addClass('NavActive');
       if (data.orderStatus == 3) {
-        if (countDown == "null") {
+        if (this.countDown === null) {
         }else {
           $("#pay_Confirm").css("display","block");
           $("#NavActive").text("等待付款");
@@ -99,7 +101,7 @@ var orderDetail = {
     $("#orderSn").attr('data-orderId',data.orderId);
     $("#orderSn").attr('data-orderType',data.orderType);
     $("#orderSn").attr('data-orderSn',data.orderSn);
-    $("#orderTime").html("<span>下单时间:</span>"+this.getsecond(data.orderTime));
+    $("#orderTime").html("<span>下单时间:</span>"+OrderUtilities.getYYYYmmDDhhMMss(data.orderTime));
     $("#productAmount").html("<span data-price='"+data.productAmount+"'>产品总额:</span>"+data.productAmount + " RMB");
     $("#orderAmount").html("<span>订单总额:</span>"+ data.orderAmount + " RMB");
     $("#discount").html("<span>折扣金额:</span>"+ data.discount + " RMB");
@@ -119,8 +121,13 @@ var orderDetail = {
     }
     $("#mobile").html("<span>手机号码:</span>"+ (data.mobile==null?'':data.mobile));
     $("#telephone").html("<span>电话:</span>"+ ((data.telephone==null)?'':data.telephone));
-    $("#departureDate").html("<span>入住日期:</span>"+ OrderUtilities.getnoUTCdate(data.departureDate));
-    $("#leaveDate").html("<span>离开日期:</span>"+ OrderUtilities.getnoUTCdate(data.leaveDate));
+    if (this.itemType === 'equipment') {
+      $("#departureDate").html("<span>租借日期:</span>"+ OrderUtilities.getnoUTCdate(data.departureDate));
+      $("#leaveDate").html("<span>归还日期:</span>"+ OrderUtilities.getnoUTCdate(data.leaveDate));
+    } else {
+      $("#departureDate").html("<span>入住日期:</span>"+ OrderUtilities.getnoUTCdate(data.departureDate));
+      $("#leaveDate").html("<span>离开日期:</span>"+ OrderUtilities.getnoUTCdate(data.leaveDate));
+    }
     $("#zipcode").html("<span>邮政编码:</span>"+ ((data.zipcode==null)?'':data.zipcode));
 
 
@@ -391,7 +398,7 @@ var myOrder = {
         '<div class="orders-item">',
           '<div class="item-navigation">',
             '<span>订单号: ' + data[i].orderSn + '</span>',
-            '<span>订单状态: ' + this.orderStatus(data[i].orderStatus,data[i].countDown) + '</span>',
+            '<span>订单状态: ' + this.orderStatus(data[i].orderStatus, data[i].countDown) + '</span>',
           '</div>',
           '<div class="item-content">',
             '<div class="item-img">',
@@ -401,7 +408,7 @@ var myOrder = {
               '<div class="col-xs-8">',
                   '<div class="item-orderName">产品名称: ' + data[i].orderName + '</div>',
                   renderItemCycle(data[i]),
-                  '<div class="item-time">下单时间: ' + OrderUtilities.getnoUTCdate(data[i].orderTime) + '</div>',
+                  '<div class="item-time">下单时间: ' + OrderUtilities.getYYYYmmDDhhMMss(data[i].orderTime) + '</div>',
               '</div>',
               '<div class="item-operational col-xs-4">',
                 '<div class="item-productPrice">￥' + data[i].productAmount.toFixed(2) + ' RMB</div>',
@@ -411,7 +418,11 @@ var myOrder = {
               '</div>',
             '</div>',
           '</div>',
-          '<div class="orders-masking" data-orderid="' + data[i].orderId + '" data-countDown="' + data[i].countDown + '"></div>',
+          '<div class="orders-masking" ',
+            'data-orderid="' + data[i].orderId + '" ',
+            'data-itemType="' + data[i].orderItemList[0].itemType + '" ',
+            'data-countDown="' + (data[i].countDown ? data[i].countDown : '' ) + '" ',
+            '></div>',
         '</div>'
       ].join('');
       // string += [
@@ -445,7 +456,8 @@ var myOrder = {
     $(".orders-masking").click(function(event){
       orderDetail.show(
         $(this).attr('data-orderId'),
-        $(this).attr('data-countDown')
+        $(this).attr('data-countDown'),
+        $(this).attr('data-itemType'),
       );
       $("#content").css("display","none");
       $("aside").css("display","block");
@@ -499,33 +511,44 @@ var myOrder = {
       if (item.orderStatus === 1) {
         return ('<div class="btn-cancel-orders" data-orderid="' + item.orderId + '">取消预订</div>');
       } else if ( item.orderStatus === 3 && item.countDown != null ) {
-        return ('<div ' + 
-          'class="btn-pay-orders" ' +
-          'data-orderid="' + item.orderId + '" ' +
-          'data-orderType="' + item.orderType + '" ' +
-          'data-orderSn="' + item.orderSn + '" ' + 
-        '>立即付款</div>');
+        if (item.orderType === 'C') {
+          return ('<div ' + 
+            'class="btn-pay-orders" ' +
+            'data-orderid="' + item.orderId + '" ' +
+            'data-orderType="' + item.orderType + '" ' +
+            'data-orderSn="' + item.orderSn + '" ' + 
+          '>立即付款</div>'+
+          '<div class="btn-cancel-orders" data-orderid="' + item.orderId + '">取消预订</div>');
+
+        } else {
+          return ('<div ' + 
+            'class="btn-pay-orders" ' +
+            'data-orderid="' + item.orderId + '" ' +
+            'data-orderType="' + item.orderType + '" ' +
+            'data-orderSn="' + item.orderSn + '" ' + 
+          '>立即付款</div>');
+        }
       } else if (item.orderStatus === 6) {
         return ('<div class="btn-refund-orders" data-orderid="' + item.orderId + '">申请退款</div>');
       } else {
         return ('<div ' + 
           'class="btn-show-orders" ' +
           'data-orderid="' + item.orderId + '" ' +
-          'data-countDown="' + item.countDown + '" ' +
+          'data-countDown="' + (item.countDown ? item.countDown : '') + '" ' +
         '>查看详情</div>');
       }
     }
 
     function renderItemCycle(item) {
-      if (item.orderItemList[0].itemType === 'package') {
-        return (
-          '<div class="item-cycle">入住日期: ' + OrderUtilities.getnoUTCdate(item.departureDate) + '</div>'+
-          '<div class="item-cycle">退房日期: ' + OrderUtilities.getnoUTCdate(item.leaveDate) + '</div>'
-        );
-      } else {
+      if (item.orderItemList[0].itemType === 'equipment') {
         return (
           '<div class="item-cycle">租借日期: ' + OrderUtilities.getnoUTCdate(item.departureDate) + '</div>'+
           '<div class="item-cycle">归还日期: ' + OrderUtilities.getnoUTCdate(item.leaveDate) + '</div>'
+        );
+      } else {
+        return (
+          '<div class="item-cycle">入住日期: ' + OrderUtilities.getnoUTCdate(item.departureDate) + '</div>'+
+          '<div class="item-cycle">退房日期: ' + OrderUtilities.getnoUTCdate(item.leaveDate) + '</div>'
         );
       }
     }
@@ -844,6 +867,12 @@ var OrderUtilities = {
 	getnoUTCdate: function (date) {
 		var newdate = new Date(date),
 			thisString = newdate.getFullYear() + "-" + (newdate.getMonth() + 1) + "-" + newdate.getDate();
+		return thisString
+	},
+
+  getYYYYmmDDhhMMss: function (data) {
+		var newdate = new Date(data),
+			thisString = newdate.getFullYear() + "-" + (newdate.getMonth() + 1) + "-" + newdate.getDate() + " " + newdate.getHours()+ ":" + newdate.getMinutes()+ ":"  + newdate.getSeconds();
 		return thisString
 	},
   

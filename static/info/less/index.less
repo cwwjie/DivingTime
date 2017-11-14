@@ -1063,7 +1063,47 @@
 	}
 }
 
+.mydatetimepicker {
+	position: relative;
+	background: #fafafa;
+	margin-bottom: 20px;
 
+	input[readonly]{
+    color: rgba(0,0,0,0.87);
+    border-bottom: 1px solid #9e9e9e;
+ }
+	.datetimepicker {
+		position: relative;
+		background: #fafafa;
+		margin-bottom: 20px;
+	}
+	.datetimepicker-inline {
+		position: absolute;
+		width: 268px;
+		margin: 0px auto;
+		border: #dbdbdb solid 1px;
+		z-index: 1000;
+
+		.datetimepicker-days,.datetimepicker-months,.datetimepicker-years {
+
+			.table-condensed {
+				width: 260px;
+
+				.next,.prev {
+					position: relative;
+				}
+
+				.next::after {
+					content:">";
+				}
+
+				.prev::after {
+					content:"<";
+				}
+			}
+		}
+	}
+}
 
 
 

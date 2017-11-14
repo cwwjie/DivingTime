@@ -269,7 +269,6 @@ var myRule = {
       myRuleDesc += "<p>" + ruleItemList[i].ruleDesc + "</p>";
     }
 
-
     $("#ruleItemList").html(rulestring);
     $("#ruleDesc").html(myRuleDesc);
   },
@@ -415,11 +414,12 @@ var myApartment = {
     var myVillage = this.village;
     
     $('#brandName').html(myVillage.resortName + '<span>' + myVillage.label + '</span>');
-    $('#villageDesc').html(myVillage.resortDesc + myVillage.recommendation);
+    // 这个反过来了
+    $('#villageDesc').html(myVillage.resortDesc);
     $('#villageRecommendation').html(myVillage.recommendation);
 
-    $('#apartmentTotalPrice').html('预定价格<span>' + myVillage.earnest + ' RMB 起</span>');
-    $('#apartmentTitle').html(myVillage.brandName);
+    $('#apartmentTotalPrice').html('预定价格<span>' + myVillage.initiatePrice + ' RMB 起</span>');
+    $('#apartmentTitle').html(myVillage.resortName);
   },
 
   initTimePicker: function() {

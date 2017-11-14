@@ -27,8 +27,8 @@
   <header>
   <a href=./../../index.html><i></i></a>
   <div class='header-content'>
-    <div id='headerHome'><a href=./../../index.html>首页</a></div>
-    <div id='headerVillage'><a href=./../../village/index.html>度假村直订</a></div>
+    <a id='headerHome' href=./../../index.html>首页</a>
+    <a id='headerVillage' href=./../../village/index.html>度假村直订</a>
   </div>
   <div class="login" id="login" data-home=./../../>
     <div><a href=./../../user/signup.html target="_blank">注册</a></div>
@@ -99,7 +99,7 @@
     margin-left: -548px;
     height: 50px;
   }
-  header .header-content .isSelected a {
+  header .header-content .isSelected {
     font-weight: bold;
     color: rgba(25, 163, 220, 0.87);
   }
@@ -109,7 +109,7 @@
       left: 0px;
     }
   }
-  header .header-content > div {
+  header .header-content > a {
     display: inline-block;
     padding: 0px 20px;
     cursor: pointer;
@@ -118,7 +118,7 @@
     -webkit-transition: all 0.5s;	/* Safari 和 Chrome */
     -o-transition: all 0.5s;	/* Opera */
   }
-  header .header-content > div:hover {
+  header .header-content > a:hover {
     background: rgb(225, 225, 232);
   }
   header a i {
@@ -629,9 +629,21 @@
   function highlightSelected() {
     var myUrl = window.location.pathname;
 
-    if (myUrl === '/index.html' || myUrl === '/') {
+    if (
+      myUrl === '/index.html' || 
+      myUrl === '/' || 
+      myUrl === '/Dvt-web/index.html' || 
+      myUrl === '/Dvt-web/'
+    ) {
       $('#headerHome').addClass('isSelected');
-    } else if (myUrl === '/village/index.html' || myUrl === '/village' || myUrl === '/village/') {
+    } else if (
+      myUrl === '/village/index.html' || 
+      myUrl === '/village' || 
+      myUrl === '/village/' || 
+      myUrl === '/Dvt-web/village/index.html' || 
+      myUrl === '/Dvt-web/village' || 
+      myUrl === '/Dvt-web/village/'
+    ) {
       $('#headerVillage').addClass('isSelected');
     }
   }
@@ -749,7 +761,7 @@
     <div class="part2-content">
       <div>
         <div class="part2-title">推荐</div>
-        <div class="village-description" id="villageDesc">
+        <div class="village-recommendation" id="villageRecommendation">
           <p>正在加载...</p>
         </div>
       </div>
@@ -839,7 +851,7 @@
     <div class="part4-content">
       <div>
         <div class="part4-title">关于度假村</div>
-        <div class="village-recommendation" id="villageRecommendation">
+        <div class="village-description" id="villageDesc">
           <p>正在加载...</p>
         </div>
       </div>
@@ -849,7 +861,7 @@
   <div class="part part5">
     <div class="part-content">
       <div>
-        <div class="part-title">退定规则</div>
+        <div class="part-title">退订规则</div>
         <div class="rule-content">
           <div class="rule-left">&nbsp;</div>
           <div class="rule-right">

@@ -29,7 +29,9 @@ function initAll() {
 	 	selectMonths: true,
 	 	selectYears: 90
 	 });
-	 $("#liveBirthday").data('pickadate').clear()
+
+	 $('.datetimepicker').attr('style', 'display: none;');
+	 // $("#liveBirthday").data('pickadate').clear()
 	 $('.datepicker_diving').pickadate({
 	 	format: 'yyyy mm dd',
 	 	formatSubmit: 'yyyy/mm/dd',

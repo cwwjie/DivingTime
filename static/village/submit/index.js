@@ -817,7 +817,7 @@ var customerInfo = {
               if (mySelectItemData.divingRank === 1) {
                 divingRank = 'OW(初级潜水员)';
               } else if (mySelectItemData.divingRank === 2) {
-                divingRank = 'AOW以上';
+                divingRank = 'AOW及以上';
               }
               myRenderList.push({
                 'id': myId,

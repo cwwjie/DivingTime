@@ -359,6 +359,30 @@ var pageThird = (function(){
 				dataModal.gender.data  = 2;
 			})
 		// 生日
+		$('#datetimepicker').click(function () {
+			$('.datetimepicker').attr('style', 'display: block;');
+		})
+		$('#datetimepicker').datetimepicker({
+			initialDate: new Date(),
+			startDate: new Date(1921,7,23),
+			endDate: new Date(),
+			format: "yyyy MM dd", //格式
+			autoclose: true, //自动关闭
+			todayBtn: true, //今天
+			minuteStep: 10, //用于选择分钟
+			language: 'zh-CN',
+			weekStart: 1, //周一从那天开始
+			todayHighlight: false, //高亮今天
+			startView: 2, //日期时间选择器打开之后首先显示的视图
+			minView: 2, //日期时间选择器打开之后最小的视图
+		}).on('changeDate', function(ev) {
+			$('.datetimepicker').attr('style', 'display: none;');
+			$('#mydatetimepicker').val(returnDate(ev.date))
+			dataModal.birthday.allow = true;
+			dataModal.birthday.data = returnDate(ev.date);
+		});
+		$('.datetimepicker').attr('style', 'display: none;');
+		
 		$("#liveBirthday").change(function(event){
 			var dete = $(this).val();
 			if (event.target.value == "") {
@@ -542,7 +566,7 @@ var pageThird = (function(){
 		$("#_liveCountry").val("0")
 		// 清空生日
 		$("#liveBirthday").val("")
-
+		$('#mydatetimepicker').val('请选择生日');
 		// 初始化 隐藏选择度假潜水类型
 		$("#lever_Simple").click();
 
@@ -767,6 +791,7 @@ var pageThird = (function(){
 		}
 		// 生日
 		$("#liveBirthday").val(returnDate(_data.birthday.data))
+		$('#mydatetimepicker').val(returnDate(_data.birthday.data))
 		// 手机号码
 		$("#livePhone").val(_data.mobile.data)
 		$("#livePhone").next().attr('class', 'value active');

@@ -136,7 +136,10 @@ function Person() {
 					'token':$.cookie('token'),
 					'digest':$.cookie('digest')
 				},
-				success: function (message) {
+				success: function (val) {
+					if (val.result === '0') {
+						alert('恭喜你，保存成功');
+					}
 					$(".Save").text("保存");
 					Render();
 				}
