@@ -23,7 +23,13 @@ window.onload = function() {
 var Info = {
   'data': {
     // adultNum: 1,
-    // attachmentList: [],
+    // attachmentList: [{
+    //   attachId: 14,
+    //   attachPath: "/source/image/attach/f7f2bf05-63be-41aa-8b4c-9d1f4e791229.png",
+    //   attachThumb: "/source/image/attach/thum/thum_f7f2bf05-63be-41aa-8b4c-9d1f4e791229.png",
+    //   attachType: "PT1",
+    //   infoId: null,
+    // }],
     // calMethod: "6000-500=5500",
     // checkIn: 1508428800000,
     // checkOut: 1508515200000,
@@ -242,6 +248,8 @@ var VuePart_2 = {
     'el': '#part2',
 
     'data': {
+      'template': null,
+      
       'orderinfor': {
         'orderSn': '正在加载...',
         'payStatus': '正在加载...',
@@ -259,6 +267,7 @@ var VuePart_2 = {
         'payAmount': '正在加载...',
         'notPayAmount': '正在加载...',
       },
+
       'extra': {
         'isHave': false,
         'isHaveInsurance': false,
@@ -266,6 +275,7 @@ var VuePart_2 = {
         'isHaveTransfers': false,
         'transfers': '暂无接送信息...',
       },
+
       'signName': '',
       'signNameError': '',
       'isSignNameError': false,
@@ -285,6 +295,49 @@ var VuePart_2 = {
       'payAccount': '',
       'payAccountError': '',
       'isPayAccountError': false,
+
+      'flightinfor': {
+        'checkIn': '正在加载...',
+        'checkOut': '正在加载...',
+        'cycleLength': '正在加载...'
+      },
+      // 国际航班号（入境）
+      'landDate': null,
+      'outboundNum': null,
+      'landTime': null,
+
+      // 到港航班号
+      'hLandDate': null,
+      'inHarbourNum': null,
+      'hLandTime': null,
+
+      // 离港航班号
+      'hTakeoffDate': null,
+      'outHarbourNum': null,
+      'hTakeoffTime': null,
+
+      // 国际航班号（出境）
+      'takeoffDate': null,
+      'inboundNum': null,
+      'takeoffTime': null,
+
+      'flightNote': '',
+
+      'annex': {
+        'attachmentList': [],
+        'fileListPT1': [],
+        'fileListPT2': [],
+        'fileListPT3': [],
+        'fileListPT4': [],
+        'actionPT1': URLbase + URLversion + '/gather/attach/PT1/add.do',
+        'actionPT2': URLbase + URLversion + '/gather/attach/PT2/add.do',
+        'actionPT3': URLbase + URLversion + '/gather/attach/PT3/add.do',
+        'actionPT4': URLbase + URLversion + '/gather/attach/PT4/add.do',
+        'headers': {
+          'token': localStorage.getItem('_token'),
+          'digest': localStorage.getItem('_digest')
+        },
+      }
     },
     
     'watch': {
@@ -359,6 +412,148 @@ var VuePart_2 = {
     },
 
     'methods': {
+      renderTimeLeft: function() {
+        if (this.template === 3 || this.template === 9) {
+          return '36'
+        } else {
+          return '46'
+        }
+      },
+
+      isBoundclassShow: function() {
+        if ( loaddata.template == 1 || loaddata.template == 2 || loaddata.template == 4 || loaddata.template == 5 || loaddata.template == 6 || loaddata.template == 7 || loaddata.template == 8 || loaddata.template == 9 ) {
+          return false
+        }
+        return true
+      },
+
+      submitUploadPT1: function() {
+        var _this = this,
+          myuploadFiles = this.$refs.uploadPT1.uploadFiles;
+
+        if (this.annex.fileListPT1.length > 0) {
+          return
+        }
+
+        if (myuploadFiles.length === 0) {
+          alert('你尚未选择任何文件');
+          return
+        }
+
+        if (
+          myuploadFiles[0].raw.type != 'image/jpeg' && 
+          myuploadFiles[0].raw.type != 'image/png' && 
+          myuploadFiles[0].raw.type != 'image/jpg'
+        ) {
+          alert('请选择 jpg 或 png 格式的文件');
+          return
+        }
+
+        var myloading = this.$loading(),
+          uploadForm = new FormData();
+
+        uploadForm.append('attachFile', myuploadFiles[0].raw);
+        this.AnnexFileUpload('PT1', uploadForm)
+          .then(function (val) {
+            if (val.result == '0') {
+              _this.$refs.uploadPT1;
+              _this.annex.attachmentList.push(val.data);
+              _this.annex.fileListPT1 = [{
+                'name': '出国航班机票截图',
+                'url': URLbase + val.data.attachThumb
+              }];
+            } else {
+              alert('上传失败, 原因:' + val.message);
+            }
+            myloading.close();
+          })
+      },
+
+      removeUploadPT1: function(file, fileList) {
+        var _this = this,
+            fileListPT1 = this.annex.fileListPT1;
+
+        if (this.annex.fileListPT1.length > 0) {
+          var myfileList,
+              attachId = false,
+              attachmentList = _this.annex.attachmentList,
+              newAttachmentList = [];
+
+          for (var i = 0; i < attachmentList.length; i++) {
+            if (attachmentList[i].attachType === 'PT1') {
+              myfileList = [{
+                'name': '出国航班机票截图',
+                'url': URLbase + attachmentList[i].attachThumb
+              }]
+              attachId = attachmentList[i].attachId;
+            } else {
+              newAttachmentList.push(attachmentList[i]);
+            }
+          }
+
+          this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(function () {
+            if (attachId === false) {
+              alert('删除失败 原因: 图片数据有误.');
+              _this.annex.fileListPT1 = fileListPT1;
+            } else {
+              var myloading = _this.$loading();
+
+              _this.AnnexFileRemove(attachId)
+                .then(function (val) {
+                  if (val.result == '0') {
+                    _this.annex.fileListPT1 = [];
+                    _this.annex.attachmentList = newAttachmentList;
+                  } else {
+                    _this.annex.fileListPT1 = myfileList;
+                    alert('删除失败, 原因:' + val.message);
+                  }
+                  myloading.close();
+                })
+            }
+          }).catch(function () {
+            _this.annex.fileListPT1 = myfileList;
+          });
+        }
+      },
+      
+      AnnexFileUpload: function(type, uploadForm) {
+        return fetch(URLbase + URLversion + '/gather/attach/'+ type +'/add.do', {
+          'method': 'POST',
+          'headers': {
+            'token': localStorage.getItem('_token'),
+            'digest': localStorage.getItem('_digest')
+          },
+          'body': uploadForm
+        }).then(function(response) {
+          return response.json()
+        }, function (error) {
+          return {
+            'result': '1',
+            'message': error
+          }
+        })
+      },
+      
+      AnnexFileRemove: function(attachId) {
+        return fetch(URLbase + URLversion + '/gather/attach/' + attachId + '/del.do', {
+          'method': 'GET',
+          'headers': {
+            'token': localStorage.getItem('_token'),
+            'digest': localStorage.getItem('_digest')
+          }
+        }).then(function(response) {
+          return response.json()
+        }, function (error) {
+          return {
+            'result': '1',
+            'message': error
+          }
+        })
+      }
     }
   },
 
@@ -366,15 +561,43 @@ var VuePart_2 = {
 
     this.initOrderinfor(data);
     this.initExtra();
+    this.Vue.data.template = data.template;
+
+    var cycleLength = Math.floor((data.checkOut - data.checkIn)/86400000);
+    this.Vue.data.flightinfor.checkIn = utilities.dateToYYYYMMDDFormat(new Date(data.checkIn));
+    this.Vue.data.flightinfor.checkOut = utilities.dateToYYYYMMDDFormat(new Date(data.checkOut));
+    this.Vue.data.flightinfor.cycleLength = '' + (cycleLength + 1) + '天' + cycleLength + '晚';
 
     if (isFirst) {
 
+    } else {
+      // 下单信息
+      this.Vue.data.signName = data.signName;
+      this.Vue.data.pinyinName = data.pinyinName;
+      this.Vue.data.mobile = data.mobile;
+      this.Vue.data.email = data.email;
+      this.Vue.data.payAccount = data.payAccount;
+      // 航班信息
+      this.Vue.data.landDate = data.landDate;
+      this.Vue.data.outboundNum = data.outboundNum;
+      this.Vue.data.landTime = data.landTime;
+
+      this.Vue.data.hLandDate = data.hLandDate;
+      this.Vue.data.inHarbourNum = data.inHarbourNum;
+      this.Vue.data.hLandTime = data.hLandTime;
+      
+      this.Vue.data.hTakeoffDate = data.hTakeoffDate;
+      this.Vue.data.outHarbourNum = data.outHarbourNum;
+      this.Vue.data.hTakeoffTime = data.hTakeoffTime;
+
+      this.Vue.data.takeoffDate = data.takeoffDate;
+      this.Vue.data.inboundNum = data.inboundNum;
+      this.Vue.data.takeoffTime = data.takeoffTime;
+
+      this.Vue.data.flightNote = data.flightNote;
+
+      this.initAttachmentList(data);
     }
-    this.Vue.data.signName = data.signName;
-    this.Vue.data.pinyinName = data.pinyinName;
-    this.Vue.data.mobile = data.mobile;
-    this.Vue.data.email = data.email;
-    this.Vue.data.payAccount = data.payAccount;
     return this.Vue;
   },
 
@@ -419,6 +642,35 @@ var VuePart_2 = {
       this.Vue.data.extra.isHaveInsurance = true;
       this.Vue.data.extra.isHaveTransfers = basicData.transfersInfo;
       this.Vue.data.extra.insurance = '' + utilities.dateToYYYYMMDDFormat(new Date(basicData.insuranceBegin)) + ' 至 ' + utilities.dateToYYYYMMDDFormat(new Date(basicData.insuranceEnd));
+    }
+  },
+
+  initAttachmentList: function(data) {
+    if (data.template === 3) {
+      this.Vue.data.annex.attachmentList = data.attachmentList;
+      for (var i = 0; i < data.attachmentList.length; i++) {
+        if (data.attachmentList[i] === 'PT1') {
+          this.Vue.data.annex.fileListPT1 = [{
+            'name': '出国航班机票截图',
+            'url': URLbase + data.attachmentList[i].attachThumb
+          }];
+        } else if (data.attachmentList[i] === 'PT2') {
+          this.Vue.data.annex.fileListPT2 = [{
+            'name': '回国航班机票截图',
+            'url': URLbase + data.attachmentList[i].attachThumb
+          }];
+        } else if (data.attachmentList[i] === 'PT3') {
+          this.Vue.data.annex.fileListPT3 = [{
+            'name': '到达斗湖航班机票截图',
+            'url': URLbase + data.attachmentList[i].attachThumb
+          }];
+        } else if (data.attachmentList[i] === 'PT4') {
+          this.Vue.data.annex.fileListPT4 = [{
+            'name': '离开斗湖航班机票截图',
+            'url': URLbase + data.attachmentList[i].attachThumb
+          }];
+        }
+      }
     }
   }
 };

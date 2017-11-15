@@ -206,6 +206,139 @@ header {
 			color: #999;
 		}
 	}
+
+	.part2-flightinput {
+		padding-top: 20px;
+
+		.flight-message {
+			font-size: 14px;
+			padding-bottom: 10px;
+		}
+
+		.flight-descri {
+			font-size: 14px;
+		}
+
+		.flight-picker {
+			width: 60%;
+			padding-top: 10px;
+		}
+
+		.col-12 {
+			padding-top: 25px;
+			position: relative;
+			margin-bottom: 10px;
+
+			input {
+				padding: 5px;
+				width: 90%;
+				border-top: none; 
+				border-left: none; 
+				border-right: none; 
+				border-bottom: 1px solid #9e9e9e;
+				font-size: 16px;
+			}
+			input:focus{
+				outline:none;
+			}
+
+			label {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				font-size: 14px;
+			}
+			::-webkit-input-placeholder { /* WebKit browsers */
+				color: #999;
+			}
+			:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+				color: #999;
+			}
+			::-moz-placeholder { /* Mozilla Firefox 19+ */
+				color: #999;
+			}
+			:-ms-input-placeholder { /* Internet Explorer 10+ */
+				color: #999;
+			}
+		}
+	}
+
+	.part2-pickup {
+		padding-top: 20px;
+		
+		.pickUp {
+			position: relative;
+			border: 1px solid #888;
+
+			.pickUptop {
+				overflow: hidden;
+
+				> div {
+					padding: 10px 0px;
+					float: left;
+					height: 224px;
+					
+					> div {
+						padding: 0px 10px;
+					}
+				}
+
+				.pickUpP1 {
+					width: 33%;
+					border-right: 1px solid #888;
+					letter-spacing: 2px;
+				}
+
+				.pickUpP2 {
+					width: 33%;
+					border-right: 1px solid #888;
+				}
+
+				.pickUpP3 {
+					width: 30%;
+				}
+			}
+
+			.pickUpBot {
+				padding:10px;
+				border-top: 1px solid #888;
+				
+				.PUBall{
+					text-align: left;
+					color: red;
+				}
+			}
+
+			.pickUp-title {
+				padding-bottom: 5px;
+				text-align: center;
+				font-weight: bold;
+			}
+		}
+	}
+
+	.part2-annex {
+		padding-top: 20px;
+
+		.upload-annex {
+			button span {
+				color: #fff;
+			}
+		}
+
+		.row {
+			padding-bottom: 20px;
+		}
+
+		.el-upload__tip {
+			font-size: 16px;
+			padding-bottom: 5px;
+		}
+	}
+}
+
+.part2-tooltip {
+	color: #fff;
 }
 
 

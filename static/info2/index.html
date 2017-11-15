@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>潜游时光-客户信息收集</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="stylesheet" href="https://unpkg.com/element-ui@2.0.4/lib/theme-chalk/index.css">
   <link rel="stylesheet" href="./css/row.min.css">
   <link rel="stylesheet" href="./css/index.css">
 </head>
@@ -47,7 +48,7 @@
         <div class="part2-orderinfor">
           <div class="part2-title">
             【一】订单信息
-            <span>(入住前46天补齐余款)</span>
+            <span>(入住前{{renderTimeLeft()}}天补齐余款)</span>
           </div>
           <div class="part2-content">
             <div class="row">
@@ -88,10 +89,18 @@
         </div>
 
         <div class="part2-extra" v-if="extra.isHave">
-          <div class="part2-title">
-            【二】额外赠送
-            <span>(如需修改保险/接送信息，请联系客服)</span>
-          </div>
+          <el-tooltip placement="top">
+            <div class="part2-tooltip" slot="content">
+              现预定仙本那度假村的客户：<br/>
+              2-3人每人赠送7天安联境外保险或一次往返亚庇机场到市区酒店的接送（时间为6:05-21:55之间，超出时间需付35元夜间服务费）；<br/>
+              4-7人每人赠送7天安联境外保险和一次往返亚庇机场到市区酒店的接送（时间不限）；<br/>
+              如需增加保险天数可代为购买5元/天/人，临时预定需自行购买保险，如未填写亚庇接送，默认赠送保险。
+            </div>
+            <div class="part2-title">
+              【二】额外赠送
+              <span>(如需修改保险/接送信息，请联系客服)</span>
+            </div>
+          </el-tooltip>
           <div class="part2-content">
             <div class="extra-insurance row" v-if="extra.isHaveInsurance">
               <div class="col-6">赠送保险: <span>安联境外短途旅行保障计划</span></div>
@@ -107,7 +116,7 @@
         </div>
 
         <div class="part2-orderinput">
-          <div class="part2-title">【三】下单信息</div>
+          <div class="part2-title">【{{extra.isHave ? '三' : '二'}}】下单信息</div>
           <div class="part2-content">
             <div class="row">
               <div class="col-6">
@@ -143,6 +152,431 @@
           </div>
         </div>
 
+        <div class="part2-flightinput">
+          <div class="part2-title">
+            【{{extra.isHave ? '四' : '三'}}】航班信息
+            <span>(若未订航班,请日后补充/可参考以下接送时间)</span>
+          </div>
+          <div class="part2-content">
+            <div class="row flight-message">
+              <div class="col-4">
+                上岛日期: {{flightinfor.checkIn}}
+              </div>
+              <div class="col-4">
+                离岛日期: {{flightinfor.checkOut}}
+              </div>
+              <div class="col-4">
+                行程套餐: {{flightinfor.cycleLength}}
+              </div>
+            </div>
+
+            <!-- 国际航班号（入境） -->
+            <div class="row" v-if="extra.isHaveInsurance">
+              <div class="col-4">
+                <div class="flight-descri">马来西亚抵达日期</div>
+                <div class="flight-picker">
+                  <el-date-picker
+                    v-model="landDate" 
+                    :editable="false" 
+                    type="date" 
+                    placeholder="选择日期" 
+                  />
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="flight-descri">抵达航班号</div>
+                <div class="flight-picker">
+                  <el-input v-model="outboundNum" placeholder="请输入航班号" />
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="flight-descri">时间</div>
+                <div class="flight-picker">
+                  <el-time-picker 
+                    v-model="landTime"
+                    format="HH:mm" 
+                    placeholder="请选择" 
+                    :editable="false" 
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- 到港航班号 -->
+            <div class="row">
+              <div class="col-4">
+                <div class="flight-descri">斗湖抵达日期</div>
+                <div class="flight-picker">
+                  <el-date-picker
+                    v-model="inHarbourNum" 
+                    :editable="false" 
+                    type="date" 
+                    placeholder="选择日期" 
+                  />
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="flight-descri">抵达航班号</div>
+                <div class="flight-picker">
+                  <el-input v-model="hLandDate" placeholder="请输入航班号" />
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="flight-descri">时间</div>
+                <div class="flight-picker">
+                  <el-time-picker 
+                    v-model="hLandTime"
+                    format="HH:mm" 
+                    placeholder="请选择" 
+                    :editable="false" 
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- 离港航班号 -->
+            <div class="row">
+              <div class="col-4">
+                <div class="flight-descri">斗湖离开日期</div>
+                <div class="flight-picker">
+                  <el-date-picker
+                    v-model="hTakeoffDate" 
+                    :editable="false" 
+                    type="date" 
+                    placeholder="选择日期" 
+                  />
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="flight-descri">离开航班号</div>
+                <div class="flight-picker">
+                  <el-input v-model="outHarbourNum" placeholder="请输入航班号" />
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="flight-descri">时间</div>
+                <div class="flight-picker">
+                  <el-time-picker 
+                    v-model="hTakeoffTime"
+                    format="HH:mm" 
+                    placeholder="请选择" 
+                    :editable="false" 
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- 国际航班号（出境） -->
+            <div class="row" v-if="extra.isHaveInsurance">
+              <div class="col-4">
+                <div class="flight-descri">马来西亚离开日期</div>
+                <div class="flight-picker">
+                  <el-date-picker
+                    v-model="takeoffDate" 
+                    :editable="false" 
+                    type="date" 
+                    placeholder="选择日期" 
+                  />
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="flight-descri">离开航班号</div>
+                <div class="flight-picker">
+                  <el-input v-model="inboundNum" placeholder="请输入航班号" />
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="flight-descri">时间</div>
+                <div class="flight-picker">
+                  <el-time-picker 
+                    v-model="takeoffTime"
+                    format="HH:mm" 
+                    placeholder="请选择" 
+                    :editable="false" 
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <input type="text" v-model="flightNote" name="flightNote" placeholder='如有中转，请填写斗湖或仙本那地区的中转酒店（中英文名称）'>
+                <label for="flightNote">备注</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="part2-pickup">
+          <div class="part2-title">
+            度假村接送时间
+          </div>
+          <div class="part2-content">
+            <div class="pickUp" v-if="template === 1">
+              <div class="pickUptop">
+                <div class="pickUpP1">
+                  <div class="pickUp-title">斗湖机场--中转酒店</div>
+                  <div>① 提前一天15：00前到达的航班仅接送至斗湖市区HERITAGE HOTEL（需提供预订码），或者送至仙本那的SEAFEST HOTEL与DRAGON INN。</div>
+                  <div>② 提前一天15：00后到达的航班仅接送至斗湖市区的HERITAGE HOTEL（需要提供入住预订码）</div>
+                </div>
+                <div class="pickUpP2">
+                  <div class="pickUp-title">仙本那码头上岛时间</div>
+                  <div>① 10：00</div>
+                  <div>② 12：00</div>
+                  <div>③ 16：30</div>
+                  <div class="pickUp-title">中转酒店接送时间:</div>
+                  <div>① 住斗湖酒店的客人7：30AM在酒店大堂等待接送</div>
+                  <div>② 住仙本那酒店的客人9：00AM在酒店大堂等待接送</div>
+                </div>
+                <div class="pickUpP3">
+                  <div class="pickUp-title">马达京度假村离岛时间</div>
+                  <div>11：00/14：00</div>
+                  <div class="pickUp-title">马达京度假村--中转酒店</div>
+                  <div>① 离岛后可送至斗湖市区的酒店</div>
+                  <div>② 离岛后可送至仙本那海丰酒店和DRAGON INN。</div>
+                  <div class="pickUp-title">马达京度假村--机场</div>
+                  <div>① 离岛当天可送至机场，离岛后第二天起请自行前往机场。</div>
+                </div>
+              </div>
+              <div class="pickUpBot"><div class="PUBall">离岛航班推荐：</div>
+              <div>&nbsp;&nbsp;&nbsp;乘11点的船离岛，请买15点后的航班;</div>
+              <div>&nbsp;&nbsp;&nbsp;乘14点的船离岛，请买18点后的航班;</div></div>
+            </div>
+            <div class="pickUp" v-if="template === 8">
+              <div class="pickUptop">
+                <div class="pickUpP1">
+                  <div class="pickUp-title">仙本那码头上岛时间</div>
+                  <div>① 10：00</div>
+                  <div>② 12：00</div>
+                  <div>③ 16：30</div>
+                  <div>11：00后到达斗湖的航班需第二天上岛；</div>
+                  <div>提前一天17：00前到达的航班可送至仙本那</div>
+                </div>
+                <div class="pickUpP2">
+                  <div class="pickUp-title">中转酒店接送时间</div>
+                  <div>① 住斗湖酒店的客人7：00AM在酒店大堂等待接送</div>
+                  <div>② 住仙本那酒店的客人9：30AM在酒店大堂等待接送</div>
+                </div>
+                <div class="pickUpP3">
+                  <div class="pickUp-title">离岛船班</div>
+                  <div>① 06：00</div>
+                  <div>② 11：00</div>
+                  <div>③ 13：30</div>
+                  <div>离岛第二天不送机</div>
+                </div>
+              </div>
+              <div class="pickUpBot">
+                <div class="PUBall">离岛航班推荐：</div>
+                <div>&nbsp;&nbsp;&nbsp;乘6点的船离岛，请买10点后的航班;</div>
+                <div>&nbsp;&nbsp;&nbsp;乘11点的船离岛，请买15点后的航班;</div>
+                <div>&nbsp;&nbsp;&nbsp;乘14点的船离岛，请买18点后的航班;</div>
+              </div>
+            </div>
+            <div class="pickUp" v-if="template === 3">
+              <div class="pickUptop">
+                <div class="pickUpP1">
+                  <div class="pickUp-title">斗湖机场-仙本那</div>
+                  <div>① 提前1天到达（16：30前）可免费送至斗湖或仙本那酒店。</div>
+                  <div>② 提前1天到达（16：30后到）可免费送至斗湖酒店。</div>
+                  <div>③ 入住当天13：30 前抵达斗湖机场，可入住卡帕莱。</div>
+                  <div>④ 提前2天起到达不接机。</div>
+                </div>
+                <div class="pickUpP2">
+                  <div class="pickUp-title">仙本那码头上岛时间</div>
+                  <div>①	10：00AM</div>
+                  <div>② 	12：30PM</div>
+                  <div>③ 	15：00PM</div>
+                </div>
+                <div class="pickUpP3">
+                  <div class="pickUp-title">卡帕莱度假村离岛船班</div>
+                  <div>① 06：30AM</div>
+                  <div>② 09：30AM</div>
+                  <div>③ 13：30PM</div>
+                  <div>离岛第二天自行前往机场</div>
+                </div>
+              </div>
+              <div class="pickUpBot">
+                <div style="color: red;">温馨提示，爱的建议:</div>
+                <div>①  当天上岛的客人请尽量预订最早航班到达斗湖。</div>
+                <div class="PUBall">②  离岛航班推荐：</div>
+                <div>&nbsp;&nbsp;&nbsp;乘6：30的船离岛，请买10:30后的航班；</div>
+                <div>&nbsp;&nbsp;&nbsp;乘9：30的船离岛，请买13：30后的航班；</div>
+                <div>&nbsp;&nbsp;&nbsp;乘13：30点的船离岛，请买17：30后的航班；</div>
+              </div>
+            </div>
+            <div class="pickUp" v-if="template === 5">
+              <div class="pickUptop">
+                <div class="pickUpP1" style="height: 224px;">
+                  <div class="pickUp-title">仙本那码头上岛时间</div>
+                  <div>①  12:30</div>
+                  <div>②  16:30</div>
+                </div>
+                <div class="pickUpP2">
+                  <div class="pickUp-title">邦邦岛度假村离岛时间</div>
+                  <div>①  09:30</div>
+                  <div>②  13:00</div>
+                </div>
+                <div class="pickUpP3">
+                  <div>抵达：当天上岛，需购买15:00前到达斗湖的航班，否则无法当天上岛。</div>
+                  <div>离开：离岛当天离开斗湖，需预定13：30以后的航班</div>
+                  <div>斗湖酒店：早上8:00在酒店大堂接，乘12:30船班上岛</div>
+                  <div>仙本那酒店：早上11:15在酒店大堂接，乘12:30船班上岛</div>
+                </div>
+              </div>
+              <div class="pickUpBot">
+                <div class="PUBall">离岛航班推荐:</div>
+                <div>&nbsp;&nbsp;&nbsp;乘9：30点的船离岛，请买13：30点后的航班；</div>
+                <div>&nbsp;&nbsp;&nbsp;乘13：30点的船离岛，请买17：30点后的航班；</div>
+                <div>&nbsp;&nbsp;&nbsp;提前&离岛后一天均无航班接送；</div>
+              </div>
+            </div>
+            <div class="pickUp" v-if="template === 2 || template === 6">
+              <div class="pickUptop">
+                <div class="pickUpP1">
+                  <div class="pickUp-title">斗湖机场--仙本那</div>
+                  <div>① 15点之前到斗湖机场的可以接机送上岛</div>
+                  <div>② 提前一天15点前到斗湖机场可送到仙本那酒店（斗湖酒店需自行前往），第二天9:30在酒店大堂等接上岛。</div>
+                  <div>③ 其他时间到达，需自行前往酒店。</div>
+                </div>
+                <div class="pickUpP2">
+                  <div class="pickUp-title">仙本那码头上岛时间</div>
+                  <div>① 10：00AM</div>
+                  <div>② 12：30PM</div>
+                  <div>③ 16：30PM</div>
+                </div>
+                <div class="pickUpP3">
+                  <div class="pickUp-title">马布岛度假村—机场</div>
+                  <div>① 06：30AM</div>
+                  <div>② 11：00AM</div>
+                  <div>③ 14：00PM</div>
+                  <div>离岛第二天不送机</div>
+                </div>
+              </div>
+              <div class="pickUpBot">
+                <div class="PUBall">离岛航班推荐：</div>
+                <div>&nbsp;&nbsp;&nbsp;乘6：00的船离岛，请买10：00后的航班；</div>
+                <div>&nbsp;&nbsp;&nbsp;乘11：00的船离岛，请买15：00后的航班；</div>
+                <div>&nbsp;&nbsp;&nbsp;乘13：30的船离岛，请买17：30后的航班；</div>
+              </div>
+            </div>
+            <div class="pickUp" v-if="template === 7">
+              <div class="pickUptop">
+                <div class="pickUpP1" style="height: 120px;">
+                  <div class="pickUp-title">仙本那码头上岛时间</div>
+                  <div>①  12:30</div>
+                  <div>②  16:30</div>
+                </div>
+                <div class="pickUpP2" style="height: 120px;">
+                  <div class="pickUp-title">邦邦岛度假村离岛时间</div>
+                  <div>①  06:30</div>
+                  <div>②  09:30</div>
+                  <div>③  13:30</div>
+                </div>
+                <div class="pickUpP3" style="height: 120px;">
+                  <div>当天上岛的客人按到达的时间接送至仙本那码头（超过14：30 后到达的航班当天不安排上岛，但是可以送往仙本那酒店）</div>
+                </div>
+              </div>
+              <div class="pickUpBot">
+                <div style="color: red;">离岛航班推荐</div>
+                <div>&nbsp;&nbsp;&nbsp;乘6：30的船离岛买10：30后的航班</div>
+                <div>&nbsp;&nbsp;&nbsp;乘9：30的船离岛买13：30后的航班</div>
+                <div>&nbsp;&nbsp;&nbsp;乘13：30的船离岛买17：30后的航班。</div>
+              </div>
+            </div>
+            <div class="pickUp" v-if="template === 9">
+              <div class="pickUptop">
+                <div class="pickUpP1" style="height: 120px;width: 50%;">
+                  <div class="pickUp-title" style="text-align: left;">上岛船班：</div>
+                  <div>10:00AM</div>
+                  <div class="pickUp-title" style="text-align: left;">离岛船班：</div>
+                  <div>7:00AM</div>
+                </div>
+                <div class="pickUpP3" style="height: 120px;width: 50%;">
+                  <div class="pickUp-title" style="text-align: left;">离岛航班推荐：</div>
+                  <div>建议购买11：00后离开山打根的航班，当天上岛需8：30前到达山打根。</div>
+                </div>
+              </div>
+              <div class="pickUpBot">
+                  <div>08:30之前抵达山打根航班可当天送上兰卡央岛</div>
+                  <div>08:30之后抵达无法当天上岛，需要提前一天到并自行前往山打根住宿，次日09:30从山打根酒店接上前往码头上岛</div>
+                  <div>返程航班在上午11:00之前需提前一晚离岛，次日自行前往机场，如需离岛当天起飞，建议至少订中午12:00后山打根起飞的航班,如需参加西必洛半日游的，请订14点以后的航班。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="part2-annex">
+          <div class="part2-title">
+            附件信息
+            <span>(请分别上传4个航班机票截图)</span>
+          </div>
+          <div class="part2-content">
+            <div class="row">
+              <div class="col-4">
+                <div slot="tip" class="el-upload__tip">出国航班机票截图</div>
+                <el-upload
+                  ref="uploadPT1"
+                  class="upload-annex"
+                  limit="1"
+                  list-type="picture"
+                  :file-list="annex.fileListPT1"
+                  :on-remove="removeUploadPT1"
+                  :auto-upload="false"
+                >
+                  <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                  <el-button @click="submitUploadPT1" style="margin-left: 10px;" size="small" type="success" >上传到服务器</el-button>
+                </el-upload>
+              </div>
+              <div class="col-2"></div>
+              <div class="col-4">
+                <div slot="tip" class="el-upload__tip">回国航班机票截图</div>
+                <el-upload
+                  class="upload-annex"
+                  ref="uploadPT2"
+                  limit="1"
+                  :file-list="annex.fileListPT2"
+                  list-type="picture"
+                  :auto-upload="false"
+                >
+                  <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                  <el-button style="margin-left: 10px;" size="small" type="success" >上传到服务器</el-button>
+                </el-upload>
+              </div>
+              <div class="col-2"></div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <div slot="tip" class="el-upload__tip">到达斗湖航班机票截图</div>
+                <el-upload
+                  class="upload-annex"
+                  ref="uploadPT3"
+                  limit="1"
+                  :file-list="annex.fileListPT3"
+                  list-type="picture"
+                  :auto-upload="false"
+                >
+                  <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                  <el-button style="margin-left: 10px;" size="small" type="success" >上传到服务器</el-button>
+                </el-upload>
+              </div>
+              <div class="col-2"></div>
+              <div class="col-4">
+                <div slot="tip" class="el-upload__tip">离开斗湖航班机票截图</div>
+                <el-upload
+                  class="upload-annex"
+                  ref="uploadPT4"
+                  limit="1"
+                  :file-list="annex.fileListPT4"
+                  list-type="picture"
+                  :auto-upload="false"
+                >
+                  <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                  <el-button style="margin-left: 10px;" size="small" type="success" >上传到服务器</el-button>
+                </el-upload>
+              </div>
+              <div class="col-2"></div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="main-control">
         <div class="control-prev no-select">← 阅读条款声明</div>
@@ -157,9 +591,9 @@
   <script>if(!window.Promise) {document.writeln('<script src="./../dist/js/es6-promise.min.js"'+'>'+'<'+'/'+'script>');}</script>
   <script type="text/javascript" src="./../dist/js/fetch.min.js"></script>
   <script type="text/javascript" src="./../dist/js/appconfig.js?file_version=3.15"></script>
-  <script type="text/javascript" src="./../dist/js/vue.min.js"></script>
   <script type="text/javascript" src="./../dist/js/ChineseHelper.js"></script>
-  <script type="text/javascript" src="./../dist/js/immutable.min.js"></script>
+  <script type="text/javascript" src="./../dist/js/vue.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/element-ui@2.0.4/lib/index.js"></script>
   <script type="text/javascript" src="./js/versionSupport.js"></script>
   <script type="text/javascript" src="./index.js"></script>
 </html>
