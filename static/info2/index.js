@@ -14,6 +14,7 @@ window.onload = function() {
       if (json.result === '0') {
         Info.data = Info.dealwith(json.data);
         Info.init();
+        document.getElementById('main').setAttribute('style', 'display: block;');
       }else {
         alert('加载数据失败, 原因: ' + json.message);
       }
@@ -113,10 +114,12 @@ var Info = {
   'isFirst': true,
   'part_1': null,
   'part_2': null,
+  'part_3': null,
   
   init: function () {
     this.part_1 = new Vue(VuePart_1.inti(this.isFirst));
     this.part_2 = new Vue(VuePart_2.inti(this.data, this.isFirst));
+    this.part_3 = new Vue(VuePart_3.inti(this.data, this.isFirst));
   },
 
   get: function () {
@@ -222,6 +225,7 @@ var VuePart_1 = {
       toNext: function (event) {
         if (this.checked) {
           this.isShow = false;
+          Info.part_2.$data.isShow = true;
         } else {
           alert('请同意相关条款');
         }
@@ -248,6 +252,8 @@ var VuePart_2 = {
     'el': '#part2',
 
     'data': {
+      'isShow': true,
+
       'template': null,
       
       'orderinfor': {
@@ -456,7 +462,6 @@ var VuePart_2 = {
         this.AnnexFileUpload('PT1', uploadForm)
           .then(function (val) {
             if (val.result == '0') {
-              _this.$refs.uploadPT1;
               _this.annex.attachmentList.push(val.data);
               _this.annex.fileListPT1 = [{
                 'name': '出国航班机票截图',
@@ -479,6 +484,7 @@ var VuePart_2 = {
               attachmentList = _this.annex.attachmentList,
               newAttachmentList = [];
 
+          // 寻找 PT1 的数据，并且 为删除远程服务器 获取 attachId
           for (var i = 0; i < attachmentList.length; i++) {
             if (attachmentList[i].attachType === 'PT1') {
               myfileList = [{
@@ -498,7 +504,7 @@ var VuePart_2 = {
           }).then(function () {
             if (attachId === false) {
               alert('删除失败 原因: 图片数据有误.');
-              _this.annex.fileListPT1 = fileListPT1;
+              _this.annex.fileListPT1 = myfileList;
             } else {
               var myloading = _this.$loading();
 
@@ -516,6 +522,285 @@ var VuePart_2 = {
             }
           }).catch(function () {
             _this.annex.fileListPT1 = myfileList;
+          });
+        }
+      },
+
+      submitUploadPT2: function() {
+        var _this = this,
+          myuploadFiles = this.$refs.uploadPT2.uploadFiles;
+
+        if (this.annex.fileListPT2.length > 0) {
+          return
+        }
+
+        if (myuploadFiles.length === 0) {
+          alert('你尚未选择任何文件');
+          return
+        }
+
+        if (
+          myuploadFiles[0].raw.type != 'image/jpeg' && 
+          myuploadFiles[0].raw.type != 'image/png' && 
+          myuploadFiles[0].raw.type != 'image/jpg'
+        ) {
+          alert('请选择 jpg 或 png 格式的文件');
+          return
+        }
+
+        var myloading = this.$loading(),
+          uploadForm = new FormData();
+
+        uploadForm.append('attachFile', myuploadFiles[0].raw);
+        this.AnnexFileUpload('PT2', uploadForm)
+          .then(function (val) {
+            if (val.result == '0') {
+              _this.annex.attachmentList.push(val.data);
+              _this.annex.fileListPT1 = [{
+                'name': '出国航班机票截图',
+                'url': URLbase + val.data.attachThumb
+              }];
+            } else {
+              alert('上传失败, 原因:' + val.message);
+            }
+            myloading.close();
+          })
+      },
+
+      removeUploadPT2: function(file, fileList) {
+        var _this = this,
+            fileListPT2 = this.annex.fileListPT2;
+
+        if (this.annex.fileListPT2.length > 0) {
+          var myfileList,
+              attachId = false,
+              attachmentList = _this.annex.attachmentList,
+              newAttachmentList = [];
+
+          // 寻找 PT2 的数据，并且 为删除远程服务器 获取 attachId
+          for (var i = 0; i < attachmentList.length; i++) {
+            if (attachmentList[i].attachType === 'PT2') {
+              myfileList = [{
+                'name': '回国航班机票截图',
+                'url': URLbase + attachmentList[i].attachThumb
+              }]
+              attachId = attachmentList[i].attachId;
+            } else {
+              newAttachmentList.push(attachmentList[i]);
+            }
+          }
+
+          this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(function () {
+            if (attachId === false) {
+              alert('删除失败 原因: 图片数据有误.');
+              _this.annex.fileListPT2 = myfileList;
+            } else {
+              var myloading = _this.$loading();
+
+              _this.AnnexFileRemove(attachId)
+                .then(function (val) {
+                  if (val.result == '0') {
+                    _this.annex.fileListPT2 = [];
+                    _this.annex.attachmentList = newAttachmentList;
+                  } else {
+                    _this.annex.fileListPT2 = myfileList;
+                    alert('删除失败, 原因:' + val.message);
+                  }
+                  myloading.close();
+                })
+            }
+          }).catch(function () {
+            _this.annex.fileListPT2 = myfileList;
+          });
+        }
+      },
+
+      submitUploadPT3: function() {
+        var _this = this,
+          myuploadFiles = this.$refs.uploadPT3.uploadFiles;
+
+        if (this.annex.fileListPT3.length > 0) {
+          return
+        }
+
+        if (myuploadFiles.length === 0) {
+          alert('你尚未选择任何文件');
+          return
+        }
+
+        if (
+          myuploadFiles[0].raw.type != 'image/jpeg' && 
+          myuploadFiles[0].raw.type != 'image/png' && 
+          myuploadFiles[0].raw.type != 'image/jpg'
+        ) {
+          alert('请选择 jpg 或 png 格式的文件');
+          return
+        }
+
+        var myloading = this.$loading(),
+          uploadForm = new FormData();
+
+        uploadForm.append('attachFile', myuploadFiles[0].raw);
+        this.AnnexFileUpload('PT3', uploadForm)
+          .then(function (val) {
+            if (val.result == '0') {
+              _this.annex.attachmentList.push(val.data);
+              _this.annex.fileListPT3 = [{
+                'name': '出国航班机票截图',
+                'url': URLbase + val.data.attachThumb
+              }];
+            } else {
+              alert('上传失败, 原因:' + val.message);
+            }
+            myloading.close();
+          })
+      },
+
+      removeUploadPT3: function(file, fileList) {
+        var _this = this,
+            fileListPT3 = this.annex.fileListPT3;
+
+        if (this.annex.fileListPT3.length > 0) {
+          var myfileList,
+              attachId = false,
+              attachmentList = _this.annex.attachmentList,
+              newAttachmentList = [];
+
+          // 寻找 PT3 的数据，并且 为删除远程服务器 获取 attachId
+          for (var i = 0; i < attachmentList.length; i++) {
+            if (attachmentList[i].attachType === 'PT3') {
+              myfileList = [{
+                'name': '到达斗湖航班机票截图',
+                'url': URLbase + attachmentList[i].attachThumb
+              }]
+              attachId = attachmentList[i].attachId;
+            } else {
+              newAttachmentList.push(attachmentList[i]);
+            }
+          }
+
+          this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(function () {
+            if (attachId === false) {
+              alert('删除失败 原因: 图片数据有误.');
+              _this.annex.fileListPT3 = myfileList;
+            } else {
+              var myloading = _this.$loading();
+
+              _this.AnnexFileRemove(attachId)
+                .then(function (val) {
+                  if (val.result == '0') {
+                    _this.annex.fileListPT3 = [];
+                    _this.annex.attachmentList = newAttachmentList;
+                  } else {
+                    _this.annex.fileListPT3 = myfileList;
+                    alert('删除失败, 原因:' + val.message);
+                  }
+                  myloading.close();
+                })
+            }
+          }).catch(function () {
+            _this.annex.fileListPT3 = myfileList;
+          });
+        }
+      },
+
+      submitUploadPT4: function() {
+        var _this = this,
+          myuploadFiles = this.$refs.uploadPT4.uploadFiles;
+
+        if (this.annex.fileListPT4.length > 0) {
+          return
+        }
+
+        if (myuploadFiles.length === 0) {
+          alert('你尚未选择任何文件');
+          return
+        }
+
+        if (
+          myuploadFiles[0].raw.type != 'image/jpeg' && 
+          myuploadFiles[0].raw.type != 'image/png' && 
+          myuploadFiles[0].raw.type != 'image/jpg'
+        ) {
+          alert('请选择 jpg 或 png 格式的文件');
+          return
+        }
+
+        var myloading = this.$loading(),
+          uploadForm = new FormData();
+
+        uploadForm.append('attachFile', myuploadFiles[0].raw);
+        this.AnnexFileUpload('PT4', uploadForm)
+          .then(function (val) {
+            if (val.result == '0') {
+              _this.annex.attachmentList.push(val.data);
+              _this.annex.fileListPT4 = [{
+                'name': '出国航班机票截图',
+                'url': URLbase + val.data.attachThumb
+              }];
+            } else {
+              alert('上传失败, 原因:' + val.message);
+            }
+            myloading.close();
+          })
+      },
+
+      removeUploadPT4: function(file, fileList) {
+        var _this = this,
+            fileListPT4 = this.annex.fileListPT4;
+
+        if (this.annex.fileListPT4.length > 0) {
+          var myfileList,
+              attachId = false,
+              attachmentList = _this.annex.attachmentList,
+              newAttachmentList = [];
+
+          // 寻找 PT4 的数据，并且 为删除远程服务器 获取 attachId
+          for (var i = 0; i < attachmentList.length; i++) {
+            if (attachmentList[i].attachType === 'PT4') {
+              myfileList = [{
+                'name': '到达斗湖航班机票截图',
+                'url': URLbase + attachmentList[i].attachThumb
+              }]
+              attachId = attachmentList[i].attachId;
+            } else {
+              newAttachmentList.push(attachmentList[i]);
+            }
+          }
+
+          this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(function () {
+            if (attachId === false) {
+              alert('删除失败 原因: 图片数据有误.');
+              _this.annex.fileListPT4 = myfileList;
+            } else {
+              var myloading = _this.$loading();
+
+              _this.AnnexFileRemove(attachId)
+                .then(function (val) {
+                  if (val.result == '0') {
+                    _this.annex.fileListPT4 = [];
+                    _this.annex.attachmentList = newAttachmentList;
+                  } else {
+                    _this.annex.fileListPT4 = myfileList;
+                    alert('删除失败, 原因:' + val.message);
+                  }
+                  myloading.close();
+                })
+            }
+          }).catch(function () {
+            _this.annex.fileListPT4 = myfileList;
           });
         }
       },
@@ -553,6 +838,100 @@ var VuePart_2 = {
             'message': error
           }
         })
+      },
+
+      toPrev: function() {
+        Info.part_1.$data.isShow = true;
+        this.isShow = false;
+      },
+
+      checkErrors: function () {
+        if (!this.signName) {
+          this.signNameError = '预定人姓名 不能为空';
+          this.isSignNameError= true;
+          this.$message({
+            'message': '预定人姓名 不能为空',
+            'type': 'warning'
+          });
+          return false
+        }
+
+        if (!this.pinyinName) {
+          this.isPinyinNameError = '预定人拼音 不能为空';
+          this.pinyinNameError= true;
+          this.$message({
+            'message': '预定人拼音 不能为空',
+            'type': 'warning'
+          });
+          return false
+        }
+
+        if (!this.mobile) {
+          this.mobileError = '手机号码 不能为空';
+          this.isMobileError= true;
+          this.$message({
+            'message': '手机号码 不能为空',
+            'type': 'warning'
+          });
+          return false
+        }
+
+        if (!this.email) {
+          this.emailError = '手机号码 不能为空';
+          this.isEmailError = true;
+          this.$message({
+            'message': '手机号码 不能为空',
+            'type': 'warning'
+          });
+          return false
+        }
+
+        if (
+          !this.isSignNameError ||
+          !this.isPinyinNameError ||
+          !this.isMobileError ||
+          !this.isEmailError
+        ) {
+          this.$message({
+            'message': '数据有误',
+            'type': 'warning'
+          });
+          return false
+        }
+        return true
+      },
+
+      toNext: function() {
+        if (!this.checkErrors) { return }
+
+        Info.data.signName = this.signName;
+        Info.data.pinyinName = this.pinyinName;
+        Info.data.mobile = this.mobile;
+        Info.data.email = this.email;
+        Info.data.payAccount = this.payAccount;
+
+        Info.data.landDate = Date.parse(new Date(this.landDate)) || null;
+        Info.data.outboundNum = this.outboundNum;
+        Info.data.landTime = utilities.flighTimeToTimestamp(this.landTime);
+
+        Info.data.hLandDate = Date.parse(new Date(this.hLandDate)) || null;
+        Info.data.inHarbourNum = this.inHarbourNum;
+        Info.data.hLandTime = utilities.flighTimeToTimestamp(this.hLandTime);
+
+        Info.data.hTakeoffDate = Date.parse(new Date(this.hTakeoffDate)) || null;
+        Info.data.outHarbourNum = this.outHarbourNum;
+        Info.data.hTakeoffTime = utilities.flighTimeToTimestamp(this.hTakeoffTime);
+
+        Info.data.takeoffDate = Date.parse(new Date(this.takeoffDate)) || null;
+        Info.data.inboundNum = this.inboundNum;
+        Info.data.takeoffTime = utilities.flighTimeToTimestamp(this.takeoffTime);
+
+        Info.data.flightNote = this.flightNote;
+
+        Info.data.attachmentList = this.annex.attachmentList;
+
+        this.isShow = false;
+        Info.part_3.$data.isShow = true;
       }
     }
   },
@@ -675,9 +1054,23 @@ var VuePart_2 = {
   }
 };
 
+var VuePart_3 = {
+  inti: function() {
+
+  }
+}  
 
 // 工具类
 var utilities = {
+  getDateAccurateToDay: function () {
+    var myDate = new Date();
+    return Date.parse(new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate()))
+  },
+
+  flighTimeToTimestamp: function (data) {
+    if (!data) { return null }
+    return data - this.getDateAccurateToDay();
+  },
   dateToYYYYMMDDString: function(data) {
     var yyyy = data.getFullYear();
 
