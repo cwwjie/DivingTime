@@ -121,7 +121,7 @@ xtpl.renderFile('./static/village/index.xtpl', {}, function(error, content) {
     renderFile("./static/main.js","./dist/main.js");
     // 详情页面
     renderFile("./static/page/main.css","./dist/page/main.css");
-    renderFile("./static/page/main.js","./dist/page/main.js");
+    renderFile("./static/page/index.js","./dist/page/index.js");
     // 预定页面
     renderFile("./static/page/reserve/main.css","./dist/page/reserve/main.css");
     renderFile("./static/page/reserve/main.js","./dist/page/reserve/main.js");
