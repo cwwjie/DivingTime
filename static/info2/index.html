@@ -587,6 +587,212 @@
       <div v-on:click="toNext" class="control-next no-select">下一步 →</div>
     </div>
   </div>
+
+  <div id="part3" class="part3 main" v-if="isShow">
+    <div class="main-content">
+      <div class="part3-title">
+        入住信息
+        <span>还可入住 {{lavePeopleNum}} 人</span>
+      </div>
+      <div class="part3-room">
+        <div class="room-list">
+          <div 
+            v-for="roomItem in roomList"
+            v-bind:class="[roomItem.isSelected ? 'item-active' : '', 'room-item']"
+          >
+            {{roomItem.name}}
+          </div>
+        </div>
+        <div class="room-right">
+          <div class="room-main">
+
+            <div class="room-title">房间 1</div>
+
+            <div class="Add-traveler">
+              <span class="Add-child">添加儿童</span>
+              <span class="Add-adult">添加成人</span>
+            </div>
+
+            <div class="room-bed">
+              <div class="bed-description">床型</div>
+              <el-select class="bed-input-error" v-model="bedValue" placeholder="请选择床型">
+                <el-option v-for="item in bedOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
+
+            <div class="room-dialog">
+              <el-dialog
+                title="入住信息"
+                width="50%"
+                :visible.sync="dialogVisible"
+                :close-on-click-modal="false"
+              >
+                <div class="row">
+                  <div class="col-5">
+                    <div>护照号码:</div>
+                    <el-input v-model="passportNo" placeholder="请输入护照号码"></el-input>
+                    <div class="input-descr"></div>
+                  </div>
+                  <div class="col-1"></div>
+                  <div class="col-5" v-bind:class="nationaAddition.isError ? 'dialog-error' : ''">
+                    <div>国籍(必选):</div>
+                    <el-select
+                      v-model="nationality" 
+                      placeholder="请选择国籍"
+                      @change="validatorNational"
+                    >
+                      <el-option v-for="item in nationaOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      ></el-option>
+                    </el-select>
+                    <div class="input-descr">{{nationaAddition.message}}</div>
+                  </div>
+                  <div class="col-1"></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-5" v-bind:class="chineseNameAddition.isError ? 'dialog-error' : ''">
+                    <div>姓名/中文(必填):</div>
+                    <el-input
+                      v-model="chineseName"
+                      placeholder="请输入姓名中文"
+                    ></el-input>
+                    <div class="input-descr">{{chineseNameAddition.message}}</div>
+                  </div>
+                  <div class="col-1"></div>
+                  <div class="col-5" v-bind:class="pinyinNameAddition.isError ? 'dialog-error' : ''">
+                    <div>姓名/拼音(必填):</div>
+                    <el-input v-model="pinyinName" placeholder="请输入姓名拼音"></el-input>
+                    <div class="input-descr">{{pinyinNameAddition.message}}</div>
+                  </div>
+                  <div class="col-1"></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-5">
+                    <div>性别(必填):</div>
+                    <div class="input-radio">
+                      <el-radio v-model="gender" :label="1">男</el-radio>
+                      <el-radio v-model="gender" :label="2">女</el-radio>
+                    </div>
+                  </div>
+                  <div class="col-1"></div>
+                  <div class="col-5" v-bind:class="birthdayAddition.isError ? 'dialog-error' : ''">
+                    生日(必选):
+                    <el-date-picker
+                      v-model="birthday"
+                      type="date"
+                      :editable="false"
+                      placeholder="选择日期"
+                      @change="validatorBirthday"
+                    ></el-date-picker>
+                    <div class="input-descr">{{birthdayAddition.message}}</div>
+                  </div>
+                  <div class="col-1"></div>
+                </div>
+
+                <div class="row" v-if="!isKid">
+                  <div class="col-11" v-bind:class="mobileAddition.isError ? 'dialog-error' : ''">
+                    <div>手机(必填):</div>
+                    <el-input
+                      v-model="mobile"
+                      placeholder="请输入手机号码"
+                      @change="validatorMobile"
+                    ></el-input>
+                    <div class="input-descr">{{mobileAddition.message}}</div>
+                  </div>
+                  <div class="col-1"></div>
+                </div>
+
+                <div class="row switch-dive">
+                  <div>度假潜水类型:</div>
+                  <el-switch
+                    v-model="isDive"
+                    active-text="深潜"
+                    inactive-text="浮潜">
+                  </el-switch>
+                </div>
+
+                <div v-if="isDive">
+                  <div class="row">
+                    <div class="col-5">
+                      <div>潜水级别:</div>
+                      <el-select v-model="divingRank" placeholder="请选择潜水级别">
+                        <el-option
+                          key="OW"
+                          label="OW"
+                          value="OW"
+                        ></el-option>
+                        <el-option
+                          key="AOW及以上"
+                          label="AOW及以上"
+                          value="AOW及以上"
+                        ></el-option>
+                      </el-select>
+                      <div class="input-descr"></div>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-5">
+                      <div>潜水证号:</div>
+                      <el-input v-model="divingNo" placeholder="请输入潜水证号"></el-input>
+                      <div class="input-descr"></div>
+                    </div>
+                    <div class="col-1"></div>
+                  </div>
+  
+                  <div class="row">
+                    <div class="col-5">
+                      <div>上次潜水时间:</div>
+                      
+                      <el-date-picker
+                        v-model="lastDiveTime"
+                        type="date"
+                        :editable="false"
+                        placeholder="选择日期"
+                      ></el-date-picker>
+                      <div class="input-descr"></div>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-5">
+                      <div>潜水次数:</div>
+                      <el-input v-model="divingCount" placeholder="请输入潜水次数"></el-input>
+                      <div class="input-descr"></div>
+                    </div>
+                    <div class="col-1"></div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-11">
+                    <div>以往重大病史:</div>
+                    <el-input v-model="anamnesis" placeholder="无"></el-input>
+                    <div class="input-descr"></div>
+                  </div>
+                  <div class="col-1"></div>
+                </div>
+              
+                <span slot="footer" class="dialog-footer">
+                  <el-button>取 消</el-button>
+                  <el-button @click="dialogSave" type="primary">确 定</el-button>
+                </span>
+              </el-dialog>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-control">
+      <div class="control-prev no-select">← 上一步</div>
+      <div class="control-next no-select">下一步 →</div>
+    </div>
+  </div>
 </div>
 
 </body>

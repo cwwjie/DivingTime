@@ -252,7 +252,7 @@ var VuePart_2 = {
     'el': '#part2',
 
     'data': {
-      'isShow': true,
+      'isShow': false,
 
       'template': null,
       
@@ -1055,9 +1055,299 @@ var VuePart_2 = {
 };
 
 var VuePart_3 = {
-  inti: function() {
+  'Vue': {
+    'el': '#part3',
 
+    'data': {
+      'isShow': true,
+      'template': null,
+
+      // 剩余入住人数
+      'lavePeopleNum': 0,
+
+      'roomList': [
+        // {
+        //   id: '0',
+        //   name: '房间1',
+        //   isSelected: true,
+        // }
+      ],
+
+      'bedValue': null,
+      'bedOptions': [
+        // {
+        // 'value': '蜜月大床',
+        // 'label': '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)'
+        // }
+      ],
+      
+      'dialogVisible': true,
+      'roomId': null,
+      'isKid': false,
+      'passportNo': null,
+      'nationality': null,
+      'nationaAddition': {
+        'isError': false,
+        'message': ''
+      },
+      'nationaOptions': [
+        // {
+        //   'value': 'CHINA',
+        //   'label': '中国 CHINA'
+        // }
+      ],
+      'chineseName': null,
+      'chineseNameAddition': {
+        'isError': false,
+        'message': ''
+      },
+      'pinyinName': null,
+      'pinyinNameAddition': {
+        'isError': false,
+        'message': ''
+      },
+      'gender': 1,
+      'birthday': null,
+      'birthdayAddition': {
+        'isError': false,
+        'message': ''
+      },
+      'mobile': null,
+      'mobileAddition': {
+        'isError': false,
+        'message': ''
+      },
+      'email': null,
+      'isDive': false,
+      'divingRank': null,
+      'divingNo': null,
+      'lastDiveTime': null,
+      'divingCount': null,
+      'anamnesis': null,
+    },
+    
+    'watch': {
+      'chineseName': {
+        handler: function (val, oldVal) {
+          if (val === '' || val === null) {
+            this.chineseNameAddition = {
+              'isError': false,
+              'message': ''
+            };
+          } else if (/^[\u4E00-\u9FA5]+$/.test(val) === false) {
+            this.chineseNameAddition = {
+              'isError': true,
+              'message': '必须为中文'
+            };
+          } else if (val.length >= 15) {
+            this.chineseNameAddition = {
+              'isError': true,
+              'message': '不能超出15个汉字!'
+            };
+          } else {
+            this.pinyinName = ConvertPinyin(val);
+            this.chineseNameAddition = {
+              'isError': false,
+              'message': ''
+            };
+          }
+        }
+      },
+
+      'pinyinName': {
+        handler: function (val, oldVal) {
+          if (val === '' || val === null) {
+            this.pinyinNameAddition = {
+              'isError': false,
+              'message': ''
+            };
+          } else if (/^[a-zA-Z]{0,10000}$/.test(val) === false) {
+            this.pinyinNameAddition = {
+              'isError': true,
+              'message': '拼音格式有误'
+            };
+          } else if (val.length >= 32) {
+            this.pinyinNameAddition = {
+              'isError': true,
+              'message': '不能超出32个英文!'
+            };
+          } else {
+            this.pinyinNameAddition = {
+              'isError': false,
+              'message': ''
+            };
+          }
+        }
+      }
+    },
+
+    'methods': {
+      'validatorNational': function () {
+        if (this.nationality) {
+          this.nationaAddition = {
+            'isError': false,
+            'message': ''
+          };
+          return true
+        } else {
+          this.nationaAddition = {
+            'isError': true,
+            'message': '国籍为必选'
+          };
+          return false
+        }
+      },
+
+      'validatorChineseName': function () {
+        if (this.chineseName === '' || this.chineseName === null) {
+          this.chineseNameAddition = {
+            'isError': true,
+            'message': '中文姓名不能为空'
+          };
+          return false
+        } else if (/^[\u4E00-\u9FA5]+$/.test(this.chineseName) === false) {
+          this.chineseNameAddition = {
+            'isError': true,
+            'message': '必须为中文'
+          };
+          return false
+        } else if (this.chineseName.length >= 15) {
+          this.chineseNameAddition = {
+            'isError': true,
+            'message': '不能超出15个汉字!'
+          };
+          return false
+        } else {
+          this.chineseNameAddition = {
+            'isError': false,
+            'message': ''
+          };
+          return true
+        }
+      },
+
+      'validatorPinyinName': function () {
+        if (this.pinyinName === '' || this.pinyinName === null) {
+          this.pinyinNameAddition = {
+            'isError': true,
+            'message': '拼音不能为空'
+          };
+          return false
+        } else if (/^[a-zA-Z]{0,10000}$/.test(this.pinyinName) === false) {
+          this.pinyinNameAddition = {
+            'isError': true,
+            'message': '拼音格式有误'
+          };
+          return false
+        } else if (this.pinyinName.length >= 32) {
+          this.pinyinNameAddition = {
+            'isError': true,
+            'message': '不能超出32个英文!'
+          };
+          return false
+        } else {
+          this.pinyinNameAddition = {
+            'isError': false,
+            'message': ''
+          };
+          return true
+        }
+      },
+      
+      'validatorBirthday': function () {
+        if (this.birthday === null) {
+          this.birthdayAddition = {
+            'isError': true,
+            'message': '日期不能为空'
+          };
+          return false
+        } else {
+          this.birthdayAddition = {
+            'isError': false,
+            'message': ''
+          };
+          return true
+        }
+      },
+      
+      'validatorMobile': function () {
+        if (this.isKid) {
+          this.mobileAddition = {
+            'isError': false,
+            'message': ''
+          };
+          return true
+        } else {
+          if (this.mobile === null) {
+            this.mobileAddition = {
+              'isError': true,
+              'message': '手机号码不能为空'
+            };
+            return false
+          } else if ( /^1[34578]\d{9}$/.test(this.mobile) === false) {
+            this.mobileAddition = {
+              'isError': true,
+              'message': '手机号码格式有误'
+            };
+            return false
+          } else {
+            this.mobileAddition = {
+              'isError': false,
+              'message': ''
+            };
+            return true
+          }
+        }
+      },
+
+      'dialogSave': function () {
+        var allow = true;
+        if ( this.validatorNational() === false ) { allow = false }
+        if ( this.validatorChineseName() === false ) { allow = false }
+        if ( this.validatorPinyinName() === false ) { allow = false }
+        if ( this.validatorBirthday() === false ) { allow = false }
+        if ( this.validatorMobile() === false ) { allow = false }
+        if (allow === false) { return }
+        this.dialogVisible = false;
+      }
+    },
+  },
+  inti: function(data, isFirst) {
+    this.Vue.data.template = data.template;
+    this.Vue.data.nationaOptions = utilities.renderNationality();
+
+    this.renderRoom(data);
+    if (isFirst) {
+
+    }
+
+    return this.Vue;
+  },
+
+  renderRoom: function (data) {
+    var roomInfoList = data.roomInfoList,
+        peopleNum = 0
+    var roomList = [
+      // {
+      //   id: '0',
+      //   name: '房间1',
+      //   isSelected: true,
+      // }
+    ];
+    
+    for (var i = 0; i < roomInfoList.length; i++) {
+      if (i === 0) {
+        roomList.push({
+          'id': i,
+          'name': ('房间' + (i + 1)),
+          'isSelected': true,
+        })
+      }
+    }
+    this.Vue.data.lavePeopleNum = peopleNum;
+    this.Vue.data.roomList = roomList;
   }
+
 }  
 
 // 工具类
@@ -1093,5 +1383,62 @@ var utilities = {
     dd = dd < 10 ? '0' + dd : dd;
 
     return '' + yyyy + '-' + mm + '-' + dd;
+  },
+
+  renderNationality: function () {
+    return [
+      {
+        'value': 'CHINA',
+        'label': '中国 CHINA'
+      },
+      {
+        'value': 'HONGKONG-CHINA',
+        'label': '中国-香港 HONGKONG-CHINA'
+      },
+      {
+        'value': 'MACAU-CHINA',
+        'label': '中国-澳门 MACAU-CHINA'
+      },
+      {
+        'value': 'TAIWAN-CHINA',
+        'label': '中国-台湾 TAIWAN-CHINA'
+      },
+      {
+        'value': 'AMERICA',
+        'label': '美国 AMERICA'
+      },
+      {
+        'value': 'AUSTRALIA',
+        'label': '澳大利亚 AUSTRALIA'
+      },
+      {
+        'value': 'SINGAPORE',
+        'label': '新加坡 SINGAPORE'
+      },
+      {
+        'value': 'MALASIA',
+        'label': '马来西亚 MALASIA'
+      },
+      {
+        'value': 'ENGLAND',
+        'label': '英国 ENGLAND'
+      },
+      {
+        'value': 'SWEDEN',
+        'label': '瑞典 SWEDEN'
+      },
+      {
+        'value': 'PHILIPPINE',
+        'label': '菲律宾 PHILIPPINE'
+      },
+      {
+        'value': 'RUSSIA',
+        'label': '俄罗斯 RUSSIA'
+      },
+      {
+        'value': 'NETHERLANDS',
+        'label': '荷兰 NETHERLANDS'
+      }
+    ]
   }
 }

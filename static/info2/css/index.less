@@ -341,6 +341,165 @@ header {
 	color: #fff;
 }
 
+.part3 {
+	.part3-title {
+    font-weight: 700;
+    color: #1e1e1e;
+		font-size: 20px;
+		padding-bottom: 20px;
 
+		span {
+			color: #EB9E05;
+			font-size: 16px;
+		}
+	}
+
+	.part3-room {
+		position: relative;
+		overflow: hidden;
+		
+		.room-list {
+			float: left;
+			width: 12%;
+
+			.room-item {
+				height: 48px;
+				
+				line-height: 48px;
+				text-align: center;
+				color: #262626;
+				border: 1px solid rgba(160, 160, 160, 0.46);
+				cursor: pointer;
+			}
+
+			.item-active {
+				color: #fff;
+				background: #0f88eb;
+				border: 1px solid #0f88eb;
+			}
+		}
+
+		.room-right {
+			margin-left: 15%;
+			width: 83%;
+			
+			.room-main {
+				position: relative;
+				padding: 20px;
+				border: 1px solid rgba(160, 160, 160, 0.46);
+
+				.room-title {
+					font-weight: 700;
+					color: #1e1e1e;
+					font-size: 18px;
+					padding-bottom: 20px;
+				}
+
+				.Add-traveler {
+					position: absolute;
+					top: 25px;
+					right: 20px;
+
+					> span {
+						padding: 7px 20px;
+						margin-left: 7px;
+						background: #fff;
+						text-align: center;
+						font-weight: 500;
+						font-size: 16px;
+						border-radius: 4px;
+						color: #5a5e66;
+						border: 1px solid #d8dce5;
+						cursor: pointer;
+						-moz-user-select: none;
+						-webkit-user-select: none;
+						-ms-user-select: none;
+						-webkit-appearance: none;
+					}
+
+					> span:hover {
+						color: #409EFF;
+						border: 1px solid #409EFF;
+					}
+
+					.Add-adult {
+						color: #409eff;
+						background: #ecf5ff;
+						border-color: #b3d8ff;
+					}
+
+					.Add-adult:hover {
+						background: #409EFF;
+						color: #fff;
+					}
+				}
+
+				.room-bed {
+					.bed-description {
+						padding-bottom: 10px;
+					}
+
+					.el-select {
+						width: 100%;
+					}
+
+					.bed-input-error {
+						input { border-color: #FA5555; }
+						::-webkit-input-placeholder { color: #FA5555; }
+						:-moz-placeholder { color: #FA5555; }
+						::-moz-placeholder { color: #FA5555; }
+						:-ms-input-placeholder { color: #FA5555; }
+					}
+				}
+
+				.room-dialog {
+					.row {
+						padding-bottom: 10px;
+					}
+
+					.el-input {
+						padding-top: 5px;
+						width: 100%;
+					}
+
+					.input-descr {
+						padding-left: 15px;
+						color: #FA5555;
+					}
+
+					.el-select {
+						width: 100%;
+					}
+
+					.input-radio {
+						padding-top: 10px;
+					}
+
+					.switch-dive {
+						padding: 10px 0px;
+
+						.el-switch {
+							padding: 5px 10px;
+						}
+					}
+
+					.dialog-error {
+						input { border-color: #FA5555; }
+						::-webkit-input-placeholder { color: #FA5555; }
+						:-moz-placeholder { color: #FA5555; }
+						::-moz-placeholder { color: #FA5555; }
+						:-ms-input-placeholder { color: #FA5555; }
+
+					}
+
+					.el-button--primary span {
+						color: #fff;
+					}
+				}
+			}
+		}
+	}
+}
+	
 
 
