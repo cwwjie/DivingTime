@@ -4,7 +4,7 @@
 var pageFourth = (function(){
 	function init() {
 		// 表示第一次提交
-		if (loaddata.isRead == "Y") {
+		if (!_first) {
 			$.ajax({ 
 				type: "POST", 
 				url: URLbase + URLversion + "/gather/"+THERUL+"/updateForm.do", 

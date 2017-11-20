@@ -435,6 +435,8 @@ header {
 				}
 
 				.room-bed {
+					padding-bottom: 20px;
+
 					.bed-description {
 						padding-bottom: 10px;
 					}
@@ -452,52 +454,88 @@ header {
 					}
 				}
 
-				.room-dialog {
-					.row {
-						padding-bottom: 10px;
-					}
+				.room-infor {
+					position: relative;
+					margin-bottom: 20px;
+					padding: 20px;
+					background: #f9f9f9;
+					border: 1px solid #d8dce5;
+					overflow: hidden;
 
-					.el-input {
-						padding-top: 5px;
-						width: 100%;
+					.infor-title {
+						font-size: 18px;
 					}
-
-					.input-descr {
-						padding-left: 15px;
-						color: #FA5555;
-					}
-
-					.el-select {
-						width: 100%;
-					}
-
-					.input-radio {
+					
+					.infor-main {
 						padding-top: 10px;
-					}
-
-					.switch-dive {
-						padding: 10px 0px;
-
-						.el-switch {
-							padding: 5px 10px;
+						padding-left: 10px;
+						
+						.row {
+							padding: 1.5px;
 						}
 					}
 
-					.dialog-error {
-						input { border-color: #FA5555; }
-						::-webkit-input-placeholder { color: #FA5555; }
-						:-moz-placeholder { color: #FA5555; }
-						::-moz-placeholder { color: #FA5555; }
-						:-ms-input-placeholder { color: #FA5555; }
+					.infor-operate {
+						padding-top: 20px;
+						float: right;
 
-					}
-
-					.el-button--primary span {
-						color: #fff;
+						i {
+							color: #fff;
+						}
 					}
 				}
 			}
 		}
+	}
+
+	.room-dialog, .part3-iceinfor	 {
+		.row {
+			padding-bottom: 10px;
+		}
+
+		.el-input {
+			padding-top: 5px;
+			width: 100%;
+		}
+
+		.input-descr {
+			padding-left: 15px;
+			color: #FA5555;
+		}
+
+		.el-select {
+			width: 100%;
+		}
+
+		.input-radio {
+			padding-top: 10px;
+		}
+
+		.switch-dive {
+			padding: 10px 0px;
+
+			.el-switch {
+				padding: 5px 10px;
+			}
+		}
+
+		.dialog-error {
+			input { border-color: #FA5555; }
+			::-webkit-input-placeholder { color: #FA5555; }
+			:-moz-placeholder { color: #FA5555; }
+			::-moz-placeholder { color: #FA5555; }
+			:-ms-input-placeholder { color: #FA5555; }
+
+		}
+
+		.el-button--primary span {
+			color: #fff;
+		}
+	}
+	
+	.part3-iceinfor {
+		width: 965px;
+		padding-bottom: 20px;
 	}
 }
 	

@@ -79,33 +79,34 @@ var Info = {
     // transfersInfo: "",
     // roomInfoList: [
     //   {
+    //     infoId: 122,
+    //     roomId: 123,
     //     bedType: "蜜月大床",
     //     iceEmail: null,
     //     iceMobile: null,
     //     iceName: null,
     //     iceRelation: null,
-    //     infoId: 122,
-    //     roomId: 123,
     //     customerInfoList: [
     //       {
-    //         age: 45,
-    //         anamnesis: "无",
-    //         birthday: "1972-01-15",
-    //         chineseName: "曾杰",
+    //         roomId: 123,
     //         customerId: 145,
+    //         isKid: "N",
+
+    //         passportNo: null,
+    //         nationality: "MACAU CHINA",
+    //         chineseName: "曾杰",
+    //         pinyinName: "Zeng Jie",
+    //         birthday: "1972-01-15",
+    //         age: 45,
+    //         gender: 1,
+    //         email: "54454@qq.com",
+    //         mobile: "15976713287",
+    //         isDive: "N",
     //         divingCount: null,
     //         divingNo: null,
     //         divingRank: null,
-    //         email: "54454@qq.com",
-    //         gender: 1,
-    //         isDive: "N",
-    //         isKid: "N",
     //         lastDiveTime: null,
-    //         mobile: "15976713287",
-    //         nationality: "MACAU CHINA",
-    //         passportNo: null,
-    //         pinyinName: "Zeng Jie",
-    //         roomId: 123
+    //         anamnesis: "无",
     //       }
     //     ]
     //   }
@@ -932,6 +933,20 @@ var VuePart_2 = {
 
         this.isShow = false;
         Info.part_3.$data.isShow = true;
+
+        if (Info.isFirst) {
+          Info.part_3.$data.dialogVisible = true;
+          Info.part_3.$data.isDialogAdd = true;
+          Info.part_3.$data.chineseName = this.signName;
+          Info.part_3.$data.pinyinName = this.pinyinName;
+          Info.part_3.$data.mobile = this.mobile;
+          Info.part_3.$data.email = this.email;
+          if (this.template === 3) {
+            Info.part_3.$data.iceName = this.signName;
+            Info.part_3.$data.iceEmail = this.email;
+            Info.part_3.$data.iceMobile = this.mobile;
+          }
+        }
       }
     }
   },
@@ -1062,28 +1077,32 @@ var VuePart_3 = {
       'isShow': true,
       'template': null,
 
+      'peopleNum': 0,
       // 剩余入住人数
       'lavePeopleNum': 0,
 
-      'roomList': [
-        // {
-        //   id: '0',
-        //   name: '房间1',
-        //   isSelected: true,
-        // }
-      ],
+      // 选中的房间
+      'selectRoomNum': 0,
 
-      'bedValue': null,
+      'roomList': [],
+
+      'bedType': null,
       'bedOptions': [
         // {
         // 'value': '蜜月大床',
         // 'label': '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)'
         // }
       ],
-      
-      'dialogVisible': true,
+
+      // 下面的都是模态框数据
+      'dialogVisible': false,
+      'isDialogAdd': false,
+      'dialogId': null,
+
       'roomId': null,
-      'isKid': false,
+      'customerId': null,
+      'isKid': "N",
+
       'passportNo': null,
       'nationality': null,
       'nationaAddition': {
@@ -1124,6 +1143,28 @@ var VuePart_3 = {
       'lastDiveTime': null,
       'divingCount': null,
       'anamnesis': null,
+
+      // 下面是紧急联系人信息
+      'iceName': null,
+      'iceNameAddition': {
+        'isError': false,
+        'message': ''
+      },
+      'iceEmail': null,
+      'iceEmailAddition': {
+        'isError': false,
+        'message': ''
+      },
+      'iceMobile': null,
+      'iceMobileAddition': {
+        'isError': false,
+        'message': ''
+      },
+      'iceRelation': null,
+      'iceRelationAddition': {
+        'isError': false,
+        'message': ''
+      },
     },
     
     'watch': {
@@ -1178,11 +1219,187 @@ var VuePart_3 = {
             };
           }
         }
+      },
+
+      'iceName': {
+        handler: function (val, oldVal) { this.validatorIceName() }
+      },
+      
+      'iceEmail': {
+        handler: function (val, oldVal) { this.validatorIceEmail() }
+      },
+
+      'iceMobile': {
+        handler: function (val, oldVal) { this.validatorIceMobile() }
       }
     },
 
     'methods': {
-      'validatorNational': function () {
+      addTraveler: function (isKid) {
+        this.isDialogAdd = true;
+        this.isKid = isKid;
+        this.dialogId = null;
+
+        this.roomId = null;
+        this.customerId = null;
+
+        this.passportNo = null;
+        this.nationality = null;
+        this.nationaAddition = { 'isError': false, 'message': '' };
+        this.chineseName = null,
+        this.chineseNameAddition = { 'isError': false, 'message': '' };
+        this.pinyinName = null;
+        this.pinyinNameAddition = { 'isError': false, 'message': '' };
+        this.gender = 1;
+        this.birthday = null;
+        this.birthdayAddition = { 'isError': false, 'message': '' };
+        this.mobile = null;
+        this.mobileAddition = { 'isError': false, 'message': '' };
+        // this.email = null;
+        this.isDive = false;
+        this.divingRank = null;
+        this.divingNo = null;
+        this.lastDiveTime = null;
+        this.divingCount = null;
+        this.anamnesis = null;
+
+        this.dialogVisible = true;
+      },
+
+      editTraveler: function (data) {
+        var customerInfo = this.roomList[this.selectRoomNum].customerInfoList[data.id];
+
+        this.isDialogAdd = false;
+        this.isKid = customerInfo.isKid;
+        this.dialogId = customerInfo.id;
+
+        this.roomId = customerInfo.roomId;
+        this.customerId = customerInfo.customerId;
+
+        this.passportNo = customerInfo.passportNo;
+        this.nationality = customerInfo.nationality;
+        this.nationaAddition = { 'isError': false, 'message': '' };
+        this.chineseName = customerInfo.chineseName,
+        this.chineseNameAddition = { 'isError': false, 'message': '' };
+        this.pinyinName = customerInfo.pinyinName;
+        this.pinyinNameAddition = { 'isError': false, 'message': '' };
+        this.gender = customerInfo.gender;
+        this.birthday = new Date(customerInfo.birthday);
+        this.birthdayAddition = { 'isError': false, 'message': '' };
+        this.mobile = customerInfo.mobile;
+        this.mobileAddition = { 'isError': false, 'message': '' };
+        this.email = customerInfo.email;
+        this.isDive = customerInfo.isDive === 'Y' ? true : false;
+        this.divingRank = customerInfo.divingRank;
+        this.divingNo = customerInfo.divingNo;
+        this.lastDiveTime = customerInfo.lastDiveTime ? new Date(customerInfo.lastDiveTime) : null;
+        this.divingCount = customerInfo.divingCount;
+        this.anamnesis = customerInfo.anamnesis;
+
+        this.dialogVisible = true;
+      },
+
+      deleteTraveler: function (data) {
+        var _this = this,
+            newTravelerId = 0,
+            newcustomerInfoList = [];
+        var customerInfoList = this.roomList[this.selectRoomNum].customerInfoList;
+
+        this.$confirm('此操作将删除该旅客信息, 是否继续?', '提示', {
+          'confirmButtonText': '确定',
+          'cancelButtonText': '取消',
+          'type': 'warning'
+        }).then(() => {
+          for (var i = 0; i < customerInfoList.length; i++) {
+            if (data.id !== customerInfoList[i].id) {
+              customerInfoList[i].id = newTravelerId;
+              newcustomerInfoList.push(customerInfoList[i]);
+              newTravelerId++;
+            }
+          }
+  
+          _this.roomList[_this.selectRoomNum].customerInfoList = newcustomerInfoList;
+        }).catch(() => {
+          this.$message({
+            'type': 'info',
+            'message': '已取消删除'
+          });
+        });
+      },
+
+      validatorIceName: function () {
+        if (this.iceName === '' || this.iceName === null) {
+          this.iceNameAddition = {
+            'isError': true,
+            'message': '姓名不能为空'
+          };
+          return false
+        } else if (/^[\u4E00-\u9FA5]+$/.test(this.iceName) === false) {
+          this.iceNameAddition = {
+            'isError': true,
+            'message': '中文格式有误'
+          };
+          return false
+        } else if (this.iceName.length >= 32) {
+          this.iceNameAddition = {
+            'isError': true,
+            'message': '不能超出15个汉字!'
+          };
+          return false
+        } else {
+          this.iceNameAddition = {
+            'isError': false,
+            'message': ''
+          };
+          return true
+        }
+      },
+
+      validatorIceEmail: function () {
+        if (this.iceEmail === '' || this.iceEmail === null) {
+          this.iceEmailAddition = {
+            'isError': true,
+            'message': '邮箱不能为空'
+          };
+          return false
+        } else if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(this.iceEmail) === false) {
+          this.iceEmailAddition = {
+            'isError': true,
+            'message': '邮箱格式有误'
+          };
+          return false
+        } else {
+          this.iceEmailAddition = {
+            'isError': false,
+            'message': ''
+          };
+          return true
+        }
+      },
+
+      validatorIceMobile: function () {
+        if (this.iceMobile === '' || this.iceMobile === null) {
+          this.iceMobileAddition = {
+            'isError': true,
+            'message': '手机号码不能为空'
+          };
+          return false
+        } else if (/^1[34578]\d{9}$/.test(this.iceMobile) === false) {
+          this.iceMobileAddition = {
+            'isError': true,
+            'message': '手机号码格式有误'
+          };
+          return false
+        } else {
+          this.iceMobileAddition = {
+            'isError': false,
+            'message': ''
+          };
+          return true
+        }
+      },
+
+      validatorNational: function () {
         if (this.nationality) {
           this.nationaAddition = {
             'isError': false,
@@ -1198,7 +1415,7 @@ var VuePart_3 = {
         }
       },
 
-      'validatorChineseName': function () {
+      validatorChineseName: function () {
         if (this.chineseName === '' || this.chineseName === null) {
           this.chineseNameAddition = {
             'isError': true,
@@ -1226,7 +1443,7 @@ var VuePart_3 = {
         }
       },
 
-      'validatorPinyinName': function () {
+      validatorPinyinName: function () {
         if (this.pinyinName === '' || this.pinyinName === null) {
           this.pinyinNameAddition = {
             'isError': true,
@@ -1253,8 +1470,8 @@ var VuePart_3 = {
           return true
         }
       },
-      
-      'validatorBirthday': function () {
+
+      validatorBirthday: function () {
         if (this.birthday === null) {
           this.birthdayAddition = {
             'isError': true,
@@ -1269,9 +1486,9 @@ var VuePart_3 = {
           return true
         }
       },
-      
-      'validatorMobile': function () {
-        if (this.isKid) {
+
+      validatorMobile: function () {
+        if (this.isKid === 'Y') {
           this.mobileAddition = {
             'isError': false,
             'message': ''
@@ -1300,16 +1517,153 @@ var VuePart_3 = {
         }
       },
 
-      'dialogSave': function () {
+      dialogSave: function () {
         var allow = true;
+
         if ( this.validatorNational() === false ) { allow = false }
         if ( this.validatorChineseName() === false ) { allow = false }
         if ( this.validatorPinyinName() === false ) { allow = false }
         if ( this.validatorBirthday() === false ) { allow = false }
         if ( this.validatorMobile() === false ) { allow = false }
         if (allow === false) { return }
+
+        var mobile;
+
+        if (this.isKid === 'N') {
+          mobile = this.mobile;
+        } else {
+          mobile = Info.data.mobile;
+        }
+
+        if (this.isDialogAdd) {
+          var customerInfoId = this.roomList[this.selectRoomNum].customerInfoList.length;
+
+          this.roomList[this.selectRoomNum].customerInfoList.push({
+            'id': customerInfoId,
+  
+            'roomId': this.roomId,
+            'customerId': this.customerId,
+            'isKid': this.isKid,
+  
+            'passportNo': this.passportNo,
+            'nationality': this.nationality,
+            'chineseName': this.chineseName,
+            'pinyinName': this.pinyinName,
+            'gender': this.gender,
+            'birthday': utilities.dateToYYYYMMDDFormat(this.birthday),
+            'age': utilities.dateToAge(this.birthday),
+            'mobile': mobile,
+            'email': Info.data.email,
+            'divingCount': this.divingCount,
+            'divingNo': this.divingNo,
+            'divingRank': this.divingRank,
+            'isDive': this.isDive ? 'Y' : 'N',
+            'lastDiveTime': this.lastDiveTime ? Date.parse(new Date(this.lastDiveTime)) : '',
+            'anamnesis': this.anamnesis
+          });
+
+        } else {
+          this.roomList[this.selectRoomNum].customerInfoList[this.dialogId] = {
+            'id': this.dialogId,
+  
+            'roomId': this.roomId,
+            'customerId': this.customerId,
+            'isKid': this.isKid,
+  
+            'passportNo': this.passportNo,
+            'nationality': this.nationality,
+            'chineseName': this.chineseName,
+            'pinyinName': this.pinyinName,
+            'gender': this.gender,
+            'birthday': utilities.dateToYYYYMMDDFormat(this.birthday),
+            'age': utilities.dateToAge(this.birthday),
+            'mobile': mobile,
+            'email': Info.data.email,
+            'divingCount': this.divingCount,
+            'divingNo': this.divingNo,
+            'divingRank': this.divingRank,
+            'isDive': this.isDive ? 'Y' : 'N',
+            'lastDiveTime': this.lastDiveTime ? Date.parse(new Date(this.lastDiveTime)) : '',
+            'anamnesis': this.anamnesis
+          };
+        }
+
         this.dialogVisible = false;
-      }
+      },
+
+      toPrev: function() {
+        Info.part_2.$data.isShow = true;
+        this.isShow = false;
+      },
+
+      toNext: function() {
+        var allow = true,
+            newRoomInfoList = [];
+        if (this.template === 3) {
+          if ( this.validatorIceName() === false ) { allow = false }
+          if ( this.validatorIceEmail() === false ) { allow = false }
+          if ( this.validatorIceMobile() === false ) { allow = false }
+          if ( this.iceRelation === null ) { allow = false }
+          if (allow === false) {
+            this.$message({ 'message': '紧急联系人相关信息未完善', 'type': 'warning' });
+            return
+          }
+        }
+
+        for (var i = 0; i < this.roomList.length; i++) {
+          if (this.roomList[i].bedType === null) {
+            allow = false;
+            this.$message({ 'message': '每间房间的床型是必选', 'type': 'warning' });
+            return
+          } else if (this.roomList[i].customerInfoList.length < 1) {
+            this.$message({ 'message': '每间房间必须至少有一名旅客信息', 'type': 'warning' });
+            return
+          }
+
+          var newCustomerInfoList = [];
+          for (var j = 0; j < this.roomList[i].customerInfoList.length; j++) {
+            var customerInfoList = this.roomList[i].customerInfoList[j];
+
+            newCustomerInfoList.push({
+              'roomId': customerInfoList.roomId,
+              'customerId': customerInfoList.customerId,
+              'isKid': customerInfoList.isKid,
+
+              'passportNo': customerInfoList.passportNo,
+              'nationality': customerInfoList.nationality,
+              'chineseName': customerInfoList.chineseName,
+              'pinyinName': customerInfoList.pinyinName,
+              'birthday': customerInfoList.birthday,
+              'age': customerInfoList.age,
+              'gender': customerInfoList.gender,
+              'email': customerInfoList.email,
+              'mobile': customerInfoList.mobile,
+              'isDive': customerInfoList.isDive,
+              'divingCount': customerInfoList.divingCount,
+              'divingNo': customerInfoList.divingNo,
+              'divingRank': customerInfoList.divingRank,
+              'lastDiveTime': customerInfoList.lastDiveTime,
+              'anamnesis': customerInfoList.anamnesis,
+            })
+          }
+
+          newRoomInfoList.push({
+            'infoId': this.roomList[i].infoId,
+            'roomId': this.roomList[i].roomId,
+            'bedType': this.roomList[i].bedType,
+
+            'iceEmail': this.iceEmail,
+            'iceMobile': this.iceMobile,
+            'iceName': this.iceName,
+            'iceRelation': this.iceRelation,
+            'newCustomerInfoList': newCustomerInfoList
+          });
+        }
+
+        if (allow === false) { return }
+
+        Info.data.roomInfoList = newRoomInfoList;
+      },
     },
   },
   inti: function(data, isFirst) {
@@ -1326,25 +1680,76 @@ var VuePart_3 = {
 
   renderRoom: function (data) {
     var roomInfoList = data.roomInfoList,
-        peopleNum = 0
+        lavePeopleNum = 0;
     var roomList = [
       // {
-      //   id: '0',
-      //   name: '房间1',
-      //   isSelected: true,
+      //   'id': 0,
+      //   'infoId': 122,
+      //   'roomId': 123,
+      //   'name': '房间1',
+      //   'bedType': null,
+      //   'bedOptions': [{
+      //     'value': '蜜月大床',
+      //     'label': '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)'
+      //   }],
+      //   'iceEmail': null,
+      //   'iceMobile': null,
+      //   'iceName': null,
+      //   'iceRelation': null,
+      //   'customerInfoList': [{
+      //     'id': 0,
+      //     'roomId': 123,
+      //     'isKid': "N",
+      //     'customerId': 145,
+      //     'passportNo': null,
+      //     'nationality': "MACAU CHINA",
+      //     'chineseName': "曾杰",
+      //     'pinyinName': "Zeng Jie",
+      //     'mobile': "15976713287",
+      //     'age': 45,
+      //     'email': "54454@qq.com",
+      //     'gender': 1,
+      //     'birthday': "1972-01-15",
+      //     'divingCount': null,
+      //     'divingNo': null,
+      //     'divingRank': null,
+      //     'isDive': "N",
+      //     'lastDiveTime': null,
+      //     'anamnesis': "无",
+      //   }]
       // }
     ];
     
     for (var i = 0; i < roomInfoList.length; i++) {
-      if (i === 0) {
-        roomList.push({
-          'id': i,
-          'name': ('房间' + (i + 1)),
-          'isSelected': true,
-        })
+      var mycustomerInfoList = [];
+
+      if (roomInfoList[i].customerInfoList.length > 0) {
+        lavePeopleNum += roomInfoList[i].customerInfoList.length;
+
+        for (var j = 0; j < roomInfoList[i].customerInfoList.length; j++) {
+          var temCustomerInfoList = roomInfoList[i].customerInfoList[j];
+
+          temCustomerInfoList.id = j;
+          mycustomerInfoList.push(temCustomerInfoList);
+        }
       }
+
+      roomList.push({
+        'id': i,
+        'infoId': roomInfoList[i].infoId,
+        'roomId': roomInfoList[i].roomId,
+        'name': ('房间' + (i + 1)),
+        'bedType': roomInfoList[i].bedType,
+        'bedOptions': utilities.renderBedOptions(data.template),
+        'iceEmail': roomInfoList[i].iceEmail,
+        'iceMobile': roomInfoList[i].iceMobile,
+        'iceName': roomInfoList[i].iceName,
+        'iceRelation': roomInfoList[i].iceRelation,
+        'customerInfoList': mycustomerInfoList
+      })
     }
-    this.Vue.data.lavePeopleNum = peopleNum;
+    this.Vue.data.peopleNum = data.peopleNum;
+    this.Vue.data.lavePeopleNum = lavePeopleNum;
     this.Vue.data.roomList = roomList;
   }
 
@@ -1352,6 +1757,212 @@ var VuePart_3 = {
 
 // 工具类
 var utilities = {
+  renderBedOptions: function (template) {
+    if (template === 1) {
+      return [
+        {
+          'value': '大床',
+          'label': '大床'
+        }, {
+          'value': '双床',
+          'label': '双床(仅园景房提供)'
+        }, {
+          'value': '蜜月大床',
+          'label': '蜜月大床(需半年内结婚证申请/含免费花瓣铺床，烛光晚餐)'
+        }, {
+          'value': '大床+单床',
+          'label': '大床+单床'
+        }, {
+          'value': '双床+单床',
+          'label': '双床+单床(仅园景房和半独立房提供)'
+        },
+      ]
+    } else if (template === 2) {
+      return [
+        {
+          'value': '大床',
+          'label': '大床'
+        }, {
+          'value': '双床',
+          'label': '双床'
+        }, {
+          'value': '大床+单床',
+          'label': '大床+单床(联排不可选)'
+        }, {
+          'value': '双床+单床',
+          'label': '双床+单床(联排不可选)'
+        }, {
+          'value': '大床+床垫',
+          'label': '大床+床垫(只限联排房间)'
+        }, {
+          'value': '双床+床垫',
+          'label': '双床+床垫(只限联排房间)'
+        }, {
+          'value': '蜜月大床',
+          'label': '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)'
+        }
+      ]
+    } else if (template === 3) {
+      return [
+        {
+          'value': '单床',
+          'label': '单床(仅一人入住可能选)'
+        }, {
+          'value': '大床',
+          'label': '大床'
+        }, {
+          'value': '双床',
+          'label': '双床'
+        }, {
+          'value': '大床+单床',
+          'label': '大床+单床'
+        }, {
+          'value': '双床+单床',
+          'label': '双床+单床'
+        }, {
+          'value': '蜜月布置大床',
+          'label': '蜜月布置大床(需要支付160马币/仅限入住当天)'
+        }
+      ]
+    } else if (template === 4) {
+      return [
+        {
+          'value': '单床',
+          'label': '单床(仅限四人间选)'
+        }, {
+          'value': '双床',
+          'label': '双床(二人间可选)'
+        }, {
+          'value': '大床',
+          'label': '大床(二人间可选)'
+        }
+      ]
+    } else if (template === 5) {
+      return [
+        {
+          'value': '大床',
+          'label': '大床'
+        }, {
+          'value': '双床',
+          'label': '双床'
+        }, {
+          'value': '蜜月大床',
+          'label': '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)'
+        }, {
+          'value': '大床+单床',
+          'label': '大床+单床'
+        }, {
+          'value': '双床+单床',
+          'label': '双床+单床'
+        }
+      ]
+    } else if (template === 6) {
+      return [
+        {
+          'value': '大床',
+          'label': '大床'
+        }, {
+          'value': '双床',
+          'label': '双床'
+        }, {
+          'value': '大床+单床',
+          'label': '大床+单床(联排不可选)'
+        }, {
+          'value': '双床+单床',
+          'label': '双床+单床(联排不可选)'
+        }, {
+          'value': '大床+床垫',
+          'label': '大床+床垫(只限联排房间)'
+        }, {
+          'value': '双床+床垫',
+          'label': '双床+床垫(只限联排房间)'
+        }, {
+          'value': '蜜月大床',
+          'label': '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)'
+        }
+      ]
+    } else if (template === 7) {
+      return [
+        {
+          'value': '大床',
+          'label': '大床'
+        }, {
+          'value': '双床',
+          'label': '双床'
+        }, {
+          'value': '蜜月大床',
+          'label': '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)'
+        }, {
+          'value': '大床+单床',
+          'label': '大床+单床'
+        }, {
+          'value': '双床+单床',
+          'label': '双床+单床'
+        }
+      ]
+    } else if (template === 8) {
+      return [
+        {
+          'value': '大床',
+          'label': '大床'
+        }, {
+          'value': '双床',
+          'label': '双床'
+        }, {
+          'value': '大床+单床',
+          'label': '大床+单床'
+        }, {
+          'value': '双床+单床',
+          'label': '双床+单床'
+        }, {
+          'value': '大床+床垫',
+          'label': '大床+床垫'
+        }, {
+          'value': '双床+床垫',
+          'label': '双床+床垫'
+        }, {
+          'value': '蜜月大床',
+          'label': '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)'
+        }
+      ]
+    } else if (template === 9) {
+      return [
+        {
+          'value': '单床',
+          'label': '单床'
+        }, {
+          'value': '大床',
+          'label': '大床'
+        }, {
+          'value': '双床',
+          'label': '双床'
+        }, {
+          'value': '大床+单床',
+          'label': '大床+单床'
+        }, {
+          'value': '双床+单床',
+          'label': '双床+单床'
+        }, {
+          'value': '蜜月大床',
+          'label': '蜜月布置大床(需要支付160马币/仅限入住当天)'
+        }
+      ]
+    } else {
+      return [
+        {
+          'value': '单床',
+          'label': '单床'
+        }, {
+          'value': '大床',
+          'label': '大床'
+        }, {
+          'value': '双床',
+          'label': '双床'
+        }
+      ]
+    }
+  },
+
   getDateAccurateToDay: function () {
     var myDate = new Date();
     return Date.parse(new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate()))
@@ -1361,6 +1972,7 @@ var utilities = {
     if (!data) { return null }
     return data - this.getDateAccurateToDay();
   },
+
   dateToYYYYMMDDString: function(data) {
     var yyyy = data.getFullYear();
 
@@ -1383,6 +1995,10 @@ var utilities = {
     dd = dd < 10 ? '0' + dd : dd;
 
     return '' + yyyy + '-' + mm + '-' + dd;
+  },
+
+  dateToAge: function (data) {
+    return new Date().getFullYear() - new Date(data).getFullYear();
   },
 
   renderNationality: function () {
