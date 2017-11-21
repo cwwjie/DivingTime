@@ -2,7 +2,7 @@ $(document).ready(function() {
   if (utilities.loadPageVar('productId')) {
     myProduct.id = utilities.loadPageVar('productId');
   } else {
-    alert('非常抱歉, 订单失效!');
+    alert('非常抱歉, 此产品失效或产品编号有误!');
     return
   }
 

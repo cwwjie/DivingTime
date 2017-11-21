@@ -1,6 +1,5 @@
 window.onload = function() {
-  if ( versionSupport.check() === false ) { return }
-
+  if ( utilities.isSupport() === false ) { return }
 
   Info.get()
     .then(
@@ -116,11 +115,19 @@ var Info = {
   'part_1': null,
   'part_2': null,
   'part_3': null,
+  'part_4': null,
   
   init: function () {
-    this.part_1 = new Vue(VuePart_1.inti(this.isFirst));
-    this.part_2 = new Vue(VuePart_2.inti(this.data, this.isFirst));
-    this.part_3 = new Vue(VuePart_3.inti(this.data, this.isFirst));
+    this.part_1 = new Vue(VuePart_1.init(this.data, this.isFirst));
+    this.part_2 = new Vue(VuePart_2.init(this.data, this.isFirst));
+    this.part_3 = new Vue(VuePart_3.init(this.data, this.isFirst));
+    this.part_4 = new Vue(VuePart_4.init(this.data, this.isFirst));
+    this.part_5 = new Vue(VuePart_5);
+    if (this.isFirst) {
+      this.part_1.$data.isShow = true;
+    } else {
+      this.part_2.$data.isShow = true;
+    }
   },
 
   get: function () {
@@ -138,7 +145,6 @@ var Info = {
   },
 
   dealwith: function (data) {
-
     if (data) {
       this.isFirst = false;
       return data
@@ -195,6 +201,14 @@ var Info = {
         ultimateData.roomInfoList.push(newRoomInfo());
       }
 
+      var myTempData = utilities.getInforData();
+      if (utilities.getInforData() && myTempData.orderDesc == basicData.orderDesc ) {
+        if (confirm('你有一份数据尚未填写完毕,请问你要继续填写这份数据吗?')) {
+          return myTempData;
+        }else {
+          return ultimateData;
+        }
+      }
       return ultimateData;
     }
 
@@ -210,6 +224,25 @@ var Info = {
         'customerInfoList': []
       }
     }
+  },
+
+  getAdminInfo: function() {
+    var basicData = JSON.parse(localStorage.getItem('loginSuccessful')),
+        token = localStorage.getItem('_token'),
+        digest = localStorage.getItem('_digest');
+
+    return fetch(URLbase + URLversion + '/admin/' + basicData.belongId + '/getAdminInfo.do',{
+      'method': 'GET',
+      'headers': {
+        'Content-Type': 'application/json; charset=utf-8'
+      }
+    }).then(
+      function(response) {
+        return response.json()
+      }, function(error) {
+        return { 'result': '1', 'message': error }
+      }
+    )
   }
 }
 
@@ -218,13 +251,14 @@ var VuePart_1 = {
     'el': '#part1',
 
     'data': {
-      'isShow': true,
+      'isShow': false,
       'checked': false
     },
 
     'methods': {
       toNext: function (event) {
         if (this.checked) {
+          Info.data.isRead = 'Y';
           this.isShow = false;
           Info.part_2.$data.isShow = true;
         } else {
@@ -232,18 +266,14 @@ var VuePart_1 = {
         }
       }
     }
-
   },
 
-  inti: function (isFirst) {
-    if (isFirst) {
-      this.Vue.data.isShow = true;
+  init: function (data, isFirst) {
+    if (data.isRead === 'Y') {
+      this.Vue.data.checked = true;
+    } else {
       this.Vue.data.checked = false;
-      return this.Vue;
     }
-
-    this.Vue.data.isShow = false;
-    this.Vue.data.checked = true;
     return this.Vue;
   },
 };
@@ -847,6 +877,7 @@ var VuePart_2 = {
       },
 
       checkErrors: function () {
+        var allow = true;
         if (!this.signName) {
           this.signNameError = '预定人姓名 不能为空';
           this.isSignNameError= true;
@@ -854,44 +885,46 @@ var VuePart_2 = {
             'message': '预定人姓名 不能为空',
             'type': 'warning'
           });
-          return false
+          allow =  false
         }
 
         if (!this.pinyinName) {
-          this.isPinyinNameError = '预定人拼音 不能为空';
-          this.pinyinNameError= true;
+          this.pinyinNameError = '预定人拼音 不能为空';
+          this.isPinyinNameError = true;
           this.$message({
             'message': '预定人拼音 不能为空',
             'type': 'warning'
           });
-          return false
+          allow =  false
         }
 
         if (!this.mobile) {
           this.mobileError = '手机号码 不能为空';
-          this.isMobileError= true;
+          this.isMobileError = true;
           this.$message({
             'message': '手机号码 不能为空',
             'type': 'warning'
           });
-          return false
+          allow =  false
         }
 
         if (!this.email) {
-          this.emailError = '手机号码 不能为空';
+          this.emailError = '邮箱 不能为空';
           this.isEmailError = true;
           this.$message({
-            'message': '手机号码 不能为空',
+            'message': '邮箱 不能为空',
             'type': 'warning'
           });
-          return false
+          allow =  false
         }
 
+        if (allow === false) { return false }
+
         if (
-          !this.isSignNameError ||
-          !this.isPinyinNameError ||
-          !this.isMobileError ||
-          !this.isEmailError
+          this.isSignNameError ||
+          this.isPinyinNameError ||
+          this.isMobileError ||
+          this.isEmailError
         ) {
           this.$message({
             'message': '数据有误',
@@ -903,7 +936,7 @@ var VuePart_2 = {
       },
 
       toNext: function() {
-        if (!this.checkErrors) { return }
+        if (!this.checkErrors()) { return }
 
         Info.data.signName = this.signName;
         Info.data.pinyinName = this.pinyinName;
@@ -934,6 +967,7 @@ var VuePart_2 = {
         this.isShow = false;
         Info.part_3.$data.isShow = true;
 
+        utilities.saveInforData();
         if (Info.isFirst) {
           Info.part_3.$data.dialogVisible = true;
           Info.part_3.$data.isDialogAdd = true;
@@ -951,7 +985,7 @@ var VuePart_2 = {
     }
   },
 
-  inti: function (data, isFirst) {
+  init: function (data, isFirst) {
 
     this.initOrderinfor(data);
     this.initExtra();
@@ -962,36 +996,33 @@ var VuePart_2 = {
     this.Vue.data.flightinfor.checkOut = utilities.dateToYYYYMMDDFormat(new Date(data.checkOut));
     this.Vue.data.flightinfor.cycleLength = '' + (cycleLength + 1) + '天' + cycleLength + '晚';
 
-    if (isFirst) {
+    // 下单信息
+    this.Vue.data.signName = data.signName;
+    this.Vue.data.pinyinName = data.pinyinName;
+    this.Vue.data.mobile = data.mobile;
+    this.Vue.data.email = data.email;
+    this.Vue.data.payAccount = data.payAccount;
+    // 航班信息
+    this.Vue.data.landDate = data.landDate;
+    this.Vue.data.outboundNum = data.outboundNum;
+    this.Vue.data.landTime = data.landTime;
 
-    } else {
-      // 下单信息
-      this.Vue.data.signName = data.signName;
-      this.Vue.data.pinyinName = data.pinyinName;
-      this.Vue.data.mobile = data.mobile;
-      this.Vue.data.email = data.email;
-      this.Vue.data.payAccount = data.payAccount;
-      // 航班信息
-      this.Vue.data.landDate = data.landDate;
-      this.Vue.data.outboundNum = data.outboundNum;
-      this.Vue.data.landTime = data.landTime;
+    this.Vue.data.hLandDate = data.hLandDate;
+    this.Vue.data.inHarbourNum = data.inHarbourNum;
+    this.Vue.data.hLandTime = data.hLandTime;
+    
+    this.Vue.data.hTakeoffDate = data.hTakeoffDate;
+    this.Vue.data.outHarbourNum = data.outHarbourNum;
+    this.Vue.data.hTakeoffTime = data.hTakeoffTime;
 
-      this.Vue.data.hLandDate = data.hLandDate;
-      this.Vue.data.inHarbourNum = data.inHarbourNum;
-      this.Vue.data.hLandTime = data.hLandTime;
-      
-      this.Vue.data.hTakeoffDate = data.hTakeoffDate;
-      this.Vue.data.outHarbourNum = data.outHarbourNum;
-      this.Vue.data.hTakeoffTime = data.hTakeoffTime;
+    this.Vue.data.takeoffDate = data.takeoffDate;
+    this.Vue.data.inboundNum = data.inboundNum;
+    this.Vue.data.takeoffTime = data.takeoffTime;
 
-      this.Vue.data.takeoffDate = data.takeoffDate;
-      this.Vue.data.inboundNum = data.inboundNum;
-      this.Vue.data.takeoffTime = data.takeoffTime;
+    this.Vue.data.flightNote = data.flightNote;
 
-      this.Vue.data.flightNote = data.flightNote;
+    this.initAttachmentList(data);
 
-      this.initAttachmentList(data);
-    }
     return this.Vue;
   },
 
@@ -1022,46 +1053,51 @@ var VuePart_2 = {
     var basicData = JSON.parse(localStorage.getItem('loginSuccessful'));
     if (!basicData.present) {
       this.Vue.data.extra.isHave = false;
-    } else if (basicData.present === '1') {
+    } else {
       this.Vue.data.extra.isHave = true;
-      this.Vue.data.extra.isHaveInsurance = true;
-      this.Vue.data.extra.insurance = '' + utilities.dateToYYYYMMDDFormat(new Date(basicData.insuranceBegin)) + ' 至 ' + utilities.dateToYYYYMMDDFormat(new Date(basicData.insuranceEnd));
-    } else if (basicData.present === '2') {
-      this.Vue.data.extra.isHave = true;
-      this.Vue.data.extra.isHaveTransfers = true;
-      this.Vue.data.extra.isHaveTransfers = basicData.transfersInfo;
-    } else if (basicData.present === '1,2') {
-      this.Vue.data.extra.isHave = true;
-      this.Vue.data.extra.isHaveTransfers = true;
-      this.Vue.data.extra.isHaveInsurance = true;
-      this.Vue.data.extra.isHaveTransfers = basicData.transfersInfo;
-      this.Vue.data.extra.insurance = '' + utilities.dateToYYYYMMDDFormat(new Date(basicData.insuranceBegin)) + ' 至 ' + utilities.dateToYYYYMMDDFormat(new Date(basicData.insuranceEnd));
+
+      if (basicData.present === '1') {
+        this.Vue.data.extra.isHaveInsurance = true;
+        this.Vue.data.extra.insurance = '' + utilities.dateToYYYYMMDDFormat(new Date(basicData.insuranceBegin)) + ' 至 ' + utilities.dateToYYYYMMDDFormat(new Date(basicData.insuranceEnd));
+      } else if (basicData.present === '2') {
+        this.Vue.data.extra.isHaveTransfers = true;
+        this.Vue.data.extra.transfers = basicData.transfersInfo;
+      } else if (basicData.present === '1,2') {
+        this.Vue.data.extra.isHaveTransfers = true;
+        this.Vue.data.extra.isHaveInsurance = true;
+        this.Vue.data.extra.transfers = basicData.transfersInfo;
+        this.Vue.data.extra.insurance = '' + utilities.dateToYYYYMMDDFormat(new Date(basicData.insuranceBegin)) + ' 至 ' + utilities.dateToYYYYMMDDFormat(new Date(basicData.insuranceEnd));
+      }
+      
     }
+    
   },
 
   initAttachmentList: function(data) {
     if (data.template === 3) {
-      this.Vue.data.annex.attachmentList = data.attachmentList;
-      for (var i = 0; i < data.attachmentList.length; i++) {
-        if (data.attachmentList[i] === 'PT1') {
+      var myattachmentList = data.attachmentList || []
+
+      this.Vue.data.annex.attachmentList = myattachmentList;
+      for (var i = 0; i < myattachmentList.length; i++) {
+        if (myattachmentList[i] === 'PT1') {
           this.Vue.data.annex.fileListPT1 = [{
             'name': '出国航班机票截图',
-            'url': URLbase + data.attachmentList[i].attachThumb
+            'url': URLbase + myattachmentList[i].attachThumb
           }];
-        } else if (data.attachmentList[i] === 'PT2') {
+        } else if (myattachmentList[i] === 'PT2') {
           this.Vue.data.annex.fileListPT2 = [{
             'name': '回国航班机票截图',
-            'url': URLbase + data.attachmentList[i].attachThumb
+            'url': URLbase + myattachmentList[i].attachThumb
           }];
-        } else if (data.attachmentList[i] === 'PT3') {
+        } else if (myattachmentList[i] === 'PT3') {
           this.Vue.data.annex.fileListPT3 = [{
             'name': '到达斗湖航班机票截图',
-            'url': URLbase + data.attachmentList[i].attachThumb
+            'url': URLbase + myattachmentList[i].attachThumb
           }];
-        } else if (data.attachmentList[i] === 'PT4') {
+        } else if (myattachmentList[i] === 'PT4') {
           this.Vue.data.annex.fileListPT4 = [{
             'name': '离开斗湖航班机票截图',
-            'url': URLbase + data.attachmentList[i].attachThumb
+            'url': URLbase + myattachmentList[i].attachThumb
           }];
         }
       }
@@ -1074,7 +1110,7 @@ var VuePart_3 = {
     'el': '#part3',
 
     'data': {
-      'isShow': true,
+      'isShow': false,
       'template': null,
 
       'peopleNum': 0,
@@ -1231,11 +1267,25 @@ var VuePart_3 = {
 
       'iceMobile': {
         handler: function (val, oldVal) { this.validatorIceMobile() }
+      },
+
+      'iceRelation': {
+        handler: function (val, oldVal) { 
+          if (val !== null) { this.iceRelationAddition = { 'isError': false, 'message': '' } }
+        }
       }
     },
 
     'methods': {
       addTraveler: function (isKid) {
+        if ((this.peopleNum - this.lavePeopleNum) <= 0) {
+          this.$alert('已达到最大入住人数', '通知', {
+            confirmButtonText: '确定',
+            callback: action => {return false}
+          });
+          return
+        }
+
         this.isDialogAdd = true;
         this.isKid = isKid;
         this.dialogId = null;
@@ -1317,7 +1367,7 @@ var VuePart_3 = {
               newTravelerId++;
             }
           }
-  
+          this.lavePeopleNum--;
           _this.roomList[_this.selectRoomNum].customerInfoList = newcustomerInfoList;
         }).catch(() => {
           this.$message({
@@ -1588,6 +1638,7 @@ var VuePart_3 = {
           };
         }
 
+        this.lavePeopleNum++;
         this.dialogVisible = false;
       },
 
@@ -1601,9 +1652,14 @@ var VuePart_3 = {
             newRoomInfoList = [];
         if (this.template === 3) {
           if ( this.validatorIceName() === false ) { allow = false }
-          if ( this.validatorIceEmail() === false ) { allow = false }
+          // if ( this.validatorIceEmail() === false ) { allow = false }
           if ( this.validatorIceMobile() === false ) { allow = false }
-          if ( this.iceRelation === null ) { allow = false }
+          if ( this.iceRelation === null ) {
+            allow = false;
+            this.iceRelationAddition = { 'isError': true, 'message': '请选择紧急联系人关系' }
+          } else {
+            this.iceRelationAddition = { 'isError': false, 'message': '' }
+          }
           if (allow === false) {
             this.$message({ 'message': '紧急联系人相关信息未完善', 'type': 'warning' });
             return
@@ -1616,6 +1672,7 @@ var VuePart_3 = {
             this.$message({ 'message': '每间房间的床型是必选', 'type': 'warning' });
             return
           } else if (this.roomList[i].customerInfoList.length < 1) {
+            allow = false;
             this.$message({ 'message': '每间房间必须至少有一名旅客信息', 'type': 'warning' });
             return
           }
@@ -1656,29 +1713,30 @@ var VuePart_3 = {
             'iceMobile': this.iceMobile,
             'iceName': this.iceName,
             'iceRelation': this.iceRelation,
-            'newCustomerInfoList': newCustomerInfoList
+            'customerInfoList': newCustomerInfoList
           });
         }
 
         if (allow === false) { return }
 
         Info.data.roomInfoList = newRoomInfoList;
+        utilities.saveInforData();
+        this.isShow = false;
+        Info.part_4.$data.isShow = true;
       },
     },
   },
-  inti: function(data, isFirst) {
+  init: function(data, isFirst) {
     this.Vue.data.template = data.template;
     this.Vue.data.nationaOptions = utilities.renderNationality();
 
-    this.renderRoom(data);
-    if (isFirst) {
-
-    }
+    this.initRoom(data);
+    // if (isFirst) { }
 
     return this.Vue;
   },
 
-  renderRoom: function (data) {
+  initRoom: function (data) {
     var roomInfoList = data.roomInfoList,
         lavePeopleNum = 0;
     var roomList = [
@@ -1719,41 +1777,280 @@ var VuePart_3 = {
       //   }]
       // }
     ];
-    
-    for (var i = 0; i < roomInfoList.length; i++) {
-      var mycustomerInfoList = [];
 
-      if (roomInfoList[i].customerInfoList.length > 0) {
-        lavePeopleNum += roomInfoList[i].customerInfoList.length;
+    if (roomInfoList.length > 0) {
+      this.Vue.data.iceName = roomInfoList[0].iceName;
+      this.Vue.data.iceEmail = roomInfoList[0].iceEmail;
+      this.Vue.data.iceMobile = roomInfoList[0].iceMobile;
+      this.Vue.data.iceRelation = roomInfoList[0].iceRelation;
 
-        for (var j = 0; j < roomInfoList[i].customerInfoList.length; j++) {
-          var temCustomerInfoList = roomInfoList[i].customerInfoList[j];
-
-          temCustomerInfoList.id = j;
-          mycustomerInfoList.push(temCustomerInfoList);
+      for (var i = 0; i < roomInfoList.length; i++) {
+        var mycustomerInfoList = [];
+  
+        if (roomInfoList[i].customerInfoList.length > 0) {
+          // 计算以入住的人数
+          lavePeopleNum += roomInfoList[i].customerInfoList.length;
+  
+          for (var j = 0; j < roomInfoList[i].customerInfoList.length; j++) {
+            var temCustomerInfoList = JSON.parse(JSON.stringify(roomInfoList[i].customerInfoList[j]));
+  
+            temCustomerInfoList.id = j;
+            mycustomerInfoList.push(temCustomerInfoList);
+          }
         }
+  
+        roomList.push({
+          'id': i,
+          'infoId': roomInfoList[i].infoId,
+          'roomId': roomInfoList[i].roomId,
+          'name': ('房间' + (i + 1)),
+          'bedType': roomInfoList[i].bedType,
+          'bedOptions': utilities.renderBedOptions(data.template),
+          'iceEmail': roomInfoList[i].iceEmail,
+          'iceMobile': roomInfoList[i].iceMobile,
+          'iceName': roomInfoList[i].iceName,
+          'iceRelation': roomInfoList[i].iceRelation,
+          'customerInfoList': mycustomerInfoList
+        })
       }
-
-      roomList.push({
-        'id': i,
-        'infoId': roomInfoList[i].infoId,
-        'roomId': roomInfoList[i].roomId,
-        'name': ('房间' + (i + 1)),
-        'bedType': roomInfoList[i].bedType,
-        'bedOptions': utilities.renderBedOptions(data.template),
-        'iceEmail': roomInfoList[i].iceEmail,
-        'iceMobile': roomInfoList[i].iceMobile,
-        'iceName': roomInfoList[i].iceName,
-        'iceRelation': roomInfoList[i].iceRelation,
-        'customerInfoList': mycustomerInfoList
-      })
     }
+    
     this.Vue.data.peopleNum = data.peopleNum;
     this.Vue.data.lavePeopleNum = lavePeopleNum;
     this.Vue.data.roomList = roomList;
   }
 
 }  
+
+var VuePart_4 = {
+  'Vue': {
+    'el': '#part4',
+
+    'data': {
+      'isShow': false,
+      'template': null,
+      'isFirst': null,
+    },
+
+    'methods': {
+      toPrev: function () {
+        this.isShow = false;
+        Info.part_3.$data.isShow = true;
+      },
+
+      toNext: function () {
+        var _this = this,
+            loadingInstance = this.$loading({
+              fullscreen: true,
+              background: 'rgba(0, 0, 0, 0.74)',
+              text: '正在提交...'
+            });
+        this.isShow = false;
+        if (this.isFirst) {
+          this.ajaxSubmit(Info.data)
+          .then(function (val) {
+            if (val.result == '0') {
+              Info.part_5.$data.isSuccess = true;
+              Info.part_5.$data.message = '您的信息已提交，并已邮件的形式通知客服!';
+              Info.part_5.$data.reason = '请注意关注相关信息！谢谢！';
+            } else if (val.result == '2') {
+              Info.part_5.$data.isSuccess = false;
+              Info.part_5.$data.message = '非常抱歉，该链接已经失效!';
+              Info.part_5.$data.reason = val.message;
+            } else if (val.result == '3') {
+              Info.part_5.$data.isSuccess = false;
+              Info.part_5.$data.message = '非常抱歉，无法进行数据修改!';
+              Info.part_5.$data.reason = val.message;
+            } else if (val.result == '100') {
+              Info.part_5.$data.isSuccess = false;
+              Info.part_5.$data.message = '非常抱歉，数据在提交时发生错误!';
+              Info.part_5.$data.reason = '原因: ' + val.message;
+            } else {
+              Info.part_5.$data.isSuccess = false;
+              Info.part_5.$data.message = '非常抱歉，服务器返回一个错误!';
+              Info.part_5.$data.reason = '错误代码: ' + val.message;
+            }
+            loadingInstance.close();
+            Info.part_5.$data.isShow = true;
+          }).catch(function (error) { 
+            Info.part_5.$data.isSuccess = false;
+            Info.part_5.$data.message = '非常抱歉，数据在提交时发生错误!';
+            Info.part_5.$data.reason = '原因: ' + error;
+            loadingInstance.close();
+            Info.part_5.$data.isShow = true;
+          });
+        }
+
+        this.ajaxUpdate(Info.data)
+          .then(function (val) {
+            if (val.result == '0') {
+              Info.part_5.$data.isSuccess = true;
+              Info.part_5.$data.message = '恭喜你的信息提交成功!';
+              Info.part_5.$data.reason = '';
+            } else if (val.result == '2') {
+              Info.part_5.$data.isSuccess = false;
+              Info.part_5.$data.message = '非常抱歉，该链接已经失效!';
+              Info.part_5.$data.reason = val.message;
+            } else if (val.result == '3') {
+              Info.part_5.$data.isSuccess = false;
+              Info.part_5.$data.message = '非常抱歉，无法进行数据修改!';
+              Info.part_5.$data.reason = val.message;
+            } else if (val.result == '100') {
+              Info.part_5.$data.isSuccess = false;
+              Info.part_5.$data.message = '非常抱歉，数据在提交时发生错误!';
+              Info.part_5.$data.reason = '原因: ' + val.message;
+            } else {
+              Info.part_5.$data.isSuccess = false;
+              Info.part_5.$data.message = '非常抱歉，服务器返回一个错误!';
+              Info.part_5.$data.reason = '错误代码: ' + val.message;
+            }
+            loadingInstance.close();
+            Info.part_5.$data.isShow = true;
+          }).catch(function (error) { 
+            Info.part_5.$data.isSuccess = false;
+            Info.part_5.$data.message = '非常抱歉，数据在提交时发生错误!';
+            Info.part_5.$data.reason = '原因: ' + error;
+            loadingInstance.close();
+            Info.part_5.$data.isShow = true;
+          });
+      },
+
+      ajaxUpdate: function (data) {
+        var uniqueKey = localStorage.getItem('_uniqueKey'),
+            token = localStorage.getItem('_token'),
+            digest = localStorage.getItem('_digest');
+  
+        // return new Promise(function (resolve, reject) {
+        //   $.ajax({ 
+        //     'type': 'POST', 
+        //     'url': URLbase + URLversion + '/gather/'+ uniqueKey +'/updateForm.do', 
+        //     'contentType':'application/json; charset=utf-8',  
+        //     'headers': {
+        //       'token': token,
+        //       'digest': digest
+        //     },
+        //     'data': JSON.stringify(data),
+        //     'dataType': 'json',
+        //     success: function (val) {
+        //       resolve(val);
+        //     },
+        //     error: function (XMLHttpRequest, textStatus, errorThrown) {
+        //       resolve({ 'result': '100', 'message': errorThrown });
+        //     }
+        //   })
+        // });
+        return fetch(URLbase + URLversion + '/gather/'+ uniqueKey +'/updateForm.do', {
+          'method': 'POST',
+          'headers': {
+            'Content-Type': 'application/json; charset=utf-8',
+            'token': token,
+            'digest': digest
+          },
+          'body': JSON.stringify(data)
+        }).then(
+          function(response) {
+            return response.json()
+          }, function(error) {
+            return { 'result': '100', 'message': error }
+          }
+        )
+      },
+
+      ajaxSubmit: function (data) {
+        var uniqueKey = localStorage.getItem('_uniqueKey'),
+            token = localStorage.getItem('_token'),
+            digest = localStorage.getItem('_digest');
+  
+        // return new Promise(function (resolve, reject) {
+        //   $.ajax({ 
+        //     'type': 'POST', 
+        //     'url': URLbase + URLversion + '/gather/'+ uniqueKey +'/gather.do', 
+        //     'contentType': 'application/json; charset=utf-8',  
+        //     'headers': {
+        //       'token': token,
+        //       'digest': digest
+        //     },
+        //     'data': JSON.stringify(data),
+        //     'dataType': 'json',
+        //     success: function (val) {
+        //       resolve(val);
+        //     },
+        //     error: function (XMLHttpRequest, textStatus, errorThrown) {
+        //       resolve({ 'result': '100', 'message': errorThrown });
+        //     }
+        //   })
+        // });
+  
+        return fetch(URLbase + URLversion + '/gather/'+ uniqueKey +'/gather.do', {
+          'method': 'POST',
+          'headers': {
+            'Content-Type': 'application/json; charset=utf-8',
+            'token': token,
+            'digest': digest
+          },
+          'body': JSON.stringify(data)
+        }).then(
+          function(response) {
+            return response.json()
+          }, function(error) {
+            return { 'result': '100', 'message': error }
+          }
+        )
+      }
+    }
+
+  },
+
+  init: function (data, isFirst) {
+    this.Vue.data.template = data.template;
+    this.Vue.data.isFirst = isFirst;
+
+    return this.Vue;
+  },
+}
+
+var VuePart_5 = {
+  'el': '#part5',
+
+  'data': {
+    'isShow': false,
+    'isSuccess': false,
+    'message': '恭喜你信息提交成功!',
+    'reason': '',
+  },
+
+  'methods': {
+    showSuccessMessage: function () {
+			location = "./view/index.html";
+    },
+
+    clipboard: function () {
+      var _this = this;
+      document.getElementById('clipboard').setAttribute(
+        'data-clipboard-text',
+        JSON.stringify(Info.data)
+      );
+      var clipboard = new Clipboard('#clipboard');
+
+      clipboard.on('success', function(e) {
+        _this.$message({
+          message: '你已成功复制错误数据',
+          type: 'success'
+        });
+        e.clearSelection();
+      });
+      
+      clipboard.on('error', function(e) {
+        _this.$message.error('复制错误数据失败');
+      });
+    },
+
+    backtrack: function() {
+      this.isShow = false;
+      Info.part_2.$data.isShow = true;
+    }
+  }
+}
 
 // 工具类
 var utilities = {
@@ -2056,5 +2353,57 @@ var utilities = {
         'label': '荷兰 NETHERLANDS'
       }
     ]
-  }
+  },
+
+  saveInforData: function () {
+    var tempData = {};
+    tempData.time = Date.parse(new Date());
+    tempData.data = Info.data;
+    localStorage.setItem("Final_DATA", JSON.stringify(tempData));
+  },
+
+  getInforData: function () {
+		var timeNow = Date.parse(new Date()),
+			  mydataString = localStorage.getItem("Final_DATA");
+		// 如果数据不存在
+		if (!mydataString) {
+			return false;
+		}
+		var mydata = JSON.parse(mydataString),
+			dataTime = parseInt(mydata.time);
+		// 如果数据超时
+		if ( timeNow > (dataTime + 3600000) ) {
+			this.clear();
+			return false;
+		}else {
+			return mydata.data;
+		}
+  },
+
+  clearInforData: function () {
+		localStorage.setItem("Final_DATA","");
+  },
+
+  isSupport: function() {
+    if (isIE(6) || isIE(7) || isIE(8)) {
+      alert('因为IE8（及以下）由于存在安全风险，已被本站禁止，请升级到IE11或使用Chrome浏览器。')
+      return false
+    }
+
+    var storage = window.localStorage;
+    try {
+      storage.setItem('test', 'testValue');
+      storage.removeItem('test');
+    } catch (error) {
+      alert('非常抱歉，暂不支持此浏览器，请更换您的浏览器或联系客服。');
+      return false
+    }
+    return true
+
+    function isIE(ver) {
+      var b = document.createElement('b');
+      b.innerHTML = '<!--[if IE ' + ver + ']><i></i><![endif]-->';
+      return b.getElementsByTagName('i').length === 1;
+    }
+  },
 }

@@ -111,7 +111,7 @@
             <div class="transfers-desc">
               接送: <span>(1次往返亚庇机场--市区酒店的接送,免费接机时间段为6:05-21:55，超出时间需另付35元)</span>
             </div>
-            <div class="transfers-info">暂无接送信息...</div>
+            <div class="transfers-info">{{extra.transfers}}</div>
           </div>
         </div>
       </div>
@@ -121,31 +121,31 @@
         <div class="part2-content">
           <div class="row">
             <div class="col-6">
-              <input type="text" v-model="signName" v-bind:class="isSignNameError ? 'inputerror' : ''" name="signName" placeholder='请补充信息'>
+              <input type="text" v-model="signName" v-bind:class="isSignNameError ? 'inputerror' : ''" name="signName" placeholder='请填写预定人姓名'>
               <label for="signName">预定人姓名(必填)</label>
               <div class="error">{{signNameError}}</div>
             </div>
             <div class="col-6">
-              <input type="text" v-model="pinyinName" v-bind:class="isPinyinNameError ? 'inputerror' : ''" name="pinyinName" placeholder='请补充信息'>
+              <input type="text" v-model="pinyinName" v-bind:class="isPinyinNameError ? 'inputerror' : ''" name="pinyinName" placeholder='请填写预定人拼音'>
               <label for="pinyinName">预定人拼音(必填)</label>
               <div class="error">{{pinyinNameError}}</div>
             </div>
           </div>
           <div class="row">
             <div class="col-6">
-              <input type="text"v-model="mobile" v-bind:class="isMobileError ? 'inputerror' : ''"  name="mobile" placeholder='请补充信息'>
+              <input type="text"v-model="mobile" v-bind:class="isMobileError ? 'inputerror' : ''"  name="mobile" placeholder='请填写预定人预定人手机号码/电话'>
               <label for="mobile">预定人手机号码/电话(必填)</label>
               <div class="error">{{mobileError}}</div>
             </div>
             <div class="col-6">
-              <input type="text"v-model="email" v-bind:class="isEmailError ? 'inputerror' : ''"  name="email" placeholder='请补充信息'>
+              <input type="text"v-model="email" v-bind:class="isEmailError ? 'inputerror' : ''"  name="email" placeholder='请填写预定人邮箱'>
               <label for="email">预定人邮箱(必填)</label>
               <div class="error">{{emailError}}</div>
             </div>
           </div>
           <div class="row">
             <div class="col-12">
-              <input type="text"v-model="payAccount" v-bind:class="isPayAccountError ? 'inputerror' : ''"  name="payAccount" placeholder='请补充信息'>
+              <input type="text"v-model="payAccount" v-bind:class="isPayAccountError ? 'inputerror' : ''"  name="payAccount" placeholder='请填写付款人账号'>
               <label for="payAccount">付款人账号(淘宝/支付宝/微信)</label>
               <div class="error">{{payAccountError}}</div>
             </div>
@@ -614,13 +614,13 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-5" v-bind:class="iceEmailAddition.isError ? 'dialog-error' : ''">
+          <!-- <div class="col-5" v-bind:class="iceEmailAddition.isError ? 'dialog-error' : ''">
             <div>紧急联系人邮箱(必填):</div>
             <el-input v-model="iceEmail" placeholder="请输入紧急联系人邮箱"></el-input>
             <div class="input-descr">{{iceEmailAddition.message}}</div>
           </div>
-          <div class="col-1"></div>
-          <div class="col-6" v-bind:class="iceRelationAddition.isError ? 'dialog-error' : ''">
+          <div class="col-1"></div> -->
+          <div class="col-12" v-bind:class="iceRelationAddition.isError ? 'dialog-error' : ''">
             <div>紧急联系人关系(必选):</div>
             <el-select
               v-model="iceRelation" 
@@ -887,6 +887,174 @@
       <div v-on:click="toNext" class="control-next no-select">下一步 →</div>
     </div>
   </div>
+
+  <div id="part4" class="part4 main" v-if="isShow">
+    <div class="main-content">
+      <div class="part4-title">特别注意</div>
+
+      <div class="part4-Refundinstruction">
+
+        <div class="Refundinstruction-1" v-if="template === 1 || template === 4 || template === 5 || template === 8">
+          <div class="Refundinstruction-content">
+            <div class="Refundinstruction-title">1. 退款说明：</div>
+            <div class="row">· 预定成功后定金不退，退订扣除定金（入住前46天补余款）</div>
+            <div class="row">· 入住前35天以上退订，需要扣除全款的30%</div>
+            <div class="row">· 入住前34-16天退订，需要扣除全款的50%</div>
+            <div class="row">· 入住前15-8天退订，需要扣除全款的75%</div>
+            <div class="row">· 入住前7-入住日，扣除100%全款。</div>
+          </div>
+          <div class="Refundinstruction-content Refundinstruction-title">2. 因各个度假村上岛时间及接送安排不同，预定机票时请咨询我们的顾问</div>
+          <div class="Refundinstruction-content">
+            <div class="Refundinstruction-title">3. 免责声明：</div>
+            <div class="row">我们对自身掌控范围之外的原因直接或间接给客人造成的延迟、额外费用或不便不承担责任</div>
+          </div>
+          <div class="Refundinstruction-content">具体请参考潜游时光淘宝店里“政策说明”页面</div>
+          <div class="Refundinstruction-content" style="color: red">如您在本店铺支付了预订款项，代表您已同意以上政策，谢谢理解</div>
+        </div>
+
+        <div class="Refundinstruction-2" v-if="template === 2 || template === 6">
+          <div class="Refundinstruction-content">
+            <div class="Refundinstruction-title">1. 退款说明：</div>
+            <div class="row">· 预定成功后定金不退，退订扣除定金（入住前46天补余款）</div>
+            <div class="row">· 入住前45-36天以上退订，需要扣除全款的30%</div>
+            <div class="row">· 入住前34-16天退订，需要扣除全款的50%</div>
+            <div class="row">· 入住前15-8天退订，需要扣除全款的75%</div>
+            <div class="row">· 入住前7-入住日，扣除100%全款</div>
+          </div>
+          <div class="Refundinstruction-content Refundinstruction-title">2. 因各个度假村上岛时间及接送安排不同，预定机票时请咨询我们的顾问</div>
+          <div class="Refundinstruction-content">
+            <div class="Refundinstruction-title">3. 免责声明：</div>
+            <div class="row">我们对自身掌控范围之外的原因直接或间接给客人造成的延迟、额外费用或不便不承担责任</div>
+          </div>
+          <div class="Refundinstruction-content">具体请参考潜游时光淘宝店里“政策说明”页面</div>
+          <div class="Refundinstruction-content" style="color: red">如您在本店铺支付了预订款项，代表您已同意以上政策，谢谢理解</div>
+        </div>
+
+        <div class="Refundinstruction-3" v-if="template === 3 || template === 9">
+          <div class="Refundinstruction-content">
+            <div class="Refundinstruction-title">1. 退款说明：</div>
+            <div class="row">· 预定成功后定金不退，退订扣除定金（入住前35天补余款）</div>
+            <div class="row">· 入住前34-16天退订，需要扣除全款的30%</div>
+            <div class="row">· 入住前15-8天退订，需要扣除全款的50%</div>
+            <div class="row">· 入住前7-入住日，扣除100%全款</div>
+            <div class="row">· 入住当天退订，需要扣除100%全款</div>
+          </div>
+          <div class="Refundinstruction-content Refundinstruction-title">2. 因各个度假村上岛时间及接送安排不同，预定机票时请咨询我们的顾问</div>
+          <div class="Refundinstruction-content">
+            <div class="Refundinstruction-title">3. 免责声明：</div>
+            <div class="row">我们对自身掌控范围之外的原因直接或间接给客人造成的延迟、额外费用或不便不承担责任</div>
+          </div>
+          <div class="Refundinstruction-content">具体请参考潜游时光淘宝店里“政策说明”页面</div>
+          <div class="Refundinstruction-content" style="color: red">如您在本店铺支付了预订款项，代表您已同意以上政策，谢谢理解</div>
+        </div>
+
+        <div class="Refundinstruction-4" v-if="template === 7">
+          <div class="Refundinstruction-content">
+            <div class="Refundinstruction-title">1. 退款说明：</div>
+            <div class="row">· 预定成功后定金不退，退订扣除定金（入住前35天补余款）</div>
+            <div class="row">· 入住前34-16天退订，需要扣除全款的30%</div>
+            <div class="row">· 入住前15-天退订，扣除100%全款</div>
+          </div>
+          <div class="Refundinstruction-content Refundinstruction-title">2. 因各个度假村上岛时间及接送安排不同，预定机票时请咨询我们的顾问</div>
+          <div class="Refundinstruction-content">
+            <div class="Refundinstruction-title">3. 免责声明：</div>
+            <div class="row">我们对自身掌控范围之外的原因直接或间接给客人造成的延迟、额外费用或不便不承担责任</div>
+          </div>
+          <div class="Refundinstruction-content">具体请参考潜游时光淘宝店里“政策说明”页面</div>
+          <div class="Refundinstruction-content" style="color: red">如您在本店铺支付了预订款项，代表您已同意以上政策，谢谢理解</div>
+        </div>
+
+      </div>
+      <div class="part4-Related">
+
+        <div class="Related-1" v-if="template === 1">
+          <div class="Related-title">关于诗巴丹：</div>
+          <div class="row">1、船费（不含6%消费税）：一人1200马币，2人600马币/人，3人400马币/人，4人300马币/人，5人260马币/人，6或7人230马币/人</div>
+          <div class="row">2、拼船价格需当天依度假村的具体安排为准</div>
+          <div class="row">3、诗巴丹名额一经预约（预订房间时让客服帮忙预约），就不可取消，你到达度假村后，都需要支付这个费用，务必考虑清楚</div>
+          <div class="row">4、诗巴丹名船费在马达京现付，预约成功，是不能取消不付费的</div>
+          <div class="row">5、诗巴丹上岛费40马币（不含6%消费税）每人需现付</div>
+          <div class="row">6、马达京到诗巴丹船程约80分钟</div>
+        </div>
+
+        <div class="Related-2" v-if="template === 8">
+          <div class="Related-title">关于诗巴丹：</div>
+          <div class="row">入住5天4晚及以上的成年客人，预定房间时每人支付80人民币，可保证每人1天诗巴丹之旅</div>
+          <div class="row">任何额外的名额分配仅在入住度假村后确认，费用为146马币每人/天，12岁以下不能确保名额</div>
+          <div class="row">申请诗巴丹名额，需提前告知客服，一天诗巴丹为四潜安排</div>
+        </div>
+
+        <div class="Related-3" v-if="template === 3">
+          <div class="Related-title">关于诗巴丹：</div>
+          <div class="row">一、有潜水员证</div>
+          <div class="row">二、有20潜或以上的记录</div>
+          <div class="row">三、预订卡帕莱5天4晚或以上的深潜套餐</div>
+        </div>
+
+        <div class="Related-4" v-if="template === 4">
+          <div class="Related-title">关于诗巴丹：</div>
+          <div class="row">诗巴丹许可证每天配额有限，请提早预订</div>
+          <div class="row">2人间住3晚保证一次诗巴丹</div>
+          <div class="row">入住4人间，不含诗巴丹，可另付530马币/人/天前往（已含6%消费税）</div>
+          <div class="row">所有去诗巴丹的客人均需自付许可证RM40/人</div>
+        </div>
+
+        <div class="Related-5" v-if="template === 2 || template === 6">
+          <div class="Related-title">关于诗巴丹许可证：</div>
+          <div class="row">入住独栋和水屋5晚及以上的客人享受一日诗巴丹，优先安排水屋的潜水员，并不能保证非潜水员诗巴丹名额。</div>
+          <div class="row">上岛当天可询问岛上工作人员是否被安排去诗巴丹，如果没被安排，可390马币/人购买</div>
+        </div>
+      </div>
+    </div>
+    <div class="main-control">
+      <div v-on:click="toPrev" class="control-prev no-select">← 上一步</div>
+      <div v-on:click="toNext" class="control-next no-select">完成 →</div>
+    </div>
+  </div>
+
+  <div id="part5" class="part5 main" v-if="isShow">
+    <div class="main-content">
+      <div class="part5-alert">
+        <el-alert
+          title="* 度假村接受世界预订，有房请尽早下单，以免错失良机"
+          type="info"
+          close-text="知道了"
+        ></el-alert>
+        <el-alert
+          title="* 查房跟订房有时间差，不保证能100%预订成功，预订不成功我们会退款给您"
+          type="warning"
+          close-text="知道了"
+        ></el-alert>
+      </div>
+      <div class="part5-main">
+        <div class="main-icon">
+          <i class="el-icon-success" v-if="isSuccess"></i>
+          <i class="el-icon-error" v-if="isSuccess === false"></i>
+        </div>
+        <div class="main-message">{{message}}</div>
+        <div class="main-reason">{{reason}}</div>
+        <div class="main-Button">
+          <el-button v-on:click="showSuccessMessage" type="primary" v-if="isSuccess">查看提交信息</el-button>
+          <el-button
+            id="clipboard"
+            data-clipboard-text="clipboard"
+            v-on:click="clipboard" 
+            type="danger" 
+            v-if="isSuccess === false"
+          >复制错误数据</el-button>
+          <el-button v-on:click="backtrack" type="warning" v-if="isSuccess === false">返回</el-button>
+        </div>
+      </div>
+      <div class="part5-ContactUS">
+          <img src="./img/2Qcode.jpg">
+          <div class="ContactUS-content">
+            <div>潜游时光文化传媒有限公司</div>
+            <div class="ContactUS-icon"><span></span><a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&touid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&siteid=cntaobao&status=1&charset=utf-8"><img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&site=cntaobao&s=1&charset=utf-8" alt="" title="" /></a></div>
+            <div class="ContactUS-icon"><span></span><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2546623187&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2546623187:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a></div>
+          </div>
+        </div>
+    </div>
+  </div>
 </div>
 
 </body>
@@ -894,6 +1062,7 @@
   <script type="text/javascript" src="./../dist/js/fetch.min.js"></script>
   <script type="text/javascript" src="./../dist/js/appconfig.js?file_version=3.15"></script>
   <script type="text/javascript" src="./../dist/js/ChineseHelper.js"></script>
+  <script type="text/javascript" src="./../dist/js/clipboard.min.js"></script>
   <script type="text/javascript" src="./../dist/js/vue.min.js"></script>
   <script type="text/javascript" src="./js/element-ui@2.0.4.js"></script>
   <script type="text/javascript" src="./js/versionSupport.js"></script>
