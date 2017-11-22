@@ -573,6 +573,7 @@ header {
 		}
 	}
 }
+
 .part5 {
 	.part5-alert {
 		width: 60%;
@@ -625,4 +626,35 @@ header {
 		}
 	}
 }
-	
+
+.QR-code {
+	position: relative;
+	font-size: 14px;
+	padding-bottom: 2.5px;
+	margin-bottom: 30px;
+	border-bottom: 1px solid rgba(160,160,160,0.46);
+
+	.QR-WeChat {
+		position: absolute;
+		top: 0px;
+		right: 20px;
+	}
+
+	.QR-WeChat-img {
+		display: none;
+		position: absolute;
+		top: 27.5px;
+		right: 0px;
+		z-index: 999;
+		
+		img {
+			width: 160px;
+			height: 160px;
+		}
+	}
+	.QR-WeChat:hover {
+		.QR-WeChat-img {
+			display: block;
+		}
+	}
+}

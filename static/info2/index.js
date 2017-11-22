@@ -1,6 +1,8 @@
 window.onload = function() {
   if ( utilities.isSupport() === false ) { return }
 
+  VueComponent.init();
+
   Info.get()
     .then(
       function(response) {
@@ -14,6 +16,23 @@ window.onload = function() {
         Info.data = Info.dealwith(json.data);
         Info.init();
         document.getElementById('main').setAttribute('style', 'display: block;');
+        Info.getAdminInfo()
+          .then(function(json) {
+            if (json.result === '0') {
+              var myadminInfo = {
+                'name': json.data.name,
+                'webchat': json.data.webchat || '暂无',
+                'qrimg': URLbase + json.data.qrCode
+              }
+              Info.part_1.$data.adminInfo = myadminInfo;
+              Info.part_2.$data.adminInfo = myadminInfo;
+              Info.part_3.$data.adminInfo = myadminInfo;
+              Info.part_4.$data.adminInfo = myadminInfo;
+              Info.part_5.$data.adminInfo = myadminInfo;
+            }else {
+              alert('加载二维码失败, 原因: ' + json.message);
+            }
+          })
       }else {
         alert('加载数据失败, 原因: ' + json.message);
       }
@@ -252,7 +271,8 @@ var VuePart_1 = {
 
     'data': {
       'isShow': false,
-      'checked': false
+      'checked': false,
+      'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': 'null'},
     },
 
     'methods': {
@@ -374,7 +394,8 @@ var VuePart_2 = {
           'token': localStorage.getItem('_token'),
           'digest': localStorage.getItem('_digest')
         },
-      }
+      },
+      'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': 'null'},
     },
     
     'watch': {
@@ -1201,6 +1222,8 @@ var VuePart_3 = {
         'isError': false,
         'message': ''
       },
+
+      'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': 'null'},
     },
     
     'watch': {
@@ -1830,6 +1853,7 @@ var VuePart_4 = {
       'isShow': false,
       'template': null,
       'isFirst': null,
+      'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': 'null'},
     },
 
     'methods': {
@@ -2017,6 +2041,7 @@ var VuePart_5 = {
     'isSuccess': false,
     'message': '恭喜你信息提交成功!',
     'reason': '',
+    'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': 'null'},
   },
 
   'methods': {
@@ -2050,6 +2075,28 @@ var VuePart_5 = {
       Info.part_2.$data.isShow = true;
     }
   }
+}
+
+var VueComponent = {
+  init: function() {
+    Vue.component('qr-code', qrCodeVue);
+  }
+}
+
+var qrCodeVue = {
+  'props': ['name', 'webchat', 'qrimg'],
+
+  'template': [
+    '<div class="QR-code">',
+      '<div class="QR-person">行程负责人: {{name}}</div>',
+      '<div class="QR-WeChat">',
+        '微信号: {{webchat}}',
+        '<div class="QR-WeChat-img">',
+          '<img v-bind:src="qrimg" />',
+        '</div>',
+      '</div>',
+    '</div>'
+  ].join('')
 }
 
 // 工具类

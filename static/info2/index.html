@@ -19,6 +19,11 @@
 <div id="main" style="display: none;">
   <div id="part1" class="part1 main" v-if="isShow">
     <div class="main-content">
+      <qr-code 
+        :name="adminInfo.name"
+        :webchat="adminInfo.webchat"
+        :qrimg="adminInfo.qrimg"
+      ></qr-code>
       <div class="part1-title">条款声明</div>
       <div class="part1-content">
         <div class="row">1、<span class="strong">潜游时光通过网络为客人提供代定服务。如用户预定的相关服务项目中，最终服务的酒店或者度假村以及其他一日游，包船等服务商提供的服务出现纠纷，本公司并不承担责任，</span>但本公司将尽力协助客人与相关服务提供商进行协调，不能协商解决的，客人可以向当地旅游局或通过法律途径解决。</div>
@@ -45,6 +50,11 @@
 
   <div id="part2" class="part2 main" v-if="isShow">
     <div class="main-content">
+      <qr-code 
+        :name="adminInfo.name"
+        :webchat="adminInfo.webchat"
+        :qrimg="adminInfo.qrimg"
+      ></qr-code>
 
       <div class="part2-orderinfor">
         <div class="part2-title">
@@ -590,6 +600,11 @@
 
   <div id="part3" class="part3 main" v-if="isShow">
     <div class="main-content">
+      <qr-code 
+        :name="adminInfo.name"
+        :webchat="adminInfo.webchat"
+        :qrimg="adminInfo.qrimg"
+      ></qr-code>
 
       <div class="part3-title">
         入住信息
@@ -890,6 +905,12 @@
 
   <div id="part4" class="part4 main" v-if="isShow">
     <div class="main-content">
+      <qr-code 
+        :name="adminInfo.name"
+        :webchat="adminInfo.webchat"
+        :qrimg="adminInfo.qrimg"
+      ></qr-code>
+
       <div class="part4-title">特别注意</div>
 
       <div class="part4-Refundinstruction">
@@ -1014,6 +1035,11 @@
 
   <div id="part5" class="part5 main" v-if="isShow">
     <div class="main-content">
+      <qr-code 
+        :name="adminInfo.name"
+        :webchat="adminInfo.webchat"
+        :qrimg="adminInfo.qrimg"
+      ></qr-code>
       <div class="part5-alert">
         <el-alert
           title="* 度假村接受世界预订，有房请尽早下单，以免错失良机"
