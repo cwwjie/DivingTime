@@ -7,7 +7,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<link rel="stylesheet" href="./css/materialize.min.css">
 	<link rel="stylesheet" href="./css/materialize.clockpicker.css">
-	<link rel="stylesheet" type="text/css" href="./css/index.css?file_version=3.15">
+	<link rel="stylesheet" href="./css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" type="text/css" href="./css/index.css?file_version=3.2">
 </head>
 <body>
 
@@ -619,9 +620,13 @@
 											    <label for="client_girls">女</label>
 												</form>
 											</div>
-											<div class="input-field col s6" id="renderliveBirthday">
-												<input id="liveBirthday" value="yyyy-MM-dd" data-value="1972/01/01" type="date" class="datepicker" data-ID="liveBirthday" placeholder="生日(与护照一致,必填)">
+											
+											<div class="mydatetimepicker col s6" id="datetimepicker">
+												<input id="mydatetimepicker" type="text" readonly="readonly" value="请选择生日">
 											</div>
+											<!-- <div class="input-field col s6" id="renderliveBirthday">
+												<input id="liveBirthday" value="yyyy-MM-dd" data-value="1972/01/01" type="date" class="datepicker" data-ID="liveBirthday" placeholder="生日(与护照一致,必填)">
+											</div> -->
 										</div>
 										<div class="row" id="showAdultData">
 											<div class="newInput input-field col s12">
@@ -959,16 +964,18 @@
 	<script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="./js/fetch.js"></script>
   <script src="./../dist/js/ChineseHelper.js"></script>
-	<script type="text/javascript" src="./../dist/js/appconfig.js?file_version=3.15"></script>
-	<script type="text/javascript" src="./js/materialize.min.js?file_version=3.15"></script>
-	<script type="text/javascript" src="./js/materialize.clockpicker.js?file_version=3.15"></script>
+	<script type="text/javascript" src="./../dist/js/appconfig.js?file_version=3.2"></script>
+	<script type="text/javascript" src="./js/materialize.min.js?file_version=3.2"></script>
+	<script type="text/javascript" src="./js/materialize.clockpicker.js?file_version=3.2"></script>
+	<script type="text/javascript" src="./js/bootstrap-datetimepicker.min.js?file_version=3.2"></script>
+	<script type="text/javascript" src="./js/bootstrap-datetimepicker.zh-CN.js?file_version=3.2"></script>
 
-	<script type="text/javascript" src="./my/init.js?file_version=3.15"></script>
-	<script type="text/javascript" src="./my/page1.js?file_version=3.15"></script>
-	<script type="text/javascript" src="./my/page2.js?file_version=3.15"></script>
-	<script type="text/javascript" src="./my/page3.js?file_version=3.15"></script>
-	<script type="text/javascript" src="./my/page4.js?file_version=3.15"></script>
-	<script type="text/javascript" src="./my/page5.js?file_version=3.15"></script>
-	<script type="text/javascript" src="./my/ready.js?file_version=3.15"></script>
+	<script type="text/javascript" src="./my/init.js?file_version=3.2"></script>
+	<script type="text/javascript" src="./my/page1.js?file_version=3.2"></script>
+	<script type="text/javascript" src="./my/page2.js?file_version=3.2"></script>
+	<script type="text/javascript" src="./my/page3.js?file_version=3.2"></script>
+	<script type="text/javascript" src="./my/page4.js?file_version=3.2"></script>
+	<script type="text/javascript" src="./my/page5.js?file_version=3.2"></script>
+	<script type="text/javascript" src="./my/ready.js?file_version=3.2"></script>
 
 </html>

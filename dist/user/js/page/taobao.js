@@ -105,15 +105,15 @@ var myTaobaoOrder = {
           if (sidebar.clientWidth < 768) {
             window.open("./../info/mobile/index.html");
           }else {
-            window.open("./../info/gather.html");
+            window.open("./../info/index.html");
           }
           $("#pop-up").click(function(event) {
             if (sidebar.clientWidth < 768) {// 手机端
               window.open("./../info/mobile/index.html");
               location = "./../info/mobile/index.html";
             }else {
-              window.open("./../info/gather.html");
-              location = "./../info/gather.html";
+              window.open("./../info/index.html");
+              location = "./../info/index.html";
             }
           });
           // $('#taobaoModal').modal({backdrop:'static'});

@@ -2420,7 +2420,7 @@ var utilities = {
 			dataTime = parseInt(mydata.time);
 		// 如果数据超时
 		if ( timeNow > (dataTime + 3600000) ) {
-			this.clearInforData();
+			this.clear();
 			return false;
 		}else {
 			return mydata.data;

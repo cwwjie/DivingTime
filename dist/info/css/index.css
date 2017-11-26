@@ -1003,3 +1003,47 @@
   top: 7px;
   color: #000;
 }
+.mydatetimepicker {
+  position: relative;
+  background: #fafafa;
+  margin-bottom: 20px;
+}
+.mydatetimepicker input[readonly] {
+  color: rgba(0, 0, 0, 0.87);
+  border-bottom: 1px solid #9e9e9e;
+}
+.mydatetimepicker .datetimepicker {
+  position: relative;
+  background: #fafafa;
+  margin-bottom: 20px;
+}
+.mydatetimepicker .datetimepicker-inline {
+  position: absolute;
+  width: 268px;
+  margin: 0px auto;
+  border: #dbdbdb solid 1px;
+  z-index: 1000;
+}
+.mydatetimepicker .datetimepicker-inline .datetimepicker-days .table-condensed,
+.mydatetimepicker .datetimepicker-inline .datetimepicker-months .table-condensed,
+.mydatetimepicker .datetimepicker-inline .datetimepicker-years .table-condensed {
+  width: 260px;
+}
+.mydatetimepicker .datetimepicker-inline .datetimepicker-days .table-condensed .next,
+.mydatetimepicker .datetimepicker-inline .datetimepicker-months .table-condensed .next,
+.mydatetimepicker .datetimepicker-inline .datetimepicker-years .table-condensed .next,
+.mydatetimepicker .datetimepicker-inline .datetimepicker-days .table-condensed .prev,
+.mydatetimepicker .datetimepicker-inline .datetimepicker-months .table-condensed .prev,
+.mydatetimepicker .datetimepicker-inline .datetimepicker-years .table-condensed .prev {
+  position: relative;
+}
+.mydatetimepicker .datetimepicker-inline .datetimepicker-days .table-condensed .next::after,
+.mydatetimepicker .datetimepicker-inline .datetimepicker-months .table-condensed .next::after,
+.mydatetimepicker .datetimepicker-inline .datetimepicker-years .table-condensed .next::after {
+  content: ">";
+}
+.mydatetimepicker .datetimepicker-inline .datetimepicker-days .table-condensed .prev::after,
+.mydatetimepicker .datetimepicker-inline .datetimepicker-months .table-condensed .prev::after,
+.mydatetimepicker .datetimepicker-inline .datetimepicker-years .table-condensed .prev::after {
+  content: "<";
+}

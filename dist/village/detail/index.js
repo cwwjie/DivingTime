@@ -51,7 +51,7 @@ var myData = {
       }
       $.ajax({
         type: "GET",
-        url: URLbase + '/Dvt-reserve/product/relResortGallery/' + resortId + '/findByResortId.do',
+        url: URLbase + URLvillage + '/product/relResortGallery/' + resortId + '/findByResortId.do',
         contentType: "application/json; charset=utf-8",
         success: function(value) {
           if (value.result === '0') {
@@ -80,7 +80,7 @@ var myData = {
       if (startDate && endDate) {
         $.ajax({
           type: "GET",
-          url: URLbase + '/Dvt-reserve/product/apartment/1/0/searchSource.do?startDate=' + startDate + '&endDate=' + endDate + '&resortCode=' + resortCode,
+          url: URLbase + URLvillage + '/product/apartment/1/0/searchSource.do?startDate=' + startDate + '&endDate=' + endDate + '&resortCode=' + resortCode,
           contentType: "application/json; charset=utf-8",
           success: function(value) {
             if (value.result === '0') {
@@ -394,7 +394,7 @@ var myApartment = {
     return new Promise(function(resolve, reject){
       $.ajax({
         'type': 'GET',
-        'url': URLbase + '/Dvt-reserve/product/resort/' + resortId + '/get.do',
+        'url': URLbase + URLvillage+ '/product/resort/' + resortId + '/get.do',
         'contentType': 'application/json; charset=utf-8',
         success: function(value) {
           if (value.result === '0') {
@@ -900,7 +900,7 @@ var myApartment = {
 
         mySelect.click(function() {
           if (!dataList[i].skuNum) { return }
-          if (dataList[i].select.length > dataList[i].skuNum) {
+          if (dataList[i].select.length >= dataList[i].skuNum) {
             $(this).addClass('disable');
             return
           }

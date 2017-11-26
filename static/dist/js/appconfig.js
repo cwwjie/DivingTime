@@ -9,6 +9,12 @@ var URLbase = "http://192.168.0.100:8080";
  * 生产 /dvtweb
  */
 var URLversion = "/Dvt-web"
+/**
+ * 本地 /Dvt-reserve
+ * 生产 /dvtreserve
+ */
+var URLvillage = "/Dvt-reserve"
+
 var appConfig = {
 	findByElement:URLbase + URLversion+"/system/carousel/findByElement.do",
 	logurl: URLbase + URLversion+"/user/login.do",

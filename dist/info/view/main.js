@@ -438,7 +438,7 @@ function initEvent() {
 		}
 	});
 	$("#edit").click(function(){
-        location = "./../gather.html";
+        location = "./../index.html";
 	});
 }
 function initPanel() {

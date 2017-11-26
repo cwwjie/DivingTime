@@ -1,5 +1,6 @@
 var URLbase = "http://112.74.92.97:8080";
 var URLversion = "/dvtweb"
+var URLvillage = "/dvtreserve"
 var appConfig = {
 	findByElement:URLbase + URLversion+"/system/carousel/findByElement.do",
 	logurl: URLbase + URLversion+"/user/login.do",

@@ -276,7 +276,6 @@ var pageSecond = (function(){
 			dataAllow.signName.data = event.target.value.trim();
 			dataAllow.signName.allow = true;
 			// 转换
-			$(this).toPinyin();
 			var _pingyin = ConvertPinyin($(this).val());
 			$("#pinyinName").val(_pingyin);
 			dataAllow.pinyinName.data = _pingyin;

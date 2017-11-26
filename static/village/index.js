@@ -14,7 +14,7 @@ var myData = {
     return new Promise(function(resolve, reject){
       $.ajax({
         type: 'GET',
-        url: URLbase + '/Dvt-reserve/product/resort/1/0/list.do',
+        url: URLbase + URLvillage + '/product/resort/1/0/list.do',
         contentType: 'application/json; charset=utf-8',
         success: function(value) {
           if (value.result === '0') {

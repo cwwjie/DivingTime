@@ -5,8 +5,8 @@
 <head>
   {{ include ("./basehead") }}
 
-  <link rel="stylesheet" type="text/css" href="./main.css?file_version=3.15">
-  <script type="text/javascript" src="./main.js?file_version=3.15"></script>
+  <link rel="stylesheet" type="text/css" href="./main.css?file_version=3.2">
+  <script type="text/javascript" src="./main.js?file_version=3.2"></script>
 
 
 </head>
