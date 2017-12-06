@@ -583,13 +583,13 @@ class customer extends React.Component {
                   _this.props.router.push('/room');
                   document.body.scrollTop = document.documentElement.scrollTop = 0;
                 });
-              }}>保存</div>
+              }}>确认</div>
             }else {
               return <div className="NextPage" onClick={function(){
                 verify(_this);
                 Toast.fail(_this.state.alert, 1);
               }}
-              >保存</div>
+              >确认</div>
             }
           }.bind(this))()}
         </div>

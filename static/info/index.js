@@ -1026,19 +1026,19 @@ var VuePart_2 = {
     // 航班信息
     this.Vue.data.landDate = data.landDate;
     this.Vue.data.outboundNum = data.outboundNum;
-    this.Vue.data.landTime = data.landTime;
+    this.Vue.data.landTime = utilities.timestampToFlighTime(data.landTime);
 
     this.Vue.data.hLandDate = data.hLandDate;
     this.Vue.data.inHarbourNum = data.inHarbourNum;
-    this.Vue.data.hLandTime = data.hLandTime;
+    this.Vue.data.hLandTime = utilities.timestampToFlighTime(data.hLandTime);
     
     this.Vue.data.hTakeoffDate = data.hTakeoffDate;
     this.Vue.data.outHarbourNum = data.outHarbourNum;
-    this.Vue.data.hTakeoffTime = data.hTakeoffTime;
+    this.Vue.data.hTakeoffTime = utilities.timestampToFlighTime(data.hTakeoffTime);
 
     this.Vue.data.takeoffDate = data.takeoffDate;
     this.Vue.data.inboundNum = data.inboundNum;
-    this.Vue.data.takeoffTime = data.takeoffTime;
+    this.Vue.data.takeoffTime = utilities.timestampToFlighTime(data.takeoffTime);
 
     this.Vue.data.flightNote = data.flightNote;
 
@@ -2314,7 +2314,12 @@ var utilities = {
 
   flighTimeToTimestamp: function (data) {
     if (!data) { return null }
-    return data - this.getDateAccurateToDay();
+    return data - this.getDateAccurateToDay() - 28800000;
+  },
+
+  timestampToFlighTime: function (data) {
+    if (!data) { return null }
+    return new Date(data + this.getDateAccurateToDay() + 28800000);
   },
 
   dateToYYYYMMDDString: function(data) {
@@ -2420,7 +2425,7 @@ var utilities = {
 			dataTime = parseInt(mydata.time);
 		// 如果数据超时
 		if ( timeNow > (dataTime + 3600000) ) {
-			this.clear();
+			this.clearInforData();
 			return false;
 		}else {
 			return mydata.data;

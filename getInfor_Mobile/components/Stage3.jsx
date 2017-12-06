@@ -102,9 +102,12 @@ class Stage3 extends React.Component {
                 <Accordion.Panel header="赠送说明">
                   <div className="List">
                     <List className="my-list">
-                      <Item wrap>2-3人每人赠送7天安联境外保险或一次往返亚庇机场到市区酒店的接送（时间为6:05-21:55之间，超出时间需付35元夜间服务费）</Item>
-                      <Item wrap>4-7人每人赠送7天安联境外保险和一次往返亚庇机场到市区酒店的接送（时间不限）</Item>
-                      <Item wrap>临时预定需自行购买保险，如未填写亚庇接送，默认赠送保险。</Item>
+                      <Item wrap>2-3人每人赠送“保游全球”畅游海外旅行保障A计划或一次往返亚庇机场到市区酒店的接送（时间为6:05-21:55之间，超出时间需付35元夜间服务费）</Item>
+                      <Item wrap>4-7人每人赠送“保游全球”畅游海外旅行保障A计划和一次往返亚庇机场到市区酒店的接送（时间不限）</Item>
+                      <Item wrap>1. 免费提供给客户的是1-10天的A计划，如增加天数或选择计划B，客户需自补差价；</Item>
+                      <Item wrap>A计划：1-10天17元/人，11-20天29元/人，21-25天41元/人，26-30天58元/人。</Item>
+                      <Item wrap>B计划：1-10天28元/人，11-20天41元/人，21-25天52元/人，26-30天73元/人。</Item>
+                      <Item wrap>2. 临时预定需自行购买保险，如未填写亚庇接送，默认赠送保险。</Item>
                     </List>
                   </div>
                 </Accordion.Panel>
@@ -113,7 +116,7 @@ class Stage3 extends React.Component {
           </div>
           <div style={{"display":this.state.disInsurance}}>
             <List renderHeader={() => '赠送保险'} className="my-list">
-              <Item>安联境外短途旅行保障计划</Item>
+              <Item>“保游全球”畅游海外旅行保障A计划</Item>
             </List>
             <List renderHeader={() => '保险期间'} className="my-list">
               <Item>{this.state.insurance}</Item>

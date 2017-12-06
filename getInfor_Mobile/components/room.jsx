@@ -371,7 +371,7 @@ class room extends React.Component {
                 Toast.loading('Loading...', 0.5, () => {
                   _this.props.router.push('/s5');
                 });
-              }}>保存</div>
+              }}>确认</div>
             }else {
               return <div className="NextPage" onClick={function(){
                 let toastMessage = "";
@@ -382,7 +382,7 @@ class room extends React.Component {
                   toastMessage = "至少提供一位入住人信息";
                 }
                 Toast.fail(toastMessage, 1);
-              }}>保存</div>
+              }}>确认</div>
             }
           }.bind(this))()}
         </div>
