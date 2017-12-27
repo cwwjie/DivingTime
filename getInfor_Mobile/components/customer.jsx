@@ -68,8 +68,12 @@ const NationaList = [
     value: 'RUSSIA'
   },
   {
-    label: '荷兰 NETHERLANDS ',
+    label: '荷兰 NETHERLANDS',
     value: 'NETHERLANDS'
+  },
+  {
+    label: '法国 FRENCH',
+    value: 'FRENCH'
   }
 ];
 const diveList = [
@@ -120,7 +124,7 @@ class customer extends React.Component {
       "pinyinName":null,
         pinyinNameError:false,
         pinyinNameErrorT:'中文名为必填',
-      "gender":[null],
+      "gender":[1],
       "birthday":null,
       "mobile":null,
         mobileError:false,
@@ -333,6 +337,7 @@ class customer extends React.Component {
               value={this.state.gender}
               title="请选择性别"
               onChange={function(val){
+                console.log(val)
                 const _this = this;
                 let _data = assign({},this.state);
                 _data.gender = val;
@@ -659,6 +664,13 @@ function verify(_this) {
       _data.alert = "英文名称不能长于32位";
       _data.pinyinNameErrorT = "英文名称不能长于32位";
       _data.pinyinNameError = true;
+      _data.next = false;
+    }
+  }
+
+  if (Array.isArray(_this.state.gender)) {
+    if (_this.state.gender[0] == null) {
+      _data.alert = "性别不能为空";
       _data.next = false;
     }
   }

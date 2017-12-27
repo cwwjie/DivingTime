@@ -178,11 +178,28 @@ function fullamount() {
     }
   }
   $("#part5-PerInfor").html(PersonalInformation);
-  $("#part6").html(
-    "<div class='part6-left'><div>接送安排</div><div class='EH'>Transfer Details</div></div><div class='part6-right'>"
-    +"<div>"+mainInfo.transfersInfo+"</div>"
-    +"<div class='EH'></div><div class='EH'>（机场出口寻找右上角度假村LOGO的工作人员，确认名单即可。）</div></div>"
-  );
+  
+  $("#part6").html([
+    "<div style='padding-bottom: 20px;'>",
+    "<div class='part6-left'>",
+      "<div>亚庇接送</div>",
+      "<div class='EH'>Kota Kinabalu Transfer</div>",
+    "</div>",
+    "<div class='part6-right'>",
+      "<div>"+mainInfo.transfersInfo+"</div>",
+    "</div>",
+    "</div>",
+    "<div class='part6-left'>",
+      "<div>度假村接送</div>",
+      "<div class='EH'>Resort Transfer Details</div>",
+    "</div>",
+    "<div class='part6-right'>",
+      "<div>"+mainInfo.resortShuttle+"</div>",
+      "<div class='EH'></div>",
+      "<div class='EH'>（机场出口寻找右上角度假村LOGO的工作人员，确认名单即可。）</div>",
+    "</div>"
+  ].join(''));
+
   $("#part7").html("<img src='./img/map1.png'>");
   $(".part8-Email").html(loademail);
 
@@ -190,7 +207,6 @@ function fullamount() {
   if (!mainInfo.reservationCode) {
     mainInfo.reservationCode = '无';
   }
-
   // 马达京
   if (template == 1) {
     $(".part1").html(
@@ -524,7 +540,98 @@ function fullamount() {
 
     $("#part8-template8").css("display","block");
 
+  } else if (template == 11 || template == 12 || template == 13 || template == 14) {
+    $(".part1").html([
+      "<img class='mainlogo' src='./img/logo.png'>",
+      "<div>",
+        "<div class='title'>爱昵岛度假村确认函</div>",
+        "<div class='subtitle'>EL NIDO Resorts’</div>",
+        "<div class='subtitle'>Confirmation letter</div>",
+      "</div>",
+      "<img class='minorlogo' src='./img/ELNIDO.png'>"
+    ].join(''));
+
+  
+    $("#part3-fullamount").html([
+      "<div class='row'>",
+        "<div class='row-left'>",
+          "<div class='row-top'>订房码<span>"+mainInfo.reservationCode+"</span></div>",
+          "<div class='row-bottom'>Reservation No<span></span></div>",
+        "</div>",
+        "<div class='row-right'>",
+          "<div class='row-top'>房型&数量<span>"+mainInfo.orderName+" / "+mainInfo.roomNum+"间"+"</span></div>",
+          "<div class='row-bottom'>Room Number<span></span></div>",
+        "</div>",
+      "</div>",
+      
+      "<div class='row'>",
+        "<div class='row-left'>",
+          "<div class='row-top'>入住人数<span>"+mainInfo.adultNum+"成人/"+mainInfo.childNum+"儿童"+"</span></div>",
+          "<div class='row-bottom'>Occupancy<span>"+mainInfo.adultNum+" adult, "+mainInfo.childNum+" kids"+"</span></div>",
+        "</div>",
+      "</div>",
+      
+      "<div class='row'>",
+        "<div class='row-left'>",
+          "<div class='row-top'>上岛日期<span>"+stampToFormat(mainInfo.checkIn)+"</span></div>",
+          "<div class='row-bottom'>Check-in<span></span></div>",
+        "</div>",
+        "<div class='row-right'>",
+          "<div class='row-top'>离岛日期<span>"+stampToFormat(mainInfo.checkOut)+"</span></div>",
+          "<div class='row-bottom'>Check-out<span></span></div>",
+        "</div>",
+      "</div>",
+      
+      "<div class='row'>",
+        "<div class='row-right'>",
+          "<div class='row-top'>套餐&总价<span>" + mainInfo.period + "&" + mainInfo.package + "</span></div>",
+          "<div class='row-bottom'>Package & Total Price<span>" + mainInfo.orderAmount + "元</span></div>",
+        "</div>",
+      "</div>"
+    ].join(''));
+
+    $("#part6").html([
+      "<div class='part6-left'>",
+        "<div>度假村接送</div>",
+        "<div class='EH'>Resort Transfer Details</div>",
+      "</div>",
+      "<div class='part6-right'>",
+        "<div>"+mainInfo.resortShuttle+"</div>",
+        "<div class='EH'></div>",
+        "<div class='EH'>（机场出口寻找右上角度假村LOGO的工作人员，确认名单即可。）</div>",
+      "</div>"
+    ].join(''));
+
+    $("#part8-template11").css("display","block");
+    $("#part8-template11").html([
+      '<div class="part8-content">',
+        '<div class="part8-left">',
+          '<div>行程联系信息</div>',
+          '<div class="EH">Contact Information</div>',
+        '</div>',
+        '<div class="part8-rigth">',
+          '<div>顾问24小时紧急电话：' + mainInfo.mobile + '<br/>顾问 Email：<span class="part8-Email">' + mainInfo.email + '</span></div>',
+          '<div>爱昵岛度假村联系电话：+632 902 5948/49/34</div>',
+          '<div>爱昵岛度假村Email：holiday@elnidoresorts.com</div>',
+        '</div>',
+      '</div>',
+      '<div class="part8-content">',
+        '<div class="part8-left">',
+          '<div>取消政策</div>',
+          '<div class="EH">Cancellation policy</div>',
+        '</div>',
+        '<div class="part8-rigth">',
+          '<div class="thered">收到此函表明我公司已向度假村支付款项并订房成功，请尽快到淘宝确认收货；</div>',
+          '<div>入住日前46天以上退订，扣除定金；</div>',
+          '<div>入住日前45-35天退订，需要扣除全款的30%</div>',
+          '<div>入住日前34-16天退订，需要扣除全款的50%</div>',
+          '<div>入住日前15- 8 天退订，需要扣除全款的75%</div>',
+          '<div>入住日前7-入住日退订，需要扣除全款的100%</div>',
+        '</div>',
+      '</div>'
+    ].join(''));
   }
+  
 
 }
 

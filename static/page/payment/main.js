@@ -7,27 +7,53 @@ function loadPageVar(sVar) {
 }
 // 判断数据库是否修改
 function orderIdGet() {
-	$.ajax({
-		type: "GET", 
-		url: appConfig.getOrderBySn+loadPageVar("out_trade_no")+"/getWith.do", 
-		contentType: "application/json; charset=utf-8", 
-		headers: {
-			'token':$.cookie('token'),
-			'digest':$.cookie('digest')
-		},
-		success: function (message) {
-			if (message.result == "0") {
-				if (message.data.paymentInfo.payStatus !== 1) {
-					setTimeout(function(){
-						orderIdGet()
-					},1000)
-				}else{
-					renderPymentInfo(message.data);
-				}
+	var out_trade_no = loadPageVar("out_trade_no");
 
+	if (out_trade_no.slice(-1) === 'E' || out_trade_no.slice(-1) === 'R' ) {
+		$.ajax({
+			type: "GET", 
+			url: appConfig.getOrderBySn + loadPageVar("out_trade_no").slice(0, (loadPageVar("out_trade_no").length - 1)) + "/getWith.do", 
+			contentType: "application/json; charset=utf-8", 
+			headers: {
+				'token':$.cookie('token'),
+				'digest':$.cookie('digest')
+			},
+			success: function (message) {
+				if (message.result == "0") {
+					if (message.data.paymentInfo.payStatus === 0) {
+						setTimeout(function(){
+							orderIdGet()
+						},1000)
+					}else{
+						renderPymentInfo(message.data);
+					}
+				}
 			}
-		}
-	});
+		});
+	} else {
+		$.ajax({
+			type: "GET", 
+			url: appConfig.getOrderBySn+loadPageVar("out_trade_no")+"/getWith.do", 
+			contentType: "application/json; charset=utf-8", 
+			headers: {
+				'token':$.cookie('token'),
+				'digest':$.cookie('digest')
+			},
+			success: function (message) {
+				if (message.result == "0") {
+					if (message.data.paymentInfo.payStatus === 0) {
+						setTimeout(function(){
+							orderIdGet()
+						},1000)
+					}else{
+						renderPymentInfo(message.data);
+					}
+
+				}
+			}
+		});
+	}
+
 }
 // 方法 - 时间差  timestamp -> 时间戳
 function UTC2LocalTime(timestamp) {

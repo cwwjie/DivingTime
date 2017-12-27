@@ -118,7 +118,7 @@
         </el-tooltip>
         <div class="part2-content">
           <div class="extra-insurance row" v-if="extra.isHaveInsurance">
-            <div class="col-6">赠送保险: <span>安联境外短途旅行保障计划</span></div>
+            <div class="col-6">赠送保险: <span>“保游全球”畅游海外旅行保障A计划</span></div>
             <div class="col-6">保险期间: <span>{{orderinfor.initExtra}}</span></div>
           </div>
           <div class="extra-transfers" v-if="extra.isHaveTransfers">
@@ -979,6 +979,22 @@
             <div class="row">· 预定成功后定金不退，退订扣除定金（入住前35天补余款）</div>
             <div class="row">· 入住前34-16天退订，需要扣除全款的30%</div>
             <div class="row">· 入住前15-天退订，扣除100%全款</div>
+          </div>
+          <div class="Refundinstruction-content Refundinstruction-title">2. 因各个度假村上岛时间及接送安排不同，预定机票时请咨询我们的顾问</div>
+          <div class="Refundinstruction-content">
+            <div class="Refundinstruction-title">3. 免责声明：</div>
+            <div class="row">我们对自身掌控范围之外的原因直接或间接给客人造成的延迟、额外费用或不便不承担责任</div>
+          </div>
+          <div class="Refundinstruction-content">具体请参考潜游时光淘宝店里“政策说明”页面</div>
+          <div class="Refundinstruction-content" style="color: red">如您在本店铺支付了预订款项，代表您已同意以上政策，谢谢理解</div>
+        </div>
+
+        <div class="Refundinstruction-4" v-if="template === 11 || template === 12 || template === 13 || template === 14">
+          <div class="Refundinstruction-content">
+            <div class="Refundinstruction-title">1. 退款说明：</div>
+            <div class="row">· 出发前46天(不含)以上买家通知取消，收取订单30%的费用</div>
+            <div class="row">· 出发前45天至20天买家通知取消，收取订单50%的费用</div>
+            <div class="row">· 出发前19天以内买家通知取消，收取订单100%的费用</div>
           </div>
           <div class="Refundinstruction-content Refundinstruction-title">2. 因各个度假村上岛时间及接送安排不同，预定机票时请咨询我们的顾问</div>
           <div class="Refundinstruction-content">

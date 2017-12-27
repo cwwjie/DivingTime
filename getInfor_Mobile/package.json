@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "lib/index",
   "scripts": {
-    "start": "node save.js && webpack-dev-server --host 192.168.2.105 --port 8000 --webpack.config.js",
+    "start": "node save.js && webpack-dev-server --port 8000 --webpack.config.js",
     "dev": "node save.js && webpack -p --progress --colors --config webpack.dev.config.js",
     "build": "node save.js && webpack -p --progress --colors --config webpack.pro.config.js"
   },

@@ -142,6 +142,7 @@ var Info = {
     this.part_3 = new Vue(VuePart_3.init(this.data, this.isFirst));
     this.part_4 = new Vue(VuePart_4.init(this.data, this.isFirst));
     this.part_5 = new Vue(VuePart_5);
+
     if (this.isFirst) {
       this.part_1.$data.isShow = true;
     } else {
@@ -1131,6 +1132,7 @@ var VuePart_3 = {
     'el': '#part3',
 
     'data': {
+      
       'isShow': false,
       'template': null,
 
@@ -1635,6 +1637,7 @@ var VuePart_3 = {
             'anamnesis': this.anamnesis
           });
 
+          this.lavePeopleNum++;
         } else {
           this.roomList[this.selectRoomNum].customerInfoList[this.dialogId] = {
             'id': this.dialogId,
@@ -1661,7 +1664,6 @@ var VuePart_3 = {
           };
         }
 
-        this.lavePeopleNum++;
         this.dialogVisible = false;
       },
 
@@ -2102,7 +2104,7 @@ var qrCodeVue = {
 // 工具类
 var utilities = {
   renderBedOptions: function (template) {
-    if (template === 1) {
+    if (template === 1) { // 马达京
       return [
         {
           'value': '大床',
@@ -2121,7 +2123,7 @@ var utilities = {
           'label': '双床+单床(仅园景房和半独立房提供)'
         },
       ]
-    } else if (template === 2) {
+    } else if (template === 2) { // 马布岛-----------水屋
       return [
         {
           'value': '大床',
@@ -2146,7 +2148,7 @@ var utilities = {
           'label': '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)'
         }
       ]
-    } else if (template === 3) {
+    } else if (template === 3) { // 卡帕莱
       return [
         {
           'value': '单床',
@@ -2168,7 +2170,7 @@ var utilities = {
           'label': '蜜月布置大床(需要支付160马币/仅限入住当天)'
         }
       ]
-    } else if (template === 4) {
+    } else if (template === 4) { // 平台
       return [
         {
           'value': '单床',
@@ -2181,7 +2183,7 @@ var utilities = {
           'label': '大床(二人间可选)'
         }
       ]
-    } else if (template === 5) {
+    } else if (template === 5) { // 邦邦岛------龙珠
       return [
         {
           'value': '大床',
@@ -2200,7 +2202,7 @@ var utilities = {
           'label': '双床+单床'
         }
       ]
-    } else if (template === 6) {
+    } else if (template === 6) {// 马布岛-----------木屋
       return [
         {
           'value': '大床',
@@ -2225,26 +2227,17 @@ var utilities = {
           'label': '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)'
         }
       ]
-    } else if (template === 7) {
+    } else if (template === 7) { // 邦邦岛------白珍珠
       return [
         {
-          'value': '大床',
-          'label': '大床'
-        }, {
-          'value': '双床',
-          'label': '双床'
+          'value': '双大床',
+          'label': '双大床'
         }, {
           'value': '蜜月大床',
           'label': '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)'
-        }, {
-          'value': '大床+单床',
-          'label': '大床+单床'
-        }, {
-          'value': '双床+单床',
-          'label': '双床+单床'
         }
       ]
-    } else if (template === 8) {
+    } else if (template === 8) { // 马布岛-----------婆罗
       return [
         {
           'value': '大床',
@@ -2269,7 +2262,7 @@ var utilities = {
           'label': '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)'
         }
       ]
-    } else if (template === 9) {
+    } else if (template === 9) { // 兰卡央
       return [
         {
           'value': '单床',
@@ -2289,6 +2282,13 @@ var utilities = {
         }, {
           'value': '蜜月大床',
           'label': '蜜月布置大床(需要支付160马币/仅限入住当天)'
+        }
+      ]
+    } else if (template === 11 || template === 12 || template === 13 || template === 14 ) { // 巴拉望地区度假村
+      return [
+        {
+          'value': '随机安排',
+          'label': '默认床型'
         }
       ]
     } else {
@@ -2403,6 +2403,10 @@ var utilities = {
       {
         'value': 'NETHERLANDS',
         'label': '荷兰 NETHERLANDS'
+      },
+      {
+        'value': 'FRENCH',
+        'label': '法国 FRENCH'
       }
     ]
   },

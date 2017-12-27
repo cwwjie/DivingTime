@@ -48,7 +48,7 @@ var myData = {
       //   orderId: null,
       //   chineseName: '曾杰杰',
       //   pinyinName: 'Rejiejay',
-      //   gender: 1, // 1 男 2 女
+      //   gender: 0, // 0 男 1 女
       //   passportNo: '',
       //   email: '',
       //   divingCount: '',
@@ -518,7 +518,7 @@ var customerInfo = {
         isSelect: false,
         name: myData[i].chineseName,
         age: myData[i].age,
-        gender: (myData[i].gender === 1 ? '男' : '女'),
+        gender: (myData[i].gender === 1 ? '女' : '男'),
         mobile: myData[i].mobile
       };
       vueList.push(vueListitem);
@@ -575,6 +575,11 @@ var customerInfo = {
         itemBTN: '保存',
         item: _this.createVueItem(),
 
+        chineseName: '',
+        chineseNameError: '',
+        pinyinName: '',
+        pinyinNameError: '',
+
         submitBTN: '确认订单',
         renderList: [
           // {
@@ -595,6 +600,39 @@ var customerInfo = {
       },
 
       watch: {
+        chineseName: function (val, oldVal) {
+          // 如果 默认的检测 是 不检测.
+          if (defaultInspect === false) {
+            // 则终止此次的检测.
+            defaultInspect = true;
+            return
+          }
+          if (val === '') {
+            this.chineseNameError = '姓名不能为空';
+          } else if (/^[\u2E80-\u9FFF]+$/.test(val) === false) {
+            this.chineseNameError = '姓名只能为中文';
+          } else {
+            // this.pinyinName = ConvertPinyin(val);
+            this.pinyinName = ConvertPinyin(val);
+            this.chineseNameError = '';
+          }
+        },
+        pinyinName: function (val, oldVal) {
+          // 如果 默认的检测 是 不检测.
+          if (defaultInspect === false) {
+            // 则终止此次的检测.
+            defaultInspect = true;
+            return
+          }
+          if (val === '') {
+            this.pinyinNameError = '拼音不能为空';
+          } else if (/^[a-zA-Z]{0,10000}$/.test(val) === false) {
+            this.pinyinNameError = '拼音格式错误';
+          } else {
+            this.pinyinNameError = '';
+          }
+        },
+
         item: {
           handler: function (val, oldVal) {
             var data = oldVal;
@@ -604,23 +642,6 @@ var customerInfo = {
               // 则终止此次的检测.
               defaultInspect = true;
               return
-            }
-
-            if (data.chineseName === '') {
-              this.item.chineseNameError = '姓名不能为空';
-            } else if (/^[\u2E80-\u9FFF]+$/.test(data.chineseName) === false) {
-              this.item.chineseNameError = '姓名只能为中文';
-            } else {
-              this.item.pinyinName = ConvertPinyin(data.chineseName);
-              this.item.chineseNameError = '';
-            }
-  
-            if (data.pinyinName === '') {
-              this.item.pinyinNameError = '拼音不能为空';
-            } else if (/^[a-zA-Z]{0,10000}$/.test(data.pinyinName) === false) {
-              this.item.pinyinNameError = '拼音格式错误';
-            } else {
-              this.item.pinyinNameError = '';
             }
   
             if (data.birthday === null || data.birthday === '') {
@@ -677,12 +698,16 @@ var customerInfo = {
           selectID = id;
           this.itemModalIsShow = true;
           this.itemType = 'update';
+          this.chineseName = data.chineseName;
+          this.chineseNameError = '';
+          this.pinyinName = data.pinyinName;
+          this.pinyinNameError = '';
           this.item = {
-            'chineseName': data.chineseName,
-            'chineseNameError': '',
+            // 'chineseName': data.chineseName,
+            // 'chineseNameError': '',
       
-            'pinyinName': data.pinyinName,
-            'pinyinNameError': '',
+            // 'pinyinName': data.pinyinName,
+            // 'pinyinNameError': '',
       
             'passportNo': data.passportNo,
       
@@ -709,24 +734,24 @@ var customerInfo = {
         saveItem: function (type) {
           var data = this.item;
           
-          if (data.chineseName === '') {
-            data.chineseNameError = '姓名不能为空';
+          if (this.chineseName === '') {
+            this.chineseNameError = '姓名不能为空';
             return
-          } else if (/^[\u2E80-\u9FFF]+$/.test(data.chineseName) === false) {
-            data.chineseNameError = '姓名只能为中文';
+          } else if (/^[\u2E80-\u9FFF]+$/.test(this.chineseName) === false) {
+            this.chineseNameError = '姓名只能为中文';
             return
           } else {
-            data.chineseNameError = '';
+            this.chineseNameError = '';
           }
 
-          if (data.pinyinName === '') {
-            data.pinyinNameError = '拼音不能为空';
+          if (this.pinyinName === '') {
+            this.pinyinNameError = '拼音不能为空';
             return
-          } else if (/^[a-zA-Z]{0,10000}$/.test(data.pinyinName) === false) {
-            data.pinyinNameError = '拼音格式错误';
+          } else if (/^[a-zA-Z]{0,10000}$/.test(this.pinyinName) === false) {
+            this.pinyinNameError = '拼音格式错误';
             return
           } else {
-            data.pinyinNameError = '';
+            this.pinyinNameError = '';
           }
           
           if (data.birthday === null || data.birthday === '') {
@@ -756,7 +781,7 @@ var customerInfo = {
             data.emailError = '';
           }
 
-          if (data.divingRank !== '') {
+          if (data.divingRank !== '' && data.divingRank !== null) {
             if (/^[0-9]*$/.test(data.divingRank) === false) {
               data.divingRankError = '请输入数字';
               return
@@ -771,8 +796,8 @@ var customerInfo = {
           this.itemBTN = '正在提交...';
 
           var submitData = {
-            'chineseName': data.chineseName,
-            'pinyinName': data.pinyinName,
+            'chineseName': this.chineseName,
+            'pinyinName': this.pinyinName,
             'passportNo': data.passportNo,
             'gender': data.gender,
             'birthday': data.birthday,

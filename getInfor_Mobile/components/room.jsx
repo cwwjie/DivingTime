@@ -19,7 +19,10 @@ let bedTypeList3 = [{label: '单床(一人入住只能选)',value: '单床'},{la
 let bedTypeList4 = [{label: '单床(仅限四人间选)',value: '单床'},{label: '双床(二人间可选)',value: '双床'},{label: '大床(二人间可选)',value: '大床'}]
 let bedTypeList5 = [{label: '大床',value: '大床'},{label: '双床',value: '双床'},{label: '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)',value: '蜜月大床'},{label: '大床+单床',value: '大床+单床'},{label: '双床+单床',value: '双床+单床'}]
 let bedTypeList6 = [{label: '大床',value: '大床'},{label: '双床',value: '双床'},{label: '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)',value: '蜜月大床'},{label: '大床+单床',value: '大床+单床'},{label: '双床+单床',value: '双床+单床'}]
-let bedTypeList7 = [{label: '大床',value: '大床'},{label: '双床',value: '双床'},{label: '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)',value: '蜜月大床'},{label: '大床+单床',value: '大床+单床'},{label: '双床+单床',value: '双床+单床'}]
+let bedTypeList7 = [
+  {label: '双大床',value: '双大床'},
+  {label: '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)',value: '蜜月大床'},
+]
 let bedTypeList8 = [{label: '大床',value: '大床'},{label: '双床',value: '双床'},{label: '大床+单床',value: '大床+单床'},{label: '双床+单床',value: '双床+单床'},{label: '大床+床垫',value: '大床+床垫'},{label: '双床+床垫',value: '双床+床垫'},{label: '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)',value: '蜜月大床'}]
 let bedTypeList9 = [{label: '单床',value: '单床'},{label: '大床',value: '大床'},{label: '双床',value: '双床'},{label: '大床+单床',value: '大床+单床'},{label: '双床+单床',value: '双床+单床'},{label: '蜜月布置大床(需要支付160马币/仅限入住当天)',value: '蜜月大床'}]
 class room extends React.Component {
@@ -81,6 +84,10 @@ class room extends React.Component {
       _date.bedTypeList = bedTypeList8;
     }else if (this.props.infor.loaddata.template == 9) {
       _date.bedTypeList = bedTypeList9;
+    } else if (template === 11 || template === 12 || template === 13 || template === 14 ) { // 巴拉望地区度假村
+      return [{label: '默认床型',value: '随机安排'}]
+    } else {
+      return [ {'value': '单床', 'label': '单床'}, {'value': '大床', 'label': '大床'}, {'value': '双床', 'label': '双床'} ]
     }
 
     let bedType = [];

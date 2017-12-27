@@ -326,6 +326,10 @@ var myTaobaoOrder = {
       return "马步岛婆罗度假村";
     }else if(data == 9) {
       return "兰卡央度假村";
+    }else if(data == 11 || data == 12 || data == 13 || data == 14) {
+      return "爱昵岛度假村";
+    } else {
+      return "度假村";
     }
   },
 

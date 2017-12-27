@@ -625,7 +625,7 @@ var myApartment = {
       
       if (myCount === 0) {
         myDomString += [
-          '<div class="apartmentList-infor">',
+          '<div class="apartmentList-infor" id="showApartmentList">',
             '请在房型详情中选择你的房型',
           '</div>',
           '<div id="orderApartment" class="apartmentList-submit">预定度假村</div>'
@@ -708,6 +708,17 @@ var myApartment = {
         }
       })(i)}
 
+      // 提示 度假村
+      $('#showApartmentList').click(function() {
+        $('#apartmentDetail').addClass('apartmentDetail-hover');
+        $.smoothScroll({
+          direction: 'top',
+          offset: ($('#apartmentDetail').offset().top - 120)
+        });
+        setTimeout(()=>{
+          $('#apartmentDetail').removeClass('apartmentDetail-hover');
+        }, 1000)
+      });
       // 预定度假村
       $('#orderApartment').click(function() {
         var allApartmentNum = 0

@@ -49,13 +49,13 @@
               <div class="col-2">儿童数</div>
               <div class="col-2">{{apartmentItem.childNum}}</div>
             </div>
-            <div class="row postscript">
+            <!-- <div class="row postscript">
               <div class="col-2">入住成人数:</div>
               <div class="col-2">1 - {{apartmentItem.adultMax}} 人</div>
               <div class="col-2">入住儿童数:</div>
               <div class="col-2">0 - {{apartmentItem.childrenMax}} 人</div>
               <div class="col-4">建议入住人数: {{apartmentItem.suggestedNum}} 人</div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="orders-title">统计</div>
@@ -138,13 +138,13 @@
                 <div class="row">
                   <div class="col-6">
                     <div><span class="red">*</span>姓名(中文)</div>
-                    <div><input type="text" v-model="item.chineseName"></div>
-                    <div class="error">{{item.chineseNameError}}</div>
+                    <div><input type="text" v-model="chineseName"></div>
+                    <div class="error">{{chineseNameError}}</div>
                   </div>
                   <div class="col-6">
                     <div><span class="red">*</span>姓名(拼音)</div>
-                    <div><input type="text" v-model="item.pinyinName"></div>
-                    <div class="error">{{item.pinyinNameError}}</div>
+                    <div><input type="text" v-model="pinyinName"></div>
+                    <div class="error">{{pinyinNameError}}</div>
                   </div>
                 </div>
                 <div class="row">
@@ -155,8 +155,8 @@
                   <div class="col-6">
                     <div>性别</div>
                     <div class="customer-detail-sex">
-                      <input type="radio" name="sex" value="1" v-model="item.gender" id="male"><label for="male">男</label>
-                      <input type="radio" name="sex" value="2" v-model="item.gender" id="female"><label for="female">女</label>
+                      <input type="radio" name="sex" value="0" v-model="item.gender" id="male"><label for="male">男</label>
+                      <input type="radio" name="sex" value="1" v-model="item.gender" id="female"><label for="female">女</label>
                     </div>
                   </div>
                 </div>
@@ -233,12 +233,12 @@
             <div class="row">
               <div class="col-2">性别:</div>
               <div class="col-10 customer-result-sex" v-if="item.gender === 1">
-                <input type="radio" checked disabled><label>男</label>
-                <input type="radio" disabled><label>女</label>
-              </div>
-              <div class="col-10 customer-result-sex" v-else>
                 <input type="radio" disabled><label>男</label>
                 <input type="radio" checked disabled><label>女</label>
+              </div>
+              <div class="col-10 customer-result-sex" v-else>
+                <input type="radio" checked disabled><label>男</label>
+                <input type="radio" disabled><label>女</label>
               </div>
             </div>
             <div class="row">

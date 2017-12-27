@@ -64,7 +64,6 @@ class Stage1 extends React.Component {
             <div className="row">9、最后，感谢您通过潜游时光来预定您的行程，预祝您游玩愉快。</div>
             <div className="row">10、<span className="strong">如果您未满18周岁，请在法定监护人的陪同下阅读本协议并进行网站注册、使用相关服务。</span></div>
             <div className="row">11、<span className="strong">本条款内容中以黑体、加粗、下划线、斜体、红色字体等方式显著标识的条款，请用户着重阅读。</span></div>
-
           </div>
         </div>
         <div className="NavAgree">

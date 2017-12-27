@@ -156,6 +156,7 @@
 		}
 
 		.apartmentReserveDate {
+			position: relative;
 			width: 270px;
 			height: 40px;
 			margin: 0px auto 20px;
@@ -168,8 +169,7 @@
 			cursor: pointer;
 
 			> div {
-				float: left;
-				width: 134px;
+				width: 135px;
 			}
 
 			> div:hover {
@@ -178,7 +178,14 @@
 			}
 			
 			#startDate {
+				float: left;
 				border-right: #dbdbdb solid 1px;
+			}
+
+			#endDate {
+				position: absolute;
+				top: 0px;
+				right: 0px;
 			}
 
 			#startDate:hover {
@@ -375,6 +382,7 @@
 				background: #f7f7f7;
 				color: #4d5d77;
 				border: #dbdbdb solid 1px;
+				cursor: pointer;
 			}
 
 			.apartmentList-submit {
@@ -630,6 +638,15 @@
 				}
 			}
 
+		}
+
+		.apartmentDetail-hover {
+			
+			.apartment-block {
+				.apartment-content {
+					box-shadow: 0 14px 14px rgba(0,0,0,0.25), 0 10px 14px rgba(0,0,0,0.22);
+				}
+			}
 		}
 
 		#apartmentDetail2 {

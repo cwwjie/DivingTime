@@ -71,7 +71,7 @@ var orderDetail = {
       }else if (data.orderStatus == 5) {
         $("#NavActive").text("交易失败");
       }
-    }else if (data.orderStatus > 5) {
+    }else if (data.orderStatus > 5 && data.orderStatus < 5) {
       $("#NavAfter").text("预订成功");
       $("#NavActive").text("支付完成");
       $("#NavAfter").removeClass('NavBefore');
@@ -93,6 +93,17 @@ var orderDetail = {
         document.getElementById('OrdSuccess').setAttribute('style',"display: block;");
         $("#OrdComplete").text("退款成功");
       }
+    }else if (data.orderStatus == 10) {
+      $("#NavAfter").removeClass('NavBefore');
+      $("#NavActive").removeClass('NavBefore');
+      $("#NavAfter").addClass('NavAfter');
+      $("#NavActive").addClass('NavAfter');
+      $('#NavBefore').html('付余款');
+      $('#pay_rest').css('display','block');
+
+      $("#pay_rest").attr('data-orderId', data.orderId);
+      $("#pay_rest").attr('data-orderType', data.orderType);
+      $("#pay_rest").attr('data-orderSn', data.orderSn);
     }
 
 
@@ -386,6 +397,17 @@ var myOrder = {
         event.target.getAttribute('data-orderSn')
       );
 		})
+		// 付尾款
+		$("#pay_rest").click(function () {
+      if ( event.target.getAttribute('data-cilck') === 'doing' ) { return }
+      event.target.setAttribute('data-cilck', 'doing');
+
+      _this.payleftConfirm(
+        event.target.getAttribute('data-orderid'),
+        event.target.getAttribute('data-orderType'),
+        event.target.getAttribute('data-orderSn')
+      );
+		})
   },
   
   render: function () {
@@ -457,7 +479,7 @@ var myOrder = {
       orderDetail.show(
         $(this).attr('data-orderId'),
         $(this).attr('data-countDown'),
-        $(this).attr('data-itemType'),
+        $(this).attr('data-itemType')
       );
       $("#content").css("display","none");
       $("aside").css("display","block");
@@ -489,6 +511,18 @@ var myOrder = {
       $(this).attr('data-isSubmit', 'true');
 
       _this.payConfirm(
+        $(this).attr('data-orderid'),
+        $(this).attr('data-orderType'),
+        $(this).attr('data-orderSn')
+      );
+    });
+
+    // 付余款
+    $(".btn-payleft-orders").click(function(event){
+      if ($(this).attr('data-isSubmit') == 'true') { return }
+      $(this).attr('data-isSubmit', 'true');
+
+      _this.payleftConfirm(
         $(this).attr('data-orderid'),
         $(this).attr('data-orderType'),
         $(this).attr('data-orderSn')
@@ -530,6 +564,14 @@ var myOrder = {
         }
       } else if (item.orderStatus === 6) {
         return ('<div class="btn-refund-orders" data-orderid="' + item.orderId + '">申请退款</div>');
+      } else if (item.orderStatus === 10) {
+          return ('<div ' + 
+            'class="btn-payleft-orders" ' +
+            'data-orderid="' + item.orderId + '" ' +
+            'data-orderType="' + item.orderType + '" ' +
+            'data-orderSn="' + item.orderSn + '" ' + 
+          '>付尾款</div>');
+        return ('<div class="btn-refund-orders" data-orderid="' + item.orderId + '">付尾款</div>');
       } else {
         return ('<div ' + 
           'class="btn-show-orders" ' +
@@ -685,25 +727,89 @@ var myOrder = {
 		}
 	},
 
+  // 付尾款
+  payleftConfirm: function (orderId, orderType, orderSn) {
+    if ( $(document).width() < 760 ) {
+      $.ajax({
+        type: "GET", 
+        url:URLbase + URLversion + "/payment/" + orderSn + "/R/alipay4Custom.do?dev=Mobile", 
+        contentType: "application/json; charset=utf-8", 
+        headers: {
+          'token':$.cookie('token'),
+          'digest':$.cookie('digest')
+        },
+        success: function (message) {
+          if (message.indexOf("FAILED") !== -1) {
+            alert('支付失败, 原因'+ message.slice(message.indexOf(':')));
+              window.location.reload();
+          }else {
+            $("body").html(message);
+          }
+        }
+      });
+    } else {
+      $.ajax({
+        type: "GET", 
+        url:URLbase + URLversion + "/payment/" + orderSn + "/R/alipay4Custom.do?dev=PC", 
+        contentType: "application/json; charset=utf-8", 
+        headers: {
+          'token':$.cookie('token'),
+          'digest':$.cookie('digest')
+        },
+        success: function (message) {
+          if (message.indexOf("FAILED") !== -1) {
+            alert('支付失败, 原因'+ message.slice(message.indexOf(':')));
+              window.location.reload();
+          }else {
+            $("body").html(message);
+          }
+        }
+      });
+    }
+  },
+
+  // 全款 R
+
 	// 付款
 	payConfirm: function (orderId, orderType, orderSn) {
 		if (orderType === 'C') {
-			$.ajax({
-				type: "GET", 
-				url:URLbase + URLversion + "/payment/" + orderSn + "/E/alipay4Custom.do", 
-				contentType: "application/json; charset=utf-8", 
-				headers: {
-					'token':$.cookie('token'),
-					'digest':$.cookie('digest')
-				},
-				success: function (message) {
-					if (message == "FAILED") {
-						alert("您在30分钟内未完成付款，交易已关闭");
-					}else {
-						$("body").html(message);
-					}
-				}
-			});
+      if ( $(document).width() < 760 ) {
+        $.ajax({
+          type: "GET", 
+          url:URLbase + URLversion + "/payment/" + orderSn + "/E/alipay4Custom.do?dev=Mobile", 
+          contentType: "application/json; charset=utf-8", 
+          headers: {
+            'token':$.cookie('token'),
+            'digest':$.cookie('digest')
+          },
+          success: function (message) {
+            if (message.indexOf("FAILED") !== -1) {
+              alert('支付失败, 原因'+ message.slice(message.indexOf(':')));
+              window.location.reload();
+            } else {
+              $("body").html(message);
+            }
+          }
+        });
+      } else {
+        $.ajax({
+          type: "GET", 
+          url:URLbase + URLversion + "/payment/" + orderSn + "/E/alipay4Custom.do?dev=PC", 
+          contentType: "application/json; charset=utf-8", 
+          headers: {
+            'token':$.cookie('token'),
+            'digest':$.cookie('digest')
+          },
+          success: function (message) {
+            if (message.indexOf("FAILED") !== -1) {
+              alert('支付失败, 原因'+ message.slice(message.indexOf(':')));
+              window.location.reload();
+            }else {
+              $("body").html(message);
+            }
+          }
+        });
+      }
 		} else {
 			if ( $(document).width() < 760 ) {
 				$.ajax({
@@ -715,8 +821,9 @@ var myOrder = {
 						'digest':$.cookie('digest')
 					},
 					success: function (message) {
-						if (message == "FAILED") {
-							alert("您在30分钟内未完成付款，交易已关闭");
+						if (message.indexOf("FAILED") !== -1) {
+              alert('支付失败, 原因'+ message.slice(message.indexOf(':')));
+              window.location.reload();
 						}else {
 							$("body").html(message);
 						}
@@ -732,8 +839,9 @@ var myOrder = {
 						'digest':$.cookie('digest')
 					},
 					success: function (message) {
-						if (message == "FAILED") {
-							alert("您在30分钟内未完成付款，交易已关闭");
+						if (message.indexOf("FAILED") !== -1) {
+              alert('支付失败, 原因'+ message.slice(message.indexOf(':')));
+              window.location.reload();
 						}else {
 							$("body").html(message);
 						}
@@ -796,6 +904,8 @@ var myOrder = {
       return "退款成功"
     }else if (Status === 9) {
       return "退款失败"
+    }else if (Status === 10) {
+      return "已付定金，待付尾款"
     }
   },
 
