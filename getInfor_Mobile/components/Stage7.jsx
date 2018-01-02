@@ -485,6 +485,38 @@ class Stage7 extends React.Component {
                   </Accordion>
                 </div>
               </div>
+            }else if (this.state.template == 11 || this.state.template == 12 || this.state.template == 13 || this.state.template == 14) {
+              return <div>
+                <Accordion defaultActiveKey="0" className="my-accordion">
+                  <Accordion.Panel header="退款说明">
+                    <div className="List">
+                      <List className="my-list">
+                        <Item wrap>出发前46天(不含)以上买家通知取消，收取订单30%的费用</Item>
+                        <Item wrap>出发前45天至20天买家通知取消，收取订单50%的费用</Item>
+                        <Item wrap>出发前19天以内买家通知取消，收取订单100%的费用</Item>
+                      </List>
+                      <List className="my-list">
+                        <div className="description_extra">因各个度假村上岛时间及接送安排不同，预定机票时请咨询我们的顾问。</div>
+                      </List>
+                    </div>
+                  </Accordion.Panel>
+                </Accordion>
+                <WhiteSpace size="lg" />
+                <div className="interval"></div>
+                <div className="Accordion">
+                  <Accordion className="my-accordion">
+                    <Accordion.Panel header="免责声明">
+                      <div className="List">
+                        <List className="my-list">
+                          <Item wrap>我们对自身掌控范围之外的原因直接或间接给客人造成的延迟、额外费用或不便不承担责任。</Item>
+                          <Item wrap>具体请参考潜游时光淘宝店里“政策说明”页面。</Item>
+                          <Item wrap>如您在本店铺支付了预订款项，代表您已同意以上政策，谢谢理解。</Item>
+                        </List>
+                      </div>
+                    </Accordion.Panel>
+                  </Accordion>
+                </div>
+              </div>
             }
           }.bind(this))()}
 

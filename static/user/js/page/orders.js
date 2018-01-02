@@ -63,6 +63,7 @@ var orderDetail = {
         if (this.countDown === null) {
         }else {
           $("#pay_Confirm").css("display","block");
+          $("#pay_All_Confirm").css("display","block");
           $("#NavActive").text("等待付款");
         }
       }else if (data.orderStatus == 4) {
@@ -101,11 +102,19 @@ var orderDetail = {
       $('#NavBefore').html('付余款');
       $('#pay_rest').css('display','block');
 
-      $("#pay_rest").attr('data-orderId', data.orderId);
-      $("#pay_rest").attr('data-orderType', data.orderType);
-      $("#pay_rest").attr('data-orderSn', data.orderSn);
     }
 
+
+    // 支付信息
+    $("#pay_All_Confirm").attr('data-orderId', data.orderId);
+    $("#pay_All_Confirm").attr('data-orderType', data.orderType);
+    $("#pay_All_Confirm").attr('data-orderSn', data.orderSn);
+    $("#pay_Confirm").attr('data-orderId', data.orderId);
+    $("#pay_Confirm").attr('data-orderType', data.orderType);
+    $("#pay_Confirm").attr('data-orderSn', data.orderSn);
+    $("#pay_rest").attr('data-orderId', data.orderId);
+    $("#pay_rest").attr('data-orderType', data.orderType);
+    $("#pay_rest").attr('data-orderSn', data.orderSn);
 
     // 订单信息
     $("#orderSn").html("<span>订单编号:</span>"+data.orderSn);
@@ -328,7 +337,7 @@ var myOrder = {
     // 'orderSn': "DVT20171031093356041000",
     // 'orderStatus': 1,
     // 'orderTime': 1509384835000,
-    // 'orderType': "P",
+    // 'orderType': "P", // C
     // 'payInfoId': 121,
     // 'productAmount': 5700,
     // 'province': 0,
@@ -388,6 +397,17 @@ var myOrder = {
 		});
 		// 付款
 		$("#pay_Confirm").click(function () {
+      if ( event.target.getAttribute('data-cilck') === 'doing' ) { return }
+      event.target.setAttribute('data-cilck', 'doing');
+
+      _this.payConfirm(
+        event.target.getAttribute('data-orderid'),
+        event.target.getAttribute('data-orderType'),
+        event.target.getAttribute('data-orderSn')
+      );
+		})
+		// 付全款
+		$("#pay_All_Confirm").click(function () {
       if ( event.target.getAttribute('data-cilck') === 'doing' ) { return }
       event.target.setAttribute('data-cilck', 'doing');
 
@@ -517,6 +537,18 @@ var myOrder = {
       );
     });
 
+    // 付全款
+    $(".btn-payall-orders").click(function(event){
+      if ($(this).attr('data-isSubmit') == 'true') { return }
+      $(this).attr('data-isSubmit', 'true');
+
+      _this.payAllConfirm(
+        $(this).attr('data-orderid'),
+        $(this).attr('data-orderType'),
+        $(this).attr('data-orderSn')
+      );
+    });
+
     // 付余款
     $(".btn-payleft-orders").click(function(event){
       if ($(this).attr('data-isSubmit') == 'true') { return }
@@ -542,19 +574,26 @@ var myOrder = {
     });
     
     function renderBtn(item) {
+
       if (item.orderStatus === 1) {
         return ('<div class="btn-cancel-orders" data-orderid="' + item.orderId + '">取消预订</div>');
       } else if ( item.orderStatus === 3 && item.countDown != null ) {
-        if (item.orderType === 'C') {
+        if (item.orderType === 'C') {  // C 定制
           return ('<div ' + 
             'class="btn-pay-orders" ' +
             'data-orderid="' + item.orderId + '" ' +
             'data-orderType="' + item.orderType + '" ' +
             'data-orderSn="' + item.orderSn + '" ' + 
           '>立即付款</div>'+
+          '<div ' + 
+            'class="btn-payall-orders" ' +
+            'data-orderid="' + item.orderId + '" ' +
+            'data-orderType="' + item.orderType + '" ' +
+            'data-orderSn="' + item.orderSn + '" ' + 
+          '>付全款</div>'+
           '<div class="btn-cancel-orders" data-orderid="' + item.orderId + '">取消预订</div>');
 
-        } else {
+        } else {// P 是套餐
           return ('<div ' + 
             'class="btn-pay-orders" ' +
             'data-orderid="' + item.orderId + '" ' +
@@ -768,7 +807,46 @@ var myOrder = {
     }
   },
 
-  // 全款 R
+  // 全款 F
+  payAllConfirm: function (orderId, orderType, orderSn) {
+    if ( $(document).width() < 760 ) {
+      $.ajax({
+        type: "GET", 
+        url:URLbase + URLversion + "/payment/" + orderSn + "/F/alipay4Custom.do?dev=Mobile", 
+        contentType: "application/json; charset=utf-8", 
+        headers: {
+          'token':$.cookie('token'),
+          'digest':$.cookie('digest')
+        },
+        success: function (message) {
+          if (message.indexOf("FAILED") !== -1) {
+            alert('支付失败, 原因'+ message.slice(message.indexOf(':')));
+            window.location.reload();
+          } else {
+            $("body").html(message);
+          }
+        }
+      });
+    } else {
+      $.ajax({
+        type: "GET", 
+        url:URLbase + URLversion + "/payment/" + orderSn + "/F/alipay4Custom.do?dev=PC", 
+        contentType: "application/json; charset=utf-8", 
+        headers: {
+          'token':$.cookie('token'),
+          'digest':$.cookie('digest')
+        },
+        success: function (message) {
+          if (message.indexOf("FAILED") !== -1) {
+            alert('支付失败, 原因'+ message.slice(message.indexOf(':')));
+            window.location.reload();
+          }else {
+            $("body").html(message);
+          }
+        }
+      });
+    }
+  },
 
 	// 付款
 	payConfirm: function (orderId, orderType, orderSn) {

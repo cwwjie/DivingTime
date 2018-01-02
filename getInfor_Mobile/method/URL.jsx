@@ -3,7 +3,7 @@ const URL = (function () {
 	// 	base:"http://192.168.0.100:8080",
 	// 	version:"/Dvt-web"
 	// }
-	if (process.env.NODE_ENV=="development") {
+	if (process.env.NODE_ENV=="development" || process.env.NODE_ENV=="tesk") {
 		return {
 			base:"http://192.168.0.100:8080",
 			version:"/Dvt-web"

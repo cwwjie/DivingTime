@@ -8,6 +8,7 @@ import traveler from './../icon/traveler.png';
 import dateTime from './../method/dateTime.jsx';
 import pinYin from './../method/ChineseHelper.jsx';
 import Autocomplete from './../method/Autocomplete.jsx';
+import URL from './../method/URL.jsx';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -22,7 +23,7 @@ maxDate = dateTime.dateToFormat(maxDate)+' +0800';
 maxDate = moment(maxDate,'YYYY-MM-DD Z');
 
 
-const NationaList = [
+let NationaList = [
   {
     label: '中国 CHINA',
     value: 'CHINA'
@@ -115,6 +116,7 @@ class customer extends React.Component {
       "travelerType":'adult',//child adult
 
       "alert":"请填写相关信息",
+      'NationaList': NationaList, // 国籍
 
       "passportNo":null,
       "nationality":null,
@@ -249,7 +251,38 @@ class customer extends React.Component {
       _date.anamnesis = customerInfo.anamnesis;
     }
     this.setState(_date);
+
+    this.getNationality().then(json => {
+      if (json.result === '0') {
+        _this.setState({ 'NationaList': json.data.codeList.map(val => ({
+          'value': val.code,
+          'label': val.codeName
+        })) });
+      } else {
+        alert('加载国籍信息失败, 原因: ' + json.message);
+      }
+    })
   }
+
+  getNationality() {
+    return fetch(`${URL.base}${URL.version}/system/codetype/nationality/getWith.do`, {
+      'method': 'GET',
+      'headers': {
+        'Content-Type': 'application/json; charset=utf-8'
+      }
+    }).then(
+      function(response) {
+        return response.json()
+      }, function(error) {
+        return { 'result': '1', 'message': error }
+      }
+    ).catch(function(error) {
+      return { 'result': '1', 'message': error }
+    })
+
+  }
+
+
   render() {
     return (
       <div>
@@ -284,7 +317,7 @@ class customer extends React.Component {
             >护照</InputItem>
 
             <Picker
-              data={NationaList} cols={1} className="forss"
+              data={this.state.NationaList} cols={1} className="forss"
               value={this.state.nationality}
               title="请选择国籍"
               onChange={function(val){

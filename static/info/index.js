@@ -13,9 +13,12 @@ window.onload = function() {
     )
     .then(function(json) {
       if (json.result === '0') {
+        // 处理数据
         Info.data = Info.dealwith(json.data);
+        // 初始化页面
         Info.init();
         document.getElementById('main').setAttribute('style', 'display: block;');
+        // 初始化二维码(异步)
         Info.getAdminInfo()
           .then(function(json) {
             if (json.result === '0') {
@@ -29,10 +32,24 @@ window.onload = function() {
               Info.part_3.$data.adminInfo = myadminInfo;
               Info.part_4.$data.adminInfo = myadminInfo;
               Info.part_5.$data.adminInfo = myadminInfo;
-            }else {
+            } else {
               alert('加载二维码失败, 原因: ' + json.message);
             }
           })
+        // 初始化国籍(异步)
+        Info.getNationality()
+          .then(function(json) {
+            if (json.result === '0') {
+              Info.part_3.$data.nationaOptions = json.data.codeList.map(function(val) {
+                return {
+                  'value': val.code,
+                  'label': val.codeName
+                }
+              });
+            } else {
+              alert('加载国籍信息失败, 原因: ' + json.message);
+            }
+          });
       }else {
         alert('加载数据失败, 原因: ' + json.message);
       }
@@ -246,6 +263,23 @@ var Info = {
     }
   },
 
+  getNationality: function () {
+    return fetch(URLbase + URLversion + '/system/codetype/nationality/getWith.do',{
+      'method': 'GET',
+      'headers': {
+        'Content-Type': 'application/json; charset=utf-8'
+      }
+    }).then(
+      function(response) {
+        return response.json()
+      }, function(error) {
+        return { 'result': '1', 'message': error }
+      }
+    ).catch(function(error) {
+      return { 'result': '1', 'message': error }
+    })
+  },
+
   getAdminInfo: function() {
     var basicData = JSON.parse(localStorage.getItem('loginSuccessful')),
         token = localStorage.getItem('_token'),
@@ -397,6 +431,21 @@ var VuePart_2 = {
         },
       },
       'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': 'null'},
+    },
+
+    'computed': {
+      flightName:  function () {
+        if (
+          this.template === 11 ||
+          this.template === 12 ||
+          this.template === 13 ||
+          this.template === 14
+        ) {
+          return '马来西亚'
+        } else {
+          return '斗湖'
+        }
+      }
     },
     
     'watch': {
@@ -1844,7 +1893,6 @@ var VuePart_3 = {
     this.Vue.data.lavePeopleNum = lavePeopleNum;
     this.Vue.data.roomList = roomList;
   }
-
 }  
 
 var VuePart_4 = {

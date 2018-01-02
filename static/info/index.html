@@ -220,7 +220,7 @@
           <!-- 到港航班号 -->
           <div class="row">
             <div class="col-4">
-              <div class="flight-descri">斗湖抵达日期</div>
+              <div class="flight-descri">{{flightName}}抵达日期</div>
               <div class="flight-picker">
                 <el-date-picker
                   v-model="hLandDate" 
@@ -252,7 +252,7 @@
           <!-- 离港航班号 -->
           <div class="row">
             <div class="col-4">
-              <div class="flight-descri">斗湖离开日期</div>
+              <div class="flight-descri">{{flightName}}离开日期</div>
               <div class="flight-picker">
                 <el-date-picker
                   v-model="hTakeoffDate" 
@@ -460,7 +460,7 @@
               </div>
               <div class="pickUpP3">
                 <div class="pickUp-title">马布岛度假村—机场</div>
-                <div>① 06：30AM</div>
+                <div>① 07：30AM</div>
                 <div>② 11：00AM</div>
                 <div>③ 14：00PM</div>
                 <div>离岛第二天不送机</div>

@@ -522,7 +522,7 @@ class Stage5 extends React.Component {
                     <Accordion.Panel header="马布岛度假村—机场">
                       <div className="List">
                         <List className="my-list">
-                          <Item wrap>① 06：30AM</Item>
+                          <Item wrap>① 07：30AM</Item>
                           <Item wrap>② 11：00AM</Item>
                           <Item wrap>③ 14：00PM</Item>
                           <Item wrap>离岛第二天不送机</Item>
@@ -685,7 +685,7 @@ class Stage5 extends React.Component {
                     <Accordion.Panel header="马布岛度假村—机场">
                       <div className="List">
                         <List className="my-list">
-                          <Item wrap>① 06：30AM</Item>
+                          <Item wrap>① 07：30AM</Item>
                           <Item wrap>② 11：00AM</Item>
                           <Item wrap>③ 14：00PM</Item>
                           <Item wrap>离岛第二天不送机</Item>
@@ -767,7 +767,7 @@ class Stage5 extends React.Component {
                         <Item wrap>① 10：00</Item>
                         <Item wrap>② 12：00</Item>
                         <Item wrap>③ 16：30</Item>
-                        <Item wrap>11：00后到达斗湖的航班需第二天上岛；提前一天17：00前到达的航班可送至仙本那</Item>
+                        <Item wrap>15：15后到达斗湖的航班需第二天上岛；提前一天17：00前到达的航班可送至仙本那</Item>
                       </List>
                     </div>
                   </Accordion.Panel>
