@@ -238,7 +238,16 @@ function initAll() {
 	$("#flightNote").next().attr('class', 'value active');
 
 	// 航班信息
-	if ( loaddata.template == 1 || loaddata.template == 2 || loaddata.template == 4 || loaddata.template == 5 || loaddata.template == 6 || loaddata.template == 7 || loaddata.template == 8 || loaddata.template == 9 ) {
+	if ( 
+		loaddata.template == 1 || 
+		loaddata.template == 2 || 
+		loaddata.template == 4 || 
+		loaddata.template == 5 || 
+		loaddata.template == 6 || 
+		loaddata.template == 7 || 
+		loaddata.template == 8 || 
+		loaddata.template == 9 
+	) {
 		// 只有 2 个 航班
 		$("#outboundclass").css('display', 'none');
 		$("#inboundclass").css('display', 'none');

@@ -278,7 +278,7 @@ var myTaobaoOrder = {
       return "<div class='supplement' id='supplement"+i+"' data-id="+i+">填写出行信息</div>"
     }else {
       // 说明可以查看确认函
-      if (isConfirmed == 'Y') {
+      if (isConfirmed === 'Y') {
         return "<div class='checking' id='checking"+i+"' data-id="+i+">查看信息</div><div class='checking' id='confirm"+i+"' data-id="+i+">查看确认函</div>"
       }else {
         return "<div class='checking' id='checking"+i+"' data-id="+i+">查看信息</div>"

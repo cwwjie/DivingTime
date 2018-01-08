@@ -119,7 +119,7 @@
         <div class="part2-content">
           <div class="extra-insurance row" v-if="extra.isHaveInsurance">
             <div class="col-6">赠送保险: <span>“保游全球”畅游海外旅行保障A计划</span></div>
-            <div class="col-6">保险期间: <span>{{orderinfor.initExtra}}</span></div>
+            <div class="col-6">保险期间: <span>{{extra.insurance}}</span></div>
           </div>
           <div class="extra-transfers" v-if="extra.isHaveTransfers">
             <div class="transfers-desc">
@@ -186,7 +186,7 @@
           </div>
 
           <!-- 国际航班号（入境） -->
-          <div class="row" v-if="extra.isHaveInsurance">
+          <div class="row" v-if="template === 3">
             <div class="col-4">
               <div class="flight-descri">马来西亚抵达日期</div>
               <div class="flight-picker">
@@ -282,7 +282,7 @@
           </div>
 
           <!-- 国际航班号（出境） -->
-          <div class="row" v-if="extra.isHaveInsurance">
+          <div class="row" v-if="template === 3">
             <div class="col-4">
               <div class="flight-descri">马来西亚离开日期</div>
               <div class="flight-picker">

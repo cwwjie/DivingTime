@@ -82,10 +82,10 @@ class room extends React.Component {
       _date.bedTypeList = bedTypeList8;
     }else if (this.props.infor.loaddata.template == 9) {
       _date.bedTypeList = bedTypeList9;
-    } else if (template === 11 || template === 12 || template === 13 || template === 14 ) { // 巴拉望地区度假村
-      return [{label: '默认床型',value: '随机安排'}]
+    } else if (this.props.infor.loaddata.template === 11 || this.props.infor.loaddata.template === 12 || this.props.infor.loaddata.template === 13 || this.props.infor.loaddata.template === 14 ) { // 巴拉望地区度假村
+      _date.bedTypeList = [{label: '默认床型',value: '随机安排'}]
     } else {
-      return [ {'value': '单床', 'label': '单床'}, {'value': '大床', 'label': '大床'}, {'value': '双床', 'label': '双床'} ]
+      _date.bedTypeList = [ {'value': '单床', 'label': '单床'}, {'value': '大床', 'label': '大床'}, {'value': '双床', 'label': '双床'} ]
     }
 
     let bedType = [];

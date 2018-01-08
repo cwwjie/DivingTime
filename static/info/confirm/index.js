@@ -32,7 +32,7 @@ function loadMessage() {
         // 付款确认函
         if (val.data.type == "P") {
           earnest();
-        }else if (val.data.type == "T") {// 出行确认函
+        } else if (val.data.type == "T") {// 出行确认函
           fullamount();
         }
 

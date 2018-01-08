@@ -215,8 +215,8 @@ var Info = {
         'remark': basicData.remark,
         'kidsAge': basicData.kidsAge,
         'payAccount': null,
-        'signName': null,
-        'pinyinName': null,
+        'signName': basicData.signName,
+        'pinyinName': basicData.pinyinName,
         'mobile': null,
         'email': null,
         'outboundNum': null,
@@ -307,7 +307,7 @@ var VuePart_1 = {
     'data': {
       'isShow': false,
       'checked': false,
-      'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': 'null'},
+      'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': ''},
     },
 
     'methods': {
@@ -430,7 +430,7 @@ var VuePart_2 = {
           'digest': localStorage.getItem('_digest')
         },
       },
-      'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': 'null'},
+      'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': ''},
     },
 
     'computed': {
@@ -1274,7 +1274,7 @@ var VuePart_3 = {
         'message': ''
       },
 
-      'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': 'null'},
+      'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': ''},
     },
     
     'watch': {
@@ -1903,7 +1903,7 @@ var VuePart_4 = {
       'isShow': false,
       'template': null,
       'isFirst': null,
-      'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': 'null'},
+      'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': ''},
     },
 
     'methods': {
@@ -1953,40 +1953,40 @@ var VuePart_4 = {
             loadingInstance.close();
             Info.part_5.$data.isShow = true;
           });
-        }
-
-        this.ajaxUpdate(Info.data)
-          .then(function (val) {
-            if (val.result == '0') {
-              Info.part_5.$data.isSuccess = true;
-              Info.part_5.$data.message = '恭喜你的信息提交成功!';
-              Info.part_5.$data.reason = '';
-            } else if (val.result == '2') {
-              Info.part_5.$data.isSuccess = false;
-              Info.part_5.$data.message = '非常抱歉，该链接已经失效!';
-              Info.part_5.$data.reason = val.message;
-            } else if (val.result == '3') {
-              Info.part_5.$data.isSuccess = false;
-              Info.part_5.$data.message = '非常抱歉，无法进行数据修改!';
-              Info.part_5.$data.reason = val.message;
-            } else if (val.result == '100') {
+        } else {
+          this.ajaxUpdate(Info.data)
+            .then(function (val) {
+              if (val.result == '0') {
+                Info.part_5.$data.isSuccess = true;
+                Info.part_5.$data.message = '恭喜你的信息提交成功!';
+                Info.part_5.$data.reason = '';
+              } else if (val.result == '2') {
+                Info.part_5.$data.isSuccess = false;
+                Info.part_5.$data.message = '非常抱歉，该链接已经失效!';
+                Info.part_5.$data.reason = val.message;
+              } else if (val.result == '3') {
+                Info.part_5.$data.isSuccess = false;
+                Info.part_5.$data.message = '非常抱歉，无法进行数据修改!';
+                Info.part_5.$data.reason = val.message;
+              } else if (val.result == '100') {
+                Info.part_5.$data.isSuccess = false;
+                Info.part_5.$data.message = '非常抱歉，数据在提交时发生错误!';
+                Info.part_5.$data.reason = '原因: ' + val.message;
+              } else {
+                Info.part_5.$data.isSuccess = false;
+                Info.part_5.$data.message = '非常抱歉，服务器返回一个错误!';
+                Info.part_5.$data.reason = '错误代码: ' + val.message;
+              }
+              loadingInstance.close();
+              Info.part_5.$data.isShow = true;
+            }).catch(function (error) { 
               Info.part_5.$data.isSuccess = false;
               Info.part_5.$data.message = '非常抱歉，数据在提交时发生错误!';
-              Info.part_5.$data.reason = '原因: ' + val.message;
-            } else {
-              Info.part_5.$data.isSuccess = false;
-              Info.part_5.$data.message = '非常抱歉，服务器返回一个错误!';
-              Info.part_5.$data.reason = '错误代码: ' + val.message;
-            }
-            loadingInstance.close();
-            Info.part_5.$data.isShow = true;
-          }).catch(function (error) { 
-            Info.part_5.$data.isSuccess = false;
-            Info.part_5.$data.message = '非常抱歉，数据在提交时发生错误!';
-            Info.part_5.$data.reason = '原因: ' + error;
-            loadingInstance.close();
-            Info.part_5.$data.isShow = true;
-          });
+              Info.part_5.$data.reason = '原因: ' + error;
+              loadingInstance.close();
+              Info.part_5.$data.isShow = true;
+            });
+        }
       },
 
       ajaxUpdate: function (data) {
@@ -2091,7 +2091,7 @@ var VuePart_5 = {
     'isSuccess': false,
     'message': '恭喜你信息提交成功!',
     'reason': '',
-    'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': 'null'},
+    'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': ''},
   },
 
   'methods': {
