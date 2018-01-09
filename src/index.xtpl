@@ -1,0 +1,27 @@
+{{ set (homeURL = "./") }}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href={{ homeURL + "dist/css/bootstrap.min.css" }}>
+  <link rel="stylesheet" type="text/css" href={{ "./index.css?file_version=" + file_version }}>
+  <title>潜游时光</title>
+</head>
+<body>
+
+  {{ include ("./nav/header") }}
+
+  <div id="carousel"></div>
+  <div class="product" id="product"></div>
+
+</body>
+  <script type="text/javascript" src={{ homeURL + "dist/js/jquery-2.1.4.min.js" }}></script>
+  <script type="text/javascript" src={{ homeURL + "dist/js/es6-promise.min.js" }}></script>
+  <script type="text/javascript" src={{ homeURL + "dist/js/bootstrap.min.js" }}></script>
+  <script type="text/javascript" src={{ homeURL + "dist/js/fetch.min.js" }}></script>
+
+  <script type="text/javascript" src={{ homeURL + "dist/js/config.js?file_version=" + file_version }}></script>
+  <script type="text/javascript" src={{ "./index.js?file_version=" + file_version }}></script>
+</html>
