@@ -1,4 +1,4 @@
-{{ set (homeURL = "./") }}
+{{ set (homeURL = "./../") }}
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -11,15 +11,12 @@
 </head>
 <body>
 
-  {{ include ("./Component/Navigation-Bar/index") }}
+  {{ include ("./../Component/Navigation-Bar/index") }}
 
-  <div id="carousel"></div>
-  <div class="product" id="product"></div>
+  <div style="height: 500px;"></div>
 
-  {{ include ("./Component/ScrollTop/index") }}
+  {{ include ("./../Component/Copyright/index") }}
 
-  {{ include ("./Component/Copyright/index") }}
-  
 </body>
   <script type="text/javascript" src={{ homeURL + "dist/js/jquery-2.1.4.min.js" }}></script>
   <script type="text/javascript" src={{ homeURL + "dist/js/es6-promise.min.js" }}></script>
@@ -28,9 +25,4 @@
 
   <script type="text/javascript" src={{ homeURL + "dist/js/config.js?file_version=" + file_version }}></script>
   <script type="text/javascript" src={{ "./index.js?file_version=" + file_version }}></script>
-
-  <script type="text/javascript">
-    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-    document.write(unescape("%3Cspan style='display:none' id='cnzz_stat_icon_1261043384'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1261043384' type='text/javascript'%3E%3C/script%3E"));
-  </script>
 </html>

@@ -70,16 +70,11 @@
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component_Navigation_Bar_index_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Component_ScrollTop_index_js__ = __webpack_require__(4);
-
 
 
 $(document).ready(() => {
 
-  __WEBPACK_IMPORTED_MODULE_0__Component_Navigation_Bar_index_js__["a" /* default */].init('0');
-  carousel.init();
-  product.init();
-  __WEBPACK_IMPORTED_MODULE_1__Component_ScrollTop_index_js__["a" /* default */].init();
+  __WEBPACK_IMPORTED_MODULE_0__Component_Navigation_Bar_index_js__["a" /* default */].init();
 });
 
 let carousel = {
@@ -836,85 +831,6 @@ module.exports = {
         'message': message
     })
 }
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-  init() {
-    this.scrollTop();
-    this.siderBar();
-  },
-
-  siderBar() {
-    let myclientWidth = document.body.clientWidth;
-
-    $('#showSidebar').click(function(){
-      $('#side-bar').animate({
-        'right': '0'
-      }, 70);
-    });
-
-    $("#closeSidebar").click(function(){
-      $('#side-bar').animate({'right': '-330px'}, 70);
-    });
-  },
-
-  scrollTop() {
-    let scrollTopTimer = null,
-        isshowScrollIcon = false,
-        scrollTopNumber;
-    
-    window.onscroll= () => {
-      scrollTopNumber = document.documentElement.scrollTop || document.body.scrollTop;
-
-      if (scrollTopNumber > 600) {
-        if (isshowScrollIcon == false) {
-          isshowScrollIcon = true;
-          $('#scroll-icon-top').css('visibility', 'visible');
-          $('#scroll-icon-top').animate({
-            'opacity': ' 1'
-          }, 500);
-        }
-
-      } else if (scrollTopNumber < 600) {
-        if (isshowScrollIcon == true) {
-          isshowScrollIcon = false;
-
-          $('#scroll-icon-top').animate({
-            'opacity': '0'
-          }, 500);
-
-          setTimeout(() => {
-            $('#scroll-icon-top').css('visibility', 'hidden');
-          }, 500);
-        }
-      }
-
-      return scrollTopNumber;
-    }
-
-    $('#scroll-icon-top').click(() => {
-      clearInterval(scrollTopTimer);
-
-      scrollTopTimer = setInterval(() => {
-
-        let nowScroll = scrollTopNumber;
-        let speed= ( 0 - nowScroll ) / 10;
-        speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
-        if(scrollTopNumber == 0){
-          clearInterval(scrollTopTimer);
-        }
-        document.documentElement.scrollTop = scrollTopNumber + speed;
-        document.body.scrollTop = scrollTopNumber + speed;
-      }, 10);
-
-    });
-  }
-});
 
 
 /***/ })

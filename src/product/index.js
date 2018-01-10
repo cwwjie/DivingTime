@@ -1,12 +1,8 @@
-import header from './Component/Navigation-Bar/index.js';
-import ScrollTop from './Component/ScrollTop/index.js';
+import header from './../Component/Navigation-Bar/index.js';
 
 $(document).ready(() => {
 
-  header.init('0');
-  carousel.init();
-  product.init();
-  ScrollTop.init();
+  header.init();
 });
 
 let carousel = {

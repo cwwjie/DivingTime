@@ -1,0 +1,143 @@
+footer {
+	background: #3c3e40;
+  min-width: 995px;
+
+  .footer-content {
+    position: relative;
+    left: 50%;
+    margin-left: -350px;
+    width: 700px;
+    height: 330px;
+    overflow: hidden;
+
+    .footer-company {
+      overflow: hidden;
+      padding-top: 20px;
+      padding-bottom: 20px;
+
+      .footer-company-infor,
+      .footer-other-detail {
+        a {
+          font-size: 14px;
+          color: #fff;
+        }
+  
+        h3, h4 {
+          color: #fff;
+        }
+  
+        p {
+          padding: 5px 0px;
+        }
+      }
+  
+      .footer-company-infor {
+        float: left;
+        padding-top: 20px;
+  
+        i {
+          display: block;
+          width: 60px;
+          height: 23px;
+          background-position: -300px 0px;
+        }
+  
+        h4 {
+          padding-top: 20px;
+          padding-bottom: 15px;
+        }
+      }
+  
+      .footer-other-detail {
+        float: right;
+        width: 80%;
+        padding-top: 15px;
+
+        .row {
+          padding-left: 0px;
+          margin-left: 0px;
+        }
+  
+        h3 {
+          padding-bottom: 20px;
+          letter-spacing: 8px;
+        }
+  
+        h4 {
+          padding-top: 2px;
+          padding-bottom: 15px;
+        }
+      }
+    }
+
+    .footer-icon {
+      position: absolute;
+      left: 50%;
+      padding-top: 20px;
+      margin-left: -155px;
+      width: 310px;
+
+      > div {
+        display: inline-block;
+        padding: 0px 20px;
+      }
+
+
+      i {
+        display: block;
+        width: 32px;
+        height: 32px;
+      }
+
+      .footer-icon-taobao {
+        i {
+          background-position: -361px 0px;
+        }
+      }
+
+      .footer-icon-weibo {
+        i {
+          background-position: -393px 0px;
+        }
+      }
+
+      .footer-icon-weixin {
+				position: relative;
+
+        i {
+          background-position: -425px 0px;
+        }
+
+        > div{
+          display: none;
+					position: absolute;
+					top: -130px;
+					left: -25px;
+					width: 120px;
+					height: 120px;
+          background-image: url("/dist/img/ico.png");
+					background-position: 0px -115px;
+				}
+      }
+
+      .footer-icon-weixin:hover {
+        > div {
+          display: block;
+        }
+      }
+
+      .footer-icon-credit {
+        i {
+          background-position: -344px -217px;
+        }
+      }
+    }
+    
+    .footer-copyright {
+      padding-top: 70px;
+      text-align: center;
+      font-size: 14px;
+      color: #fff;
+    }
+  }
+}
