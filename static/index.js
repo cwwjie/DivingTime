@@ -175,7 +175,7 @@ let carousel = {
           }
         },
         error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求轮播图出错, 状态码: ${XMLHttpRequest.status}. 原因: ${textStatus}`);
+          reject(`请求轮播图出错, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
         }
       });
 
@@ -392,7 +392,7 @@ let product = {
           }
         },
         error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求产品出错, 状态码: ${XMLHttpRequest.status}. 原因: ${textStatus}`);
+          reject(`请求产品出错, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
         }
       });
 
@@ -752,7 +752,7 @@ let product = {
         }
       },
       error: (XMLHttpRequest, textStatus, errorThrown) => {
-        reject(`请求用户信息出错, 状态码: ${XMLHttpRequest.status}. 原因: ${textStatus}`)
+        reject(`请求用户信息出错, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`)
       }
     });
   }),

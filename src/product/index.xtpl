@@ -13,7 +13,70 @@
 
   {{ include ("./../Component/Navigation-Bar/index") }}
 
-  <div style="height: 500px;"></div>
+  <div id="carousel"></div>
+
+  <div class="part1 part-tlitle">
+    <div class="part-content">
+
+      <div class="part-content-left">
+        <h1 id="productName">正在加载... <span></span></h1>
+        <p id="productDesc">正在加载...</p>
+      </div>
+
+      <div class="part-aside">
+        <div class="part-aside-top">
+          <div class="aside-left">套餐价格</div>
+          <div class="aside-rigth"><span id="productPrice">正在加载...</span> RMB<i title="暂无套餐说明"></i></div>
+        </div>
+        <div class="part-aside-bottom">
+          <div class="aside-left">价格优惠期</div>
+          <div class="aside-rigth" id="promoteTime">正在加载...<!-- <span>2016-11-2</span> 至 <span>2016-11-5</span> --></div>
+        </div>
+      </div>
+
+      <div class="part-content-right reserve">
+        <div class="reserve-content">
+          <div id="apartmentTitle" class="reserve-apartmentTitle">正在加载...</div>
+
+          <div class="reserve-reserve-date">
+            出发日期
+          </div>
+
+          <div class="datetimepicker" id="starDatePicker">
+            <input type="text" style="display: none">
+          </div>
+
+          <div class="reserve-reserve-sumbit">
+            预定套餐
+          </div>
+
+          <div class="container" id="ContactUS">
+            <div class="container-left">
+              <div class="container-content">
+                <div class="content-detail">
+                  <div class="content-tiltle">联系电话:</div>
+                  <div class="content-other"><a href="tel://13750022341" >137-50022-341</a></div>
+                  <div class="content-tiltle">微信号:</div>
+                  <div class="content-other">divingtime_asia</div>
+                </div>
+                <div class="weixinQRcode"><i></i></div>
+              </div>
+            </div>
+            <div class="container-right">
+              <div>客服咨询</div>
+              <p>联系我们</p>
+              <p>收悉您的需求后，</p>
+              <p>我们会第一时间与您联系！</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height: 1000px;"></div>
+
+  {{ include ("./../Component/ScrollTop/index") }}
 
   {{ include ("./../Component/Copyright/index") }}
 

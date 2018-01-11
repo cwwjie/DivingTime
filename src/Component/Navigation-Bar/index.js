@@ -341,7 +341,7 @@ export default {
         }
       },
       error: (XMLHttpRequest, textStatus, errorThrown) => {
-        reject(`请求用户信息出错, 状态码: ${XMLHttpRequest.status}. 原因: ${textStatus}`)
+        reject(`请求用户信息出错, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`)
       }
     });
   }),
