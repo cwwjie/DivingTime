@@ -1,6 +1,7 @@
 import header from './../Component/Navigation-Bar/index.js';
 import scrollTop from './../Component/ScrollTop/index.js';
-
+import convertDate from './../../utils/convertDate.js';
+ 
 $(document).ready(() => {
   if (utilities.loadPageVar('productId')) {
     product.id = utilities.loadPageVar('productId');
@@ -12,7 +13,15 @@ $(document).ready(() => {
   header.init();
   scrollTop.init();
   carousel.init();
-  product.init();
+
+  product.init()
+  .then(val => {
+    val.productType === 'package' ? trip.init() : '';
+    val.refundRuleId ? refundrule.init() : '';
+  });
+
+  attribute.init();
+  costIncludes.init();
 });
 
 let product = {
@@ -46,25 +55,77 @@ let product = {
     // 'updateBy': 23,
     // 'updateTime': 1485194651000
   },
+  'isPromote': null,
 
   init() {
     const _this = this;
 
-    this.getProduct()
-    .then(val => {
-      _this.data = val;
-      _this.renderProduct();
-    }, error => alert(error))
+    this.bindjQueryEvent();
+
+    return new Promise((resolve, reject) => {
+      this.getProduct()
+      .then(val => {
+        _this.data = val;
+        _this.renderProduct(val);
+        resolve(val);
+      }, error => reject(alert(error)))
+    });
+  },
+
+  bindjQueryEvent() {
+
   },
 
   renderProduct() {
     const _this = this;
+
+    this.chackIsPromote();
 
     // 标签
     $("#productName").html(this.data.productName);
 
     // 简单描述
     $("#productDesc").html(this.data.productDesc);
+
+    // 套餐价格
+    $("#productPrice").html(this.renderProductPrice());
+
+    // 价格优惠期
+    $("#promoteTime").html(this.renderPromoteTime());
+  },
+
+  chackIsPromote() {
+    const nowTimestamp = Date.parse(new Date()),
+      promotePrice = this.data.promotePrice,
+      promoteEndTimestamp = this.data.promoteEndTime,
+      promoteStartTimestamp = this.data.promoteStartTime;
+
+    // 如果促销
+    if (promotePrice != null && promotePrice != 0) {
+      // 当前时间 大于等于 促销开始时间
+      // 并且
+      // 当前时间 小于等于 促销结束时间
+      if (
+        nowTimestamp >= promoteStartTimestamp && 
+        nowTimestamp <= promoteEndTimestamp
+      ) {
+        return this.isPromote = true;
+      }
+    }
+
+    return this.isPromote = false;
+  },
+
+  renderProductPrice() {
+    return this.isPromote === true ? 
+      `<span style='text-decoration:line-through'>${this.data.productPrice}</span> ${this.data.promotePrice}` :
+      this.data.productPrice;
+  },
+
+  renderPromoteTime() {
+    return this.isPromote === true ? 
+      `<span>${convertDate.dateToFormat(new Date(this.data.promoteStartTime))} 至 ${convertDate.dateToFormat(new Date(this.data.promoteEndTime))}</span>` :
+      '暂无';
   },
 
   getProduct() {
@@ -203,15 +264,16 @@ let carousel = {
 let attribute = {
   'data': [
     // {
-    //   'costContent': '<p><span style="line-height: 1;">往返机场接送服务：</span></p><p><span style="line-height: 1;">斗湖机场--仙本那码头车程约70分钟 &nbsp; 仙本那码头--度假村船程约60分钟；</span></p><p><span style="line-height: 1;">每日三餐（自助餐）加下午茶：</span></p><p>早餐 7:00-9:00AM &nbsp; &nbsp;中餐 12:00-14:00PM &nbsp; &nbsp;晚餐 19:00-21:00PM</p><p>餐厅终日提供咖啡、茶、果汁（不包含酒精饮料或碳酸饮料），<span style="line-height: 1;">糖果、新鲜出炉的面包和甜点</span></p><p>度假村沙滩屋住宿及无限次数岸边浮潜。</p><p><br></p>',
-    //   'costTitle': '包含',
-    //   'createBy': 23,
-    //   'createTime': 1485195023000,
-    //   'includeId': 271,
+    //   'attrId': 184,
+    //   'attrName': '交通信息',
+    //   'attrValue': '<p>哥打基那巴鲁）机场--斗湖机场</p><p>斗湖机场--仙本那码头<br></p><p>当天上岛的客人按到达的时间接送至仙本那0PM</p><p>POM POM度假村--仙本那码头--斗湖机场&nb</p>',
+    //   'createBy': '2,3',
+    //   'createTime': 1486150327000,
     //   'isDelete': 'N',
     //   'productId': 64,
-    //   'updateBy': 23,
-    //   'updateTime': 1485374889000,
+    //   'sortOrder': 0,
+    //   'updateBy': null,
+    //   'updateTime': null,
     // }
   ],
 
@@ -227,6 +289,16 @@ let attribute = {
 
   renderAttribute() {
     const _this = this;
+    let lastData = this.data.length - 1;
+
+    $('#part-attribute').html(this.data.map((val, key) => {
+      return [
+        `<div class="main-content${key !== lastData ? ' main-bottom-line' : ''}">`,
+          `<div class="main-content-name">${val.attrName}</div>`,
+          `<div class="main-content-value">${val.attrValue}</div>`,
+        '</div>'
+      ].join('')
+    }).join(''));
   },
 
   getAttribute() {
@@ -271,16 +343,74 @@ let trip = {
 
   init() {
     const _this = this;
+    $('.part-trip').show();
 
     this.getTrip()
     .then(val => {
       _this.data = val;
-      _this.renderTrip();
+      _this.renderTripFrom();
+      _this.renderTripModal();
     }, error => alert(error))
   },
 
-  renderTrip() {
+  renderTripFrom() {
     const _this = this;
+    
+    $('#part-trip').html([
+      '<div class="trip-from">',
+        '<div class="trip-from-tlitle">',
+          '<div class="from-tripDay">日期</div>',
+          '<div class="from-tripEvent">项目&amp;活动</div>',
+          '<div class="from-tripPlace">入宿&amp;景点</div>',
+        '</div>',
+        this.data.map((val, key) => {
+          return [
+            '<div class="trip-from-main" data-toggle="modal" data-target="#trip-modal">',
+              `<div class="from-tripDay">第${val.tripDay}天</div>`,
+              `<div class="from-tripEvent">${val.tripEvent}</div>`,
+              `<div class="from-tripPlace">${val.tripPlace}</div>`,
+            '</div>'
+          ].join('');
+        }).join(''),
+      '</div>',
+    ].join(''));
+  },
+
+  renderTripModal() {
+    const _this = this;
+
+    $('#trip-modal').html([
+      '<div class="modal-content">',
+        '<div class="trip-modal-nav">',
+          this.data.map((val, key) => {
+            return `<div><a href="#modal-trip-day${key + 1}">第${key + 1}天</a></div>`
+          }).join(''),
+        '</div>',
+        '<div class="trip-modal-main">',
+          '<div class="modal-header">',
+            '<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>',
+            `<h4 class="modal-title" id="myModalLabel">${product.data.productName}</h4>`,
+          '</div>',
+          
+          '<div class="modal-body">',
+            '<div class="journey">',
+              this.data.map((val, key) => {
+                return [
+                  `<div class="journey-title" id="modal-trip-day${key + 1}">第${key + 1}天</div>`,
+                  `<div class="journey-content">${val.tripDesc}</div>`,
+                ].join('');
+              }).join(''),
+            
+            '</div>',
+          '</div>',
+          
+          '<div class="modal-footer">',
+            '<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>',
+          '</div>',
+        '</div>',
+      '</div>'
+    ].join(''));
+
   },
 
   getTrip() {
@@ -332,6 +462,16 @@ let costIncludes = {
 
   rendercostIncludes() {
     const _this = this;
+    let lastData = this.data.length - 1;
+
+    $('#part-costIncludes').html(this.data.map((val, key) => {
+      return [
+        `<div class="main-content${key !== lastData ? ' main-bottom-line' : ''}">`,
+          `<div class="main-content-name">${val.costTitle}</div>`,
+          `<div class="main-content-value">${val.costContent}</div>`,
+        '</div>'
+      ].join('')
+    }).join(''));
   },
 
   getcostIncludes() {
@@ -357,7 +497,7 @@ let costIncludes = {
 }
 
 let refundrule = {
-  data: {
+  'data': {
     // 'createBy': null,
     // 'createTime': null,
     // 'isDelete': null,
@@ -386,6 +526,7 @@ let refundrule = {
 
   init() {
     const _this = this;
+    $('.part-refundrule').show();
 
     this.getRefundrule()
     .then(val => {
@@ -396,13 +537,51 @@ let refundrule = {
 
   renderRefundrule() {
     const _this = this;
+    let ruleLength = this.data.ruleItemList.length;
+
+    $('#part-refundrule').html([
+      '<div class="part-content">',
+        '<div class="content-tlitle">退款说明</div>',
+        '<div class="part-main">',
+
+          '<div class="refundrule-strip">',
+            this.data.ruleItemList.map((val, key) => {
+              let ruleItemWidth = ( 1 - key * ( 1 / ruleLength ) ) * 100;
+              return [
+                `<div style="width: ${ruleItemWidth}%; ${_this.renderRuleItemBackground(key)}">`,
+                  `<span>${_this.renderRuleDate(val)}</span>`,
+                  `<a>扣${val.deductionRatio}</a>`,
+                '</div>'
+              ].join('');
+            }).join(''),
+          '</div>',
+
+          '<div class="refundrule-detail">',
+            this.data.ruleItemList.map(val => 
+              `<p>${val.ruleDesc}</p>`
+            ).join(''),
+          '</div>',
+        '</div>',
+      '</div>'
+    ].join(''));
+  },
+
+  renderRuleDate(data) {
+    return data.endDay < 0 ? 
+      `${data.beginDay}天以上` :
+      `${data.beginDay}天`;
+  },
+
+  renderRuleItemBackground(num) {
+    let percentage = (num + 1) * (1 / this.data.ruleItemList.length);
+    return `background:rgba(69, 90, 100, ${percentage});`;
   },
 
   getRefundrule() {
     return new Promise((resolve, reject) => {
       $.ajax({
         'type': 'GET',
-        'url': `${appConfig.version}/product/refundrule/${this.id}`,
+        'url': `${appConfig.version}/product/refundrule/${product.data.refundRuleId}/item/list.do`,
         'contentType': 'application/json; charset=utf-8',
         success: val => {
           if (val.result === '0') {
