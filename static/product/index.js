@@ -86,6 +86,7 @@ $(document).ready(() => {
 
   __WEBPACK_IMPORTED_MODULE_0__Component_Navigation_Bar_index_js__["a" /* default */].init();
   __WEBPACK_IMPORTED_MODULE_1__Component_ScrollTop_index_js__["a" /* default */].init();
+  scrollPin.init();
   carousel.init();
 
   product.init()
@@ -130,9 +131,13 @@ let product = {
     // 'updateTime': 1485194651000
   },
   'isPromote': null,
+  'selectdays': null, // 格式 时间戳
+  'packageCount': 1,
 
   init() {
     const _this = this;
+
+    this.bindjQueryEvent();
 
     return new Promise((resolve, reject) => {
       this.getProduct()
@@ -144,6 +149,68 @@ let product = {
     });
   },
 
+  bindjQueryEvent() {
+    const _this = this;
+
+    $('#starDatePicker').datetimepicker({
+        format: "yyyy MM dd", //格式
+        autoclose: true, //自动关闭
+        todayBtn: true, //今天
+        startDate: __WEBPACK_IMPORTED_MODULE_2__utils_convertDate_js__["a" /* default */].dateToFormat(new Date()),
+        minuteStep: 10, //用于选择分钟
+        language: 'zh-CN',
+        weekStart: 1, //周一从那天开始
+        todayHighlight: true, //高亮今天
+        startView: 2, //日期时间选择器打开之后首先显示的视图
+        minView: 2, //日期时间选择器打开之后最小的视图
+    }).on('changeDate', function(ev) {
+        _this.selectdays = Date.parse(new Date(ev.date));
+        _this.packageCount = 1;
+        // 隐藏 时间区域
+        $("#starDatePicker").hide();
+        // 渲染 选择的时间
+        $("#selectdays").text( __WEBPACK_IMPORTED_MODULE_2__utils_convertDate_js__["a" /* default */].dateToFormat(new Date(ev.date)) );
+        // 显示选择套餐数量
+        $('#selectPackageCount').show();
+    });
+
+    // 选择时间
+    $('#selectdays').click(function(event) {
+      $('#selectPackageCount').hide();
+      $("#starDatePicker").show();
+    });
+
+    // 增加数量
+    $('#countPicker .add').click(function(event) {
+      _this.packageCount++
+      _this.renderpackagecount();
+    });
+
+    // 减少套餐数量
+    $('#countPicker .cut').click(function(event) {
+      if (_this.packageCount <= 1) { return }
+      _this.packageCount--
+      _this.renderpackagecount();
+    });
+
+    // 确认提交
+    $('#confirm-sumbit').click(function(event) {
+      if (__WEBPACK_IMPORTED_MODULE_0__Component_Navigation_Bar_index_js__["a" /* default */].data === false) {
+        return alert('你尚未登录, 请先登录您的账号');
+      }
+
+      window.location.href = `./submit/index.html?productId=${_this.id}&departureDate=${_this.selectdays}&productNum=${_this.packageCount}`;
+    });
+  },
+
+  renderpackagecount() {
+    let currentPrice = this.isPromote === true ? this.data.promotePrice : this.data.productPrice;
+    let totalPrice = this.packageCount * currentPrice;
+
+    $('#countPicker .main').text(`套餐数量 ${this.packageCount} 份`);
+    $('#totalPrice').text(`合计 ${totalPrice} RMB`);
+  },
+
   renderProduct() {
     const _this = this;
 
@@ -151,6 +218,7 @@ let product = {
 
     // 标签
     $("#productName").html(this.data.productName);
+    $("#apartmentTitle").html(this.data.productName);
 
     // 简单描述
     $("#productDesc").html(this.data.productDesc);
@@ -160,6 +228,9 @@ let product = {
 
     // 价格优惠期
     $("#promoteTime").html(this.renderPromoteTime());
+
+    // 价格优惠期
+    $("#totalPrice").html(`合计 ${this.isPromote === true ? this.data.promotePrice : this.data.productPrice} RMB`);
   },
 
   chackIsPromote() {
@@ -666,6 +737,32 @@ let refundrule = {
   }
 }
 
+let scrollPin = {
+  init() {
+    let isPin = false;
+
+    $(window).scroll(function() {
+      let scrollTop = $(window).scrollTop();
+      let carouselClientHeight = $('#carousel')[0].clientHeight;
+      if (scrollTop > carouselClientHeight) {
+        if (isPin === false) {
+          $('.part-content-right').addClass('isPin');
+          $('.header-login').hide();
+          $('.header-tell').hide();
+          isPin = true;
+        }
+      } else {
+        if (isPin === true) {
+          $('.part-content-right').removeClass('isPin');
+          $('.header-login').show();
+          $('.header-tell').show();
+          isPin = false;
+        }
+      }
+    });
+  }
+}
+
 // 工具类
 var utilities = {
   loadPageVar: function(sVar) {
@@ -686,34 +783,35 @@ var utilities = {
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-  'data': {
-    // 'bindEmailTime': 1484529221000,
-    // 'birthday': "1989-06-01",
-    // 'digest': "00000000-0000-0000-0000-00000000",
-    // 'email': "123456798@divingtime.asia",
-    // 'forgetPsState': null,
-    // 'forgetPsTime': null,
-    // 'gender': 1,
-    // 'genderCount': null,
-    // 'isDelete': "N",
-    // 'isUseBind': "Y",
-    // 'lastIp': "192.168.0.101",
-    // 'lastLogin': 1515355000000,
-    // 'mobile': "18511111111",
-    // 'nickname': "18511111111",
-    // 'passwd': null,
-    // 'qq': null,
-    // 'regTime': 1484189501000,
-    // 'salt': null,
-    // 'status': 1,
-    // 'telephone': null,
-    // 'token': "6fafefe0-0000-0000-0000-00000000",
-    // 'userId': 70,
-    // 'userName': "某某某",
-    // 'validateCode': "bbbbb13b5c81e982dcde40c7205f0fc8",
-    // 'visitCount': null,
-    // 'webchat': null,
-  },
+  'data': false,
+  // {
+  //   'bindEmailTime': 1484529221000,
+  //   'birthday': "1989-06-01",
+  //   'digest': "00000000-0000-0000-0000-00000000",
+  //   'email': "123456798@divingtime.asia",
+  //   'forgetPsState': null,
+  //   'forgetPsTime': null,
+  //   'gender': 1,
+  //   'genderCount': null,
+  //   'isDelete': "N",
+  //   'isUseBind': "Y",
+  //   'lastIp': "192.168.0.101",
+  //   'lastLogin': 1515355000000,
+  //   'mobile': "18511111111",
+  //   'nickname': "18511111111",
+  //   'passwd': null,
+  //   'qq': null,
+  //   'regTime': 1484189501000,
+  //   'salt': null,
+  //   'status': 1,
+  //   'telephone': null,
+  //   'token': "6fafefe0-0000-0000-0000-00000000",
+  //   'userId': 70,
+  //   'userName': "某某某",
+  //   'validateCode': "bbbbb13b5c81e982dcde40c7205f0fc8",
+  //   'visitCount': null,
+  //   'webchat': null,
+  // },
   'username': '', // 账号
   'password': '', // 密码
 
@@ -818,8 +916,8 @@ var utilities = {
 
     // 退出 登出
     $('#droplist-logout').click(function(event) {
-      __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].removeItem('token');
-      __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].removeItem('digest');
+      __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].removeItem('token', '/');
+      __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].removeItem('digest', '/');
 
       $('.login-false').show();
       $('.login-true').hide();
@@ -1178,7 +1276,7 @@ module.exports = {
         let nowScroll = scrollTopNumber;
         let speed= ( 0 - nowScroll ) / 10;
         speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
-        if(scrollTopNumber == 0){
+        if(scrollTopNumber <= 10){
           clearInterval(scrollTopTimer);
         }
         document.documentElement.scrollTop = scrollTopNumber + speed;
@@ -1207,6 +1305,12 @@ module.exports = {
     let ddstring = dd < 10 ? '0' + dd : dd;
 
     return `${yyyy}-${mmstring}-${ddstring}`;
+  },
+
+  // xxxx-xx-xx 字符串 转换 时间戳
+  YYYYMMDDFormatToTimestamp: (data) => {
+    let myDateList = data.split("-");
+    return Date.parse(new Date(myDateList[0], (parseInt(myDateList[1]) - 1), myDateList[2]));
   },
   
   // Date 转换 20180102 字符串

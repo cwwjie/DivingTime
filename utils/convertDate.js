@@ -11,6 +11,12 @@ export default {
 
     return `${yyyy}-${mmstring}-${ddstring}`;
   },
+
+  // xxxx-xx-xx 字符串 转换 时间戳
+  YYYYMMDDFormatToTimestamp: (data) => {
+    let myDateList = data.split("-");
+    return Date.parse(new Date(myDateList[0], (parseInt(myDateList[1]) - 1), myDateList[2]));
+  },
   
   // Date 转换 20180102 字符串
   dateToYYYYmmNumber: (myDate) => {

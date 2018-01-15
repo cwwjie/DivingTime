@@ -1,4 +1,4 @@
-<header id='header' data-homeurl={{homeURL}}>
+<header id='header' data-homeurl="{{homeURL}}">
   <div class="header-logo">
     <a href={{ homeURL + "index.html" }}><i></i></a>
   </div>

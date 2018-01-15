@@ -2,34 +2,35 @@ import cookies from './../../../utils/cookies';
 import request from './../../../utils/request';
 
 export default {
-  'data': {
-    // 'bindEmailTime': 1484529221000,
-    // 'birthday': "1989-06-01",
-    // 'digest': "00000000-0000-0000-0000-00000000",
-    // 'email': "123456798@divingtime.asia",
-    // 'forgetPsState': null,
-    // 'forgetPsTime': null,
-    // 'gender': 1,
-    // 'genderCount': null,
-    // 'isDelete': "N",
-    // 'isUseBind': "Y",
-    // 'lastIp': "192.168.0.101",
-    // 'lastLogin': 1515355000000,
-    // 'mobile': "18511111111",
-    // 'nickname': "18511111111",
-    // 'passwd': null,
-    // 'qq': null,
-    // 'regTime': 1484189501000,
-    // 'salt': null,
-    // 'status': 1,
-    // 'telephone': null,
-    // 'token': "6fafefe0-0000-0000-0000-00000000",
-    // 'userId': 70,
-    // 'userName': "某某某",
-    // 'validateCode': "bbbbb13b5c81e982dcde40c7205f0fc8",
-    // 'visitCount': null,
-    // 'webchat': null,
-  },
+  'data': false,
+  // {
+  //   'bindEmailTime': 1484529221000,
+  //   'birthday': "1989-06-01",
+  //   'digest': "00000000-0000-0000-0000-00000000",
+  //   'email': "123456798@divingtime.asia",
+  //   'forgetPsState': null,
+  //   'forgetPsTime': null,
+  //   'gender': 1,
+  //   'genderCount': null,
+  //   'isDelete': "N",
+  //   'isUseBind': "Y",
+  //   'lastIp': "192.168.0.101",
+  //   'lastLogin': 1515355000000,
+  //   'mobile': "18511111111",
+  //   'nickname': "18511111111",
+  //   'passwd': null,
+  //   'qq': null,
+  //   'regTime': 1484189501000,
+  //   'salt': null,
+  //   'status': 1,
+  //   'telephone': null,
+  //   'token': "6fafefe0-0000-0000-0000-00000000",
+  //   'userId': 70,
+  //   'userName': "某某某",
+  //   'validateCode': "bbbbb13b5c81e982dcde40c7205f0fc8",
+  //   'visitCount': null,
+  //   'webchat': null,
+  // },
   'username': '', // 账号
   'password': '', // 密码
 
@@ -134,8 +135,8 @@ export default {
 
     // 退出 登出
     $('#droplist-logout').click(function(event) {
-      cookies.removeItem('token');
-      cookies.removeItem('digest');
+      cookies.removeItem('token', '/');
+      cookies.removeItem('digest', '/');
 
       $('.login-false').show();
       $('.login-true').hide();

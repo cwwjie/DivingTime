@@ -1,4 +1,4 @@
-{{ set (homeURL = "./") }}
+{{ set (homeURL = "./../") }}
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -15,26 +15,33 @@
 </head>
 <body>
 
-  {{ include ("./Component/Navigation-Bar/index") }}
+  {{ include ("./../Component/Navigation-Bar/index") }}
 
-  <div id="carousel"></div>
-  <div class="product" id="product"></div>
+  <h2>度假村直定</h2>
+  <div id="village">
+    <!-- <div class="village-block">
+      <div class="village-content">
+        <div class="img-content">
+          <img src="http://192.168.0.100:8080/source/image/product/thum/thum_8f217c44-f783-408a-9cc1-9c230c680769.JPG" />
+          <div class="village-label">热卖</div>
+        </div>
+        <div class="village-depiction">
+          <div class="village-title">潜游沙巴·仙本那</div>
+          <div class="village-price">111 RMB起</div>
+        </div>
+      </div>
+    </div> -->
+  </div>
 
-  {{ include ("./Component/ScrollTop/index") }}
+  {{ include ("./../Component/ScrollTop/index") }}
 
-  {{ include ("./Component/Copyright/index") }}
-  
+  {{ include ("./../Component/Copyright/index") }}
+
 </body>
   <script type="text/javascript" src={{ homeURL + "dist/js/jquery-2.1.4.min.js" }}></script>
   <script type="text/javascript" src={{ homeURL + "dist/js/es6-promise.min.js" }}></script>
   <script type="text/javascript" src={{ homeURL + "dist/js/bootstrap.min.js" }}></script>
-  <script type="text/javascript" src={{ homeURL + "dist/js/fetch.min.js" }}></script>
 
   <script type="text/javascript" src={{ homeURL + "dist/js/config.js?file_version=" + file_version }}></script>
   <script type="text/javascript" src={{ "./index.js?file_version=" + file_version }}></script>
-
-  <script type="text/javascript">
-    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-    document.write(unescape("%3Cspan style='display:none' id='cnzz_stat_icon_1261043384'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1261043384' type='text/javascript'%3E%3C/script%3E"));
-  </script>
 </html>

@@ -114,8 +114,9 @@ module.exports = {
     }),
 
     WriteFillePromise: (writeFilePath, data) => new Promise((resolve, reject) => {
-
-        fs.writeFile(writeFilePath, data, 'utf8', (error) => {
+        let options = { 'encoding': 'utf8' }
+        
+        fs.writeFile(writeFilePath, data, options, (error) => {
             if (error) {
                 reject(error);
                 return

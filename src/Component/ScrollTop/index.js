@@ -60,7 +60,7 @@ export default {
         let nowScroll = scrollTopNumber;
         let speed= ( 0 - nowScroll ) / 10;
         speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
-        if(scrollTopNumber == 0){
+        if(scrollTopNumber <= 10){
           clearInterval(scrollTopTimer);
         }
         document.documentElement.scrollTop = scrollTopNumber + speed;
