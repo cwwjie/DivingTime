@@ -2,9 +2,7 @@ const Router = require('koa-router')();
 const index = require('./index.js');
 const product = require('./product/Router.js');
 const village = require('./village/Router.js');
-
-// 这个是测试
-const info = require('./info/Router.js');
+const other = require('./other/Router.js');
 
 module.exports = (app) => {
 	
@@ -13,8 +11,7 @@ module.exports = (app) => {
 
 	Router.use('/product', product.routes());
 	Router.use('/village', village.routes());
+	Router.use('/other', other.routes());
 	
-	Router.use('/info', info.routes());
-
 	app.use(Router.routes());
 }

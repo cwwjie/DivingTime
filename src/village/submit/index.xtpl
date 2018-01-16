@@ -10,59 +10,88 @@
   <meta name="description" content="【潜游时光】专业的旅游行程定制,全新的服务体验,最佳的旅游度假体验,为您提供一站式潜水度假村预定服务,为出国旅游者提供最佳的旅游攻略和服务,让您的旅行有温度。" />
   <meta name="author" content="潜游时光" />
 
-  <link rel="stylesheet" type="text/css" href={{ "./index.css?file_version=" + file_version }}>
+  <link rel="stylesheet" type="text/css" href='{{ "./index.css?file_version=" + file_version }}'>
 </head>
 <body>
   <header>
-    <a href="{{ homeURL + "index.html" }}"><i></i></a>
+    <a href="./../../index.html"><i></i></a>
     <div class="tell-header">服务咨询 :<a href="tel://4006709078"> 400-9688-768</a></div>
   </header>
 
-  <div class="main"><div id="main" style="display: none;">
+  <div class="orders-navigation">
+    <ol>
+      <li class="navigation-before">1 · 选择度假产品</li>
+      <li class="navigation-active">2 · 确认订单填写客户信息</li>
+      <li class="navigation-after">3 · 提交订单</li>
+    </ol>
+  </div>
 
-    <div class="orders-navigation">
-      <ol>
-        <li class="navigation-before">1 · 选择度假产品</li>
-        <li class="navigation-active">2 · 确认订单填写客户信息</li>
-        <li class="navigation-after">3 · 提交订单</li>
-      </ol>
-    </div>
-
+  <div class="main">
     <div id="ordersDetail" class="orders-detail">
-
       <div class="main-title"><span>1</span>订单详情</div>
-
       <div class="orders-content">
-
-        <div class="orders-title" id="orders-title">{{% {{ordersTitle}} %}}</div>
-
-        <div class="orders-date row">
-          <div class="col-5" id="departureDate">出发日期: {{% {{startDate}} %}}</div>
+        <div class="orders-title">
+          {{% {{ordersTitle}} %}}
         </div>
-
+        <div class="orders-date row">
+          <div class="col-5">入住日期: {{% {{startDate}} %}}</div>
+          <div class="col-4">退房日期: {{% {{endDate}} %}}</div>
+        </div>
+        <div class="orders-title">房间</div>
+        <div class="orders-apartment">
+          <div class="orders-apartment-content" v-for="apartmentItem in apartmentList">
+            <div class="apartment-title">{{% {{apartmentItem.apartmentName}} %}}</div>
+            <div class="apartment-prices">{{% {{apartmentItem.prices.toFixed(2)}} %}} RMB</div>
+            <div class="row">
+              <div class="col-2">床型</div>
+              <div class="col-10">{{% {{apartmentItem.bedType}} %}}</div>
+            </div>
+            <div class="row">
+              <div class="col-2">成人数</div>
+              <div class="col-2">{{% {{apartmentItem.adultNum}} %}}</div>
+              <div class="col-2">儿童数</div>
+              <div class="col-2">{{% {{apartmentItem.childNum}} %}}</div>
+            </div>
+            <!-- <div class="row postscript">
+              <div class="col-2">入住成人数:</div>
+              <div class="col-2">1 - {{% {{apartmentItem.adultMax}} %}} 人</div>
+              <div class="col-2">入住儿童数:</div>
+              <div class="col-2">0 - {{% {{apartmentItem.childrenMax}} %}} 人</div>
+              <div class="col-4">建议入住人数: {{% {{apartmentItem.suggestedNum}} %}} 人</div>
+            </div> -->
+          </div>
+        </div>
         <div class="orders-title">统计</div>
-
         <div class="orders-table">
           <div class="orders-table-title row">
-            <div class="col-4"><div>项目</div></div>
-            <div class="col-4"><div>数量</div></div>
-            <div class="col-4 price"><div>合计</div></div>
+            <div class="col-3"><div>项目</div></div>
+            <div class="col-3"><div>房间数</div></div>
+            <div class="col-3"><div>人数</div></div>
+            <div class="col-3 price"><div>合计</div></div>
           </div>
           <div class="orders-table-content">
+            <div v-for="orderItem in ordersList" v-if="false" class="orders-table-item row">
+              <div class="col-3"><div>{{% {{orderItem.name}} %}}</div></div>
+              <div class="col-3"><div>&nbsp&nbsp{{% {{orderItem.roomCount}} %}}</div></div>
+              <div class="col-3"><div>&nbsp&nbsp{{% {{orderItem.personCount}} %}}</div></div>
+              <div class="col-3 price"><div>{{% {{orderItem.ordersprice}} %}}</div></div>
+            </div>
             <div class="orders-table-total row">
-              <div class="col-4"><div>合计</div></div>
-              <div class="col-4"><div id="productNum">&nbsp&nbsp{{% {{ordersCount}} %}}</div></div>
-              <div class="col-4 price"><div id="totalPrice">{{% {{ordersprice}} %}}</div></div>
+              <div class="col-3"><div>合计</div></div>
+              <div class="col-3"><div>&nbsp&nbsp{{% {{ordersRoomCount}} %}}</div></div>
+              <div class="col-3"><div>&nbsp&nbsp{{% {{ordersPersonCount}} %}}</div></div>
+              <div class="col-3 price"><div>{{% {{ordersprice}} %}}</div></div>
             </div>
           </div>
         </div>
+        <!-- <div class="orders-postscript">
+          <div class="row">房间实际入住总人数小于等于建议入住人数时, 一律按房间起始价格计算. 大于建议入住人数时, 订房价格按实际入住情况计算.</div>
+        </div> -->
       </div>
     </div>
-
+    
     <div id="customerInfo" class="customer">
-
       <div class="main-title"><span>2</span>顾客信息</div>
-
       <div class="customer-content">
         <div class="customer-title">
           旅客信息 <span> 注: 至少提供一人信息</span>
@@ -243,18 +272,17 @@
         </div>
       </div>
     </div>
-
-  </div></div>
+  </div>
 
   {{ include ("./../../Component/Copyright/index") }}
 
-</body>
-  <script type="text/javascript" src={{ homeURL + "dist/js/vue.min.js" }}></script>
-  <script type="text/javascript" src={{ homeURL + "dist/js/vue-date-picker.js" }}></script>
-  <script type="text/javascript" src={{ homeURL + "dist/js/es6-promise.min.js" }}></script>
-  <script type="text/javascript" src={{ homeURL + "dist/js/fetch.min.js" }}></script>
-  <script type="text/javascript" src={{ homeURL + "dist/js/ChineseHelper.js" }}></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/vue.min.js" }}'></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/vue-date-picker.js" }}'></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/es6-promise.min.js" }}'></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/fetch.min.js" }}'></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/ChineseHelper.js" }}'></script>
 
-  <script type="text/javascript" src={{ homeURL + "dist/js/config.js?file_version=" + file_version }}></script>
-  <script type="text/javascript" src={{ "./index.js?file_version=" + file_version }}></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/config.js?file_version=" + file_version }}'></script>
+  <script type="text/javascript" src='{{ "./index.js?file_version=" + file_version }}'></script>
+</body>
 </html>

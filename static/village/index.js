@@ -65,52 +65,58 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component_Navigation_Bar_index_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Component_ScrollTop_index_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_convertDate_js__ = __webpack_require__(5);
 
 
+var _index = __webpack_require__(1);
 
- 
-$(document).ready(() => {
-  __WEBPACK_IMPORTED_MODULE_0__Component_Navigation_Bar_index_js__["a" /* default */].init();
-  __WEBPACK_IMPORTED_MODULE_1__Component_ScrollTop_index_js__["a" /* default */].init();
+var _index2 = _interopRequireDefault(_index);
 
-  myData.getAjax()
-    .then(function(json) {
-      myVillage.data = json;
-      myVillage.init();
-    }, function(error) {
-      alert(error);
-    }
-  );
+var _index3 = __webpack_require__(4);
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _convertDate = __webpack_require__(5);
+
+var _convertDate2 = _interopRequireDefault(_convertDate);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+$(document).ready(function () {
+  _index2.default.init(1);
+  _index4.default.init();
+
+  myData.getAjax().then(function (json) {
+    myVillage.data = json;
+    myVillage.init();
+  }, function (error) {
+    alert(error);
+  });
 });
 
 var myData = {
-  getAjax: function() {
-    return new Promise(function(resolve, reject){
+  getAjax: function getAjax() {
+    return new Promise(function (resolve, reject) {
       $.ajax({
         type: 'GET',
-        url: `${appConfig.village}/product/resort/1/0/list.do`,
+        url: appConfig.village + '/product/resort/1/0/list.do',
         contentType: 'application/json; charset=utf-8',
-        success: function(value) {
+        success: function success(value) {
           if (value.result === '0') {
             resolve(value.data);
           } else {
             reject('接收数据发生错误, 原因: ' + value.message);
           }
         },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        error: function error(XMLHttpRequest, textStatus, errorThrown) {
           reject('接收数据发生错误, 原因: ' + errorThrown);
         }
       });
     });
   }
-}
+};
 
 var myVillage = {
   'data': {
@@ -142,10 +148,10 @@ var myVillage = {
     'size': 0,
     'totalCount': 0
   },
-  
-  init: function() {
+
+  init: function init() {
     var dataList = this.data.list,
-      domString = '';
+        domString = '';
 
     if (dataList.length === 0) {
       domString = '暂无数据';
@@ -159,58 +165,51 @@ var myVillage = {
     this.bindEvent();
   },
 
-  template: function(data) {
-    return [
-      '<div class="village-block">',
-        '<div class="village-content">',
-        '<div class="img-content">',
-          '<img src="' + appConfig.urlBase + data.resortImg + '" />',
-          '<div class="village-label">' + data.label + '</div>',
-        '</div>',
-        '<div class="village-depiction">',
-            '<div class="village-title">' + data.resortName + '</div>',
-            '<div class="village-price">' + data.initiatePrice + 'RMB 起</div>',
-        '</div>',
-        '</div>',
-      '</div>'
-    ].join('');
+  template: function template(data) {
+    return ['<div class="village-block">', '<div class="village-content">', '<div class="img-content">', '<img src="' + appConfig.urlBase + data.resortImg + '" />', '<div class="village-label">' + data.label + '</div>', '</div>', '<div class="village-depiction">', '<div class="village-title">' + data.resortName + '</div>', '<div class="village-price">' + data.initiatePrice + 'RMB 起</div>', '</div>', '</div>', '</div>'].join('');
   },
 
-  bindEvent: function() {
+  bindEvent: function bindEvent() {
     var dataList = this.data.list,
-      myDomList = $('#village').find('.village-block');
+        myDomList = $('#village').find('.village-block');
 
-    for (var i = 0; i < myDomList.length; i++) {(function(i) {
-      var myData = dataList[i];
+    for (var i = 0; i < myDomList.length; i++) {
+      (function (i) {
+        var myData = dataList[i];
 
-      $(myDomList[i]).click(function(event) {
-        var myUrl = 'resortCode=' + myData.resortCode + '&resortId=' + myData.resortId;
-        localStorage.setItem('village',JSON.stringify(myData));
-        localStorage.setItem('resortCode',myData.resortCode);
-        localStorage.setItem('resortId',myData.resortId);
-        location = './detail/index.html?' + myUrl;
-      });
-    })(i)}
+        $(myDomList[i]).click(function (event) {
+          var myUrl = 'resortCode=' + myData.resortCode + '&resortId=' + myData.resortId + '&selectNum=' + i;
+          location = './detail/index.html?' + myUrl;
+        });
+      })(i);
+    }
   }
-}
 
-// 工具类
-var utilities = {
-}
-
+  // 工具类
+};var utilities = {};
 
 /***/ }),
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_cookies__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_request__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_request___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utils_request__);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-/* harmony default export */ __webpack_exports__["a"] = ({
+var _cookies = __webpack_require__(2);
+
+var _cookies2 = _interopRequireDefault(_cookies);
+
+var _request = __webpack_require__(3);
+
+var _request2 = _interopRequireDefault(_request);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   'data': false,
   // {
   //   'bindEmailTime': 1484529221000,
@@ -251,8 +250,8 @@ var utilities = {
   'isOutDropdown': false, // 是否 离开下拉菜单
   'dropdownSetTimeout': null, // NodeJS.Timer
 
-  init: function(SelectedNumString) {
-    const _this = this;
+  init: function init(SelectedNumString) {
+    var _this = this;
 
     this.litUpContentSelected(SelectedNumString);
 
@@ -260,8 +259,7 @@ var utilities = {
 
     this.setOptionCookie();
 
-    this.getUserInfo()
-    .then(val => {
+    this.getUserInfo().then(function (val) {
       if (val.result === 1) {
         _this.data = val.data;
         $('.login-true').show();
@@ -270,64 +268,66 @@ var utilities = {
           console.log(val.message);
         }
         $('.login-false').show();
-  
-        $('#login-show').click(() => {
+
+        $('#login-show').click(function () {
           _this.loginModalShow();
         });
       }
-    }, error => alert(error));
+    }, function (error) {
+      return alert(error);
+    });
   },
 
-  loginModalShow: function() {
+  loginModalShow: function loginModalShow() {
     this.isModalShow = true;
     $("#Modal-login").modal('show');
   },
 
-  loginModalHide: function() {
+  loginModalHide: function loginModalHide() {
     this.isModalShow = false;
     $($('.input-username label')[0]).html('');
     $($('.input-password label')[0]).html('');
     $('#input-password').val('');
   },
 
-  bindjQueryEvent: function() {
-    const _this = this;
+  bindjQueryEvent: function bindjQueryEvent() {
+    var _this = this;
 
     // 隐藏模态框
-    $('#login-hiden').click(() => {
+    $('#login-hiden').click(function () {
       $("#Modal-login").modal('hide');
     });
-    $("#Modal-login").on('hidden.bs.modal', e => {
+    $("#Modal-login").on('hidden.bs.modal', function (e) {
       _this.loginModalHide();
     });
 
     // 显示隐藏密码
-    $('#password-eye').click(() => {
+    $('#password-eye').click(function () {
       if (_this.isPasswordShow) {
         $('#password-eye').removeClass('eye-show');
-        $('#input-password').attr('type','password');
+        $('#input-password').attr('type', 'password');
         _this.isPasswordShow = false;
       } else {
         $('#password-eye').addClass('eye-show');
-        $('#input-password').attr('type','text');
+        $('#input-password').attr('type', 'text');
         _this.isPasswordShow = true;
       }
     });
 
     // 输入账号
-    $('#input-username').bind('input propertychange', function(event) {
+    $('#input-username').bind('input propertychange', function (event) {
       _this.username = $(this).val();
       _this.checkUserName();
     });
 
     // 输入密码
-    $('#input-password').bind('input propertychange', function(event) {
+    $('#input-password').bind('input propertychange', function (event) {
       _this.password = $(this).val();
       _this.checkPassword();
     });
 
     // 记住密码
-    $('#option-cookie').click(function(event) {
+    $('#option-cookie').click(function (event) {
       if (_this.isRememberCookie) {
         $(this).attr("checked", false);
         _this.isRememberCookie = false;
@@ -338,56 +338,54 @@ var utilities = {
     });
 
     // 登录
-    $('#login-subimt').click(function(event) {
+    $('#login-subimt').click(function (event) {
       _this.optionloginsubimt();
     });
 
     // 退出 登出
-    $('#droplist-logout').click(function(event) {
-      __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].removeItem('token', '/');
-      __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].removeItem('digest', '/');
+    $('#droplist-logout').click(function (event) {
+      _cookies2.default.removeItem('token', '/');
+      _cookies2.default.removeItem('digest', '/');
 
       $('.login-false').show();
       $('.login-true').hide();
     });
 
     // 下拉框移入 显示
-    $('.login-droplist').mouseenter(function(event) {
+    $('.login-droplist').mouseenter(function (event) {
       _this.isOutDropdown = false;
-      _this.dropdownSetTimeout = setTimeout(function() {
+      _this.dropdownSetTimeout = setTimeout(function () {
         if (_this.isOutDropdown === false) {
           $('.login-user').dropdown('toggle');
         }
       }, 500);
     });
-    $('.login-droplist').mouseleave(function(event) {
+    $('.login-droplist').mouseleave(function (event) {
       _this.isOutDropdown = true;
       clearTimeout(_this.dropdownSetTimeout);
     });
-    $('#dLabel').click(function(event) {
+    $('#dLabel').click(function (event) {
       _this.isOutDropdown = true;
       clearTimeout(_this.dropdownSetTimeout);
     });
   },
 
-  optionloginsubimt: function () {
-    const _this = this;
+  optionloginsubimt: function optionloginsubimt() {
+    var _this = this;
 
-    if (this.isLogining) { return false }
-
-    if (
-      this.checkUserName().result !== 1 ||
-      this.checkPassword().result !== 1
-    ) {
-      return false
+    if (this.isLogining) {
+      return false;
     }
-    
-    let myDom = $(this);
+
+    if (this.checkUserName().result !== 1 || this.checkPassword().result !== 1) {
+      return false;
+    }
+
+    var myDom = $(this);
     myDom.text('正在提交');
     this.isLogining = true;
 
-    this.subimtLogin()
-    .then(val => {
+    this.subimtLogin().then(function (val) {
       if (val.result === 1) {
         _this.data = val.data;
 
@@ -397,30 +395,24 @@ var utilities = {
         $('.login-false').hide();
         $('.login-true').show();
       } else if (val.result == '-9') {
-        $($('.input-username label')[0]).html(
-          '<div class="danger">您的账号尚未激活</div>'
-        );
+        $($('.input-username label')[0]).html('<div class="danger">您的账号尚未激活</div>');
       } else if (val.result == '-5') {
-        $($('.input-username label')[0]).html(
-          '<div class="danger">此账号不存在</div>'
-        );
+        $($('.input-username label')[0]).html('<div class="danger">此账号不存在</div>');
       } else if (val.result == '-6') {
-        $($('.input-password label')[0]).html(
-          '<div class="danger">您输入的密码是错误, 请输入正确的密码！</div>'
-        );
+        $($('.input-password label')[0]).html('<div class="danger">您输入的密码是错误, 请输入正确的密码！</div>');
       }
 
       myDom.text('登录');
       _this.isLogining = false;
-    }, error => {
+    }, function (error) {
       myDom.text('登录');
       _this.isLogining = false;
       alert(error);
     });
   },
 
-  setOptionCookie: function() {
-    let rememberCookie = localStorage.getItem('remember-cookie');
+  setOptionCookie: function setOptionCookie() {
+    var rememberCookie = localStorage.getItem('remember-cookie');
 
     if (rememberCookie) {
       rememberCookie = JSON.parse(rememberCookie);
@@ -435,64 +427,61 @@ var utilities = {
     }
   },
 
-  SaveCookie: function() {
-    let SevenDayLater = new Date( Date.parse(new Date()) + (86400000 * 7) );
-    
-    __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].setItem('token', this.data.token, SevenDayLater, '/');
-    __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].setItem('digest', this.data.digest, SevenDayLater, '/');
+  SaveCookie: function SaveCookie() {
+    var SevenDayLater = new Date(Date.parse(new Date()) + 86400000 * 7);
+
+    _cookies2.default.setItem('token', this.data.token, SevenDayLater, '/');
+    _cookies2.default.setItem('digest', this.data.digest, SevenDayLater, '/');
 
     if (this.isRememberCookie) {
       localStorage.setItem('remember-cookie', JSON.stringify({
         username: this.username,
-        password: this.password,
-      }))
+        password: this.password
+      }));
     } else {
       localStorage.removeItem('remember-cookie');
     }
   },
 
-  checkUserName: function () {
-    let usernameLabel = $($('.input-username label')[0]);
+  checkUserName: function checkUserName() {
+    var usernameLabel = $($('.input-username label')[0]);
 
     if (this.username === '') {
       usernameLabel.html('<div>请输入用户名</div>');
-      return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('用户名为空');
+      return _request2.default.error('用户名为空');
     }
 
     // 既不是邮箱账号, 也不是手机账号
-    if (
-      /^1[34578]\d{9}$/.test(this.username) === false &&
-      /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(this.username) === false
-    ) {
+    if (/^1[34578]\d{9}$/.test(this.username) === false && /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(this.username) === false) {
       usernameLabel.html('<div class="warning">请输入正确手机或邮箱格式的账号</div>');
-      return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('账号格式有误');
+      return _request2.default.error('账号格式有误');
     }
 
     usernameLabel.html('');
-    return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.success();
+    return _request2.default.success();
   },
 
-  checkPassword: function () {
-    let passwordLabel = $($('.input-password label')[0]);
+  checkPassword: function checkPassword() {
+    var passwordLabel = $($('.input-password label')[0]);
 
     if (this.password === '') {
       passwordLabel.html('<div>请输入密码</div>');
-      return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('密码为空');
+      return _request2.default.error('密码为空');
     }
 
     // 密码小于 8 位
     if (this.password.length < 8) {
       passwordLabel.html('<div class="warning">输入的密码不能小于8位长度</div>');
-      return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('密码格式有误');
+      return _request2.default.error('密码格式有误');
     }
 
     passwordLabel.html('');
-    return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.success();
+    return _request2.default.success();
   },
 
-  subimtLogin: function () {
-    const _this = this;
-    let subimtData;
+  subimtLogin: function subimtLogin() {
+    var _this = this;
+    var subimtData = void 0;
 
     if (/^1[34578]\d{9}$/.test(this.username)) {
       subimtData = {
@@ -506,69 +495,76 @@ var utilities = {
       };
     }
 
-    return new Promise((resolve, reject) => {
-      fetch(`${appConfig.version}/user/login.do`,{
+    return new Promise(function (resolve, reject) {
+      fetch(appConfig.version + '/user/login.do', {
         method: 'POST',
         contentType: 'application/json; charset=utf-8',
         body: JSON.stringify(subimtData)
-      }).then(
-        response => response.json(),
-        error => ({'result':'1', 'message': error})
-      ).then(val => {
+      }).then(function (response) {
+        return response.json();
+      }, function (error) {
+        return { 'result': '1', 'message': error };
+      }).then(function (val) {
         if (val.result === '0') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.success(val.data));
+          resolve(_request2.default.success(val.data));
         } else if (val.result == '-9') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('您的账号尚未激活', '-9'));
+          resolve(_request2.default.error('您的账号尚未激活', '-9'));
         } else if (val.result == '-5') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('此账号不存在', '-5'));
+          resolve(_request2.default.error('此账号不存在', '-5'));
         } else if (val.result == '-6') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('您输入的密码是错误, 请输入正确的密码', '-6'));
+          resolve(_request2.default.error('您输入的密码是错误, 请输入正确的密码', '-6'));
         } else {
-          reject(`请求服务器成功, 但是用户登录信息有误! 原因: ${val.message}`);
+          reject('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u4F46\u662F\u7528\u6237\u767B\u5F55\u4FE1\u606F\u6709\u8BEF! \u539F\u56E0: ' + val.message);
         }
-      }).catch(error => {
-        reject(`请求出错 , 向服务器发起请求用户登录失败, 原因: ${error}`);
-      })
+      }).catch(function (error) {
+        reject('\u8BF7\u6C42\u51FA\u9519 , \u5411\u670D\u52A1\u5668\u53D1\u8D77\u8BF7\u6C42\u7528\u6237\u767B\u5F55\u5931\u8D25, \u539F\u56E0: ' + error);
+      });
     });
   },
 
-  getUserInfo: () => new Promise((resolve, reject) => {
-    $.ajax({
-      'type': "GET", 
-      'url': `${appConfig.version}/user/getUserInfo.do`, 
-      'contentType': "application/json; charset=utf-8", 
-      'headers': {
-        'token': __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].getItem('token'),
-        'digest': __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].getItem('digest')
-      },
-      success: val => {
-        if (val.result === '0') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.success(val.data));
-        } else if (val.result === '401') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('你尚未登录!', 2));
-        } else {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error(`请求服务器成功, 但是用户信息有误! 原因: ${val.message}`, 3));
+  getUserInfo: function getUserInfo() {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        'type': "GET",
+        'url': appConfig.version + '/user/getUserInfo.do',
+        'contentType': "application/json; charset=utf-8",
+        'headers': {
+          'token': _cookies2.default.getItem('token'),
+          'digest': _cookies2.default.getItem('digest')
+        },
+        success: function success(val) {
+          if (val.result === '0') {
+            resolve(_request2.default.success(val.data));
+          } else if (val.result === '401') {
+            resolve(_request2.default.error('你尚未登录!', 2));
+          } else {
+            resolve(_request2.default.error('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u4F46\u662F\u7528\u6237\u4FE1\u606F\u6709\u8BEF! \u539F\u56E0: ' + val.message, 3));
+          }
+        },
+        error: function error(XMLHttpRequest, textStatus, errorThrown) {
+          reject('\u8BF7\u6C42\u7528\u6237\u4FE1\u606F\u51FA\u9519, \u72B6\u6001\u7801: ' + XMLHttpRequest.status + '. \u539F\u56E0: ' + errorThrown);
         }
-      },
-      error: (XMLHttpRequest, textStatus, errorThrown) => {
-        reject(`请求用户信息出错, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`)
-      }
+      });
     });
-  }),
+  },
 
-  litUpContentSelected(SelectedNumString) {
+  litUpContentSelected: function litUpContentSelected(SelectedNumString) {
     if (SelectedNumString) {
       $($('.header-content a')[SelectedNumString]).addClass('content-selected');
     }
   }
-});
-
+};
 
 /***/ }),
 /* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 /*
  * docCookies.setItem(name, value[, end[, path[, domain[, secure]]]])
  * docCookies.getItem(name)
@@ -577,13 +573,15 @@ var utilities = {
  * docCookies.keys()
  */
 
-let docCookies = {
-  getItem: function (sKey) {
+var docCookies = {
+  getItem: function getItem(sKey) {
     return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
   },
-  setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
-    if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
-    let sExpires = "";
+  setItem: function setItem(sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+    if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) {
+      return false;
+    }
+    var sExpires = "";
     if (vEnd) {
       switch (vEnd.constructor) {
         case Number:
@@ -600,74 +598,86 @@ let docCookies = {
     document.cookie = encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
     return true;
   },
-  removeItem: function (sKey, sPath, sDomain) {
-    if (!sKey || !this.hasItem(sKey)) { return false; }
-    document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + ( sDomain ? "; domain=" + sDomain : "") + ( sPath ? "; path=" + sPath : "");
+  removeItem: function removeItem(sKey, sPath, sDomain) {
+    if (!sKey || !this.hasItem(sKey)) {
+      return false;
+    }
+    document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
     return true;
   },
-  hasItem: function (sKey) {
-    return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+  hasItem: function hasItem(sKey) {
+    return new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=").test(document.cookie);
   },
-  keys: /* optional method: you can safely remove it! */ function () {
-    let aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
-    for (let nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
+  keys: /* optional method: you can safely remove it! */function keys() {
+    var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+    for (var nIdx = 0; nIdx < aKeys.length; nIdx++) {
+      aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]);
+    }
     return aKeys;
   }
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (docCookies);
-
+exports.default = docCookies;
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 module.exports = {
-    success: (data, message) => ({
-        'result': 1,
-        'data': data || null,
-        'message': message || 'Request to Database success'
-    }),
+    success: function success(data, message) {
+        return {
+            'result': 1,
+            'data': data || null,
+            'message': message || 'Request to Database success'
+        };
+    },
 
-    error: (message, result, data) => ({
-        'result': result || 0,
-        'data': data || null,
-        'message': message
-    })
-}
-
+    error: function error(message, result, data) {
+        return {
+            'result': result || 0,
+            'data': data || null,
+            'message': message
+        };
+    }
+};
 
 /***/ }),
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-  init() {
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  init: function init() {
     this.scrollTop();
     this.siderBar();
   },
+  siderBar: function siderBar() {
+    var myclientWidth = document.body.clientWidth;
 
-  siderBar() {
-    let myclientWidth = document.body.clientWidth;
-
-    $('#showSidebar').click(function(){
+    $('#showSidebar').click(function () {
       $('#side-bar').animate({
         'right': '0'
       }, 70);
     });
 
-    $("#closeSidebar").click(function(){
-      $('#side-bar').animate({'right': '-330px'}, 70);
+    $("#closeSidebar").click(function () {
+      $('#side-bar').animate({ 'right': '-330px' }, 70);
     });
   },
-
-  scrollTop() {
-    let scrollTopTimer = null,
+  scrollTop: function scrollTop() {
+    var scrollTopTimer = null,
         isshowScrollIcon = false,
-        scrollTopNumber;
-    
-    window.onscroll= () => {
+        scrollTopNumber = void 0;
+
+    window.onscroll = function () {
       scrollTopNumber = document.documentElement.scrollTop || document.body.scrollTop;
 
       if (scrollTopNumber > 600) {
@@ -678,7 +688,6 @@ module.exports = {
             'opacity': ' 1'
           }, 500);
         }
-
       } else if (scrollTopNumber < 600) {
         if (isshowScrollIcon == true) {
           isshowScrollIcon = false;
@@ -687,95 +696,98 @@ module.exports = {
             'opacity': '0'
           }, 500);
 
-          setTimeout(() => {
+          setTimeout(function () {
             $('#scroll-icon-top').css('visibility', 'hidden');
           }, 500);
         }
       }
 
       return scrollTopNumber;
-    }
+    };
 
-    $('#scroll-icon-top').click(() => {
+    $('#scroll-icon-top').click(function () {
       clearInterval(scrollTopTimer);
 
-      scrollTopTimer = setInterval(() => {
+      scrollTopTimer = setInterval(function () {
 
-        let nowScroll = scrollTopNumber;
-        let speed= ( 0 - nowScroll ) / 10;
+        var nowScroll = scrollTopNumber;
+        var speed = (0 - nowScroll) / 10;
         speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
-        if(scrollTopNumber <= 10){
+        if (scrollTopNumber <= 10) {
           clearInterval(scrollTopTimer);
         }
         document.documentElement.scrollTop = scrollTopNumber + speed;
         document.body.scrollTop = scrollTopNumber + speed;
       }, 10);
-
     });
   }
-});
-
+};
 
 /***/ }),
 /* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* unused harmony default export */ var _unused_webpack_default_export = ({
-  // Date 转换 xxxx-xx-xx 字符串
-  dateToFormat: (myDate) => {
-    let yyyy = myDate.getFullYear();
 
-    let mm = myDate.getMonth() + 1;
-    let mmstring = mm < 10 ? '0' + mm : mm;
 
-    let dd = myDate.getDate();
-    let ddstring = dd < 10 ? '0' + dd : dd;
-
-    return `${yyyy}-${mmstring}-${ddstring}`;
-  },
-
-  // xxxx-xx-xx 字符串 转换 时间戳
-  YYYYMMDDFormatToTimestamp: (data) => {
-    let myDateList = data.split("-");
-    return Date.parse(new Date(myDateList[0], (parseInt(myDateList[1]) - 1), myDateList[2]));
-  },
-  
-  // Date 转换 20180102 字符串
-  dateToYYYYmmNumber: (myDate) => {
-    let yyyy = myDate.getFullYear();
-
-    let mm = myDate.getMonth() + 1;
-    let mmstring = mm < 10 ? '0' + mm : mm;
-
-    let dd = myDate.getDate();
-    let ddstring = dd < 10 ? '0' + dd : dd;
-    
-    return `${yyyy}${mmstring}${ddstring}`;
-  },
-  
-  // Date 转换 xxxx-xx-xx xx:xx:xx 字符串
-  dateToYYYYmmDDhhMMss: (myDate) => {
-    let yyyy = myDate.getFullYear();
-
-    let mm = myDate.getMonth() + 1;
-    let mmstring = mm < 10 ? '0' + mm : mm;
-
-    let dd = myDate.getDate();
-    let ddstring = dd < 10 ? '0' + dd : dd;
-
-    let hh = myDate.getHours();
-    let hhstring = hh < 10 ? '0' + hh : hh;
-
-    let Min = myDate.getMinutes();
-    let Minstring = Min < 10 ? '0' + Min : Min;
-
-    let ss = myDate.getSeconds();
-    let ssstring = ss < 10 ? '0' + ss : ss;
-    
-    return `${yyyy}-${mmstring}-${ddstring} ${hhstring}:${Minstring}:${ssstring}`;
-  }
+Object.defineProperty(exports, "__esModule", {
+    value: true
 });
+exports.default = {
+    // Date 转换 xxxx-xx-xx 字符串
+    dateToFormat: function dateToFormat(myDate) {
+        var yyyy = myDate.getFullYear();
+
+        var mm = myDate.getMonth() + 1;
+        var mmstring = mm < 10 ? '0' + mm : mm;
+
+        var dd = myDate.getDate();
+        var ddstring = dd < 10 ? '0' + dd : dd;
+
+        return yyyy + '-' + mmstring + '-' + ddstring;
+    },
+
+    // xxxx-xx-xx 字符串 转换 时间戳
+    YYYYMMDDFormatToTimestamp: function YYYYMMDDFormatToTimestamp(data) {
+        var myDateList = data.split("-");
+        return Date.parse(new Date(myDateList[0], parseInt(myDateList[1]) - 1, myDateList[2]));
+    },
+
+    // Date 转换 20180102 字符串
+    dateToYYYYmmNumber: function dateToYYYYmmNumber(myDate) {
+        var yyyy = myDate.getFullYear();
+
+        var mm = myDate.getMonth() + 1;
+        var mmstring = mm < 10 ? '0' + mm : mm;
+
+        var dd = myDate.getDate();
+        var ddstring = dd < 10 ? '0' + dd : dd;
+
+        return '' + yyyy + mmstring + ddstring;
+    },
+
+    // Date 转换 xxxx-xx-xx xx:xx:xx 字符串
+    dateToYYYYmmDDhhMMss: function dateToYYYYmmDDhhMMss(myDate) {
+        var yyyy = myDate.getFullYear();
+
+        var mm = myDate.getMonth() + 1;
+        var mmstring = mm < 10 ? '0' + mm : mm;
+
+        var dd = myDate.getDate();
+        var ddstring = dd < 10 ? '0' + dd : dd;
+
+        var hh = myDate.getHours();
+        var hhstring = hh < 10 ? '0' + hh : hh;
+
+        var Min = myDate.getMinutes();
+        var Minstring = Min < 10 ? '0' + Min : Min;
+
+        var ss = myDate.getSeconds();
+        var ssstring = ss < 10 ? '0' + ss : ss;
+
+        return yyyy + '-' + mmstring + '-' + ddstring + ' ' + hhstring + ':' + Minstring + ':' + ssstring;
+    }
+};
 
 /***/ })
 /******/ ]);

@@ -1,10 +1,18 @@
-import header from './../Component/Navigation-Bar/index.js';
-import scrollTop from './../Component/ScrollTop/index.js';
-import convertDate from './../../utils/convertDate.js';
+import header from './../../Component/Navigation-Bar/index.js';
+import scrollTop from './../../Component/ScrollTop/index.js';
+import convertDate from './../../../utils/convertDate.js';
  
 $(document).ready(() => {
-  if (utilities.loadPageVar('productId')) {
-    product.id = utilities.loadPageVar('productId');
+  if (utilities.isSupport() === false) { alert('非常抱歉，暂不支持此浏览器，请更换您的浏览器或联系客服。'); return }
+
+  if (
+    utilities.loadPageVar('resortCode') && 
+    utilities.loadPageVar('resortId') && 
+    utilities.loadPageVar('selectNum')
+  ) {
+    product.resortCode = utilities.loadPageVar('resortCode');
+    product.resortId = parseInt(utilities.loadPageVar('resortId'));
+    product.selectNum = parseInt(utilities.loadPageVar('selectNum'));
   } else {
     alert('非常抱歉, 此产品失效或产品编号有误!');
     return
@@ -12,556 +20,907 @@ $(document).ready(() => {
 
   header.init();
   scrollTop.init();
-  scrollPin.init();
+
   carousel.init();
 
-  product.init()
-  .then(val => {
-    val.productType === 'package' ? trip.init() : '';
-    val.refundRuleId ? refundrule.init() : '';
-  });
+  // 精确到日
+  var nowDate = new Date();
+  product.startDate = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
+  product.endDate = new Date(Date.parse(product.startDate) + 86400000);
 
-  attribute.init();
-  costIncludes.init();
+  product.init();
 });
 
-let product = {
-  'id': null,
+var product = {
+  'resortCode': null, // 'KPL'
+  'resortId': null,
+  'selectNum': null,
+  'startDate': new Date(),
+  'endDate': new Date(),
   'data': {
-    // 'apartment': "邦邦 沙滩屋",
-    // 'apartmentNum': 1,
-    // 'bedType': "大床",
     // 'brandId': 25,
-    // 'clickCount': null,
-    // 'createBy': 23,
-    // 'createTime': 1484004647000,
+    // 'brandName': "潜游沙巴·仙本那",
+    // 'createBy': 33,
+    // 'createTime': 1503252103000,
+    // 'earnest': 500,
+    // 'initiatePrice': 1000,
     // 'isDelete': "N",
-    // 'isNew': "Y",
-    // 'isOnsale': "Y",
-    // 'period': 3,
-    // 'productBrief': "未经雕琢的天然小岛--邦邦岛",
-    // 'productDesc': "未经雕琢的天然小岛--邦邦岛，安静的她坐落于辽阔的斯里伯斯海域。择一岛终老，携一人至此，面朝大海，春暖花开。邦邦同时具备有水上屋和海岛风情，您可以漫步沙滩听海浪拍打的声音抑或走在水上木板上任海风拂过。另外度假村配备健身房、休息室、潜水中心和蔬菜花园等，非常适合蜜月/闺蜜行。",
-    // 'productId': 64,
-    // 'productImg': "/source/image/product/thum/thum_34867ce5-d61a-4576-b4fb-060365c7d638.jpg",
-    // 'productName': "天然小岛邦邦 3天2晚蜜月/闺蜜行",
-    // 'productPrice': 5700,
-    // 'productSn': "000006",
-    // 'productThumb': "/source/image/product/thum/thum_34867ce5-d61a-4576-b4fb-060365c7d638.jpg",
-    // 'productType': "package",
-    // 'productView': null,
-    // 'promoteEndTime': 0,
-    // 'promotePrice': 0,
-    // 'promoteStartTime': 0,
-    // 'refundRuleId': 30,
-    // 'updateBy': 23,
-    // 'updateTime': 1485194651000
+    // 'label': "热卖",
+    // 'recommendation': "<p>2222222222222</p>",
+    // 'refundRuleId': 29,
+    // 'resortCode': "KPL",
+    // 'resortDesc': "<p>111111111111111111</p>",
+    // 'resortId': 1,
+    // 'resortImg': "/source/image/product/thum/thum_8f217c44-f783-408a-9cc1-9c230c680769.JPG",
+    // 'resortName': "卡帕莱",
+    // 'resortThumb': "/source/image/product/thum/thum_8f217c44-f783-408a-9cc1-9c230c680769.JPG",
+    // 'updateBy': null,
+    // 'updateTime': null
   },
-  'isPromote': null,
-  'selectdays': null, // 格式 时间戳
-  'packageCount': 1,
 
   init() {
     const _this = this;
 
-    this.bindjQueryEvent();
+    this.getVillageProduct()
+    .then(val => {
+      _this.data = val.list[_this.selectNum];
 
-    return new Promise((resolve, reject) => {
-      this.getProduct()
-      .then(val => {
-        _this.data = val;
-        _this.renderProduct(val);
-        resolve(val);
-      }, error => reject(alert(error)))
-    });
+      _this.searchApartmentAjax()
+      .then(function(val) {
+        myApartment.data = utilities.addSelect(val);
+        myApartment.village = _this.data;
+        myApartment.init();
+      }, error => alert(error));
+    }, error => alert(error));
+
   },
 
-  bindjQueryEvent() {
-    const _this = this;
-
-    $('#starDatePicker').datetimepicker({
-        format: "yyyy MM dd", //格式
-        autoclose: true, //自动关闭
-        todayBtn: true, //今天
-        startDate: convertDate.dateToFormat(new Date()),
-        minuteStep: 10, //用于选择分钟
-        language: 'zh-CN',
-        weekStart: 1, //周一从那天开始
-        todayHighlight: true, //高亮今天
-        startView: 2, //日期时间选择器打开之后首先显示的视图
-        minView: 2, //日期时间选择器打开之后最小的视图
-    }).on('changeDate', function(ev) {
-        _this.selectdays = Date.parse(new Date(ev.date));
-        _this.packageCount = 1;
-        // 隐藏 时间区域
-        $("#starDatePicker").hide();
-        // 渲染 选择的时间
-        $("#selectdays").text( convertDate.dateToFormat(new Date(ev.date)) );
-        // 显示选择套餐数量
-        $('#selectPackageCount').show();
-    });
-
-    // 选择时间
-    $('#selectdays').click(function(event) {
-      $('#selectPackageCount').hide();
-      $("#starDatePicker").show();
-    });
-
-    // 增加数量
-    $('#countPicker .add').click(function(event) {
-      _this.packageCount++
-      _this.renderpackagecount();
-    });
-
-    // 减少套餐数量
-    $('#countPicker .cut').click(function(event) {
-      if (_this.packageCount <= 1) { return }
-      _this.packageCount--
-      _this.renderpackagecount();
-    });
-
-    // 确认提交
-    $('#confirm-sumbit').click(function(event) {
-      if (header.data === false) {
-        return alert('你尚未登录, 请先登录您的账号');
-      }
-
-      window.location.href = `./submit/index.html?productId=${_this.id}&departureDate=${_this.selectdays}&productNum=${_this.packageCount}`;
-    });
-  },
-
-  renderpackagecount() {
-    let currentPrice = this.isPromote === true ? this.data.promotePrice : this.data.productPrice;
-    let totalPrice = this.packageCount * currentPrice;
-
-    $('#countPicker .main').text(`套餐数量 ${this.packageCount} 份`);
-    $('#totalPrice').text(`合计 ${totalPrice} RMB`);
-  },
-
-  renderProduct() {
-    const _this = this;
-
-    this.chackIsPromote();
-
-    // 标签
-    $("#productName").html(this.data.productName);
-    $("#apartmentTitle").html(this.data.productName);
-
-    // 简单描述
-    $("#productDesc").html(this.data.productDesc);
-
-    // 套餐价格
-    $("#productPrice").html(this.renderProductPrice());
-
-    // 价格优惠期
-    $("#promoteTime").html(this.renderPromoteTime());
-
-    // 价格优惠期
-    $("#totalPrice").html(`合计 ${this.isPromote === true ? this.data.promotePrice : this.data.productPrice} RMB`);
-  },
-
-  chackIsPromote() {
-    const nowTimestamp = Date.parse(new Date()),
-      promotePrice = this.data.promotePrice,
-      promoteEndTimestamp = this.data.promoteEndTime,
-      promoteStartTimestamp = this.data.promoteStartTime;
-
-    // 如果促销
-    if (promotePrice != null && promotePrice != 0) {
-      // 当前时间 大于等于 促销开始时间
-      // 并且
-      // 当前时间 小于等于 促销结束时间
-      if (
-        nowTimestamp >= promoteStartTimestamp && 
-        nowTimestamp <= promoteEndTimestamp
-      ) {
-        return this.isPromote = true;
-      }
-    }
-
-    return this.isPromote = false;
-  },
-
-  renderProductPrice() {
-    return this.isPromote === true ? 
-      `<span style='text-decoration:line-through'>${this.data.productPrice}</span> ${this.data.promotePrice}` :
-      this.data.productPrice;
-  },
-
-  renderPromoteTime() {
-    return this.isPromote === true ? 
-      `<span>${convertDate.dateToFormat(new Date(this.data.promoteStartTime))} 至 ${convertDate.dateToFormat(new Date(this.data.promoteEndTime))}</span>` :
-      '暂无';
-  },
-
-  getProduct() {
-    return new Promise((resolve, reject) => {
+  getVillageProduct() {
+    return new Promise(function(resolve, reject){
       $.ajax({
-        'type': 'GET',
-        'url': `${appConfig.version}/product/${this.id}/get.do`,
-        'contentType': 'application/json; charset=utf-8',
-        success: val => {
-          if (val.result === '0') {
-            resolve(val.data);
+        type: 'GET',
+        url: `${appConfig.village}/product/resort/1/0/list.do`,
+        contentType: 'application/json; charset=utf-8',
+        success: function(value) {
+          if (value.result === '0') {
+            resolve(value.data);
           } else {
-            reject(`请求服务器成功, 接收的产品信息数据有误, 原因: ${val.message}`);
+            reject('接收数据发生错误, 原因: ' + value.message);
           }
         },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求产品信息发生错误, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          reject('接收数据发生错误, 原因: ' + errorThrown);
         }
       });
+    });
+  },
 
-    })
+  // 查询度假村产品 (复用)
+  searchApartmentAjax() {
+    var resortCode = this.resortCode,
+      startDate = convertDate.dateToYYYYmmNumber(this.startDate),
+      endDate = convertDate.dateToYYYYmmNumber(this.endDate);
+
+    return new Promise(function (resolve, reject) {
+      if (resortCode === null) {
+        location = "./../index.html";
+        reject('非常抱歉，请先选择你的产品。');
+      }
+      if (startDate && endDate) {
+        $.ajax({
+          'type': "GET",
+          'url': `${appConfig.village}/product/apartment/1/0/searchSource.do?startDate=${startDate}&endDate=${endDate}&resortCode=${resortCode}`,
+          'contentType': "application/json; charset=utf-8",
+          success: function(value) {
+            if (value.result === '0') {
+              resolve(value.data);
+            } else {
+              reject('查询的房型发生错误, 原因: ' + value.message);
+            }
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            reject('查询的房型发生错误, 原因: ' + errorThrown);
+          }
+        });
+      }else {
+        reject('非常抱歉，你查询的房型未传入具体时间。');
+      }
+    });
   }
 }
 
-let carousel = {
+var carousel = {
   'data': [
     // {
     //   'gallery': {
-    //     'createBy': 23,
-    //     'createTime': 1485047677000,
+    //     'createBy': 33,
+    //     'createTime': 1503252103000,
     //     'group': null,
     //     'imgDesc': null,
-    //     'imgId': 200,
-    //     'imgTitle': 'P5.jpg',
-    //     'imgUrl': '/source/image/product/34867ce5-d61a-4576-b4fb-060365c7d638.jpg',
-    //     'isDelete': 'N',
-    //     'thumbUrl': '/source/image/product/thum/thum_34867ce5-d61a-4576-b4fb-060365c7d638.jpg',
-    //     'updateBy': 23,
-    //     'updateTime': 1485047677000,
+    //     'imgId': 153,
+    //     'imgTitle': "MA1.JPG",
+    //     'imgUrl': "/source/image/product/8f217c44-f783-408a-9cc1-9c230c680769.JPG",
+    //     'isDelete': "N",
+    //     'thumbUrl': "/source/image/product/thum/thum_8f217c44-f783-408a-9cc1-9c230c680769.JPG",
+    //     'updateBy': null,
+    //     'updateTime': null
     //   },
-    //   'createBy': 23,
-    //   'createTime': 1485047677000,
-    //   'imgId': 200,
-    //   'isDelete': 'N',
-    //   'isFirst': 'Y',
-    //   'productId': 64,
-    //   'relId': 565,
+    //   'imgId': 153,
+    //   'isDelete': "N",
+    //   'isFirst': "Y",
+    //   'relId': 1,
+    //   'resortId': 1,
     //   'sortOrder': 0,
-    //   'updateBy': 23,
-    //   'updateTime': 1485047677000,
+    //   'updateBy': null,
+    //   'updateTime': null,
+    //   'createBy': 33,
+    //   'createTime': 1503252103000
     // }
   ],
-
-  init() {
+  init: function() {
     const _this = this;
 
     this.getCarousel()
     .then(val => {
       _this.data = val;
       _this.renderCarousel();
-    }, error => alert(error))
+    }, error => alert(error));
   },
 
   renderCarousel() {
-    $('#carousel').html([
-      '<div class="carousel slide" data-ride="carousel">',
-        '<ol class="carousel-indicators">',
-        this.data.map((val, key) => {
-          return key === 0 ?
-          '<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>' :
-          `<li data-target="#carousel-example-generic" data-slide-to="${key}"></li>`;
-        }).join(''),
-        '</ol>',
-        '<div class="carousel-inner" role="listbox" id="carousel">',
-        this.data.map((val, key) => {
-          return key === 0 ? [
-            '<div class="item active">',
-              `<a>`,
-                `<img src="${appConfig.urlBase}${val.gallery.imgUrl}">`,
-                '<div class="carousel-caption"></div>',
-              '</a>',
-            '</div>',
-          ].join('') : [
-            '<div class="item">',
-              `<a>`,
-                `<img src="${appConfig.urlBase}${val.gallery.imgUrl}">`,
-                '<div class="carousel-caption"></div>',
-              '</a>',
-            '</div>',
-          ].join('');
-        }).join(''),
-        '</div>',
-        '<a id="carousel-left" class="left carousel-control" role="button" data-slide="prev">',
-          '<span class="sr-only">Previous</span>',
-          '<span class="glyphicon glyphicon-chevron-left"></span>',
-          '<i class="left-btn allbtn"></i>',
-        '</a>',
-        '<a id="carousel-right" class="right carousel-control" role="button" data-slide="next">',
-          '<span class="sr-only">Next</span>',
-          '<span class="glyphicon glyphicon-chevron-right"></span>',
-          '<i class="right-btn allbtn"></i>',
-        '</a>',
-      '</div>',
-    ].join(''));
+    var data = this.data,
+      imgNum = this.data.length,
+      indicators = '',
+      wrappers = '';
 
-    $('.carousel').carousel();
-    $('#carousel-left').click(() => {
-      $('.carousel').carousel('prev')
-    });
-    $('#carousel-right').click(() => {
-      $('.carousel').carousel('next')
-    });
+    if (imgNum === 0) {
+      indicators = '<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>';
+      wrappers = [
+        '<div class="item active">',
+          '<img src="./../../dist/img/404.jpg">',
+          '<div class="carousel-caption">',
+          '</div>',
+        '</div>'
+      ].join('');
+    } else {
+      for (var i = 0; i < imgNum; i++) {
+        var imgUrl = data[i].gallery.imgUrl;
+        var indicator = '<li data-target="#carousel-example-generic" data-slide-to="' + i + '" ' + (i === 0 ? ' class="active"' : '') + '></li>';
+        var wrapper = [
+          '<div class="item ' + (i === 0 ? 'active' : '') + '">',
+            '<img src="' + appConfig.urlBase + imgUrl + '">',
+            '<div class="carousel-caption">',
+            '</div>',
+          '</div>'
+        ].join('');
+
+        indicators += indicator;
+        wrappers += wrapper;
+      }
+    }
+
+    $('#carouselIndicators').html(indicators);
+    $('#carouselInner').html(wrappers);
   },
-
+  
   getCarousel() {
-    return new Promise((resolve, reject) => {
-      $.ajax({
-        'type': 'GET',
-        'url': `${appConfig.version}/product/relProductGallery/${product.id}/findByProductId.do`,
-        'contentType': 'application/json; charset=utf-8',
-        success: val => {
-          if (val.result === '0') {
-            resolve(val.data);
-          } else {
-            reject(`请求服务器成功, 但是轮播图数据有误, 原因: ${val.message}`);
-          }
-        },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求轮播图出错, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
-        }
-      });
-    })
-  }
-}
-
-let attribute = {
-  'data': [
-    // {
-    //   'attrId': 184,
-    //   'attrName': '交通信息',
-    //   'attrValue': '<p>哥打基那巴鲁）机场--斗湖机场</p><p>斗湖机场--仙本那码头<br></p><p>当天上岛的客人按到达的时间接送至仙本那0PM</p><p>POM POM度假村--仙本那码头--斗湖机场&nb</p>',
-    //   'createBy': '2,3',
-    //   'createTime': 1486150327000,
-    //   'isDelete': 'N',
-    //   'productId': 64,
-    //   'sortOrder': 0,
-    //   'updateBy': null,
-    //   'updateTime': null,
-    // }
-  ],
-
-  init() {
-    const _this = this;
-
-    this.getAttribute()
-    .then(val => {
-      _this.data = val;
-      _this.renderAttribute();
-    }, error => alert(error))
-  },
-
-  renderAttribute() {
-    const _this = this;
-    let lastData = this.data.length - 1;
-
-    $('#part-attribute').html(this.data.map((val, key) => {
-      return [
-        `<div class="main-content${key !== lastData ? ' main-bottom-line' : ''}">`,
-          `<div class="main-content-name">${val.attrName}</div>`,
-          `<div class="main-content-value">${val.attrValue}</div>`,
-        '</div>'
-      ].join('')
-    }).join(''));
-  },
-
-  getAttribute() {
-    return new Promise((resolve, reject) => {
-      $.ajax({
-        'type': 'GET',
-        'url': `${appConfig.version}/product/attribute/findByProductId.do?productId=${product.id}`,
-        'contentType': 'application/json; charset=utf-8',
-        success: val => {
-          if (val.result === '0') {
-            resolve(val.data);
-          } else {
-            reject(`请求服务器成功, 接收的产品详情数据有误, 原因: ${val.message}`);
-          }
-        },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求产品详情发生错误, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
-        }
-      });
-
-    })
-  }
-}
-
-let trip = {
-  'data': [
-    // {
-    //   'createBy': 23,
-    //   'createTime': 1485285336000,
-    //   'isDelete': 'N',
-    //   'productId': 64,
-    //   'tripBrief': '初次遇见 天然小岛 邦邦',
-    //   'tripDay': 1,
-    //   'tripDesc': '<p>在斗湖机场门口，就看到邦邦的工作人员举牌并叫喊您的名字，核对信息后您就可以坐上专门负责接送的巴士。如果时间允许，您可以在机场门口购买电话卡（建议您选择celcom）和兑换马币。</p><p><img src="http://www.divingtime.asia:8080/source/image/rteImg/716280e3-e6a8-4ba6-95a5-e68115504665.jpg" alt="1" style="max-width:100%;"><br></p><p>斗湖机场到仙本那码头大约70分钟，您可以休息会儿或者看看窗外有异于北半球的<span style="line-height: 1;">沿途</span>热带风景。在陆地的尽头仙本那码头换乘飞艇，驶往邦邦岛。</p><p><img src="http://www.divingtime.asia:8080/source/image/rteImg/594b7ade-8a3f-45ec-bc59-c059ae6057ef.jpg" alt="邦邦岛快艇2" style="max-width:100%;"><br></p><p>一路上，船似乎一不小心进入了世外桃源，远远望去的海面上有朦胧的烟气溢出。忽然眼前一亮，视线清晰，您就会看到海中央一个安静小岛--邦邦。<span style="line-height: 1;">初次遇见的邦邦像邻家的小姑娘，有点安静有点害羞。</span></p><p><img src="http://www.divingtime.asia:8080/source/image/rteImg/cf981ea3-3a90-42b6-be82-d33c095931f5.jpg" alt="2" style="max-width:100%;"><br></p><p>邦邦龙珠度假村同时具备有海岛和水上屋风情，您可以漫步在沙滩，岛中央的蔬菜花园和果林，或者是水上木板路。女神范、文艺小清新照随时切换。</p><p><img src="http://www.divingtime.asia:8080/source/image/rteImg/19f5f77c-1df5-47c3-9bce-da4618b9120a.jpg" alt="IMG_6072_副本" style="line-height: 1; max-width: 100%;" class=""></p><p>上岛后，贴心工作人员会把你的行李拿到餐厅（确认房间号码后会送到您的房间）。<span style="line-height: 1;">服务员</span>递上新鲜的橙汁，并简单<span style="line-height: 1;">介绍度假村和注意</span>办理入住手续，您就可以入住了。（有啥疑问可以咨询中文服务员）</p><p><img src="http://www.divingtime.asia:8080/source/image/rteImg/726a582a-e11a-4a85-9053-19da4f9d3070.jpg" alt="5" style="max-width:100%;"><br></p><p>如果您是蜜月出行，我们还会给您免费的蜜月布置（需提供半年内的结婚证）</p><p><img src="http://www.divingtime.asia:8080/source/image/rteImg/658d2294-1da9-4a8b-99df-f614cb6d6bd0.jpg" alt="水屋12" style="max-width:100%;"><br></p><p>午休后泡一杯免费的咖啡或茶，坐在阳台的躺椅上，听海浪拍打岸边的声音，感受清爽柔和的海风，细细读一本书或者到与来自世界各地的朋友一起来一场沙滩排球/足球。</p><p><img src="http://www.divingtime.asia:8080/source/image/rteImg/cef06c97-6703-4906-8cf8-ac1cfed7d4dc.jpg" alt="4" style="line-height: 1; max-width: 100%;"></p><p>您还可以租借皮划艇，在海里随处漂流，然后跳进水里浮潜（请确保安全情况下）。浮潜装备、皮划艇在潜水中心租借。</p><p><img src="http://www.divingtime.asia:8080/source/image/rteImg/88953139-719a-457e-8edc-5bc8410503f4.jpg" alt="潜水中心14" style="max-width:100%;"><br></p><p>晚餐的食谱每天都会更新在餐厅的小黑板上，<span style="line-height: 1;">烧烤</span><span style="line-height: 1;">、</span>中西餐、马来餐都有，而蔬菜水果自产岛上，绿色健康。与您的另一半/闺蜜一边品尝佳肴，一边诉说这些年你印象深刻的人和事，让彼此敞开心扉。</p><p><img src="http://www.divingtime.asia:8080/source/image/rteImg/9a18280b-7727-42cb-96eb-6e57525625cd.jpg" alt="6" style="max-width:100%;"><br></p>',
-    //   'tripEvent': '初次遇见 天然小岛 邦邦',
-    //   'tripId': 570,
-    //   'tripPlace': '邦邦龙珠',
-    //   'updateBy': null,
-    //   'updateTime': null  ,
-    // }
-  ],
-
-  init() {
-    const _this = this;
-    $('.part-trip').show();
-
-    this.getTrip()
-    .then(val => {
-      _this.data = val;
-      _this.renderTripFrom();
-      _this.renderTripModal();
-    }, error => alert(error))
-  },
-
-  renderTripFrom() {
-    const _this = this;
+    var resortId = product.resortId;
     
-    $('#part-trip').html([
-      '<div class="trip-from">',
-        '<div class="trip-from-tlitle">',
-          '<div class="from-tripDay">日期</div>',
-          '<div class="from-tripEvent">项目&amp;活动</div>',
-          '<div class="from-tripPlace">入宿&amp;景点</div>',
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        'type': 'GET',
+        'url': `${appConfig.village}/product/relResortGallery/${resortId}/findByResortId.do`,
+        'contentType': 'application/json; charset=utf-8',
+        success: function(value) {
+          if (value.result === '0') {
+            resolve(value.data);
+          } else {
+            reject('轮播图接收数据发生错误, 原因: ' + value.message);
+          }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          reject('轮播图接收数据发生错误, 原因: ' + errorThrown);
+        }
+      });
+    });
+  },
+}
+
+var myApartment = {
+  'data': {
+    'list': [
+      // {
+      //   'select': [
+      //     {
+      //        apartmentName: '白珍珠海景房',
+      //        bedTypeList: ['大床', '双床'],
+      //        bedType: '大床',
+
+      //        calMethod: '1',
+      //        initiatePrice: 1200, //起始价格
+
+      //        peopleMax: 4,
+      //        suggestedNum: 2,
+
+      //        adultNum: 1,
+      //        childNum: 0,
+      //        adultMax: 2,
+      //        adultPrices: 600.00,
+      //        childrenMax: 2,
+      //        childPrices: 600.00,
+
+      //        prices: 1200.00,
+      //     }
+      //   ],
+      //   'selectNum': 0, // 已选房间数 (自己加进去的  
+      //   'adultMax': 2,
+      //   'adultMin': 1,
+      //   'adultPrices': '3000.00',
+      //   'adultUnitPrice': 3000,
+      //   'apartmentCode': 'KPLyjf',
+      //   'apartmentDesc': '房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息',
+      //   'apartmentId': 1,
+      //   'apartmentImg': '/source/image/product/thum/thum_17f9b08b-b21e-4638-aaec-67bd2ce913f7.jpg',
+      //   'apartmentName': '园景房',
+      //   'apartmentThumb': '/source/image/product/thum/thum_17f9b08b-b21e-4638-aaec-67bd2ce913f7.jpg',
+      //   'bedType': '大床,双人床,单床,蜜月大床',
+      //   'calMethod': null,
+      //   'childPrices': '1500.00',
+      //   'childUnitPrice': 1500,
+      //   'childrenMax': 2,
+      //   'childrenMin': 0,
+      //   'codes': 'KPLyjf20170918',
+      //   'createBy': 1,
+      //   'createTime': 1505328965000,
+      //   'facilities': '',
+      //   'haveDays': 1,
+      //   'ids': '5',
+      //   'initiatePrice': 6000,
+      //   'isAvePrice': 'N',
+      //   'isDelete': 'N',
+      //   'isSaleOut': 'N',
+      //   'notice': '入住须知↵入住须知↵入住须知↵入住须知↵入住须知',
+      //   'peopleMax': 4,
+      //   'peopleMin': 0,
+      //   'policy': '',
+      //   'resortCode': 'KPL',
+      //   'resortId': 1,
+      //   'resortName': '卡帕莱',
+      //   'skuNum': 2,
+      //   'suggestedNum': 2,
+      //   'updateBy': null,
+      //   'updateTime': null
+      // }
+    ],
+    'pageNum': 0,
+    'pageSize': 0,
+    'pages': 0,
+    'size': 0,
+    'totalCount': 0
+  },
+  'village': {
+    // 'brandId': 25,
+    // 'brandName': "潜游沙巴·仙本那",
+    // 'createBy': 33,
+    // 'createTime': 1503252103000,
+    // 'earnest': 500,
+    // 'initiatePrice': 1000,
+    // 'isDelete': "N",
+    // 'label': "热卖",
+    // 'recommendation': "<p>2222222222222</p>",
+    // 'refundRuleId': 29,
+    // 'resortCode': "KPL",
+    // 'resortDesc': "<p>111111111111111111</p>",
+    // 'resortId': 1,
+    // 'resortImg': "/source/image/product/thum/thum_8f217c44-f783-408a-9cc1-9c230c680769.JPG",
+    // 'resortName': "卡帕莱",
+    // 'resortThumb': "/source/image/product/thum/thum_8f217c44-f783-408a-9cc1-9c230c680769.JPG",
+    // 'updateBy': null,
+    // 'updateTime': null
+  },
+
+  init: function() {
+    var _this = this;
+
+    this.getvillage()
+    .then(function(value) {
+      _this.village = value;
+      _this.renderApartmentBrand();
+      _this.renderApartmentDetail();
+      myRule.init(value.refundRuleId);
+      _this.initTimePicker();
+      _this.renderSideApartment();
+      _this.initScroll();
+    }, function(error) { alert(error) });
+
+  },
+  
+  getvillage: function() {
+    var resortId = utilities.loadPageVar('resortId');
+
+    return new Promise(function(resolve, reject) {
+      $.ajax({
+        'type': 'GET',
+        'url': `${appConfig.village}/product/resort/${resortId}/get.do`,
+        'contentType': 'application/json; charset=utf-8',
+        success: function(value) {
+          if (value.result === '0') {
+            resolve(value.data);
+          } else {
+            reject('接收数据发生错误, 原因: ' + value.message);
+          }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          reject('接收数据发生错误, 原因: ' + errorThrown);
+        }
+      });
+    });
+  },
+
+  renderApartmentBrand() {
+    var myVillage = this.village;
+    
+    $('#brandName').html(myVillage.resortName + '<span>' + myVillage.label + '</span>');
+    // 这个反过来了
+    $('#villageDesc').html(myVillage.resortDesc);
+    $('#villageRecommendation').html(myVillage.recommendation);
+
+    $('#apartmentTotalPrice').html('预定价格<span>' + myVillage.initiatePrice + ' RMB 起</span>');
+    $('#apartmentTitle').html(myVillage.resortName);
+  },
+
+  initTimePicker: function() {
+    var _this = this,
+      startDate = product.startDate,
+      endDate = product.endDate,
+
+      apartmentList = $('#apartmentList'),
+
+      startDateDOM = $('#startDate'),
+      starDatePicker = $('#starDatePicker'),
+      starDateInput = $('#starDatePicker input'),
+
+      endDateDOM = $('#endDate'),
+      endDatePicker = $('#endDatePicker'),
+      endDateInput = $('#endDatePicker input');
+
+    starDatePicker.hide();
+    endDatePicker.hide();
+    
+    this.renderTimePicker();
+
+    startDateDOM.click(function() {
+      $(this).addClass('select');
+      endDateDOM.removeClass('select');
+
+      starDatePicker.show();
+      endDatePicker.hide();
+
+      apartmentList.hide();
+    });
+
+    starDatePicker.datetimepicker({
+      initialDate: convertDate.dateToFormat(new Date(startDate)),
+      startDate: convertDate.dateToFormat(new Date(startDate)),
+      format: "yyyy MM dd", //格式
+      autoclose: true, //自动关闭
+      todayBtn: true, //今天
+      minuteStep: 10, //用于选择分钟
+      language: 'zh-CN',
+      weekStart: 1, //周一从那天开始
+      todayHighlight: false, //高亮今天
+      startView: 2, //日期时间选择器打开之后首先显示的视图
+      minView: 2, //日期时间选择器打开之后最小的视图
+    }).on('changeDate', function(ev) {
+      var selectDate = new Date(ev.date),
+        selectTimeStamp = Date.parse(new Date(ev.date)),
+        endDateTimeStamp = Date.parse(product.endDate);
+
+      if (selectTimeStamp >= endDateTimeStamp) {
+        product.startDate = selectDate;
+        product.endDate = new Date(Date.parse(new Date(selectDate)) + 86400000);
+      } else {
+        product.startDate = selectDate;
+      }
+      _this.renderTimePicker();
+
+      endDatePicker.datetimepicker('update');
+
+      startDateDOM.removeClass('select');
+      endDateDOM.addClass('select');
+
+      starDatePicker.hide();
+      endDatePicker.show();
+    });
+
+    endDateDOM.click(function() {
+      startDateDOM.removeClass('select');
+      $(this).addClass('select');
+
+      starDatePicker.hide();
+      endDatePicker.show();
+
+      apartmentList.hide();
+    });
+
+    endDatePicker.datetimepicker({
+      initialDate: convertDate.dateToFormat(new Date(endDate)),
+      startDate: convertDate.dateToFormat(new Date(endDate)),
+      format: "yyyy MM dd", //格式
+      autoclose: true, //自动关闭
+      todayBtn: false, //今天
+      minuteStep: 10, //用于选择分钟
+      language: 'zh-CN',
+      weekStart: 1, //周一从那天开始
+      todayHighlight: false, //高亮今天
+      startView: 2, //日期时间选择器打开之后首先显示的视图
+      minView: 2, //日期时间选择器打开之后最小的视图
+    }).on('changeDate', function(ev) {
+      var starDateTimeStamp = Date.parse(product.startDate),
+        selectDate = new Date(ev.date),
+        selectTimeStamp = Date.parse(new Date(ev.date));
+
+      if (selectTimeStamp <= starDateTimeStamp) {
+        product.startDate = new Date(Date.parse(new Date(selectDate)) - 86400000);
+        product.endDate = selectDate;
+      } else {
+        product.endDate = selectDate;
+      }
+      _this.renderTimePicker();
+
+      starDatePicker.datetimepicker('update');
+
+      startDateDOM.removeClass('select');
+      endDateDOM.removeClass('select');
+
+      starDatePicker.hide();
+      endDatePicker.hide();
+
+      apartmentList.show();
+      apartmentList.html('<div class="loader--audioWave"></div>');
+
+      product.searchApartmentAjax()
+        .then(function(val) {
+          _this.data = utilities.addSelect(val);
+          _this.renderSideApartment();
+          _this.renderApartmentDetail();
+        }, function(error) {
+          alert(error);
+        });
+    });
+  },
+
+  renderTimePicker: function() {
+    var startDate = product.startDate,
+      endDate = product.endDate;
+
+    $('#startDate').html( convertDate.dateToFormat(new Date(startDate)) );
+    $('#endDate').html( convertDate.dateToFormat(new Date(endDate)) );
+
+    $('#starDatePicker input').val( convertDate.dateToFormat(new Date(startDate)) );
+    $('#endDatePicker input').val( convertDate.dateToFormat(new Date(endDate)) );
+  },
+
+  // 侧边栏上面的房型
+  renderSideApartment: function() {
+    var _this = this,
+      dataList = this.data.list,
+      apartmentList = $('#apartmentList');
+
+    if (dataList.length === 0) {
+      apartmentList.html([
+        '<div class="apartmentList-infor">',
+          '当前时间暂无可选房型<br/>可拨打 400-9688-768 咨询',
         '</div>',
-        this.data.map((val, key) => {
-          return [
-            '<div class="trip-from-main" data-toggle="modal" data-target="#trip-modal">',
-              `<div class="from-tripDay">第${val.tripDay}天</div>`,
-              `<div class="from-tripEvent">${val.tripEvent}</div>`,
-              `<div class="from-tripPlace">${val.tripPlace}</div>`,
+        '<div class="apartmentList-submit failure">预定度假村</div>'
+      ].join(''));
+    } else {
+      var myDomString = '',
+          allPrice = 0,
+          myCount = 0;
+
+      myDomString += '<div class="apartmentList-content">';
+      for (var i = 0; i < dataList.length; i++) {(function (i) {
+        var data = dataList[i];
+
+        if (data.select.length > 0) {
+          myCount += data.select.length;
+
+          myDomString += '<div class="apartmentList-division">';
+          for (var j = 0; j < data.select.length; j++) {(function (j) {
+            var mySelectPrice = utilities.renderSelectPrice(data.select[j]);
+
+            allPrice += mySelectPrice;
+            myDomString += [
+            '<div class="apartment">',
+              '<div class="apartment-title">',
+                '<div>' + data.select[j].apartmentName + '</div>',
+                '<div class="title-rigth" id="price' + i + "" + j + '">' + mySelectPrice + ' RMB</div>',
+              '</div>',
+              '<div class="apartment-select">',
+                '<div class="select-name">成人</div>',
+                '<div class="select-btn">',
+                  '<span class="adultCut">-</span>',
+                  '<div class="adult" id="adult' + i + "" + j + '">' + data.select[j].adultNum + '</div>',
+                  '<span class="adultAdd">+</span>',
+                '</div>',
+              '</div>',
+              '<div class="apartment-select">',
+                '<div class="select-name">儿童</div>',
+                '<div class="select-btn">',
+                  '<span class="childrenCut">-</span>',
+                  '<div class="children" id="children' + i + "" + j + '">' + data.select[j].childNum + '</div>',
+                  '<span class="childrenAdd">+</span>',
+                '</div>',
+              '</div>',
+              '<div class="apartment-select">',
+                '<div class="select-name">床型</div>',
+                '<select>',
+                  renderSelectBedType(data.select[j].bedTypeList, data.select[j].bedType),
+                '</select>',
+              '</div>',
+              '<div class="apartment-delete">删除</div>',
             '</div>'
-          ].join('');
-        }).join(''),
-      '</div>',
-    ].join(''));
-  },
-
-  renderTripModal() {
-    const _this = this;
-
-    $('#trip-modal').html([
-      '<div class="modal-content">',
-        '<div class="trip-modal-nav">',
-          this.data.map((val, key) => {
-            return `<div><a href="#modal-trip-day${key + 1}">第${key + 1}天</a></div>`
-          }).join(''),
-        '</div>',
-        '<div class="trip-modal-main">',
-          '<div class="modal-header">',
-            '<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>',
-            `<h4 class="modal-title" id="myModalLabel">${product.data.productName}</h4>`,
+            ].join('');
+          })(j)}
+          myDomString += '</div>';
+        } else {
+          myDomString += '<div class="apartmentList-division"></div>';
+        }
+      })(i)}
+      myDomString += '</div>';
+      
+      if (myCount === 0) {
+        myDomString += [
+          '<div class="apartmentList-infor" id="showApartmentList">',
+            '请在房型详情中选择你的房型',
           '</div>',
-          
-          '<div class="modal-body">',
-            '<div class="journey">',
-              this.data.map((val, key) => {
-                return [
-                  `<div class="journey-title" id="modal-trip-day${key + 1}">第${key + 1}天</div>`,
-                  `<div class="journey-content">${val.tripDesc}</div>`,
-                ].join('');
-              }).join(''),
+          '<div id="orderApartment" class="apartmentList-submit">预定度假村</div>'
+        ].join('')
+      } else {
+        myDomString += [
+          '<div id="allSelectPrice" class="apartmentList-infor">',
+            '合计: ' + allPrice + ' RMB',
+          '</div>',
+          '<div id="orderApartment" class="apartmentList-submit">预定度假村</div>'
+        ].join('')
+      }
+
+      apartmentList.html(myDomString);
+
+      var apartmenNodeDivision = $('#apartmentList .apartmentList-division');
+      for (var i = 0; i < dataList.length; i++) {(function(i) {
+        var data = dataList[i],
+            myDivisionNode = $(apartmenNodeDivision[i]);
+
+        var apartmentSelect = myDivisionNode.find('.apartment');
+
+        if (apartmentSelect.length > 0) {
+          for (var j = 0; j < data.select.length; j++) {(function(j) {
+            var mySelect = data.select[j],
+                mySelectNode = $(apartmentSelect[j]);
+
+            mySelectNode.find('.adultCut').click(function() {
+              if (mySelect.adultNum <= 1) { return }
+              _this.data.list[i].select[j].adultNum--;
+              $('#adult' + i + '' + j).html(_this.data.list[i].select[j].adultNum);
+              var myPrice = utilities.renderSelectPrice(_this.data.list[i].select[j]);
+              _this.data.list[i].select[j].prices = myPrice;
+              $('#price' + i + '' + j).html(myPrice + ' RMB');
+              $('#allSelectPrice').html('合计: ' + renderAllSelectPrice() + ' RMB');
+            });
+
+            mySelectNode.find('.adultAdd').click(function() {
+              if ((mySelect.adultNum + 1) > mySelect.adultMax) { return }
+              _this.data.list[i].select[j].adultNum++;
+              $('#adult' + i + '' + j).html(_this.data.list[i].select[j].adultNum);
+              var myPrice = utilities.renderSelectPrice(_this.data.list[i].select[j]);
+              _this.data.list[i].select[j].prices = myPrice;
+              $('#price' + i + '' + j).html(myPrice + ' RMB');
+              $('#allSelectPrice').html('合计: ' + renderAllSelectPrice() + ' RMB');
+            });
             
+            mySelectNode.find('.childrenCut').click(function() {
+              if (mySelect.childNum < 1) { return }
+              _this.data.list[i].select[j].childNum--;
+              $('#children' + i + '' + j).html(_this.data.list[i].select[j].childNum);
+              var myPrice = utilities.renderSelectPrice(_this.data.list[i].select[j]);
+              _this.data.list[i].select[j].prices = myPrice;
+              $('#price' + i + '' + j).html(myPrice + ' RMB');
+              $('#allSelectPrice').html('合计: ' + renderAllSelectPrice() + ' RMB');
+            });
+
+            mySelectNode.find('.childrenAdd').click(function() {
+              if ((mySelect.childNum + 1) > mySelect.childrenMax) { return }
+              _this.data.list[i].select[j].childNum++;
+              $('#children' + i + '' + j).html(_this.data.list[i].select[j].childNum);
+              var myPrice = utilities.renderSelectPrice(_this.data.list[i].select[j]);
+              _this.data.list[i].select[j].prices = myPrice;
+              $('#price' + i + '' + j).html(myPrice + ' RMB');
+              $('#allSelectPrice').html('合计: ' + renderAllSelectPrice() + ' RMB');
+            });
+
+            mySelectNode.find('select').change(function() {
+              _this.data.list[i].select[j].bedType = $(this).val();
+            });
+            
+            mySelectNode.find('.apartment-delete').click(function() {
+              if (confirm('你确认要删除吗?')) {
+                _this.data.list[i].select.splice(j, 1);
+                _this.renderSideApartment();
+                _this.renderApartmentDetail();
+              }
+            });
+          })(j)}
+        }
+      })(i)}
+
+      // 提示 度假村
+      $('#showApartmentList').click(function() {
+        $('#apartmentDetail').addClass('apartmentDetail-hover');
+        $.smoothScroll({
+          direction: 'top',
+          offset: ($('#apartmentDetail').offset().top - 120)
+        });
+        setTimeout(()=>{
+          $('#apartmentDetail').removeClass('apartmentDetail-hover');
+        }, 1000)
+      });
+      // 预定度假村
+      $('#orderApartment').click(function() {
+        var allApartmentNum = 0
+
+        for (var i = 0; i < dataList.length; i++) {
+          allApartmentNum += dataList[i].select.length;
+        }
+
+        if (allApartmentNum === 0) {
+          return alert('请选择房型!');
+        }
+
+        if (header.data === false) {
+          return alert('你尚未登录, 请先登录您的账号');
+        }
+
+        var mydate = {
+          startDate: product.startDate,
+          endDate: product.endDate
+        };
+        
+        localStorage.setItem('mydate',JSON.stringify(mydate));
+        localStorage.setItem('apartmentList',JSON.stringify(myApartment.data.list));
+        localStorage.setItem('village',JSON.stringify(myApartment.village));
+        location = './../submit/index.html?effective=' + Date.parse(new Date());
+      })
+
+      function renderAllSelectPrice() {
+        var dataList = _this.data.list,
+            myallPrice = 0;
+        
+        for (var i = 0; i < dataList.length; i++) {
+          for (var j = 0; j < dataList[i].select.length; j++) {
+            myallPrice += utilities.renderSelectPrice(dataList[i].select[j]);
+          }
+        }
+        
+        return myallPrice;
+      }
+
+      function renderSelectBedType(bedTypeList, bedType) {
+        var mybedString = '';
+
+        for (var i = 0; i < bedTypeList.length; i++) {
+          if (bedTypeList[i] == bedType) {
+            mybedString += '<option value="' + bedTypeList[i] + '" selected="selected" >' + bedTypeList[i] + '</option>';
+          } else {
+            mybedString += '<option value="' + bedTypeList[i] + '">' + bedTypeList[i] + '</option>';
+          }
+        }
+        return mybedString
+      }
+    }
+  },
+
+  renderReferPrice: function () {
+    var _this = this,
+      dataList = this.data.list,
+      earnest = this.village.earnest,
+      selectNum = 0,
+      apartmentTotalPrice = $('#apartmentTotalPrice');
+
+    for (var i = 0; i < dataList.length; i++) {
+      var mySelectNum = dataList[0].select.length || 0;
+
+      if (mySelectNum !== 0) {
+        selectNum += mySelectNum;
+      }
+    }
+
+    apartmentTotalPrice.html('预定价格<span>' + (earnest * selectNum) + ' RMB');
+  },
+
+  // 主页上面的房型
+  renderApartmentDetail: function() {
+    var _this = this,
+      dataList = this.data.list,
+      apartmentDetailDOM = $('#apartmentDetail');
+
+    if (dataList.length === 0) {
+      apartmentDetailDOM.html('<div class="message-infor">当前时间暂无可选房型<br/>可拨打 400-9688-768 咨询</div>');
+    } else {
+      var myDomString = '';
+      for (var i = 0; i < dataList.length; i++) {
+        var data = dataList[i];
+
+        myDomString += [
+        '<div class="apartment-block">',
+          '<div class="apartment-content">',
+            '<div class="img-content">',
+              '<img src="' + appConfig.urlBase + data.apartmentThumb + '" />',
+              '<div class="apartment-confirm '+ renderDisable(data.skuNum, dataList[i].select.length) +'">+</div>',
             '</div>',
-          '</div>',
-          
-          '<div class="modal-footer">',
-            '<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>',
+            '<div class="apartment-depiction">',
+              '<div class="apartment-apartmentName">' + data.apartmentName + '</div>',
+              '<div class="apartment-introduction">',
+                '<div class="apartment-suggestedNum">建议入住: ' + data.suggestedNum + '人</div>',
+                '<div class="apartment-bedType">床型: ' + renderBedType(data.bedType) + '</div>',
+                '<div class="apartment-skuNum">' + ((data.skuNum - dataList[i].select.length) > 0 ? ('库存: ' + (data.skuNum - dataList[i].select.length) + '间') :'') + '</div>',
+                '<div class="apartment-price">' + (data.initiatePrice ? ( data.initiatePrice + ' RMB 起' ) : '暂无价格') + '</div>',
+              '</div>',
+              '<div class="apartment-Desc">' + data.apartmentDesc + '</div>',
+            '</div>',
+            '<div class="apartment-line"></div>',
+            '<div class="apartment-showDetail">查看详情</div>',
           '</div>',
         '</div>',
-      '</div>'
-    ].join(''));
+        ].join('');
+        // myDomString += [
+        // '<div class="apartment-block">',
+        //   '<div class="apartment-content">',
+        //     '<img src="' + URLbase + data.apartmentThumb + '" />',
+        //     '<div class="apartment-depiction">',
+        //       '<div class="apartment-title">' + data.apartmentName + '</div>',
+        //       '<div class="apartment-introduction">' + data.apartmentDesc + '</div>',
+        //       '<div class="apartment-price">预定价格: <span>' + (data.initiatePrice || '暂无' ) + '</span> &nbsp; 库存: <span>' + (data.skuNum || '0') + '</span></div>',
+        //       '<div class="apartment-confirm">查看详情</div>',
+        //       '<div class=' + ( dataList[i].selectNum > 0 ? "apartment-selected" : "apartment-select" ) + '>选择</div>',
+        //     '</div>',
+        //   '</div>',
+        //   '<div class="apartment-line"></div>',
+        // '</div>',
+        // ].join('');
+      }
+      apartmentDetailDOM.html(myDomString);
+    }
 
+    var nodeListDetail = $('#apartmentDetail .apartment-showDetail'),
+        nodeListSelect = $('#apartmentDetail .apartment-confirm');
+
+    for (var i = 0; i < dataList.length; i++) {(function(i) {
+      var data = dataList[i],
+        myDetail = $(nodeListDetail[i]),
+        mySelect = $(nodeListSelect[i]);
+
+        myDetail.click(function() {
+          $('#myApartmentModal').modal('show');
+          $('#myApartmentModalContent').html([
+            '<div class="modal-header">',
+              '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>',
+              '<h4 class="modal-title">' + data.apartmentName + '</h4>',
+            '</div>',
+            '<img src="' + appConfig.urlBase + data.apartmentImg + '" />',
+            '<div class="modal-depiction">',
+              '<h3>房型信息</h3>',
+              '<p>' + data.apartmentDesc + '</p>',
+              '<h3>费用说明</h3>',
+              '<div class="row">',
+                '<div class="col-xs-6">成人价格: ' + (data.adultUnitPrice || '暂无') + '</div>',
+                '<div class="col-xs-6">儿童价格: ' + (data.childUnitPrice || '暂无') + '</div>',
+              '</div>',
+              '<h3>入住规格</h3>',
+              '<div class="row">',
+                '<div class="col-xs-12">床型: ' + data.bedType + '</div>',
+              '</div>',
+              '<div class="row">',
+                '<div class="col-xs-6">入住成人数: ' + data.adultMin + '-' + data.adultMax + '人</div>',
+                '<div class="col-xs-6">入住儿童人数: ' + data.childrenMin + '-' + data.childrenMax + '人</div>',
+              '</div>',
+              '<div class="row">',
+                '<div class="col-xs-6">最大入住人数: ' + data.peopleMax + '人</div>',
+                '<div class="col-xs-6">建议入住人数: ' + data.suggestedNum + '人</div>',
+              '</div>',
+              '<h3>入住须知</h3>',
+              '<p>' + data.notice + '</p>',
+            '</div>'
+          ].join(''));
+        });
+
+        mySelect.click(function() {
+          if (!dataList[i].skuNum) { return }
+          if (dataList[i].select.length >= dataList[i].skuNum) {
+            $(this).addClass('disable');
+            return
+          }
+          $(this).removeClass('disable');
+          var myselect = {
+            apartmentName: _this.data.list[i].apartmentName,
+            bedTypeList: _this.data.list[i].bedType.split(','),
+            bedType: _this.data.list[i].bedType.split(',')[0],
+
+            calMethod: _this.data.list[i].calMethod,
+            initiatePrice: _this.data.list[i].initiatePrice, //起始价格
+
+            peopleMax: _this.data.list[i].peopleMax,
+            suggestedNum: _this.data.list[i].suggestedNum,
+
+            adultNum: _this.data.list[i].suggestedNum,
+            childNum: 0,
+            adultMax: _this.data.list[i].adultMax,
+            adultPrices: parseFloat(_this.data.list[i].adultPrices),
+            childrenMax: _this.data.list[i].childrenMax,
+            childPrices: parseFloat(_this.data.list[i].childPrices),
+          }
+          myselect.prices = utilities.renderSelectPrice(myselect);
+
+          _this.data.list[i].select.push(myselect);
+          _this.renderSideApartment();
+          _this.renderApartmentDetail();
+        })
+    })(i)}
+
+    function renderBedType(bedType) {
+      var myBedList = bedType.split(',');
+
+      if (myBedList[1]) {
+        return '' + myBedList[0] + ',' + myBedList[1] + '...';
+      } else {
+        return '' + myBedList[0];
+      }
+    }
+
+    function renderDisable(skuNum, selectNum) {
+      if ((skuNum - selectNum) <= 0) {
+        return 'disable';
+      } else {
+        return '';
+      }
+
+    }
   },
 
-  getTrip() {
-    return new Promise((resolve, reject) => {
-      $.ajax({
-        'type': 'GET',
-        'url': `${appConfig.version}/product/trip/findByProductId.do?productId=${product.id}`,
-        'contentType': 'application/json; charset=utf-8',
-        success: val => {
-          if (val.result === '0') {
-            resolve(val.data);
-          } else {
-            reject(`请求服务器成功, 接收的产品旅途详情数据有误, 原因: ${val.message}`);
-          }
-        },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求产品旅途详情发生错误, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
-        }
-      });
+  initScroll: function() {
+    var apartmentIsFlex = false,
+      apartmentOffsetTop = $('#part1').offset().top - 50,
+      apartmentDOM = $('#myApartment'),
+      apartmentTitle = $('#apartmentTitle'),
+      LoginDOM = $('#header-login'),
+      tellHeader = $('.header-tell');
 
-    })
+    $(window).scroll(function() {
+      var distance = $(window).scrollTop()
+
+      if (distance > apartmentOffsetTop) {
+        if (apartmentIsFlex === false) {
+          apartmentDOM.addClass('scrollFlex');
+          apartmentTitle.show();
+          LoginDOM.hide();
+          tellHeader.hide();
+          apartmentIsFlex = true;
+        }
+      } else {
+        if (apartmentIsFlex) {
+          apartmentDOM.removeClass('scrollFlex');
+          apartmentTitle.hide();
+          LoginDOM.show();
+          tellHeader.show();
+          apartmentIsFlex = false;
+        }          
+      }
+    });
   }
 }
 
-let costIncludes = {
-  'data': [
-    // {
-    //   'costContent': '<p><span style="line-height: 1;">往返机场接送服务：</span></p><p><span style="line-height: 1;">斗湖机场--仙本那码头车程约70分钟 &nbsp; 仙本那码头--度假村船程约60分钟；</span></p><p><span style="line-height: 1;">每日三餐（自助餐）加下午茶：</span></p><p>早餐 7:00-9:00AM &nbsp; &nbsp;中餐 12:00-14:00PM &nbsp; &nbsp;晚餐 19:00-21:00PM</p><p>餐厅终日提供咖啡、茶、果汁（不包含酒精饮料或碳酸饮料），<span style="line-height: 1;">糖果、新鲜出炉的面包和甜点</span></p><p>度假村沙滩屋住宿及无限次数岸边浮潜。</p><p><br></p>',
-    //   'costTitle': "包含",
-    //   'createBy': 23,
-    //   'createTime': 1485195023000,
-    //   'includeId': 271,
-    //   'isDelete': "N",
-    //   'productId': 64,
-    //   'updateBy': 23,
-    //   'updateTime': 1485374889000,
-    // }
-  ],
-
-  init() {
-    const _this = this;
-
-    this.getcostIncludes()
-    .then(val => {
-      _this.data = val;
-      _this.rendercostIncludes();
-    }, error => alert(error))
-  },
-
-  rendercostIncludes() {
-    const _this = this;
-    let lastData = this.data.length - 1;
-
-    $('#part-costIncludes').html(this.data.map((val, key) => {
-      return [
-        `<div class="main-content${key !== lastData ? ' main-bottom-line' : ''}">`,
-          `<div class="main-content-name">${val.costTitle}</div>`,
-          `<div class="main-content-value">${val.costContent}</div>`,
-        '</div>'
-      ].join('')
-    }).join(''));
-  },
-
-  getcostIncludes() {
-    return new Promise((resolve, reject) => {
-      $.ajax({
-        'type': 'GET',
-        'url': `${appConfig.version}/product/costIncludes/findByProductId.do?productId=${product.id}`,
-        'contentType': 'application/json; charset=utf-8',
-        success: val => {
-          if (val.result === '0') {
-            resolve(val.data);
-          } else {
-            reject(`请求服务器成功, 接收的产品包含详情数据有误, 原因: ${val.message}`);
-          }
-        },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求产品包含详情发生错误, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
-        }
-      });
-
-    })
-  }
-}
-
-let refundrule = {
+var myRule = {
   'data': {
     // 'createBy': null,
     // 'createTime': null,
@@ -589,109 +948,133 @@ let refundrule = {
     // 'updateTime': null,
   },
 
-  init() {
-    const _this = this;
-    $('.part-refundrule').show();
+  init: function(id) {
+    var _this = this;
 
-    this.getRefundrule()
-    .then(val => {
-      _this.data = val;
-      _this.renderRefundrule();
-    }, error => alert(error))
+    if (!id) {
+      $('#part5').css('display', 'none');
+      return
+    }
+
+    this.getRuleData(id)
+      .then(function(val) {
+        _this.data = val;
+        _this.render();
+      }, function(error) { alert(error) });
   },
 
-  renderRefundrule() {
-    const _this = this;
-    let ruleLength = this.data.ruleItemList.length;
-
-    $('#part-refundrule').html([
-      '<div class="part-content">',
-        '<div class="content-tlitle">退款说明</div>',
-        '<div class="part-main">',
-
-          '<div class="refundrule-strip">',
-            this.data.ruleItemList.map((val, key) => {
-              let ruleItemWidth = ( 1 - key * ( 1 / ruleLength ) ) * 100;
-              return [
-                `<div style="width: ${ruleItemWidth}%; ${_this.renderRuleItemBackground(key)}">`,
-                  `<span>${_this.renderRuleDate(val)}</span>`,
-                  `<a>扣${val.deductionRatio}</a>`,
-                '</div>'
-              ].join('');
-            }).join(''),
-          '</div>',
-
-          '<div class="refundrule-detail">',
-            this.data.ruleItemList.map(val => 
-              `<p>${val.ruleDesc}</p>`
-            ).join(''),
-          '</div>',
-        '</div>',
-      '</div>'
-    ].join(''));
-  },
-
-  renderRuleDate(data) {
-    return data.endDay < 0 ? 
-      `${data.beginDay}天以上` :
-      `${data.beginDay}天`;
-  },
-
-  renderRuleItemBackground(num) {
-    let percentage = (num + 1) * (1 / this.data.ruleItemList.length);
-    return `background:rgba(69, 90, 100, ${percentage});`;
-  },
-
-  getRefundrule() {
-    return new Promise((resolve, reject) => {
+  getRuleData: function(id) {
+    return new Promise(function(resolve, reject) {
       $.ajax({
         'type': 'GET',
-        'url': `${appConfig.version}/product/refundrule/${product.data.refundRuleId}/item/list.do`,
+        'url': `${appConfig.version}/product/refundrule/${id}/item/list.do`,
         'contentType': 'application/json; charset=utf-8',
-        success: val => {
-          if (val.result === '0') {
-            resolve(val.data);
+        success: function(value) {
+          if (value.result === '0') {
+            resolve(value.data);
           } else {
-            reject(`请求服务器成功, 接收的产品包含详情数据有误, 原因: ${val.message}`);
+            reject('接收的规则数据有误, 原因: ' + value.message);
           }
         },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求产品包含详情发生错误, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          reject('请求规则发生错误, 原因: ' + errorThrown);
         }
       });
-    })
-  }
-}
-
-let scrollPin = {
-  init() {
-    let isPin = false;
-
-    $(window).scroll(function() {
-      let scrollTop = $(window).scrollTop();
-      let carouselClientHeight = $('#carousel')[0].clientHeight;
-      if (scrollTop > carouselClientHeight) {
-        if (isPin === false) {
-          $('.part-content-right').addClass('isPin');
-          $('.header-login').hide();
-          $('.header-tell').hide();
-          isPin = true;
-        }
-      } else {
-        if (isPin === true) {
-          $('.part-content-right').removeClass('isPin');
-          $('.header-login').show();
-          $('.header-tell').show();
-          isPin = false;
-        }
-      }
     });
+  },
+
+  render: function() {
+    var data = this.data,
+        ruleItemList = this.data.ruleItemList,
+        rulestring = '',
+        myRuleDesc = '';
+
+    for (var i = 0; i < ruleItemList.length; i++) {
+      var j = 1 - i * (1 / ruleItemList.length);
+
+      rulestring += "<div style='width:" + j * 100 + "%;background:rgba(69, 90, 100," //
+        + (i + 1) * (1 / ruleItemList.length) + ");'><span style='color:#4d5d77'>" //
+        + this.judgDay(ruleItemList[i]) + "</span><a style='color:#fff;position:absolute;z-index:2;top:2px;left:4px;'>扣" //
+        + ruleItemList[i].deductionRatio + "</a></div>";
+
+      myRuleDesc += "<p>" + ruleItemList[i].ruleDesc + "</p>";
+    }
+
+    $("#ruleItemList").html(rulestring);
+    $("#ruleDesc").html(myRuleDesc);
+  },
+
+  judgDay: function(data) {
+    return data.endDay < 0 ? (data.beginDay + '天以上') : (data.endDay + '天');
   }
 }
 
 // 工具类
 var utilities = {
+  renderSelectPrice: function (data) {
+    var calMethod = data.calMethod, // 计算方式
+      adultNum = data.adultNum, // 成人数
+      adultPrices = data.adultPrices, // 成人价格
+      childNum = data.childNum, // 儿童数
+      childPrices = data.childPrices, // 儿童价格
+      suggestedNum = data.suggestedNum, // 建议人数
+      initiatePrice = data.initiatePrice; // 起始价格
+    // 订房价格算法一：
+    // 1、一个房间至少入住1成人；
+    // 2、成人入住人数不得大于最多成人入住人数；
+    // 3、儿童入住人数不得大于最多儿童入住人数；
+    // 4、实际入住人数不得大于最多入住人数；
+    // 5、房间实际入住总人数小于等于建议入住人数时，一律按房间起始价格计算；
+    // （即订房价格=房间起始价格=成人单价*建议入住人数*晚数）
+    // 6、房间实际入住总人数大于建议入住人数，但计算金额小于房间起始价格时，则订房价格按房间起始价格计算；
+    // 7、在以上规则的基础上，房间实际入住总人数大于建议入住人数时，订房价格按实际入住情况计算。
+    // （即订房价格=成人单价*成人人数*晚数+儿童单价*儿童人数*晚数）
+    if (calMethod === '1') {
+      if ((adultNum + childNum) <= suggestedNum) { // 房间实际入住总人数小于等于建议入住人数时
+        var myPrice = (adultNum + childNum) * adultPrices;
+        return (myPrice > initiatePrice ? myPrice : initiatePrice);
+      } else { // 间实际入住总人数大于建议入住人数
+        return ( (adultPrices * adultNum) + (childPrices * childNum) );
+      }
+    // 订房价格算法二：
+    // 1、一个房间至少入住1成人；
+    // 2、成人入住人数不得大于最多成人入住人数；
+    // 3、儿童入住人数不得大于最多儿童入住人数；
+    // 4、实际入住人数不得大于最多入住人数；
+    // 5、房间起始价格作为基数（成人单价*建议入住人数*晚数）；
+    // 6、成人超出价格=成年单价*超出成人人数(入住成人人数超出建议入住人数)*晚数；
+    // 7、儿童价格=入住儿童单价*儿童人数*晚数；
+    // 8、订房价格=基数+成人超出价格+儿童价格。
+    } else {
+      if (adultNum > suggestedNum) {
+        return (initiatePrice + ((suggestedNum - adultNum) * initiatePrice) + (childPrices * childNum));
+      } else {
+        return (initiatePrice + (childPrices * childNum));
+      }
+    }
+  },
+
+  isSupport: function() {
+    var testKey = 'test',
+      storage = window.localStorage;
+    try {
+      storage.setItem(testKey, 'testValue');
+      storage.removeItem(testKey);
+      return true
+    } catch (error) {
+      return false
+    }
+  },
+
   loadPageVar: function(sVar) {
     return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
-  }
+  },
+
+  addSelect: function(data) {
+    for (var i = 0; i < data.list.length; i++) {
+      data.list[i].select = [];
+    }
+
+    return data
+  } 
 }

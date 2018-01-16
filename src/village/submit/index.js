@@ -1,154 +1,405 @@
-import cookies from './../../../utils/cookies';
-import convertDate from './../../../utils/convertDate';
-
 window.onload = function () {
   if (utilities.isSupport() === false) { return }
 
-  myData.init();
-  customerInfo.init();
+  myData.init()
+    .then(function () {
+      myData.checkLogin()
+        .then(function (response) {
+          return response.json();
+        }, function (error) {
+          alert('非常抱歉，查询登录信息出错！原因: ' + error);
+          return false;
+        })
+        .then(function (val) {
+          if (val === false) { return }
+          if (val.result === '0') {
+            customerInfo.init();
+          } else {
+            alert('检测到您尚未登录！原因: ' + val.message);
+            window.location = './../index.html';
+          }
+        });
+    }, function (error) {
+      alert(error);
+      window.location = './../index.html';
+    });
 }
 
-let myData = {
-  'data': {
-    // 'apartment': "邦邦 沙滩屋",
-    // 'apartmentNum': 1,
-    // 'bedType': "大床",
-    // 'brandId': 25,
-    // 'clickCount': null,
-    // 'createBy': 23,
-    // 'createTime': 1484004647000,
-    // 'isDelete': "N",
-    // 'isNew': "Y",
-    // 'isOnsale': "Y",
-    // 'period': 3,
-    // 'productBrief': "未经雕琢的天然小岛--邦邦岛",
-    // 'productDesc': "未经雕琢的天然小岛--邦邦岛，安静的她坐落于辽阔的斯里伯斯海域。择一岛终老，携一人至此，面朝大海，春暖花开。邦邦同时具备有水上屋和海岛风情，您可以漫步沙滩听海浪拍打的声音抑或走在水上木板上任海风拂过。另外度假村配备健身房、休息室、潜水中心和蔬菜花园等，非常适合蜜月/闺蜜行。",
-    // 'productId': 64,
-    // 'productImg': "/source/image/product/thum/thum_34867ce5-d61a-4576-b4fb-060365c7d638.jpg",
-    // 'productName': "天然小岛邦邦 3天2晚蜜月/闺蜜行",
-    // 'productPrice': 5700,
-    // 'productSn': "000006",
-    // 'productThumb': "/source/image/product/thum/thum_34867ce5-d61a-4576-b4fb-060365c7d638.jpg",
-    // 'productType': "package",
-    // 'productView': null,
-    // 'promoteEndTime': 0,
-    // 'promotePrice': 0,
-    // 'promoteStartTime': 0,
-    // 'refundRuleId': 30,
-    // 'updateBy': 23,
-    // 'updateTime': 1485194651000
+var myData = {
+  'date': {
+    // startDate: new Date(),
+    // endDate: new Date()
   },
   'submitData': {
-    'userInfoList': [],
+    'billItemList': [
+      // {
+      //   adultNum: 1,
+      //   childNum: 0,
+      //   itemCode: "KPLyjf",
+      //   itemId: null,
+      //   itemName: "园景房",
+      //   itemNum: null,
+      //   itemSize: "大床"
+      // }
+    ],
+    'userInfoList': [
+      // {
+      //   relId: null,
+      //   orderId: null,
+      //   chineseName: '曾杰杰',
+      //   pinyinName: 'Rejiejay',
+      //   gender: 0, // 0 男 1 女
+      //   passportNo: '',
+      //   email: '',
+      //   divingCount: '',
+      //   divingRank: '',
+      //   birthday: '',
+      //   age: 0,
+      //   mobile: 0
+      // }
+    ],
     'address': {}
   },
-  'productId': null,
-  'departureDate': null,
-  'productNum': null,
-
-  init() {
-    const _this = this;
-    let productId = utilities.loadPageVar('productId');
-    let departureDate = utilities.loadPageVar('departureDate');
-    let productNum = utilities.loadPageVar('productNum');
-
-    if (!productId || !departureDate || !productNum) {
-      return alert('此订单数据有误, 请检查您的操作或者联系客服!');
-    }
-
-    this.productId = productId;
-    this.departureDate = parseInt(departureDate);
-    this.productNum = parseInt(productNum);
-    this.getProduct()
-    .then(val => {
-      document.getElementById('main').setAttribute('style', 'display: block;');
-      _this.data = val;
-      _this.renderOrders();
-    }, error => alert(error))
+  'apartmentList': [
+    // {
+    //   'select': [
+    //     {
+    //        apartmentName: '白珍珠海景房',
+    //        bedTypeList: ['大床', '双床'],
+    //        bedType: '大床',
+    //
+    //        calMethod: '1',
+    //        initiatePrice: 1200, //起始价格
+    //
+    //        peopleMax: 4,
+    //        suggestedNum: 2,
+    //
+    //        adultNum: 1,
+    //        childNum: 0,
+    //        adultMax: 2,
+    //        adultPrices: 600.00,
+    //        childrenMax: 2,
+    //        childPrices: 600.00,
+    //
+    //        prices: 1200.00,
+    //     }
+    //   ],
+    //   'adultMax': 2,
+    //   'adultMin': 1,
+    //   'adultPrices': '3000.00',
+    //   'adultUnitPrice': 3000,
+    //   'apartmentCode': 'KPLyjf',
+    //   'apartmentDesc': '房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息↵房间描述信息',
+    //   'apartmentId': 1,
+    //   'apartmentImg': '/source/image/product/thum/thum_17f9b08b-b21e-4638-aaec-67bd2ce913f7.jpg',
+    //   'apartmentName': '园景房',
+    //   'apartmentThumb': '/source/image/product/thum/thum_17f9b08b-b21e-4638-aaec-67bd2ce913f7.jpg',
+    //   'bedType': '大床,双人床,单床,蜜月大床',
+    //   'calMethod': null,
+    //   'childPrices': '1500.00',
+    //   'childUnitPrice': 1500,
+    //   'childrenMax': 2,
+    //   'childrenMin': 0,
+    //   'codes': 'KPLyjf20170918',
+    //   'createBy': 1,
+    //   'createTime': 1505328965000,
+    //   'facilities': '',
+    //   'haveDays': 1,
+    //   'ids': '5',
+    //   'initiatePrice': 6000,
+    //   'isAvePrice': 'N',
+    //   'isDelete': 'N',
+    //   'isSaleOut': 'N',
+    //   'notice': '入住须知↵入住须知↵入住须知↵入住须知↵入住须知',
+    //   'peopleMax': 4,
+    //   'peopleMin': 0,
+    //   'policy': '',
+    //   'resortCode': 'KPL',
+    //   'resortId': 1,
+    //   'resortName': '卡帕莱',
+    //   'skuNum': 2,
+    //   'suggestedNum': 2,
+    //   'updateBy': null,
+    //   'updateTime': null
+    // }
+  ],
+  'village': {
+    // 'brandId': 25,
+    // 'brandName': "潜游沙巴·仙本那",
+    // 'createBy': 33,
+    // 'createTime': 1503252103000,
+    // 'earnest': 500,
+    // 'initiatePrice': 1000,
+    // 'isDelete': "N",
+    // 'label': "热卖",
+    // 'recommendation': "<p>2222222222222</p>",
+    // 'refundRuleId': 29,
+    // 'resortCode': "KPL",
+    // 'resortDesc': "<p>111111111111111111</p>",
+    // 'resortId': 1,
+    // 'resortImg': "/source/image/product/thum/thum_8f217c44-f783-408a-9cc1-9c230c680769.JPG",
+    // 'resortName': "卡帕莱",
+    // 'resortThumb': "/source/image/product/thum/thum_8f217c44-f783-408a-9cc1-9c230c680769.JPG",
+    // 'updateBy': null,
+    // 'updateTime': null
   },
+  'myVue': {},
+  
+  init: function() {
+    var _this = this,
+      mydate = localStorage.getItem('mydate'),
+      myEffective = utilities.loadPageVar('effective'),
+      myApartmentList = localStorage.getItem('apartmentList'),
+      myVillage = localStorage.getItem('village');
 
-  renderOrders() {
-    document.getElementById('orders-title').innerHTML = `${this.data.productName}`;
-    document.getElementById('departureDate').innerHTML = `出发日期: ${convertDate.dateToFormat(new Date(this.departureDate))}`;
-    document.getElementById('productNum').innerHTML = `&nbsp&nbsp ${this.productNum}`;
-    document.getElementById('totalPrice').innerHTML = this.TotalPrice();
-  },
+    return new Promise(function (resolve, reject) {
+      if (mydate && myApartmentList && myVillage && myEffective) {
+        // if ( Date.parse(new Date()) > ( parseInt(myEffective) + 300000 ) ) { reject('订单已失效，请重新选择。') }
+        var jsonDate = JSON.parse(mydate);
 
-  TotalPrice() {
-    const nowTimestamp = Date.parse(new Date()),
-      promotePrice = this.data.promotePrice,
-      promoteEndTimestamp = this.data.promoteEndTime,
-      promoteStartTimestamp = this.data.promoteStartTime;
-
-    // 表示促销
-    if (promotePrice != null && promotePrice != 0) {
-      // 当前时间 大于等于 促销开始时间
-      // 并且
-      // 当前时间 小于等于 促销结束时间
-      if (
-        nowTimestamp >= promoteStartTimestamp && 
-        nowTimestamp <= promoteEndTimestamp
-      ) {
-        return this.data.promotePrice * this.productNum;
+        _this.date = {
+          startDate: new Date(jsonDate.startDate),
+          endDate: new Date(jsonDate.endDate)
+        };
+        _this.apartmentList = JSON.parse(myApartmentList);
+        _this.village = JSON.parse(myVillage);
+        _this.initOrdersDetailVue();
+        // localStorage.removeItem('apartmentList');
+        // localStorage.removeItem('village');
+        resolve();
+      } else {
+        reject('订单已失效，请重新选择。');
       }
+    });
+  },
+
+  initOrdersDetailVue: function () {
+    var ordersList = [
+        // {
+        //   name: '',
+        //   roomCount: 0,
+        //   personCount: 0,
+        //   price: 0
+        // }
+      ],
+      myapartmentList = [
+        // {
+        //   'id': 0,
+        //   'ordersListId': 0,
+        //   'itemCode': 'KPLyjf',
+        //   'apartmentName': '园景房',
+        //   'bedTypeList': ['大床','双人床','单床','蜜月大床'],
+        //   'bedType': '大床',
+        //   'adult': 1,
+        //   'adultMax': 2,
+        //   'adultUnitPrice': 1200,
+        //   'children': 0,
+        //   'childrenMax': 2,
+        //   'childUnitPrice': 1200,
+        //   'suggestedNum': 2,
+        // }
+      ],
+      ordersRoomCount = 0,
+      ordersPersonCount = 0,
+      ordersprice = 0,
+      ordersTitle = this.village.resortName,
+      startDate = utilities.dateToYYYYMMDDFormat(this.date.startDate),
+      endDate = utilities.dateToYYYYMMDDFormat(this.date.endDate);
+
+    for (var i = 0; i < this.apartmentList.length; i++) {
+      var apartment = this.apartmentList[i],
+          myPersonCount = 0,
+          myPrice = 0;
+
+      for (var j = 0; j < this.apartmentList[i].select.length; j++) {
+        var apartmentItem = {
+          'itemCode': this.apartmentList[i].apartmentCode,
+          'prices': this.apartmentList[i].select[j].prices,
+
+          'apartmentName': this.apartmentList[i].select[j].apartmentName,
+
+          'bedType': this.apartmentList[i].select[j].bedType,
+          'adultNum': this.apartmentList[i].select[j].adultNum,
+          'childNum': this.apartmentList[i].select[j].childNum,
+ 
+          'adultMax': this.apartmentList[i].select[j].adultMax,
+          'childrenMax': this.apartmentList[i].select[j].childrenMax,
+          'suggestedNum': this.apartmentList[i].select[j].suggestedNum,
+        };
+        // var apartmentItem = {
+        //   'id': ordersRoomCount,
+        //   'ordersListId': i,
+        //   'itemCode': this.apartmentList[i].apartmentCode,
+        //   'apartmentName': this.apartmentList[i].apartmentName,
+        //   'bedTypeList': this.apartmentList[i].bedType.split(','),
+        //   'bedType': this.apartmentList[i].bedType.split(',')[0],
+        //   'adult': 1,
+        //   'adultMax': this.apartmentList[i].adultMax,
+        //   'adultUnitPrice': this.apartmentList[i].adultUnitPrice,
+        //   'children': 0,
+        //   'childrenMax': this.apartmentList[i].childrenMax,
+        //   'childUnitPrice': this.apartmentList[i].childUnitPrice,
+        //   'suggestedNum': this.apartmentList[i].suggestedNum,
+        // };
+
+        myapartmentList.push(apartmentItem);
+
+        ordersRoomCount++;
+
+        var peopleNum = (this.apartmentList[i].select[j].adultNum + this.apartmentList[i].select[j].childNum);
+        myPersonCount += peopleNum;
+        ordersPersonCount += peopleNum;
+
+        myPrice += this.apartmentList[i].select[j].prices;
+        ordersprice += this.apartmentList[i].select[j].prices;
+      }
+        
+      var ordersItem = {
+        'id': i,
+        'isShow': (apartment.select.length > 0 ? true : false),
+        'name': apartment.apartmentName,
+        'roomCount': apartment.select.length,
+        'personCount': myPersonCount,
+        'ordersprice': myPrice
+      };
+
+      ordersList.push(ordersItem);
     }
 
-    // 表示不促销
-    return this.data.productPrice * this.productNum;
-  },
+    this.myVue = new Vue({
+      'el': '#ordersDetail',
 
-  chackIsPromote() {
-  },
+      'data': {
+        'ordersTitle': ordersTitle,
+        'startDate': startDate,
+        'endDate': endDate,
 
-  submitProduct() {
-    const _this = this;
-    let fetchbody = JSON.stringify(this.submitData)
-    let url = `${appConfig.version}/order/${this.productId}/${this.productNum}/${convertDate.dateToYYYYmmNumber(new Date(this.departureDate))}/reserve.do`
+        'apartmentList': myapartmentList,
 
-    return new Promise((resolve, reject) => {
-      fetch(url, {
-        'method': 'POST',
-        'headers':{
-          'Content-Type': 'application/json; charset=utf-8',
-          'token': cookies.getItem('token'),
-          'digest': cookies.getItem('digest')
+        'ordersList': ordersList,
+        'ordersRoomCount': ordersRoomCount,
+        'ordersPersonCount': ordersPersonCount,
+        'ordersprice': ordersprice
+      },
+      
+      'watch': {
+        ordersList: {
+          handler: function (val, oldVal) {
+            var myOrdersList = oldVal,
+              myCount = 0;
+
+            for (var i = 0; i < myOrdersList.length; i++) {
+              myCount += myOrdersList[i].personCount;
+            }
+
+            this.ordersPersonCount = myCount;
+          },
+          deep: true
+        }
+      },
+
+      'methods': {
+        reduceAdult: function(id) {
+          var dataNum = this.apartmentList[id].adult,
+            ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
+        
+          if (dataNum <= 1) { return }
+
+          this.apartmentList[id].adult = dataNum - 1;
+          this.apartmentList[id].personCount = dataNum - 1;
+          this.ordersList[this.apartmentList[id].ordersListId].personCount = ordersItemPersonNum - 1;
         },
-        'body': fetchbody 
-      }).then(
-        response => ( response.json() ),
-        error => ({'result': '1', 'message': error})
-      ).then((json) => {
-        if (json.result === '0') {
-          resolve();
-        } else {
-          reject(`请求服务器成功, 但是返回的预订信息有误! 原因: ${json.message}`);
-        }
-      }).catch(error => {
-        reject(`向服务器发起请求预订信息失败, 原因: ${error}`);
-      })
+
+        addAdult: function(id) {
+          var dataNum = this.apartmentList[id].adult,
+            maxNum = this.apartmentList[id].adultMax,
+            ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
+
+          if (dataNum >= maxNum) { return }
+          this.apartmentList[id].adult = dataNum + 1;
+          this.ordersList[this.apartmentList[id].ordersListId].personCount = ordersItemPersonNum + 1;
+        },
+
+        reducechildren: function(id) {
+          var dataNum = this.apartmentList[id].children,
+          ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
+
+          if (dataNum <= 0) { return }
+
+          this.apartmentList[id].children = dataNum - 1,
+          ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
+          this.ordersList[this.apartmentList[id].ordersListId].personCount = ordersItemPersonNum - 1;
+        },
+
+        addchildren: function(id) {
+          var dataNum = this.apartmentList[id].children,
+            maxNum = this.apartmentList[id].childrenMax,
+            ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
+         
+          if (dataNum >= maxNum) { return }
+
+          this.apartmentList[id].children = dataNum + 1;
+          this.ordersList[this.apartmentList[id].ordersListId].personCount = ordersItemPersonNum + 1;
+        },
+      }
     });
   },
 
-  getProduct() {
-    const _this = this;
+  initBillItemList: function () {
+    var billItemList = [],
+      apartmentListNum = this.myVue.$data.apartmentList.length,
+      apartmentList = this.myVue.$data.apartmentList;
 
-    return new Promise((resolve, reject) => {
-      fetch(`${appConfig.version}/product/${_this.productId}/get.do`, {
-        'method': "GET",
-        'contentType': 'application/json; charset=utf-8'
-      }).then(
-        response => response.json(),
-        error => ({'result': '1', 'message': error})
-      ).then((json) => {
-        if (json.result === '0') {
-          resolve(json.data);
-        } else {
-          reject(`请求服务器成功, 但是返回的订单信息有误! 原因: ${json.message}`);
-        }
-      }).catch(error => {
-        reject(`向服务器发起请求订单信息失败, 原因: ${error}`);
-      })
+    for (var i = 0; i < apartmentListNum; i++) {
+      var apartment = apartmentList[i];
+
+      billItemList.push({
+        'itemId': null,
+        'itemNum': null,
+        'itemCode': apartment.itemCode,
+        'itemName': apartment.apartmentName,
+        'itemSize': apartment.bedType,
+        'adultNum': apartment.adultNum,
+        'childNum': apartment.childNum,
+      });
+    }
+
+    this.submitData.billItemList = billItemList;
+  },
+
+  checkLogin: function () {
+    var token = utilities.getCookie('token'),
+      digest = utilities.getCookie('digest');
+    
+    return fetch(`${appConfig.version}/user/getUserInfo.do`, {
+      method: "GET",
+      headers: {
+        'token': token,
+        'digest': digest
+      }
     });
+  },
+
+  submit: function () {
+    var _this = this,
+      mySubmitData = this.submitData,
+      resortCode = this.village.resortCode,
+      checkInDate = utilities.dateToYYYYMMDDString(this.date.startDate),
+      leaveDate = utilities.dateToYYYYMMDDString(this.date.endDate),
+      token = utilities.getCookie('token'),
+      digest = utilities.getCookie('digest');
+
+    this.initBillItemList();
+    
+    return fetch(`${appConfig.version}/order/${resortCode}/${checkInDate}/${leaveDate}/custom.do`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'token': token,
+        'digest': digest
+      },
+      body: JSON.stringify(mySubmitData)
+    })
   }
 }
 
@@ -193,10 +444,9 @@ var customerInfo = {
       });
   },
 
-  // 获取 旅客信息方法
   fetchCustomerData: function () {
-    var token = cookies.getItem('token'),
-      digest = cookies.getItem('digest');
+    var token = utilities.getCookie('token'),
+      digest = utilities.getCookie('digest');
 
     return fetch(`${appConfig.version}/user/userinfo/findByUserId.do`, {
       method: 'GET',
@@ -207,12 +457,11 @@ var customerInfo = {
     });
   },
 
-  // 更新 旅客信息方法
   updateCustomerData: function (data, type) {
     var _this = this,
       url = '',
-      token = cookies.getItem('token'),
-      digest = cookies.getItem('digest');
+      token = utilities.getCookie('token'),
+      digest = utilities.getCookie('digest');
 
     if (type === 'add') {
       url = `${appConfig.version}/user/userinfo/add.do`;
@@ -259,7 +508,6 @@ var customerInfo = {
     });
   },
 
-  // 初始化 Vue 旅客信息 列表(空)数据 方法
   dataToVueList: function (data) {
     var myData = data || this.data,
       vueList = [];
@@ -279,7 +527,6 @@ var customerInfo = {
     return vueList;
   },
 
-  // 初始化 Vue 旅客信息 项目(空)数据 方法
   createVueItem: function () {
     return {
       chineseName: '',
@@ -401,7 +648,7 @@ var customerInfo = {
               this.item.birthdayError = '请选择出生日期';
             }else {
               var nowDate = Date.parse(new Date());
-              var selectTimestamp = convertDate.YYYYMMDDFormatToTimestamp(data.birthday);
+              var selectTimestamp = utilities.YYYYMMDDFormatToTimestamp(data.birthday);
               this.item.age = Math.ceil((nowDate - selectTimestamp) / 31536000000);
               this.item.birthdayError = '';
             }
@@ -466,7 +713,7 @@ var customerInfo = {
       
             'gender': data.gender,
       
-            'birthday': convertDate.dateToFormat(new Date(data.birthday)),
+            'birthday': utilities.dateToYYYYMMDDFormat(new Date(data.birthday)),
             'birthdayError': '',
       
             'age': data.age,
@@ -589,7 +836,7 @@ var customerInfo = {
             if (mySelectList[i].isSelect) {
               var myId = myRenderList.length,
                 mySelectItemData = _this.data[mySelectList[i].id],
-                divingRank = '';
+              divingRank = '';
 
               selectCount++;
               if (mySelectItemData.divingRank === 1) {
@@ -604,7 +851,7 @@ var customerInfo = {
                 'chineseName': mySelectItemData.chineseName,
                 'pinyinName': mySelectItemData.pinyinName,
                 'gender': mySelectItemData.gender,
-                'birthday': convertDate.dateToFormat(new Date(mySelectItemData.birthday)),
+                'birthday': utilities.dateToYYYYMMDDFormat(new Date(mySelectItemData.birthday)),
                 'age': mySelectItemData.age,
                 'mobile': mySelectItemData.mobile,
                 'email': mySelectItemData.email,
@@ -642,6 +889,7 @@ var customerInfo = {
             return
           }
 
+
           for (var i = 0; i < this.renderList.length; i++) {
             var myUserInfoItem = _this.data[this.renderList[i].listId];
             userInfoList.push({
@@ -664,17 +912,39 @@ var customerInfo = {
             isSubmit = true;
             this.submitBTN = '正在提交...';
 
-            myData.submitProduct()
-            .then(val => {
-              alert('恭喜你提交成功! 请在30分钟内付定金!');
-              isSubmit = false;
-              Vuethis.submitBTN = '确认订单';
-              window.location = './../../user/account.html#Orders';
-            }, error => {
-              alert(error);
-              isSubmit = false;
-              Vuethis.submitBTN = '确认订单';
-            })
+            myData.submit()
+              .then(function (response) {
+                return response.json();
+              }, function (error) {
+                return {'result': '1', 'message': error};
+              })
+              .then(function (val) {
+                if (val.result === '0') {
+                  isSubmit = false;
+                  Vuethis.submitBTN = '确认订单';
+                  window.location = './../../user/account.html#Orders';
+                } else if (val.result === '-11') {
+                  isSubmit = false;
+                  Vuethis.submitBTN = '确认订单';
+                  
+                  var notEnoughTermName = '',
+                      notEnoughTermList = val.data.split(',');
+                  for (var i = 0; i < myData.apartmentList.length; i++) {
+                    for (var j = 0; j < notEnoughTermList.length; j++) {
+                      if (myData.apartmentList[i].apartmentCode ==  notEnoughTermList[j]) {
+                        notEnoughTermName += myData.apartmentList[i].apartmentName;
+                        notEnoughTermName += '、 ';
+                      }
+                    }
+                  }
+                  
+                  alert('非常抱歉，提交信息出错！原因: ' + notEnoughTermName + '库存不足');
+                } else {
+                  isSubmit = false;
+                  Vuethis.submitBTN = '确认订单';
+                  alert('非常抱歉，提交信息出错！原因: ' + val.message);
+                }
+              });
           }
         }
       },
@@ -684,16 +954,47 @@ var customerInfo = {
   }
 }
 
-// 工具类
-let utilities = {
+var utilities = {
+  dateToYYYYMMDDString: function(data) {
+    var yyyy = data.getFullYear();
 
-  isSupport() {
+    var mm = data.getMonth() + 1;
+    mm = mm < 10 ? '0' + mm : mm;
+
+    var dd = data.getDate();
+    dd = dd < 10 ? '0' + dd : dd;
+
+    return '' + yyyy + mm + dd;
+  },
+
+  dateToYYYYMMDDFormat: function(data) {
+    var yyyy = data.getFullYear();
+
+    var mm = data.getMonth() + 1;
+    mm = mm < 10 ? '0' + mm : mm;
+
+    var dd = data.getDate();
+    dd = dd < 10 ? '0' + dd : dd;
+
+    return '' + yyyy + '-' + mm + '-' + dd;
+  },
+  
+  loadPageVar: function(sVar) {
+    return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+  },
+
+  YYYYMMDDFormatToTimestamp(data) {
+    var myDateList = data.split("-");
+    return Date.parse(new Date(myDateList[0], (parseInt(myDateList[1]) - 1), myDateList[2]));
+  },
+
+  isSupport: function() {
     if (isIE(6) || isIE(7) || isIE(8)) {
       alert('因为IE8（及以下）由于存在安全风险，已被本站禁止，请升级到IE11或使用Chrome浏览器。')
       return false
     }
 
-    let storage = window.localStorage;
+    var storage = window.localStorage;
     try {
       storage.setItem('test', 'testValue');
       storage.removeItem('test');
@@ -704,13 +1005,13 @@ let utilities = {
     return true
 
     function isIE(ver) {
-      let b = document.createElement('b');
+      var b = document.createElement('b');
       b.innerHTML = '<!--[if IE ' + ver + ']><i></i><![endif]-->';
       return b.getElementsByTagName('i').length === 1;
     }
   },
 
-  loadPageVar: function(sVar) {
-    return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+  getCookie: function (sKey) {
+    return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
   }
 }

@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>潜游时光-确认函</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="stylesheet" type="text/css" href="./index.css">
+</head>
+<body>
+  <div class="content" style="display: none;">
+
+    <div class="part1">
+      <!-- <img class="mainlogo" src="./img/logo.png">
+      <div>
+        <div class="title">马达京彩珊瑚度假村确认函</div>
+        <div class="subtitle">Mataking Reef Dives Resort’</div>
+        <div class="subtitle">Confirmation letter</div>
+      </div>
+      <img class="minorlogo" src="./image2.jpeg"> -->
+    </div>
+
+    <div class="part2">
+      <img src="./img/icon.png">
+      <div class="message">
+        <div>您的订单已确认并支付成功。</div>
+        <div>Your reservation is confirmed and your card has been charged.</div>
+      </div>
+    </div>
+
+    <div class="part3">
+      <div id="earnest">
+        <div class="row">
+          <div class="row-left">
+            <div class="row-top">淘宝订单号<span id="orderSn"></span></div>
+            <div class="row-bottom">Order No<span></span></div>
+          </div>
+          <div class="row-right">
+            <div class="row-top">订房码<span id="reservationCode"></span></div>
+            <div class="row-bottom">Reservation No<span></span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-left">
+            <div class="row-top">入住人数<span id="Occupancy"></span></div>
+            <div class="row-bottom">Occupancy<span id="OccupancyEN"></span></div>
+          </div>
+          <div class="row-right">
+            <div class="row-top">床型<span id="bedType"></span></div>
+            <div class="row-bottom">Bed Type<span></span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-left">
+            <div class="row-top">上岛日期<span id="checkIn"></span></div>
+            <div class="row-bottom">Check-in<span></span></div>
+          </div>
+          <div class="row-right">
+            <div class="row-top">房型&数量<span id="roomNum"></span></div>
+            <div class="row-bottom">Room Number<span></span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-left">
+            <div class="row-top">离岛日期<span id="checkOut"></span></div>
+            <div class="row-bottom">Check-out<span></span></div>
+          </div>
+          <div class="row-right">
+            <div class="row-top">套餐&总价 <span id="Package"></span></div>
+            <div class="row-bottom">Package&Total Price<span></span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="Remarks-L">
+            <div class="Remarksbold">备注</div>
+            <div class="Remarkssmall">Remark</div>
+          </div>
+          <div class="Remarks-R" id="Remarks">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <div id="part3-fullamount">
+
+        <div class="row">
+          <div class="row-left">
+            <div class="row-top">订房码<span></span></div>
+            <div class="row-bottom">Remarks<span></span></div>
+          </div>
+          <div class="row-right">
+            <div class="row-top">房型&数量<span></span></div>
+            <div class="row-bottom">Reservation No<span></span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-left">
+            <div class="row-top">入住人数<span></span></div>
+            <div class="row-bottom">Occupancy<span></span></div>
+          </div>
+          <div class="row-right">
+            <div class="row-top">床型<span></span></div>
+            <div class="row-bottom">Bed Type<span></span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-left">
+            <div class="row-top">上岛日期<span></span></div>
+            <div class="row-bottom">Check-in<span></span></div>
+          </div>
+          <div class="row-right">
+            <div class="row-top">备注<span></span></div>
+            <div class="row-bottom">Room Number<span></span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-left">
+            <div class="row-top">离岛日期<span></span></div>
+            <div class="row-bottom">Check-out<span></span></div>
+          </div>
+          <div class="row-right">
+            <div class="row-top">套餐&总价 <span></span></div>
+            <div class="row-bottom">Package&Total Price<span></span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="part4">
+      <div class="part4-left" id="qrCode">
+        <div class="message">
+          <div>预订、个人专享</div>
+          <div>24小时微服务伴您一路旅程</div>
+          <div>（微信号：123456789）</div>
+        </div>
+      </div>
+      <div class="part4-right">
+        <img src="./img/qrCode.jpeg">
+        <div class="message">
+          <div>扫一扫关注 潜游时光</div>
+          <div>快速订酒店、查询订单、</div>
+          <div>实时旅游资讯</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="part5">
+      <div class="title">入住人信息Personal Information</div>
+      <div id="part5-PerInfor">
+      </div>
+      <!-- <div class="part5-content">
+        <div class="content-title">
+          <div>1</div><span>旅客信息1</span>
+        </div>
+        <div class="row">
+          <div class="row-left">
+            <div class="row-top">护照号码<span></span></div>
+            <div class="row-bottom">Passport No<span></span></div>
+          </div>
+          <div class="row-right">
+            <div class="row-top">姓名<span></span></div>
+            <div class="row-bottom">Name<span></span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-left">
+            <div class="row-top">拼音<span></span></div>
+            <div class="row-bottom">Pinyin<span></span></div>
+          </div>
+          <div class="row-right">
+            <div class="row-top">性别<span></span></div>
+            <div class="row-bottom">Gender<span></span></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-left">
+            <div class="row-top">出生年月日<span></span></div>
+            <div class="row-bottom">Birthday<span></span></div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+
+    <div class="part6" id="part6">
+      <div class="part6-left">
+        <div>亚庇接送</div>
+        <div class="EH">Kota Kinabalu Transfer</div>
+      </div>
+      <div class="part6-right">
+        <div></div>
+      </div>
+
+      <div class="part6-left">
+        <div>度假村接送</div>
+        <div class="EH">Resort Transfer Details</div>
+      </div>
+      <div class="part6-right">
+        <div>无</div>
+        <div class="EH">null</div>
+        <div class="EH">（机场出口寻找右上角度假村LOGO的工作人员，确认名单即可。）</div>
+      </div>
+    </div>
+    <div class="part7" id="part7">
+      <!-- <img src="./image5.png"> -->
+    </div>
+
+    <div class="part8">
+      <div id="part8-template1">
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>行程联系信息</div>
+            <div class="EH">Contact Information</div>
+          </div>
+          <div class="part8-rigth">
+            <div>顾问24小时紧急电话：008613164753535<br/>Email：<span class="part8-Email">zhang @divingtime.com</span></div>
+            <div>马达京度假村误机紧急电话：+60 89786045 或者+60 89786044<br/>度假村其他联系方式：</div>
+            <div>Tel： (60 89) 770022 (咨讯或查问)， (60 89) 770025</div>
+            <div>Email：sales@mataking.com，http://www.mataking.com</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>活动项目&费用</div>
+            <div class="EH">Activity item & expense</div>
+          </div>
+          <div class="part8-rigth">
+            <div>SPA：RM120起，皮划艇：RM40/小时，海钓：RM750/船</div>
+            <div>救生衣：免费，体验潜水：RM 330/人</div>
+            <div>浮潜装备套餐：RM30/天（面镜、呼吸管、脚蹼、潜水靴）</div>
+            <div>潜水装备套装：RM85/天（BCD、调节器、面镜、脚蹼、潜水靴、潜水服）</div>
+            <div>额外船潜（持证客人）：RM100/潜，不含装备</div>
+            <div>OW课程费用：3000元/人需预订5天4晚浮潜套餐</div>
+            <div>AOW课程费用：2900元/人</div>
+            <div>考证期间包含潜水装备，中文教练需提前预约，中文课程预约成功不能取消退款</div>
+            <div class="thered">*以上项目及价格仅供参考，具体以度假村实际提供为准 *</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>餐饮</div>
+            <div class="EH">Meal</div>
+          </div>
+          <div class="part8-rigth">
+            <div>早餐：7:30-9:30；中餐：12:00-14:00；</div>
+            <div>下午茶：15:00-17:00；晚餐：19:00-21:00</div>
+            <div>提早离岛未能赶上早午餐，餐厅会有点心面包饮料等提供；</div>
+            <div>餐厅全天提供饮用水、咖啡、茶、果汁（不包含酒精饮料或碳酸饮料）。</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>取消政策</div>
+            <div class="EH">Cancellation policy</div>
+          </div>
+          <div class="part8-rigth">
+            <div class="thered">收到此函表明我公司已向度假村支付款项并订房成功，请尽快到淘宝确认收货；</div>
+            <div>入住日前46天以上退订，扣除定金；</div>
+            <div>入住日前45-35天退订，需要扣除全款的30%；</div>
+            <div>入住日前34-16天退订，需要扣除全款的50%；</div>
+            <div>入住日前15- 8 天退订，需要扣除全款的75%；</div>
+            <div>入住日前7-入住日退订，需要扣除全款的100%。</div>
+          </div>
+        </div>
+      </div>
+      <div id="part8-template2">
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>行程联系信息</div>
+            <div class="EH">Contact Information</div>
+          </div>
+          <div class="part8-rigth">
+            <div>顾问24小时紧急电话：008613164753535<br/>Email：<span class="part8-Email">zhang @divingtime.com</span></div>
+            <div>马步水上别墅度假村误机紧急电话：+6 0178320006</div>
+            <div>度假村其他联系方式：</div>
+            <div>Tel： (60 88) 486389， 0178610006</div>
+            <div>Email：info@sipadanmabulresort.com http://www.mabulwaterbungalows.com/</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>活动项目&费用</div>
+            <div class="EH">Activity item & expense</div>
+          </div>
+          <div class="part8-rigth">
+            <div>住6天5晚及以上的成人客户支付40RM/人/天诗巴丹上岛费即可上岛（优先分配潜水员）</div>
+            <div>皮划艇：免费 救生衣：免费，体验潜水：RM 320/人</div>
+            <div>免费出海（每天三班船，去卡帕莱，马步周边潜点）</div>
+            <div>浮潜装备：RM22/天（面镜、呼吸管），脚蹼：RM10/天</div>
+            <div>潜水装备：浮力调节器BCDRM25/天，潜水仪表：RM25/天</div>
+            <div>水下电筒：RM30/天，潜水服：RM25/天</div>
+            <div>额外船潜（持证客人）：RM170/潜，不含装备</div>
+            <div>OW课程费用：3300元/人需预订6天5晚浮潜套餐</div>
+            <div>AOW课程费用：3100元/人</div>
+            <div>考证期间包含潜水装备，中文教练需提前预约，中文课程预约成功不能取消退款</div>
+            <div class="thered">*以上项目及价格仅供参考，具体以度假村实际提供为准 *</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>餐饮</div>
+            <div class="EH">Meal</div>
+          </div>
+          <div class="part8-rigth">
+            <div>早餐：7:30-9:30；中餐：12:00-14:00；</div>
+            <div>下午茶：15:00-17:00；晚餐：19:00-21:00</div>
+            <div>提早离岛未能赶上早午餐，餐厅会有点心面包饮料等提供；</div>
+            <div>餐厅全天提供饮用水、咖啡、茶、果汁（不包含酒精饮料或碳酸饮料）。</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>取消政策</div>
+            <div class="EH">Cancellation policy</div>
+          </div>
+          <div class="part8-rigth">
+            <div class="thered">收到此函表明我公司已向度假村支付款项并订房成功，请尽快到淘宝确认收货；</div>
+            <div>入住日前46天以上退订，扣除定金；</div>
+            <div>入住日前45-35天退订，需要扣除全款的30%；</div>
+            <div>入住日前34-16天退订，需要扣除全款的50%；</div>
+            <div>入住日前15- 8 天退订，需要扣除全款的75%；</div>
+            <div>入住日前7-入住日退订，需要扣除全款的100%。</div>
+          </div>
+        </div>
+      </div>
+      <div id="part8-template3">
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>行程联系信息</div>
+            <div class="EH">Contact Information</div>
+          </div>
+          <div class="part8-rigth">
+            <div>顾问24小时紧急电话：008613164753535<br/>Email：<span class="part8-Email">zhang @divingtime.com</span></div>
+            <div>卡帕莱度假村航班延误、取消或者司机没出现在酒店，联系电话：Thomas:+6 0178993683</div>
+            <div>如果客人在机场没找到卡帕莱的人，可以联系Ali : 01456236963；</div>
+            <div>Ujang : 0128168275；</div>
+            <div>如果在仙本那酒店没看到度假村接的人，可以联系Shim：0178991600,或者仙本那办公室电话：0178991500 </div>
+            <div>Email：psrt@po.jaring.my ，http://www.dive-malaysia.com</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>活动项目&费用</div>
+            <div class="EH">Activity item & expense</div>
+          </div>
+          <div class="part8-rigth">
+            <div>蜜月布置：RM160(折叠毛巾，鲜花铺床）</div>
+            <div>救生衣：免费，体验潜水：RM 400/人/两次，皮划艇RM30/时；</div>
+            <div>浮潜装备套餐：RM16/天（面镜、呼吸管）</div>
+            <div>潜水装备：调节器/潜水仪表/呼吸管RM30/天（BC夹克RM30/人）</div>
+            <div>潜水服RM25/人，蛙鞋RM10/天</div>
+            <div>额外船潜（持证客人）：RM100/潜，不含装备</div>
+            <div>OW课程费用：RM1590/人需预订5天4晚浮潜套餐</div>
+            <div>AOW课程费用：RM954/人</div>
+            <div>考证期间包含潜水装备，中文教练需提前预约，中文课程预约成功不能取消退款</div>
+            <div class="thered">*以上项目及价格仅供参考，具体以度假村实际提供为准 *</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>餐饮</div>
+            <div class="EH">Meal</div>
+          </div>
+          <div class="part8-rigth">
+            <div>早餐：7:30-9:30；中餐：12:00-14:00；</div>
+            <div>下午茶：15:00-17:00；晚餐：19:00-21:00</div>
+            <div>提早离岛未能赶上早午餐，餐厅会有点心面包饮料等提供；</div>
+            <div>餐厅全天提供饮用水、咖啡、茶、果汁（不包含酒精饮料或碳酸饮料）。</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>取消政策</div>
+            <div class="EH">Cancellation policy</div>
+          </div>
+          <div class="part8-rigth">
+            <div class="thered">收到此函表明我公司已向度假村支付款项并订房成功，请尽快到淘宝确认收货；</div>
+            <div>入住日前35天以上退订，扣除定金；</div>
+            <div>入住日前34-16天退订，需要扣除全款的30%；</div>
+            <div>入住日前15-8天退订，需要扣除全款的50%；</div>
+            <div>入住日前7-1天退订，需要扣除全款的75%；</div>
+            <div>入住日当天退订，需要扣除全款的100%。</div>
+          </div>
+        </div>
+      </div>
+      <div id="part8-template4">
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>行程联系信息</div>
+            <div class="EH">Contact Information</div>
+          </div>
+          <div class="part8-rigth">
+            <div>顾问24小时紧急电话：008613164753535<br/>Email：<span class="part8-Email">zhang @divingtime.com</span></div>
+            <div>度假村联系方式：</div>
+            <div>Tel : +60 88 261669 / 251 669</div>
+            <div>Email:info@seaventuresdive.com</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>活动项目&费用</div>
+            <div class="EH">Activity item & expense</div>
+          </div>
+          <div class="part8-rigth">
+            <div>住4天3晚及以上两人间的成人客户支付40RM/人/天诗巴丹上岛费即可上岛</div>
+            <div>4人间无诗巴丹名额保证，可以上岛申请购买名额</div>
+            <div>免费出海（每天三班船，去卡帕莱，马步周边潜点）</div>
+            <div>全套潜水装备：RM100/天 （不含潜水电脑、手电、水下摄像机、潜水指南针）</div>
+            <div>浮力调节器 RM25/天，潜水电脑：RM50/天</div>
+            <div>水下电筒：RM30/天，潜水服：RM25/天</div>
+            <div class="thered">PS:出于安全考虑，所有潜水员需携带电脑表潜水，不允许共用电脑表。</div>
+            <div>OW课程费用：5600元/人起（包含4天3晚及以上2人间住宿）</div>
+            <div>AOW课程费用：5550元/人起（包含4天3晚及以上2人间住宿）</div>
+            <div>考证期间包含潜水装备，中文教练需提前预约，中文课程预约成功不能取消退款</div>
+            <div class="thered">*以上项目及价格仅供参考，具体以度假村实际提供为准 *</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>餐饮</div>
+            <div class="EH">Meal</div>
+          </div>
+          <div class="part8-rigth">
+            <div>早餐：7:30-9:30；中餐：12:00-14:00；</div>
+            <div>下午茶：15:00-17:00；晚餐：19:00-21:00</div>
+            <div>提早离岛未能赶上早午餐，餐厅会有点心面包饮料等提供；</div>
+            <div>餐厅全天提供饮用水、咖啡、茶、果汁（不包含酒精饮料或碳酸饮料）。</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>取消政策</div>
+            <div class="EH">Cancellation policy</div>
+          </div>
+          <div class="part8-rigth">
+            <div class="thered">收到此函表明我公司已向度假村支付款项并订房成功，请尽快到淘宝确认收货；</div>
+            <div>入住日前46天以上退订，扣除定金；</div>
+            <div>入住日前45-35天退订，需要扣除全款的30%；</div>
+            <div>入住日前34-16天退订，需要扣除全款的50%；</div>
+            <div>入住日前15- 8 天退订，需要扣除全款的75%；</div>
+            <div>入住日前7-入住日退订，需要扣除全款的100%。</div>
+          </div>
+        </div>
+      </div>
+      <div id="part8-template5">
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>行程联系信息</div>
+            <div class="EH">Contact Information</div>
+          </div>
+          <div class="part8-rigth">
+            <div>顾问24小时紧急电话：008613164753535<br/>Email：<span class="part8-Email">zhang @divingtime.com</span></div>
+            <div>度假村联系方式：</div>
+            <div>Tel：+6 016 815 9979 / +6 013 883 3128</div>
+            <div>Email：info@pompomisland.com</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>活动项目&费用</div>
+            <div class="EH">Activity item & expense</div>
+          </div>
+          <div class="part8-rigth">
+            <div>救生衣：免费，体验潜水：RM 480/人</div>
+            <div>浮潜装备：RM30/天（面镜、呼吸管、蛙鞋、潜水靴）</div>
+            <div>潜水装备：RM85/天（调节器、BCD、面镜、蛙鞋、潜水靴、潜水服）</div>
+            <div>潜水价格（持证客人）：1-5次RM200/潜，6-10次RM180/潜，11次以上RM160/潜，不含装备</div>
+            <div>OW课程费用：RM 1880/人，需预订5天4晚及以上浮潜套餐</div>
+            <div>AOW课程费用：RM 1580/人，需预订4天3晚及以上浮潜套餐</div>
+            <div>考证期间包含潜水装备，中文教练需提前预约，中文课程预约成功不能取消退款</div>
+            <div class="thered">*以上项目及价格仅供参考，具体以度假村实际提供为准 *</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>餐饮</div>
+            <div class="EH">Meal</div>
+          </div>
+          <div class="part8-rigth">
+            <div>早餐：7:30-9:30；中餐：12:00-14:00；</div>
+            <div>下午茶：15:00-17:00；晚餐：19:00-21:00</div>
+            <div>提早离岛未能赶上早午餐，餐厅会有点心面包饮料等提供；</div>
+            <div>餐厅全天提供饮用水、咖啡、茶、果汁（不包含酒精饮料或碳酸饮料）。</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>取消政策</div>
+            <div class="EH">Cancellation policy</div>
+          </div>
+          <div class="part8-rigth">
+            <div class="thered">收到此函表明我公司已向度假村支付款项并订房成功，请尽快到淘宝确认收货；</div>
+            <div>入住日前46天以上退订，扣除定金；</div>
+            <div>入住日前45-35天退订，需要扣除全款的30%；</div>
+            <div>入住日前34-16天退订，需要扣除全款的50%；</div>
+            <div>入住日前15- 8 天退订，需要扣除全款的75%；</div>
+            <div>入住日前7-入住日退订，需要扣除全款的100%。</div>
+          </div>
+        </div>
+      </div>
+      <div id="part8-template6">
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>行程联系信息</div>
+            <div class="EH">Contact Information</div>
+          </div>
+          <div class="part8-rigth">
+            <div>顾问24小时紧急电话：008613164753535<br/>Email：<span class="part8-Email">zhang @divingtime.com</span></div>
+            <div>马步水上别墅度假村误机紧急电话：+6 0178320006</div>
+            <div>度假村其他联系方式：</div>
+            <div>Tel： (60 88) 486389， 0178610006</div>
+            <div>Email：info@sipadanmabulresort.com http://www.mabulwaterbungalows.com/</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>活动项目&费用</div>
+            <div class="EH">Activity item & expense</div>
+          </div>
+          <div class="part8-rigth">
+            <div>住6天5晚及以上独栋木屋的成人客户支付40RM/人/天诗巴丹上岛费即可上岛（优先分配潜水员）</div>
+            <div>皮划艇：免费 救生衣：免费，体验潜水：RM 320/人，</div>
+            <div>免费出海（每天三班船，去卡帕莱，马步周边潜点）</div>
+            <div>浮潜装备：RM22/天（面镜、呼吸管），脚蹼：RM10/天</div>
+            <div>潜水装备：浮力调节器BCDRM25/天，潜水仪表：RM25/天，</div>
+            <div>水下电筒：RM30/天，潜水服：RM25/天</div>
+            <div>额外船潜（持证客人）：RM170/潜，不含装备</div>
+            <div>OW课程费用：3300元/人需预订6天5晚浮潜套餐</div>
+            <div>AOW课程费用：3100元/人</div>
+            <div>考证期间包含潜水装备，中文教练需提前预约，中文课程预约成功不能取消退款</div>
+            <div class="thered">*以上项目及价格仅供参考，具体以度假村实际提供为准 *</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>餐饮</div>
+            <div class="EH">Meal</div>
+          </div>
+          <div class="part8-rigth">
+            <div>早餐：7:30-9:30；中餐：12:00-14:00；</div>
+            <div>下午茶：15:00-17:00；晚餐：19:00-21:00</div>
+            <div>提早离岛未能赶上早午餐，餐厅会有点心面包饮料等提供；</div>
+            <div>餐厅全天提供饮用水、咖啡、茶、果汁（不包含酒精饮料或碳酸饮料）。</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>取消政策</div>
+            <div class="EH">Cancellation policy</div>
+          </div>
+          <div class="part8-rigth">
+            <div class="thered">收到此函表明我公司已向度假村支付款项并订房成功，请尽快到淘宝确认收货；</div>
+            <div>入住日前46天以上退订，扣除定金；</div>
+            <div>入住日前45-35天退订，需要扣除全款的30%；</div>
+            <div>入住日前34-16天退订，需要扣除全款的50%；</div>
+            <div>入住日前15- 8 天退订，需要扣除全款的75%；</div>
+            <div>入住日前7-入住日退订，需要扣除全款的100%。</div>
+          </div>
+        </div>
+      </div>
+      <div id="part8-template7">
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>行程联系信息</div>
+            <div class="EH">Contact Information</div>
+          </div>
+          <div class="part8-rigth">
+            <div>顾问24小时紧急电话：008613164753535<br/>Email：<span class="part8-Email">zhang @divingtime.com</span></div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>活动项目&费用</div>
+            <div class="EH">Activity item & expense</div>
+          </div>
+          <div class="part8-rigth">
+            <div>救生衣：免费，体验潜水：RM 200/人</div>
+            <div>每天免费出海（具体地点以岛上公布为准）</div>
+            <div>浮潜装备：RM10/天（面镜、呼吸管） 脚蹼 RM5/天</div>
+            <div>带度数的面镜 RM50/天 潜水手电 RM40/天</div>
+            <div>潜水价格（持证客人）：1潜RM120，2潜RM220，3潜RM300，不含装备</div>
+            <div>OW课程费用：RM 1000/人，需预订4天3晚及以上浮潜套餐</div>
+            <div>AOW课程费用：RM 1000/人，需预订3天2晚及以上浮潜套餐</div>
+            <div>考证期间包含潜水装备，中文教练需提前预约，中文课程预约成功不能取消退款</div>
+            <div class="thered">*以上项目及价格仅供参考，具体以度假村实际提供为准 *</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>餐饮</div>
+            <div class="EH">Meal</div>
+          </div>
+          <div class="part8-rigth">
+            <div>早餐：7:30-9:30；中餐：12:00-14:00；</div>
+            <div>下午茶：15:00-17:00；晚餐：19:00-21:00</div>
+            <div>提早离岛未能赶上早午餐，餐厅会有点心面包饮料等提供；</div>
+            <div>餐厅全天提供饮用水、咖啡、茶、果汁（不包含酒精饮料或碳酸饮料）。</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>取消政策</div>
+            <div class="EH">Cancellation policy</div>
+          </div>
+          <div class="part8-rigth">
+            <div class="thered">收到此函表明我公司已向度假村支付款项并订房成功，请尽快到淘宝确认收货；</div>
+            <div>入住日前35天以上退订，扣除定金；</div>
+            <div>入住日前34-16天退订，需要扣除全款的50%；</div>
+            <div>入住日前15-入住日退订，需要扣除全款的100%。</div>
+          </div>
+        </div>
+      </div>
+      <div id="part8-template8">
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>行程联系信息</div>
+            <div class="EH">Contact Information</div>
+          </div>
+          <div class="part8-rigth">
+            <div>顾问24小时紧急电话：008613164753535<br/>Email：<span class="part8-Email">zhang @divingtime.com</span></div>
+            <div>紧急联系电话：Haris +6017 821 8823</div>
+            <div>度假村其他联系方式：</div>
+            <div>Tel：+6017 816 9226</div>
+            <div>Email：information@borneodivers.info</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>活动项目&费用</div>
+            <div class="EH">Activity item & expense</div>
+          </div>
+          <div class="part8-rigth">
+            <div>住5天4晚及以上的成人客户支付80元/人/天诗巴丹上岛费即可上岛</div>
+            <div>救生衣：免费，体验潜水：RM 320/人</div>
+            <div>免费出海（可跟随潜水快艇出海浮潜，具体上岛申请视当天船位安排）</div>
+            <div>浮潜装备：RM15/天（面镜、呼吸管），脚蹼：RM5/天</div>
+            <div>潜水装备：浮力调节器 RM25/天，BCD：RM25/天</div>
+            <div>潜水服：RM20/天，全套：RM95/天</div>
+            <div>额外船潜（持证客人）：RM120/潜，不含装备</div>
+            <div>OW课程费用：2600元/人，需预订5天4晚浮潜套餐</div>
+            <div>AOW课程费用：2100元/人，需预订4天3晚浮潜套餐</div>
+            <div>考证期间包含潜水装备，中文教练需提前预约，中文课程预约成功不能取消退款</div>
+            <div class="thered">*以上项目及价格仅供参考，具体以度假村实际提供为准 *</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>餐饮</div>
+            <div class="EH">Meal</div>
+          </div>
+          <div class="part8-rigth">
+            <div>早餐：7:30-9:30；中餐：12:00-14:00；</div>
+            <div>下午茶：15:00-17:00；晚餐：19:00-21:00</div>
+            <div>提早离岛未能赶上早午餐，餐厅会有点心面包饮料等提供；</div>
+            <div>餐厅全天提供饮用水、咖啡、茶、果汁（不包含酒精饮料或碳酸饮料）。</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>取消政策</div>
+            <div class="EH">Cancellation policy</div>
+          </div>
+          <div class="part8-rigth">
+            <div class="thered">收到此函表明我公司已向度假村支付款项并订房成功，请尽快到淘宝确认收货；</div>
+            <div>入住日前46天以上退订，扣除定金；</div>
+            <div>入住日前45-35天退订，需要扣除全款的30%</div>
+            <div>入住日前34-16天退订，需要扣除全款的50%</div>
+            <div>入住日前15- 8 天退订，需要扣除全款的75%</div>
+            <div>入住日前7-入住日退订，需要扣除全款的100%</div>
+          </div>
+        </div>
+      </div>
+      <div id="part8-template9">
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>行程联系信息</div>
+            <div class="EH">Contact Information</div>
+          </div>
+          <div class="part8-rigth">
+            <div>顾问24小时紧急电话：008613164753535<br/>Email：<span class="part8-Email">zhang @divingtime.com</span></div>
+            <div>接送机和酒店接送的联络电话: 017-899 6900  /  +6 089 535007 (IDFA) 英语</div>
+            <div>兰卡央山打根办公室联系电话：（只限于办公时间）：<br/>+6089 673999 / 674999 / 675999  (Kim / Tasha) 中文</div>
+            <div>Email: lankayan@tm.net.my，http://www.dive-malaysia.com</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>活动项目&费用</div>
+            <div class="EH">Activity item & expense</div>
+          </div>
+          <div class="part8-rigth">
+            <div>蜜月布置：RM160(折叠毛巾，鲜花铺床）</div>
+            <div>救生衣：免费，体验潜水：RM 400/人/两次</div>
+            <div>浮潜装备套餐：RM16/天（面镜、呼吸管）</div>
+            <div>潜水装备：调节器/潜水仪表/呼吸管RM30/天（BC夹克RM30/人）</div>
+            <div>潜水服RM25/人，蛙鞋RM10/天</div>
+            <div>额外船潜（持证客人）：RM100/潜，不含装备</div>
+            <div>OW课程费用：RM1650/人，2人以上RM1100/人，需预订5天4晚以上浮潜套餐</div>
+            <div>AOW课程费用：RM1060/人</div>
+            <div>考证期间包含潜水装备，中文教练需提前预约，中文课程预约成功不能取消</div>
+            <div class="thered">*以上项目及价格仅供参考，具体以度假村实际提供为准 *</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>餐饮</div>
+            <div class="EH">Meal</div>
+          </div>
+          <div class="part8-rigth">
+            <div>早餐：7:30-9:30；中餐：12:00-14:00；</div>
+            <div>下午茶：15:00-17:00；晚餐：19:00-21:00</div>
+            <div>提早离岛未能赶上早午餐，餐厅会有点心面包饮料等提供；</div>
+            <div>餐厅全天提供饮用水、咖啡、茶、果汁（不包含酒精饮料或碳酸饮料）。</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>取消政策</div>
+            <div class="EH">Cancellation policy</div>
+          </div>
+          <div class="part8-rigth">
+            <div class="thered">收到此函表明我公司已向度假村支付款项并订房成功，请尽快到淘宝确认收货；</div>
+            <div>入住日前35天以上退订，扣除定金；</div>
+            <div>入住日前34-16天退订，需要扣除全款的30%；</div>
+            <div>入住日前15-8天退订，需要扣除全款的50%；</div>
+            <div>入住日前7-1天退订，需要扣除全款的75%；</div>
+            <div>入住日当天退订，需要扣除全款的100%。</div>
+          </div>
+        </div>
+      </div>
+      <div id="part8-template11">
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>行程联系信息</div>
+            <div class="EH">Contact Information</div>
+          </div>
+          <div class="part8-rigth">
+            <div>顾问24小时紧急电话：008613164753535<br/>Email：<span class="part8-Email">zhang @divingtime.com</span></div>
+            <div>紧急联系电话：Haris +6017 821 8823</div>
+            <div>度假村其他联系方式：</div>
+            <div>Tel：+6017 816 9226</div>
+            <div>Email：information@borneodivers.info</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>活动项目&费用</div>
+            <div class="EH">Activity item & expense</div>
+          </div>
+          <div class="part8-rigth">
+            <div>住5天4晚及以上的成人客户支付80元/人/天诗巴丹上岛费即可上岛</div>
+            <div>救生衣：免费，体验潜水：RM 320/人</div>
+            <div>免费出海（可跟随潜水快艇出海浮潜，具体上岛申请视当天船位安排）</div>
+            <div>浮潜装备：RM15/天（面镜、呼吸管），脚蹼：RM5/天</div>
+            <div>潜水装备：浮力调节器 RM25/天，BCD：RM25/天</div>
+            <div>潜水服：RM20/天，全套：RM95/天</div>
+            <div>额外船潜（持证客人）：RM120/潜，不含装备</div>
+            <div>OW课程费用：2600元/人，需预订5天4晚浮潜套餐</div>
+            <div>AOW课程费用：2100元/人，需预订4天3晚浮潜套餐</div>
+            <div>考证期间包含潜水装备，中文教练需提前预约，中文课程预约成功不能取消退款</div>
+            <div class="thered">*以上项目及价格仅供参考，具体以度假村实际提供为准 *</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>餐饮</div>
+            <div class="EH">Meal</div>
+          </div>
+          <div class="part8-rigth">
+            <div>早餐：7:30-9:30；中餐：12:00-14:00；</div>
+            <div>下午茶：15:00-17:00；晚餐：19:00-21:00</div>
+            <div>提早离岛未能赶上早午餐，餐厅会有点心面包饮料等提供；</div>
+            <div>餐厅全天提供饮用水、咖啡、茶、果汁（不包含酒精饮料或碳酸饮料）。</div>
+          </div>
+        </div>
+        <div class="part8-content">
+          <div class="part8-left">
+            <div>取消政策</div>
+            <div class="EH">Cancellation policy</div>
+          </div>
+          <div class="part8-rigth">
+            <div class="thered">收到此函表明我公司已向度假村支付款项并订房成功，请尽快到淘宝确认收货；</div>
+            <div>入住日前46天以上退订，扣除定金；</div>
+            <div>入住日前45-35天退订，需要扣除全款的30%</div>
+            <div>入住日前34-16天退订，需要扣除全款的50%</div>
+            <div>入住日前15- 8 天退订，需要扣除全款的75%</div>
+            <div>入住日前7-入住日退订，需要扣除全款的100%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="part9">
+      <div class="lineMessage">
+        请勿将个人的生命安全交托在别人身上，请对自身的安全负责，任何旅途中的意外均需自行负责；
+      </div>
+      <div class="lineMessage">
+        本确认函的最终解释权归深圳市潜游时光文化传媒有限公司所有。
+      </div>
+    </div>
+
+  </div>
+</body>
+  <script type="text/javascript" src="./../../dist/js/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="./../../dist/js/config.js"></script>
+  <script type="text/javascript" src="./index.js"></script>
+</html>

@@ -6,16 +6,16 @@ const WriteToFille = require(path.relative(__dirname, './utils/WriteToFille'));
 
 module.exports = async (ctx, next) => {
 
-  const ReadeJavaScriptFilePath = RelativeToFilePath('./src/village/index.js');
-  const WriteJavaScriptFilePath = RelativeToFilePath('./static/village/');
+  const ReadeJavaScriptFilePath = RelativeToFilePath('./src/village/detail/index.js');
+  const WriteJavaScriptFilePath = RelativeToFilePath('./static/village/detail/');
   let WriteJavaScriptToFille = WriteToFille.JavaScriptbyWebpack(
     ReadeJavaScriptFilePath, 
     WriteJavaScriptFilePath, 
     'index.js'
   );
 
-  const ReadeCSSfilePath = RelativeToFilePath('./src/village/index.less');
-  const WriteCSSfilePath = RelativeToFilePath('./static/village');
+  const ReadeCSSfilePath = RelativeToFilePath('./src/village/detail/index.less');
+  const WriteCSSfilePath = RelativeToFilePath('./static/village/detail');
   const gulpLessfilePath = RelativeToFilePath('./src');
   let WriteCSStoFille = WriteToFille.CSS(
     ReadeCSSfilePath, 
@@ -23,8 +23,8 @@ module.exports = async (ctx, next) => {
     gulpLessfilePath
   );
 
-  const ReadeHTMLfilePath = './src/village/index.xtpl';
-  const WriteHTMLfilePath = RelativeToFilePath('./static/village/index.html');
+  const ReadeHTMLfilePath = './src/village/detail/index.xtpl';
+  const WriteHTMLfilePath = RelativeToFilePath('./static/village/detail/index.html');
   let WriteHTMLtoFille = WriteToFille.HTML(
     ReadeHTMLfilePath, 
     WriteHTMLfilePath

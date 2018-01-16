@@ -1,18 +1,18 @@
 <header id='header' data-homeurl="{{homeURL}}">
   <div class="header-logo">
-    <a href={{ homeURL + "index.html" }}><i></i></a>
+    <a href='{{ homeURL + "index.html" }}'><i></i></a>
   </div>
 
   <div class='header-content'>
-    <a id='headerHome' href={{ homeURL + "index.html" }}>首页</a>
-    <a id='headerVillage' href={{ homeURL + "village/index.html" }}>度假村直订</a>
+    <a id='headerHome' href='{{ homeURL + "index.html" }}'>首页</a>
+    <a id='headerVillage' href='{{ homeURL + "village/index.html" }}'>度假村直订</a>
     <a id='taobao' href='https://divet.taobao.com/?spm=a1z10.1-c.0.0.8cxl3q'>淘宝店铺</a>
   </div>
 
   <div class="header-login" id="header-login">
 
     <div class="login-false">
-      <a href={{ homeURL + "user/signup.html" }}><div>注册</div></a>
+      <a href='{{ homeURL + "user/signup.html" }}'><div>注册</div></a>
       <a><div id="login-show">登录</div></a>
     </div>
 
@@ -27,31 +27,31 @@
         <ul class="dropdown-menu pull-right" aria-labelledby="dLabel">
 
           <li class="Personal">
-            <a href={{ homeURL + "user/account.html#Person" }}>
+            <a href='{{ homeURL + "user/account.html#Person" }}'>
               <i></i><span>个人中心</span>
             </a>
           </li>
 
           <li class="order-Dvt">
-            <a href={{ homeURL + "user/account.html#Orders" }}>
+            <a href='{{ homeURL + "user/account.html#Orders" }}'>
               <i></i><span>商城订单</span>
             </a>
           </li>
 
           <li class="order-Taobao">
-            <a href={{ homeURL + "user/account.html#taobao" }}>
+            <a href='{{ homeURL + "user/account.html#taobao" }}'>
               <i></i><span>淘宝订单</span>
             </a>
           </li>
 
           <li class="Account">
-            <a href={{ homeURL + "user/account.html#Accoun" }}>
+            <a href='{{ homeURL + "user/account.html#Accoun" }}'>
               <i></i><span>账号中心</span>
             </a>
           </li>
 
           <li class="Traveller-Infor">
-            <a href={{ homeURL + "user/account.html#Accoun" }}>
+            <a href='{{ homeURL + "user/account.html#Accoun" }}'>
               <i></i><span>旅客信息</span>
             </a>
           </li>

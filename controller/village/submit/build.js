@@ -4,10 +4,10 @@ const babel = require('babel-core');
 const RelativeToFilePath = require(path.relative(__dirname, './utils/RelativeToFilePath'));
 const WriteToFille = require(path.relative(__dirname, './utils/WriteToFille'));
 
-module.exports = async function renderProductSubmit(next) {
+module.exports = async function renderVillageSubmit(next) {
 
-  const ReadeJavaScriptFilePath = RelativeToFilePath('./src/product/submit/index.js');
-  const WriteJavaScriptFilePath = RelativeToFilePath('./build/product/submit/');
+  const ReadeJavaScriptFilePath = RelativeToFilePath('./src/village/submit/index.js');
+  const WriteJavaScriptFilePath = RelativeToFilePath('./build/village/submit/');
   let WriteJavaScriptToFille = WriteToFille.JavaScriptbyWebpack(
     ReadeJavaScriptFilePath, 
     WriteJavaScriptFilePath, 
@@ -15,8 +15,8 @@ module.exports = async function renderProductSubmit(next) {
     true // 证明是生产环境
   );
 
-  const ReadeCSSfilePath = RelativeToFilePath('./src/product/submit/index.less');
-  const WriteCSSfilePath = RelativeToFilePath('./build/product/submit');
+  const ReadeCSSfilePath = RelativeToFilePath('./src/village/submit/index.less');
+  const WriteCSSfilePath = RelativeToFilePath('./build/village/submit');
   const gulpLessfilePath = RelativeToFilePath('./src');
   let WriteCSStoFille = WriteToFille.CSS(
     ReadeCSSfilePath, 
@@ -24,8 +24,8 @@ module.exports = async function renderProductSubmit(next) {
     gulpLessfilePath
   );
 
-  const ReadeHTMLfilePath = './src/product/submit/index.xtpl';
-  const WriteHTMLfilePath = RelativeToFilePath('./build/product/submit/index.html');
+  const ReadeHTMLfilePath = './src/village/submit/index.xtpl';
+  const WriteHTMLfilePath = RelativeToFilePath('./build/village/submit/index.html');
   let WriteHTMLtoFille = WriteToFille.HTML(
     ReadeHTMLfilePath, 
     WriteHTMLfilePath

@@ -1,0 +1,522 @@
+/**
+ * 目录
+ * 整体框架
+ *   - 二维码
+ *
+ * 第一部分条款声明
+ * 第二部分订单信息
+ * 第三部分额外赠送
+ * 第四部分下单信息
+ * 第五部分航班信息
+ * 第六部度假村接送时间
+ * 第七部特别注意
+ *
+ * 编辑
+ */
+
+
+*{
+	margin: 0px;
+	padding: 0px;
+	font-family: "微软雅黑";
+	color:#313a48;
+	body{
+		width:100%;
+		height:100%;
+		background:rgba(99, 217, 237, 1);
+	}
+}
+// 导航栏
+.Navigation {
+	@media (max-width:1025px) {
+		display: none;
+	}
+	width:100%;
+	background:#fff;
+	height:50px;
+	box-shadow: 0 1px 1px rgba(0,0,0,.26);
+	color:#4d5d77;
+	a {
+		color:#4d5d77;
+		line-height: 50px;
+		img {
+			margin-top:12px;
+			margin-left:10px;
+			float: left;
+			display: block;
+			width: 120px;
+			height: 29px;
+			background-position:-150px 0px;
+		}
+	}
+	.tell-header {
+		float: right;
+		margin-right:20px;
+	}
+}
+// 整体框架
+.Main {
+	position: relative;
+	margin: 90px auto;
+	width:1025px;
+	border-radius: 2px;
+	background: #fff;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+	.Main-content {
+		padding:25px;
+	}
+	@media (max-width:1025px) {
+		border-radius: 0px;
+		margin: 0px;
+		height: 100%;
+		width:100%;
+		.Main-content {
+			padding:10px 10px 50px 10px;
+		}
+	}
+	// 二维码
+	.charge {
+		margin-bottom: 10px;
+		display: none;
+		position: relative;
+		padding-bottom: 2.5px;
+		border-bottom: 1px solid #9e9e9e;
+		.charge_left {
+			padding-left: 5px;
+			@media (max-width:700px) {
+				display: none;
+			}
+			span {
+				font-size: 14px;
+			}
+		}
+		.charge_right {
+			padding-left: 5px;
+			position: absolute;
+			top: 0px;
+			right: 5px;
+			@media (max-width:700px) {
+				position:relative;
+			}
+			span {
+				font-size: 14px;
+			}
+			.qrCode {
+				display: none;
+				position: absolute;
+				top: 0px;
+				right: 0px;
+				z-index: 100;
+				border:1px dashed #888;
+				background: #fff;
+				img {
+					width: 160px;
+					height: 160px;
+				}
+			}
+		}
+		.charge_right:hover {
+			.qrCode {
+				display: block;
+			}
+		}
+		>div {
+			font-size: 16px;
+			color: #717171;
+		}
+	}
+	.D2code {
+		box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+		transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+		margin-left: 512.5px;
+		//margin-left: -653.5px;
+		position: absolute;
+		padding:10px;
+		left: 50%;
+		top: 0px;
+		width: 140px;
+		background: #fff;
+		> div {
+			margin:0 auto;
+			text-align: center;
+		}
+		.weche {
+			padding-top: 5px;
+			font-size: 14px;
+			padding-bottom: 2px;
+			border-bottom:1px #888 solid;
+		}
+		.fuzeren {
+			padding-top: 5px;
+		}
+		.name {
+			font-weight: bold;
+		}
+		.qrCode {
+			width: 120px;
+			height: 120px;
+			> img {
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+	.part {
+		position: relative;
+		padding-bottom: 25px;
+		padding-top: 10px;
+		.part-title {
+			font-size: 16px;
+			font-weight: bold;
+		}
+		.part-tip {
+			z-index: 2;
+			position: absolute;
+			max-width:870px;
+			left:20px;
+			top: 0px;
+			display: none;
+			> div {
+				border-radius: 4px;
+				padding:10px;
+				background:rgba(0, 0, 0, 0.78);
+				color: #fff;
+			}
+		}
+	}
+	.part:hover {
+		.part-tip {
+			display: block;
+		}
+	}
+	@media (max-width:1326px) {
+		.D2code {
+			display: none;
+		}
+		.charge {
+			display: block;
+		}
+	}
+}
+// 第一部分条款声明
+.part1 {
+	@media (max-width:1326px) {
+		padding-top: 20px;
+	}
+}
+.provision {
+	padding-top: 20px;
+	.show {
+		color: #4d5d77;
+		.provision-btn {
+			padding-bottom: 2.5px;
+			transition:transform 0.4s;
+			-moz-transition:transform 0.4s; /* Firefox 4 */
+			-webkit-transition:transform 0.4s; /* Safari and Chrome */
+			-o-transition:transform 0.4s; /* Opera */
+			display: inline-block;
+			transform: rotate(0deg);
+			-ms-transform: rotate(0deg);		/* IE 9 */
+			-webkit-transform: rotate(0deg);	/* Safari and Chrome */
+			-o-transform: rotate(0deg);		/* Opera */
+			-moz-transform: rotate(0deg);		/* Firefox */
+		}
+		.provision-click {
+			padding-left: 5px;
+		}
+		cursor: pointer;
+		padding-left: 5px;
+		border-bottom: 1px solid #888;
+	}
+	.hide {
+		color: #4d5d77;
+		transition:opacity 1s;
+		-moz-transition:opacity 1s; /* Firefox 4 */
+		-webkit-transition:opacity 1s; /* Safari and Chrome */
+		-o-transition:opacity 1s; /* Opera */
+		padding-left: 5px;
+		opacity: 0;
+		display: none;
+		.row {
+			padding-top:10px;
+			padding-left:10px;
+		}
+		.strong {
+			color:#c00;
+		}
+	}
+}
+// 第二部分订单信息
+.orderinforClass {
+	padding-left:10px;
+	.row {
+		.col-6,.col-12 {
+			position: relative;
+			padding-top: 15px;
+			span {
+				position: absolute;
+				left: 75px;
+			}
+			@media (max-width:1025px) {
+				float: none;
+				width: 100%;
+			}
+		}
+	}
+}
+// 第三部分额外赠送
+#part3 {
+	padding-left:10px;
+	#Insurance {
+		padding-bottom: 10px;
+	}
+	.row {
+		.col-6,.col-12 {
+			position: relative;
+			padding-top: 15px;
+			span {
+				position: absolute;
+				left: 75px;
+			}
+			@media (max-width:1025px) {
+				float: none;
+				width: 100%;
+			}
+		}
+	}
+}
+// 第四部分下单信息
+#part4 {
+	padding-left:10px;
+	.row {
+		.col-6,.col-12 {
+			position: relative;
+			padding-top: 15px;
+			span {
+				padding-left: 5px;
+			}
+			@media (max-width:1025px) {
+				float: none;
+				width: 100%;
+			}
+		}
+	}
+}
+// 第五部分航班信息
+#part5 {
+	padding-left:20px;
+	padding-top:20px;
+	.row {
+		border:1px solid #4d5d77;
+		.line {
+			border-right:1px solid #4d5d77;
+		}
+		.col-12 {
+			padding:10px;
+			span {
+				padding-left: 5px;
+			}
+		}
+		.col-4 {
+			width: 31%;
+			padding:10px;
+			span {
+				padding-left: 5px;
+			}
+		}
+	}
+	@media (max-width:1025px) {
+		padding-left:10px;
+		.row {
+			.line {
+				border-right:none;
+			}
+			.col-4 {
+				float: none;
+				width: 100%;
+				span {
+				}
+			}
+		}
+	}
+}
+// 第六部度假村接送时间
+#pickUp {
+	position: relative;
+	display: none;
+	.card-pickUp {
+		padding-top: 20px;
+		padding-bottom: 20px;
+		position: relative;
+		left: -15px;
+		font-size: 16px;
+		font-weight: bold;
+	}
+}
+.pickUp {
+	width: 100%;
+	display: none;
+	position: relative;
+	border: 1px solid #888;
+	.pickUptop {
+		overflow: hidden;
+		>div {
+			float: left;
+			padding:10px;
+			height: 224px;
+		}
+		.pickUpP1 {
+			width: 31%;
+			border-right: 1px solid #888;
+			letter-spacing: 2px;
+		}
+		.pickUpP2 {
+			width: 32%;
+			border-right: 1px solid #888;
+		}
+		.pickUpP3 {
+			width: 30%;
+		}
+		@media (max-width:1025px) {
+			>div {
+				float: none;
+				height: auto;
+			}
+			.pickUpP1 {
+				width: 100%;
+				border-right:none;
+				border-bottom: 1px solid #888;
+			}
+			.pickUpP2 {
+				width: 100%;
+				border-right:none;
+				border-bottom: 1px solid #888;
+			}
+			.pickUpP3{
+				width: 100%;
+				border-right:none;
+			}
+		}
+	}
+	.pickUpBot {
+		border-top: 1px solid #888;
+		.PUBall{
+			text-align: center;
+			color: red;
+		}
+		padding:10px;
+	}
+	.pickUp-title {
+		padding-bottom: 5px;
+		text-align: center;
+		font-weight: bold;
+	}
+}
+.part6 {
+	padding-top: 20px;
+	padding-left: 20px;
+	#EmergencyCT {
+		display: none;
+		.part6-title {
+			padding-bottom: 10px;
+			font-size: 16px;
+			font-weight: bold;
+		}
+		.col-6 {
+			padding-bottom: 5px;
+			span {
+				padding-left: 5px;
+			}
+		}
+	}
+	.room {
+    	border: 1px solid #888;
+		padding: 15px;
+		.room-title {
+			font-size: 16px;
+			font-weight: bold;
+			padding-bottom: 10px;
+		}
+		.room-content {
+			padding-left: 10px;
+			span {
+				padding-left: 5px;
+			}
+		}
+		.bed {
+			padding-bottom: 10px;
+		}
+		.room-panel {
+			cursor: pointer;
+			padding:5px;
+			border-top:1px solid #888 ;
+			border-left:1px solid #888 ;
+			border-right:1px solid #888 ;
+		    border-radius: 2px;
+		    background-color: #fff;
+		    .hide {
+		    	display: none;
+		    }
+        	.row {
+        		font-size: 14px;
+        		padding-top: 5px;
+        		>div {
+        			position: relative;
+        		}
+        		span {
+        			position: absolute;
+        			left:65px;
+        		}
+        		@media (max-width:1025px) {
+					.col-6,.col-12 {
+						float: none;
+						width: 100%;
+					}
+        		}
+        	}
+		}
+		.panel-bottom {
+			height: 1px;
+			background: #888;
+		}
+	}
+}
+// 第七部特别注意
+#part7 {
+	padding-top: 10px;
+	padding-left: 10px;
+	.pickUpTime {
+		padding-left: 10px;
+		.PUT-title {
+			font-weight:bold;
+			padding-top: 10px;
+			padding-bottom: 5px;
+		}
+		.Related {
+			display: none;
+		}
+	}
+}
+// 编辑
+.edit {
+	border-top: 1px solid rgba(160,160,160,0.2);
+	>div {
+		margin: 0 auto;
+		text-align: center;
+	    height: 40px;
+	    font-size: 18px;
+	    line-height: 40px;
+	    cursor: pointer;
+		background: #fb8f1c;
+		color: #f5f5f5;
+	}
+	>div:hover {
+		background: #6fcca6;
+	}
+	@media (max-width:1025px) {
+		position: fixed;
+		bottom: 0px;
+		width: 100%;
+	}
+}

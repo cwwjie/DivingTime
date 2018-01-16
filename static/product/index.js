@@ -65,32 +65,39 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component_Navigation_Bar_index_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Component_ScrollTop_index_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_convertDate_js__ = __webpack_require__(5);
 
 
+var _index = __webpack_require__(1);
 
- 
-$(document).ready(() => {
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = __webpack_require__(4);
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _convertDate = __webpack_require__(5);
+
+var _convertDate2 = _interopRequireDefault(_convertDate);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+$(document).ready(function () {
   if (utilities.loadPageVar('productId')) {
     product.id = utilities.loadPageVar('productId');
   } else {
     alert('非常抱歉, 此产品失效或产品编号有误!');
-    return
+    return;
   }
 
-  __WEBPACK_IMPORTED_MODULE_0__Component_Navigation_Bar_index_js__["a" /* default */].init();
-  __WEBPACK_IMPORTED_MODULE_1__Component_ScrollTop_index_js__["a" /* default */].init();
+  _index2.default.init();
+  _index4.default.init();
   scrollPin.init();
   carousel.init();
 
-  product.init()
-  .then(val => {
+  product.init().then(function (val) {
     val.productType === 'package' ? trip.init() : '';
     val.refundRuleId ? refundrule.init() : '';
   });
@@ -99,7 +106,7 @@ $(document).ready(() => {
   costIncludes.init();
 });
 
-let product = {
+var product = {
   'id': null,
   'data': {
     // 'apartment': "邦邦 沙滩屋",
@@ -134,85 +141,87 @@ let product = {
   'selectdays': null, // 格式 时间戳
   'packageCount': 1,
 
-  init() {
-    const _this = this;
+  init: function init() {
+    var _this2 = this;
+
+    var _this = this;
 
     this.bindjQueryEvent();
 
-    return new Promise((resolve, reject) => {
-      this.getProduct()
-      .then(val => {
+    return new Promise(function (resolve, reject) {
+      _this2.getProduct().then(function (val) {
         _this.data = val;
         _this.renderProduct(val);
         resolve(val);
-      }, error => reject(alert(error)))
+      }, function (error) {
+        return reject(alert(error));
+      });
     });
   },
-
-  bindjQueryEvent() {
-    const _this = this;
+  bindjQueryEvent: function bindjQueryEvent() {
+    var _this = this;
 
     $('#starDatePicker').datetimepicker({
-        format: "yyyy MM dd", //格式
-        autoclose: true, //自动关闭
-        todayBtn: true, //今天
-        startDate: __WEBPACK_IMPORTED_MODULE_2__utils_convertDate_js__["a" /* default */].dateToFormat(new Date()),
-        minuteStep: 10, //用于选择分钟
-        language: 'zh-CN',
-        weekStart: 1, //周一从那天开始
-        todayHighlight: true, //高亮今天
-        startView: 2, //日期时间选择器打开之后首先显示的视图
-        minView: 2, //日期时间选择器打开之后最小的视图
-    }).on('changeDate', function(ev) {
-        _this.selectdays = Date.parse(new Date(ev.date));
-        _this.packageCount = 1;
-        // 隐藏 时间区域
-        $("#starDatePicker").hide();
-        // 渲染 选择的时间
-        $("#selectdays").text( __WEBPACK_IMPORTED_MODULE_2__utils_convertDate_js__["a" /* default */].dateToFormat(new Date(ev.date)) );
-        // 显示选择套餐数量
-        $('#selectPackageCount').show();
+      format: "yyyy MM dd", //格式
+      autoclose: true, //自动关闭
+      todayBtn: true, //今天
+      startDate: _convertDate2.default.dateToFormat(new Date()),
+      minuteStep: 10, //用于选择分钟
+      language: 'zh-CN',
+      weekStart: 1, //周一从那天开始
+      todayHighlight: true, //高亮今天
+      startView: 2, //日期时间选择器打开之后首先显示的视图
+      minView: 2 //日期时间选择器打开之后最小的视图
+    }).on('changeDate', function (ev) {
+      _this.selectdays = Date.parse(new Date(ev.date));
+      _this.packageCount = 1;
+      // 隐藏 时间区域
+      $("#starDatePicker").hide();
+      // 渲染 选择的时间
+      $("#selectdays").text(_convertDate2.default.dateToFormat(new Date(ev.date)));
+      // 显示选择套餐数量
+      $('#selectPackageCount').show();
     });
 
     // 选择时间
-    $('#selectdays').click(function(event) {
+    $('#selectdays').click(function (event) {
       $('#selectPackageCount').hide();
       $("#starDatePicker").show();
     });
 
     // 增加数量
-    $('#countPicker .add').click(function(event) {
-      _this.packageCount++
+    $('#countPicker .add').click(function (event) {
+      _this.packageCount++;
       _this.renderpackagecount();
     });
 
     // 减少套餐数量
-    $('#countPicker .cut').click(function(event) {
-      if (_this.packageCount <= 1) { return }
-      _this.packageCount--
+    $('#countPicker .cut').click(function (event) {
+      if (_this.packageCount <= 1) {
+        return;
+      }
+      _this.packageCount--;
       _this.renderpackagecount();
     });
 
     // 确认提交
-    $('#confirm-sumbit').click(function(event) {
-      if (__WEBPACK_IMPORTED_MODULE_0__Component_Navigation_Bar_index_js__["a" /* default */].data === false) {
+    $('#confirm-sumbit').click(function (event) {
+      if (_index2.default.data === false) {
         return alert('你尚未登录, 请先登录您的账号');
       }
 
-      window.location.href = `./submit/index.html?productId=${_this.id}&departureDate=${_this.selectdays}&productNum=${_this.packageCount}`;
+      window.location.href = './submit/index.html?productId=' + _this.id + '&departureDate=' + _this.selectdays + '&productNum=' + _this.packageCount;
     });
   },
+  renderpackagecount: function renderpackagecount() {
+    var currentPrice = this.isPromote === true ? this.data.promotePrice : this.data.productPrice;
+    var totalPrice = this.packageCount * currentPrice;
 
-  renderpackagecount() {
-    let currentPrice = this.isPromote === true ? this.data.promotePrice : this.data.productPrice;
-    let totalPrice = this.packageCount * currentPrice;
-
-    $('#countPicker .main').text(`套餐数量 ${this.packageCount} 份`);
-    $('#totalPrice').text(`合计 ${totalPrice} RMB`);
+    $('#countPicker .main').text('\u5957\u9910\u6570\u91CF ' + this.packageCount + ' \u4EFD');
+    $('#totalPrice').text('\u5408\u8BA1 ' + totalPrice + ' RMB');
   },
-
-  renderProduct() {
-    const _this = this;
+  renderProduct: function renderProduct() {
+    var _this = this;
 
     this.chackIsPromote();
 
@@ -230,66 +239,56 @@ let product = {
     $("#promoteTime").html(this.renderPromoteTime());
 
     // 价格优惠期
-    $("#totalPrice").html(`合计 ${this.isPromote === true ? this.data.promotePrice : this.data.productPrice} RMB`);
+    $("#totalPrice").html('\u5408\u8BA1 ' + (this.isPromote === true ? this.data.promotePrice : this.data.productPrice) + ' RMB');
   },
-
-  chackIsPromote() {
-    const nowTimestamp = Date.parse(new Date()),
-      promotePrice = this.data.promotePrice,
-      promoteEndTimestamp = this.data.promoteEndTime,
-      promoteStartTimestamp = this.data.promoteStartTime;
+  chackIsPromote: function chackIsPromote() {
+    var nowTimestamp = Date.parse(new Date()),
+        promotePrice = this.data.promotePrice,
+        promoteEndTimestamp = this.data.promoteEndTime,
+        promoteStartTimestamp = this.data.promoteStartTime;
 
     // 如果促销
     if (promotePrice != null && promotePrice != 0) {
       // 当前时间 大于等于 促销开始时间
       // 并且
       // 当前时间 小于等于 促销结束时间
-      if (
-        nowTimestamp >= promoteStartTimestamp && 
-        nowTimestamp <= promoteEndTimestamp
-      ) {
+      if (nowTimestamp >= promoteStartTimestamp && nowTimestamp <= promoteEndTimestamp) {
         return this.isPromote = true;
       }
     }
 
     return this.isPromote = false;
   },
-
-  renderProductPrice() {
-    return this.isPromote === true ? 
-      `<span style='text-decoration:line-through'>${this.data.productPrice}</span> ${this.data.promotePrice}` :
-      this.data.productPrice;
+  renderProductPrice: function renderProductPrice() {
+    return this.isPromote === true ? '<span style=\'text-decoration:line-through\'>' + this.data.productPrice + '</span> ' + this.data.promotePrice : this.data.productPrice;
   },
-
-  renderPromoteTime() {
-    return this.isPromote === true ? 
-      `<span>${__WEBPACK_IMPORTED_MODULE_2__utils_convertDate_js__["a" /* default */].dateToFormat(new Date(this.data.promoteStartTime))} 至 ${__WEBPACK_IMPORTED_MODULE_2__utils_convertDate_js__["a" /* default */].dateToFormat(new Date(this.data.promoteEndTime))}</span>` :
-      '暂无';
+  renderPromoteTime: function renderPromoteTime() {
+    return this.isPromote === true ? '<span>' + _convertDate2.default.dateToFormat(new Date(this.data.promoteStartTime)) + ' \u81F3 ' + _convertDate2.default.dateToFormat(new Date(this.data.promoteEndTime)) + '</span>' : '暂无';
   },
+  getProduct: function getProduct() {
+    var _this3 = this;
 
-  getProduct() {
-    return new Promise((resolve, reject) => {
+    return new Promise(function (resolve, reject) {
       $.ajax({
         'type': 'GET',
-        'url': `${appConfig.version}/product/${this.id}/get.do`,
+        'url': appConfig.version + '/product/' + _this3.id + '/get.do',
         'contentType': 'application/json; charset=utf-8',
-        success: val => {
+        success: function success(val) {
           if (val.result === '0') {
             resolve(val.data);
           } else {
-            reject(`请求服务器成功, 接收的产品信息数据有误, 原因: ${val.message}`);
+            reject('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u63A5\u6536\u7684\u4EA7\u54C1\u4FE1\u606F\u6570\u636E\u6709\u8BEF, \u539F\u56E0: ' + val.message);
           }
         },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求产品信息发生错误, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
+        error: function error(XMLHttpRequest, textStatus, errorThrown) {
+          reject('\u8BF7\u6C42\u4EA7\u54C1\u4FE1\u606F\u53D1\u751F\u9519\u8BEF, \u72B6\u6001\u7801: ' + XMLHttpRequest.status + '. \u539F\u56E0: ' + errorThrown);
         }
       });
-
-    })
+    });
   }
-}
+};
 
-let carousel = {
+var carousel = {
   'data': [
     // {
     //   'gallery': {
@@ -318,89 +317,53 @@ let carousel = {
     // }
   ],
 
-  init() {
-    const _this = this;
+  init: function init() {
+    var _this = this;
 
-    this.getCarousel()
-    .then(val => {
+    this.getCarousel().then(function (val) {
       _this.data = val;
       _this.renderCarousel();
-    }, error => alert(error))
+    }, function (error) {
+      return alert(error);
+    });
   },
-
-  renderCarousel() {
-    $('#carousel').html([
-      '<div class="carousel slide" data-ride="carousel">',
-        '<ol class="carousel-indicators">',
-        this.data.map((val, key) => {
-          return key === 0 ?
-          '<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>' :
-          `<li data-target="#carousel-example-generic" data-slide-to="${key}"></li>`;
-        }).join(''),
-        '</ol>',
-        '<div class="carousel-inner" role="listbox" id="carousel">',
-        this.data.map((val, key) => {
-          return key === 0 ? [
-            '<div class="item active">',
-              `<a>`,
-                `<img src="${appConfig.urlBase}${val.gallery.imgUrl}">`,
-                '<div class="carousel-caption"></div>',
-              '</a>',
-            '</div>',
-          ].join('') : [
-            '<div class="item">',
-              `<a>`,
-                `<img src="${appConfig.urlBase}${val.gallery.imgUrl}">`,
-                '<div class="carousel-caption"></div>',
-              '</a>',
-            '</div>',
-          ].join('');
-        }).join(''),
-        '</div>',
-        '<a id="carousel-left" class="left carousel-control" role="button" data-slide="prev">',
-          '<span class="sr-only">Previous</span>',
-          '<span class="glyphicon glyphicon-chevron-left"></span>',
-          '<i class="left-btn allbtn"></i>',
-        '</a>',
-        '<a id="carousel-right" class="right carousel-control" role="button" data-slide="next">',
-          '<span class="sr-only">Next</span>',
-          '<span class="glyphicon glyphicon-chevron-right"></span>',
-          '<i class="right-btn allbtn"></i>',
-        '</a>',
-      '</div>',
-    ].join(''));
+  renderCarousel: function renderCarousel() {
+    $('#carousel').html(['<div class="carousel slide" data-ride="carousel">', '<ol class="carousel-indicators">', this.data.map(function (val, key) {
+      return key === 0 ? '<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>' : '<li data-target="#carousel-example-generic" data-slide-to="' + key + '"></li>';
+    }).join(''), '</ol>', '<div class="carousel-inner" role="listbox" id="carousel">', this.data.map(function (val, key) {
+      return key === 0 ? ['<div class="item active">', '<a>', '<img src="' + appConfig.urlBase + val.gallery.imgUrl + '">', '<div class="carousel-caption"></div>', '</a>', '</div>'].join('') : ['<div class="item">', '<a>', '<img src="' + appConfig.urlBase + val.gallery.imgUrl + '">', '<div class="carousel-caption"></div>', '</a>', '</div>'].join('');
+    }).join(''), '</div>', '<a id="carousel-left" class="left carousel-control" role="button" data-slide="prev">', '<span class="sr-only">Previous</span>', '<span class="glyphicon glyphicon-chevron-left"></span>', '<i class="left-btn allbtn"></i>', '</a>', '<a id="carousel-right" class="right carousel-control" role="button" data-slide="next">', '<span class="sr-only">Next</span>', '<span class="glyphicon glyphicon-chevron-right"></span>', '<i class="right-btn allbtn"></i>', '</a>', '</div>'].join(''));
 
     $('.carousel').carousel();
-    $('#carousel-left').click(() => {
-      $('.carousel').carousel('prev')
+    $('#carousel-left').click(function () {
+      $('.carousel').carousel('prev');
     });
-    $('#carousel-right').click(() => {
-      $('.carousel').carousel('next')
+    $('#carousel-right').click(function () {
+      $('.carousel').carousel('next');
     });
   },
-
-  getCarousel() {
-    return new Promise((resolve, reject) => {
+  getCarousel: function getCarousel() {
+    return new Promise(function (resolve, reject) {
       $.ajax({
         'type': 'GET',
-        'url': `${appConfig.version}/product/relProductGallery/${product.id}/findByProductId.do`,
+        'url': appConfig.version + '/product/relProductGallery/' + product.id + '/findByProductId.do',
         'contentType': 'application/json; charset=utf-8',
-        success: val => {
+        success: function success(val) {
           if (val.result === '0') {
             resolve(val.data);
           } else {
-            reject(`请求服务器成功, 但是轮播图数据有误, 原因: ${val.message}`);
+            reject('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u4F46\u662F\u8F6E\u64AD\u56FE\u6570\u636E\u6709\u8BEF, \u539F\u56E0: ' + val.message);
           }
         },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求轮播图出错, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
+        error: function error(XMLHttpRequest, textStatus, errorThrown) {
+          reject('\u8BF7\u6C42\u8F6E\u64AD\u56FE\u51FA\u9519, \u72B6\u6001\u7801: ' + XMLHttpRequest.status + '. \u539F\u56E0: ' + errorThrown);
         }
       });
-    })
+    });
   }
-}
+};
 
-let attribute = {
+var attribute = {
   'data': [
     // {
     //   'attrId': 184,
@@ -416,53 +379,46 @@ let attribute = {
     // }
   ],
 
-  init() {
-    const _this = this;
+  init: function init() {
+    var _this = this;
 
-    this.getAttribute()
-    .then(val => {
+    this.getAttribute().then(function (val) {
       _this.data = val;
       _this.renderAttribute();
-    }, error => alert(error))
+    }, function (error) {
+      return alert(error);
+    });
   },
+  renderAttribute: function renderAttribute() {
+    var _this = this;
+    var lastData = this.data.length - 1;
 
-  renderAttribute() {
-    const _this = this;
-    let lastData = this.data.length - 1;
-
-    $('#part-attribute').html(this.data.map((val, key) => {
-      return [
-        `<div class="main-content${key !== lastData ? ' main-bottom-line' : ''}">`,
-          `<div class="main-content-name">${val.attrName}</div>`,
-          `<div class="main-content-value">${val.attrValue}</div>`,
-        '</div>'
-      ].join('')
+    $('#part-attribute').html(this.data.map(function (val, key) {
+      return ['<div class="main-content' + (key !== lastData ? ' main-bottom-line' : '') + '">', '<div class="main-content-name">' + val.attrName + '</div>', '<div class="main-content-value">' + val.attrValue + '</div>', '</div>'].join('');
     }).join(''));
   },
-
-  getAttribute() {
-    return new Promise((resolve, reject) => {
+  getAttribute: function getAttribute() {
+    return new Promise(function (resolve, reject) {
       $.ajax({
         'type': 'GET',
-        'url': `${appConfig.version}/product/attribute/findByProductId.do?productId=${product.id}`,
+        'url': appConfig.version + '/product/attribute/findByProductId.do?productId=' + product.id,
         'contentType': 'application/json; charset=utf-8',
-        success: val => {
+        success: function success(val) {
           if (val.result === '0') {
             resolve(val.data);
           } else {
-            reject(`请求服务器成功, 接收的产品详情数据有误, 原因: ${val.message}`);
+            reject('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u63A5\u6536\u7684\u4EA7\u54C1\u8BE6\u60C5\u6570\u636E\u6709\u8BEF, \u539F\u56E0: ' + val.message);
           }
         },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求产品详情发生错误, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
+        error: function error(XMLHttpRequest, textStatus, errorThrown) {
+          reject('\u8BF7\u6C42\u4EA7\u54C1\u8BE6\u60C5\u53D1\u751F\u9519\u8BEF, \u72B6\u6001\u7801: ' + XMLHttpRequest.status + '. \u539F\u56E0: ' + errorThrown);
         }
       });
-
-    })
+    });
   }
-}
+};
 
-let trip = {
+var trip = {
   'data': [
     // {
     //   'createBy': 23,
@@ -480,101 +436,56 @@ let trip = {
     // }
   ],
 
-  init() {
-    const _this = this;
+  init: function init() {
+    var _this = this;
     $('.part-trip').show();
 
-    this.getTrip()
-    .then(val => {
+    this.getTrip().then(function (val) {
       _this.data = val;
       _this.renderTripFrom();
       _this.renderTripModal();
-    }, error => alert(error))
+    }, function (error) {
+      return alert(error);
+    });
   },
+  renderTripFrom: function renderTripFrom() {
+    var _this = this;
 
-  renderTripFrom() {
-    const _this = this;
-    
-    $('#part-trip').html([
-      '<div class="trip-from">',
-        '<div class="trip-from-tlitle">',
-          '<div class="from-tripDay">日期</div>',
-          '<div class="from-tripEvent">项目&amp;活动</div>',
-          '<div class="from-tripPlace">入宿&amp;景点</div>',
-        '</div>',
-        this.data.map((val, key) => {
-          return [
-            '<div class="trip-from-main" data-toggle="modal" data-target="#trip-modal">',
-              `<div class="from-tripDay">第${val.tripDay}天</div>`,
-              `<div class="from-tripEvent">${val.tripEvent}</div>`,
-              `<div class="from-tripPlace">${val.tripPlace}</div>`,
-            '</div>'
-          ].join('');
-        }).join(''),
-      '</div>',
-    ].join(''));
+    $('#part-trip').html(['<div class="trip-from">', '<div class="trip-from-tlitle">', '<div class="from-tripDay">日期</div>', '<div class="from-tripEvent">项目&amp;活动</div>', '<div class="from-tripPlace">入宿&amp;景点</div>', '</div>', this.data.map(function (val, key) {
+      return ['<div class="trip-from-main" data-toggle="modal" data-target="#trip-modal">', '<div class="from-tripDay">\u7B2C' + val.tripDay + '\u5929</div>', '<div class="from-tripEvent">' + val.tripEvent + '</div>', '<div class="from-tripPlace">' + val.tripPlace + '</div>', '</div>'].join('');
+    }).join(''), '</div>'].join(''));
   },
+  renderTripModal: function renderTripModal() {
+    var _this = this;
 
-  renderTripModal() {
-    const _this = this;
-
-    $('#trip-modal').html([
-      '<div class="modal-content">',
-        '<div class="trip-modal-nav">',
-          this.data.map((val, key) => {
-            return `<div><a href="#modal-trip-day${key + 1}">第${key + 1}天</a></div>`
-          }).join(''),
-        '</div>',
-        '<div class="trip-modal-main">',
-          '<div class="modal-header">',
-            '<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>',
-            `<h4 class="modal-title" id="myModalLabel">${product.data.productName}</h4>`,
-          '</div>',
-          
-          '<div class="modal-body">',
-            '<div class="journey">',
-              this.data.map((val, key) => {
-                return [
-                  `<div class="journey-title" id="modal-trip-day${key + 1}">第${key + 1}天</div>`,
-                  `<div class="journey-content">${val.tripDesc}</div>`,
-                ].join('');
-              }).join(''),
-            
-            '</div>',
-          '</div>',
-          
-          '<div class="modal-footer">',
-            '<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>',
-          '</div>',
-        '</div>',
-      '</div>'
-    ].join(''));
-
+    $('#trip-modal').html(['<div class="modal-content">', '<div class="trip-modal-nav">', this.data.map(function (val, key) {
+      return '<div><a href="#modal-trip-day' + (key + 1) + '">\u7B2C' + (key + 1) + '\u5929</a></div>';
+    }).join(''), '</div>', '<div class="trip-modal-main">', '<div class="modal-header">', '<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>', '<h4 class="modal-title" id="myModalLabel">' + product.data.productName + '</h4>', '</div>', '<div class="modal-body">', '<div class="journey">', this.data.map(function (val, key) {
+      return ['<div class="journey-title" id="modal-trip-day' + (key + 1) + '">\u7B2C' + (key + 1) + '\u5929</div>', '<div class="journey-content">' + val.tripDesc + '</div>'].join('');
+    }).join(''), '</div>', '</div>', '<div class="modal-footer">', '<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>', '</div>', '</div>', '</div>'].join(''));
   },
-
-  getTrip() {
-    return new Promise((resolve, reject) => {
+  getTrip: function getTrip() {
+    return new Promise(function (resolve, reject) {
       $.ajax({
         'type': 'GET',
-        'url': `${appConfig.version}/product/trip/findByProductId.do?productId=${product.id}`,
+        'url': appConfig.version + '/product/trip/findByProductId.do?productId=' + product.id,
         'contentType': 'application/json; charset=utf-8',
-        success: val => {
+        success: function success(val) {
           if (val.result === '0') {
             resolve(val.data);
           } else {
-            reject(`请求服务器成功, 接收的产品旅途详情数据有误, 原因: ${val.message}`);
+            reject('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u63A5\u6536\u7684\u4EA7\u54C1\u65C5\u9014\u8BE6\u60C5\u6570\u636E\u6709\u8BEF, \u539F\u56E0: ' + val.message);
           }
         },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求产品旅途详情发生错误, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
+        error: function error(XMLHttpRequest, textStatus, errorThrown) {
+          reject('\u8BF7\u6C42\u4EA7\u54C1\u65C5\u9014\u8BE6\u60C5\u53D1\u751F\u9519\u8BEF, \u72B6\u6001\u7801: ' + XMLHttpRequest.status + '. \u539F\u56E0: ' + errorThrown);
         }
       });
-
-    })
+    });
   }
-}
+};
 
-let costIncludes = {
+var costIncludes = {
   'data': [
     // {
     //   'costContent': '<p><span style="line-height: 1;">往返机场接送服务：</span></p><p><span style="line-height: 1;">斗湖机场--仙本那码头车程约70分钟 &nbsp; 仙本那码头--度假村船程约60分钟；</span></p><p><span style="line-height: 1;">每日三餐（自助餐）加下午茶：</span></p><p>早餐 7:00-9:00AM &nbsp; &nbsp;中餐 12:00-14:00PM &nbsp; &nbsp;晚餐 19:00-21:00PM</p><p>餐厅终日提供咖啡、茶、果汁（不包含酒精饮料或碳酸饮料），<span style="line-height: 1;">糖果、新鲜出炉的面包和甜点</span></p><p>度假村沙滩屋住宿及无限次数岸边浮潜。</p><p><br></p>',
@@ -589,53 +500,46 @@ let costIncludes = {
     // }
   ],
 
-  init() {
-    const _this = this;
+  init: function init() {
+    var _this = this;
 
-    this.getcostIncludes()
-    .then(val => {
+    this.getcostIncludes().then(function (val) {
       _this.data = val;
       _this.rendercostIncludes();
-    }, error => alert(error))
+    }, function (error) {
+      return alert(error);
+    });
   },
+  rendercostIncludes: function rendercostIncludes() {
+    var _this = this;
+    var lastData = this.data.length - 1;
 
-  rendercostIncludes() {
-    const _this = this;
-    let lastData = this.data.length - 1;
-
-    $('#part-costIncludes').html(this.data.map((val, key) => {
-      return [
-        `<div class="main-content${key !== lastData ? ' main-bottom-line' : ''}">`,
-          `<div class="main-content-name">${val.costTitle}</div>`,
-          `<div class="main-content-value">${val.costContent}</div>`,
-        '</div>'
-      ].join('')
+    $('#part-costIncludes').html(this.data.map(function (val, key) {
+      return ['<div class="main-content' + (key !== lastData ? ' main-bottom-line' : '') + '">', '<div class="main-content-name">' + val.costTitle + '</div>', '<div class="main-content-value">' + val.costContent + '</div>', '</div>'].join('');
     }).join(''));
   },
-
-  getcostIncludes() {
-    return new Promise((resolve, reject) => {
+  getcostIncludes: function getcostIncludes() {
+    return new Promise(function (resolve, reject) {
       $.ajax({
         'type': 'GET',
-        'url': `${appConfig.version}/product/costIncludes/findByProductId.do?productId=${product.id}`,
+        'url': appConfig.version + '/product/costIncludes/findByProductId.do?productId=' + product.id,
         'contentType': 'application/json; charset=utf-8',
-        success: val => {
+        success: function success(val) {
           if (val.result === '0') {
             resolve(val.data);
           } else {
-            reject(`请求服务器成功, 接收的产品包含详情数据有误, 原因: ${val.message}`);
+            reject('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u63A5\u6536\u7684\u4EA7\u54C1\u5305\u542B\u8BE6\u60C5\u6570\u636E\u6709\u8BEF, \u539F\u56E0: ' + val.message);
           }
         },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求产品包含详情发生错误, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
+        error: function error(XMLHttpRequest, textStatus, errorThrown) {
+          reject('\u8BF7\u6C42\u4EA7\u54C1\u5305\u542B\u8BE6\u60C5\u53D1\u751F\u9519\u8BEF, \u72B6\u6001\u7801: ' + XMLHttpRequest.status + '. \u539F\u56E0: ' + errorThrown);
         }
       });
-
-    })
+    });
   }
-}
+};
 
-let refundrule = {
+var refundrule = {
   'data': {
     // 'createBy': null,
     // 'createTime': null,
@@ -663,87 +567,63 @@ let refundrule = {
     // 'updateTime': null,
   },
 
-  init() {
-    const _this = this;
+  init: function init() {
+    var _this = this;
     $('.part-refundrule').show();
 
-    this.getRefundrule()
-    .then(val => {
+    this.getRefundrule().then(function (val) {
       _this.data = val;
       _this.renderRefundrule();
-    }, error => alert(error))
+    }, function (error) {
+      return alert(error);
+    });
   },
+  renderRefundrule: function renderRefundrule() {
+    var _this = this;
+    var ruleLength = this.data.ruleItemList.length;
 
-  renderRefundrule() {
-    const _this = this;
-    let ruleLength = this.data.ruleItemList.length;
-
-    $('#part-refundrule').html([
-      '<div class="part-content">',
-        '<div class="content-tlitle">退款说明</div>',
-        '<div class="part-main">',
-
-          '<div class="refundrule-strip">',
-            this.data.ruleItemList.map((val, key) => {
-              let ruleItemWidth = ( 1 - key * ( 1 / ruleLength ) ) * 100;
-              return [
-                `<div style="width: ${ruleItemWidth}%; ${_this.renderRuleItemBackground(key)}">`,
-                  `<span>${_this.renderRuleDate(val)}</span>`,
-                  `<a>扣${val.deductionRatio}</a>`,
-                '</div>'
-              ].join('');
-            }).join(''),
-          '</div>',
-
-          '<div class="refundrule-detail">',
-            this.data.ruleItemList.map(val => 
-              `<p>${val.ruleDesc}</p>`
-            ).join(''),
-          '</div>',
-        '</div>',
-      '</div>'
-    ].join(''));
+    $('#part-refundrule').html(['<div class="part-content">', '<div class="content-tlitle">退款说明</div>', '<div class="part-main">', '<div class="refundrule-strip">', this.data.ruleItemList.map(function (val, key) {
+      var ruleItemWidth = (1 - key * (1 / ruleLength)) * 100;
+      return ['<div style="width: ' + ruleItemWidth + '%; ' + _this.renderRuleItemBackground(key) + '">', '<span>' + _this.renderRuleDate(val) + '</span>', '<a>\u6263' + val.deductionRatio + '</a>', '</div>'].join('');
+    }).join(''), '</div>', '<div class="refundrule-detail">', this.data.ruleItemList.map(function (val) {
+      return '<p>' + val.ruleDesc + '</p>';
+    }).join(''), '</div>', '</div>', '</div>'].join(''));
   },
-
-  renderRuleDate(data) {
-    return data.endDay < 0 ? 
-      `${data.beginDay}天以上` :
-      `${data.beginDay}天`;
+  renderRuleDate: function renderRuleDate(data) {
+    return data.endDay < 0 ? data.beginDay + '\u5929\u4EE5\u4E0A' : data.beginDay + '\u5929';
   },
-
-  renderRuleItemBackground(num) {
-    let percentage = (num + 1) * (1 / this.data.ruleItemList.length);
-    return `background:rgba(69, 90, 100, ${percentage});`;
+  renderRuleItemBackground: function renderRuleItemBackground(num) {
+    var percentage = (num + 1) * (1 / this.data.ruleItemList.length);
+    return 'background:rgba(69, 90, 100, ' + percentage + ');';
   },
-
-  getRefundrule() {
-    return new Promise((resolve, reject) => {
+  getRefundrule: function getRefundrule() {
+    return new Promise(function (resolve, reject) {
       $.ajax({
         'type': 'GET',
-        'url': `${appConfig.version}/product/refundrule/${product.data.refundRuleId}/item/list.do`,
+        'url': appConfig.version + '/product/refundrule/' + product.data.refundRuleId + '/item/list.do',
         'contentType': 'application/json; charset=utf-8',
-        success: val => {
+        success: function success(val) {
           if (val.result === '0') {
             resolve(val.data);
           } else {
-            reject(`请求服务器成功, 接收的产品包含详情数据有误, 原因: ${val.message}`);
+            reject('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u63A5\u6536\u7684\u4EA7\u54C1\u5305\u542B\u8BE6\u60C5\u6570\u636E\u6709\u8BEF, \u539F\u56E0: ' + val.message);
           }
         },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求产品包含详情发生错误, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
+        error: function error(XMLHttpRequest, textStatus, errorThrown) {
+          reject('\u8BF7\u6C42\u4EA7\u54C1\u5305\u542B\u8BE6\u60C5\u53D1\u751F\u9519\u8BEF, \u72B6\u6001\u7801: ' + XMLHttpRequest.status + '. \u539F\u56E0: ' + errorThrown);
         }
       });
-    })
+    });
   }
-}
+};
 
-let scrollPin = {
-  init() {
-    let isPin = false;
+var scrollPin = {
+  init: function init() {
+    var isPin = false;
 
-    $(window).scroll(function() {
-      let scrollTop = $(window).scrollTop();
-      let carouselClientHeight = $('#carousel')[0].clientHeight;
+    $(window).scroll(function () {
+      var scrollTop = $(window).scrollTop();
+      var carouselClientHeight = $('#carousel')[0].clientHeight;
       if (scrollTop > carouselClientHeight) {
         if (isPin === false) {
           $('.part-content-right').addClass('isPin');
@@ -761,28 +641,37 @@ let scrollPin = {
       }
     });
   }
-}
+};
 
 // 工具类
 var utilities = {
-  loadPageVar: function(sVar) {
+  loadPageVar: function loadPageVar(sVar) {
     return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
   }
-}
-
+};
 
 /***/ }),
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_cookies__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_request__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_request___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utils_request__);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-/* harmony default export */ __webpack_exports__["a"] = ({
+var _cookies = __webpack_require__(2);
+
+var _cookies2 = _interopRequireDefault(_cookies);
+
+var _request = __webpack_require__(3);
+
+var _request2 = _interopRequireDefault(_request);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   'data': false,
   // {
   //   'bindEmailTime': 1484529221000,
@@ -823,8 +712,8 @@ var utilities = {
   'isOutDropdown': false, // 是否 离开下拉菜单
   'dropdownSetTimeout': null, // NodeJS.Timer
 
-  init: function(SelectedNumString) {
-    const _this = this;
+  init: function init(SelectedNumString) {
+    var _this = this;
 
     this.litUpContentSelected(SelectedNumString);
 
@@ -832,8 +721,7 @@ var utilities = {
 
     this.setOptionCookie();
 
-    this.getUserInfo()
-    .then(val => {
+    this.getUserInfo().then(function (val) {
       if (val.result === 1) {
         _this.data = val.data;
         $('.login-true').show();
@@ -842,64 +730,66 @@ var utilities = {
           console.log(val.message);
         }
         $('.login-false').show();
-  
-        $('#login-show').click(() => {
+
+        $('#login-show').click(function () {
           _this.loginModalShow();
         });
       }
-    }, error => alert(error));
+    }, function (error) {
+      return alert(error);
+    });
   },
 
-  loginModalShow: function() {
+  loginModalShow: function loginModalShow() {
     this.isModalShow = true;
     $("#Modal-login").modal('show');
   },
 
-  loginModalHide: function() {
+  loginModalHide: function loginModalHide() {
     this.isModalShow = false;
     $($('.input-username label')[0]).html('');
     $($('.input-password label')[0]).html('');
     $('#input-password').val('');
   },
 
-  bindjQueryEvent: function() {
-    const _this = this;
+  bindjQueryEvent: function bindjQueryEvent() {
+    var _this = this;
 
     // 隐藏模态框
-    $('#login-hiden').click(() => {
+    $('#login-hiden').click(function () {
       $("#Modal-login").modal('hide');
     });
-    $("#Modal-login").on('hidden.bs.modal', e => {
+    $("#Modal-login").on('hidden.bs.modal', function (e) {
       _this.loginModalHide();
     });
 
     // 显示隐藏密码
-    $('#password-eye').click(() => {
+    $('#password-eye').click(function () {
       if (_this.isPasswordShow) {
         $('#password-eye').removeClass('eye-show');
-        $('#input-password').attr('type','password');
+        $('#input-password').attr('type', 'password');
         _this.isPasswordShow = false;
       } else {
         $('#password-eye').addClass('eye-show');
-        $('#input-password').attr('type','text');
+        $('#input-password').attr('type', 'text');
         _this.isPasswordShow = true;
       }
     });
 
     // 输入账号
-    $('#input-username').bind('input propertychange', function(event) {
+    $('#input-username').bind('input propertychange', function (event) {
       _this.username = $(this).val();
       _this.checkUserName();
     });
 
     // 输入密码
-    $('#input-password').bind('input propertychange', function(event) {
+    $('#input-password').bind('input propertychange', function (event) {
       _this.password = $(this).val();
       _this.checkPassword();
     });
 
     // 记住密码
-    $('#option-cookie').click(function(event) {
+    $('#option-cookie').click(function (event) {
       if (_this.isRememberCookie) {
         $(this).attr("checked", false);
         _this.isRememberCookie = false;
@@ -910,56 +800,54 @@ var utilities = {
     });
 
     // 登录
-    $('#login-subimt').click(function(event) {
+    $('#login-subimt').click(function (event) {
       _this.optionloginsubimt();
     });
 
     // 退出 登出
-    $('#droplist-logout').click(function(event) {
-      __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].removeItem('token', '/');
-      __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].removeItem('digest', '/');
+    $('#droplist-logout').click(function (event) {
+      _cookies2.default.removeItem('token', '/');
+      _cookies2.default.removeItem('digest', '/');
 
       $('.login-false').show();
       $('.login-true').hide();
     });
 
     // 下拉框移入 显示
-    $('.login-droplist').mouseenter(function(event) {
+    $('.login-droplist').mouseenter(function (event) {
       _this.isOutDropdown = false;
-      _this.dropdownSetTimeout = setTimeout(function() {
+      _this.dropdownSetTimeout = setTimeout(function () {
         if (_this.isOutDropdown === false) {
           $('.login-user').dropdown('toggle');
         }
       }, 500);
     });
-    $('.login-droplist').mouseleave(function(event) {
+    $('.login-droplist').mouseleave(function (event) {
       _this.isOutDropdown = true;
       clearTimeout(_this.dropdownSetTimeout);
     });
-    $('#dLabel').click(function(event) {
+    $('#dLabel').click(function (event) {
       _this.isOutDropdown = true;
       clearTimeout(_this.dropdownSetTimeout);
     });
   },
 
-  optionloginsubimt: function () {
-    const _this = this;
+  optionloginsubimt: function optionloginsubimt() {
+    var _this = this;
 
-    if (this.isLogining) { return false }
-
-    if (
-      this.checkUserName().result !== 1 ||
-      this.checkPassword().result !== 1
-    ) {
-      return false
+    if (this.isLogining) {
+      return false;
     }
-    
-    let myDom = $(this);
+
+    if (this.checkUserName().result !== 1 || this.checkPassword().result !== 1) {
+      return false;
+    }
+
+    var myDom = $(this);
     myDom.text('正在提交');
     this.isLogining = true;
 
-    this.subimtLogin()
-    .then(val => {
+    this.subimtLogin().then(function (val) {
       if (val.result === 1) {
         _this.data = val.data;
 
@@ -969,30 +857,24 @@ var utilities = {
         $('.login-false').hide();
         $('.login-true').show();
       } else if (val.result == '-9') {
-        $($('.input-username label')[0]).html(
-          '<div class="danger">您的账号尚未激活</div>'
-        );
+        $($('.input-username label')[0]).html('<div class="danger">您的账号尚未激活</div>');
       } else if (val.result == '-5') {
-        $($('.input-username label')[0]).html(
-          '<div class="danger">此账号不存在</div>'
-        );
+        $($('.input-username label')[0]).html('<div class="danger">此账号不存在</div>');
       } else if (val.result == '-6') {
-        $($('.input-password label')[0]).html(
-          '<div class="danger">您输入的密码是错误, 请输入正确的密码！</div>'
-        );
+        $($('.input-password label')[0]).html('<div class="danger">您输入的密码是错误, 请输入正确的密码！</div>');
       }
 
       myDom.text('登录');
       _this.isLogining = false;
-    }, error => {
+    }, function (error) {
       myDom.text('登录');
       _this.isLogining = false;
       alert(error);
     });
   },
 
-  setOptionCookie: function() {
-    let rememberCookie = localStorage.getItem('remember-cookie');
+  setOptionCookie: function setOptionCookie() {
+    var rememberCookie = localStorage.getItem('remember-cookie');
 
     if (rememberCookie) {
       rememberCookie = JSON.parse(rememberCookie);
@@ -1007,64 +889,61 @@ var utilities = {
     }
   },
 
-  SaveCookie: function() {
-    let SevenDayLater = new Date( Date.parse(new Date()) + (86400000 * 7) );
-    
-    __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].setItem('token', this.data.token, SevenDayLater, '/');
-    __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].setItem('digest', this.data.digest, SevenDayLater, '/');
+  SaveCookie: function SaveCookie() {
+    var SevenDayLater = new Date(Date.parse(new Date()) + 86400000 * 7);
+
+    _cookies2.default.setItem('token', this.data.token, SevenDayLater, '/');
+    _cookies2.default.setItem('digest', this.data.digest, SevenDayLater, '/');
 
     if (this.isRememberCookie) {
       localStorage.setItem('remember-cookie', JSON.stringify({
         username: this.username,
-        password: this.password,
-      }))
+        password: this.password
+      }));
     } else {
       localStorage.removeItem('remember-cookie');
     }
   },
 
-  checkUserName: function () {
-    let usernameLabel = $($('.input-username label')[0]);
+  checkUserName: function checkUserName() {
+    var usernameLabel = $($('.input-username label')[0]);
 
     if (this.username === '') {
       usernameLabel.html('<div>请输入用户名</div>');
-      return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('用户名为空');
+      return _request2.default.error('用户名为空');
     }
 
     // 既不是邮箱账号, 也不是手机账号
-    if (
-      /^1[34578]\d{9}$/.test(this.username) === false &&
-      /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(this.username) === false
-    ) {
+    if (/^1[34578]\d{9}$/.test(this.username) === false && /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(this.username) === false) {
       usernameLabel.html('<div class="warning">请输入正确手机或邮箱格式的账号</div>');
-      return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('账号格式有误');
+      return _request2.default.error('账号格式有误');
     }
 
     usernameLabel.html('');
-    return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.success();
+    return _request2.default.success();
   },
 
-  checkPassword: function () {
-    let passwordLabel = $($('.input-password label')[0]);
+  checkPassword: function checkPassword() {
+    var passwordLabel = $($('.input-password label')[0]);
 
     if (this.password === '') {
       passwordLabel.html('<div>请输入密码</div>');
-      return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('密码为空');
+      return _request2.default.error('密码为空');
     }
 
     // 密码小于 8 位
     if (this.password.length < 8) {
       passwordLabel.html('<div class="warning">输入的密码不能小于8位长度</div>');
-      return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('密码格式有误');
+      return _request2.default.error('密码格式有误');
     }
 
     passwordLabel.html('');
-    return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.success();
+    return _request2.default.success();
   },
 
-  subimtLogin: function () {
-    const _this = this;
-    let subimtData;
+  subimtLogin: function subimtLogin() {
+    var _this = this;
+    var subimtData = void 0;
 
     if (/^1[34578]\d{9}$/.test(this.username)) {
       subimtData = {
@@ -1078,69 +957,76 @@ var utilities = {
       };
     }
 
-    return new Promise((resolve, reject) => {
-      fetch(`${appConfig.version}/user/login.do`,{
+    return new Promise(function (resolve, reject) {
+      fetch(appConfig.version + '/user/login.do', {
         method: 'POST',
         contentType: 'application/json; charset=utf-8',
         body: JSON.stringify(subimtData)
-      }).then(
-        response => response.json(),
-        error => ({'result':'1', 'message': error})
-      ).then(val => {
+      }).then(function (response) {
+        return response.json();
+      }, function (error) {
+        return { 'result': '1', 'message': error };
+      }).then(function (val) {
         if (val.result === '0') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.success(val.data));
+          resolve(_request2.default.success(val.data));
         } else if (val.result == '-9') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('您的账号尚未激活', '-9'));
+          resolve(_request2.default.error('您的账号尚未激活', '-9'));
         } else if (val.result == '-5') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('此账号不存在', '-5'));
+          resolve(_request2.default.error('此账号不存在', '-5'));
         } else if (val.result == '-6') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('您输入的密码是错误, 请输入正确的密码', '-6'));
+          resolve(_request2.default.error('您输入的密码是错误, 请输入正确的密码', '-6'));
         } else {
-          reject(`请求服务器成功, 但是用户登录信息有误! 原因: ${val.message}`);
+          reject('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u4F46\u662F\u7528\u6237\u767B\u5F55\u4FE1\u606F\u6709\u8BEF! \u539F\u56E0: ' + val.message);
         }
-      }).catch(error => {
-        reject(`请求出错 , 向服务器发起请求用户登录失败, 原因: ${error}`);
-      })
+      }).catch(function (error) {
+        reject('\u8BF7\u6C42\u51FA\u9519 , \u5411\u670D\u52A1\u5668\u53D1\u8D77\u8BF7\u6C42\u7528\u6237\u767B\u5F55\u5931\u8D25, \u539F\u56E0: ' + error);
+      });
     });
   },
 
-  getUserInfo: () => new Promise((resolve, reject) => {
-    $.ajax({
-      'type': "GET", 
-      'url': `${appConfig.version}/user/getUserInfo.do`, 
-      'contentType': "application/json; charset=utf-8", 
-      'headers': {
-        'token': __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].getItem('token'),
-        'digest': __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].getItem('digest')
-      },
-      success: val => {
-        if (val.result === '0') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.success(val.data));
-        } else if (val.result === '401') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('你尚未登录!', 2));
-        } else {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error(`请求服务器成功, 但是用户信息有误! 原因: ${val.message}`, 3));
+  getUserInfo: function getUserInfo() {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        'type': "GET",
+        'url': appConfig.version + '/user/getUserInfo.do',
+        'contentType': "application/json; charset=utf-8",
+        'headers': {
+          'token': _cookies2.default.getItem('token'),
+          'digest': _cookies2.default.getItem('digest')
+        },
+        success: function success(val) {
+          if (val.result === '0') {
+            resolve(_request2.default.success(val.data));
+          } else if (val.result === '401') {
+            resolve(_request2.default.error('你尚未登录!', 2));
+          } else {
+            resolve(_request2.default.error('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u4F46\u662F\u7528\u6237\u4FE1\u606F\u6709\u8BEF! \u539F\u56E0: ' + val.message, 3));
+          }
+        },
+        error: function error(XMLHttpRequest, textStatus, errorThrown) {
+          reject('\u8BF7\u6C42\u7528\u6237\u4FE1\u606F\u51FA\u9519, \u72B6\u6001\u7801: ' + XMLHttpRequest.status + '. \u539F\u56E0: ' + errorThrown);
         }
-      },
-      error: (XMLHttpRequest, textStatus, errorThrown) => {
-        reject(`请求用户信息出错, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`)
-      }
+      });
     });
-  }),
+  },
 
-  litUpContentSelected(SelectedNumString) {
+  litUpContentSelected: function litUpContentSelected(SelectedNumString) {
     if (SelectedNumString) {
       $($('.header-content a')[SelectedNumString]).addClass('content-selected');
     }
   }
-});
-
+};
 
 /***/ }),
 /* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 /*
  * docCookies.setItem(name, value[, end[, path[, domain[, secure]]]])
  * docCookies.getItem(name)
@@ -1149,13 +1035,15 @@ var utilities = {
  * docCookies.keys()
  */
 
-let docCookies = {
-  getItem: function (sKey) {
+var docCookies = {
+  getItem: function getItem(sKey) {
     return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
   },
-  setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
-    if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
-    let sExpires = "";
+  setItem: function setItem(sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+    if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) {
+      return false;
+    }
+    var sExpires = "";
     if (vEnd) {
       switch (vEnd.constructor) {
         case Number:
@@ -1172,74 +1060,86 @@ let docCookies = {
     document.cookie = encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
     return true;
   },
-  removeItem: function (sKey, sPath, sDomain) {
-    if (!sKey || !this.hasItem(sKey)) { return false; }
-    document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + ( sDomain ? "; domain=" + sDomain : "") + ( sPath ? "; path=" + sPath : "");
+  removeItem: function removeItem(sKey, sPath, sDomain) {
+    if (!sKey || !this.hasItem(sKey)) {
+      return false;
+    }
+    document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
     return true;
   },
-  hasItem: function (sKey) {
-    return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+  hasItem: function hasItem(sKey) {
+    return new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=").test(document.cookie);
   },
-  keys: /* optional method: you can safely remove it! */ function () {
-    let aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
-    for (let nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
+  keys: /* optional method: you can safely remove it! */function keys() {
+    var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+    for (var nIdx = 0; nIdx < aKeys.length; nIdx++) {
+      aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]);
+    }
     return aKeys;
   }
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (docCookies);
-
+exports.default = docCookies;
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 module.exports = {
-    success: (data, message) => ({
-        'result': 1,
-        'data': data || null,
-        'message': message || 'Request to Database success'
-    }),
+    success: function success(data, message) {
+        return {
+            'result': 1,
+            'data': data || null,
+            'message': message || 'Request to Database success'
+        };
+    },
 
-    error: (message, result, data) => ({
-        'result': result || 0,
-        'data': data || null,
-        'message': message
-    })
-}
-
+    error: function error(message, result, data) {
+        return {
+            'result': result || 0,
+            'data': data || null,
+            'message': message
+        };
+    }
+};
 
 /***/ }),
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-  init() {
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  init: function init() {
     this.scrollTop();
     this.siderBar();
   },
+  siderBar: function siderBar() {
+    var myclientWidth = document.body.clientWidth;
 
-  siderBar() {
-    let myclientWidth = document.body.clientWidth;
-
-    $('#showSidebar').click(function(){
+    $('#showSidebar').click(function () {
       $('#side-bar').animate({
         'right': '0'
       }, 70);
     });
 
-    $("#closeSidebar").click(function(){
-      $('#side-bar').animate({'right': '-330px'}, 70);
+    $("#closeSidebar").click(function () {
+      $('#side-bar').animate({ 'right': '-330px' }, 70);
     });
   },
-
-  scrollTop() {
-    let scrollTopTimer = null,
+  scrollTop: function scrollTop() {
+    var scrollTopTimer = null,
         isshowScrollIcon = false,
-        scrollTopNumber;
-    
-    window.onscroll= () => {
+        scrollTopNumber = void 0;
+
+    window.onscroll = function () {
       scrollTopNumber = document.documentElement.scrollTop || document.body.scrollTop;
 
       if (scrollTopNumber > 600) {
@@ -1250,7 +1150,6 @@ module.exports = {
             'opacity': ' 1'
           }, 500);
         }
-
       } else if (scrollTopNumber < 600) {
         if (isshowScrollIcon == true) {
           isshowScrollIcon = false;
@@ -1259,95 +1158,98 @@ module.exports = {
             'opacity': '0'
           }, 500);
 
-          setTimeout(() => {
+          setTimeout(function () {
             $('#scroll-icon-top').css('visibility', 'hidden');
           }, 500);
         }
       }
 
       return scrollTopNumber;
-    }
+    };
 
-    $('#scroll-icon-top').click(() => {
+    $('#scroll-icon-top').click(function () {
       clearInterval(scrollTopTimer);
 
-      scrollTopTimer = setInterval(() => {
+      scrollTopTimer = setInterval(function () {
 
-        let nowScroll = scrollTopNumber;
-        let speed= ( 0 - nowScroll ) / 10;
+        var nowScroll = scrollTopNumber;
+        var speed = (0 - nowScroll) / 10;
         speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
-        if(scrollTopNumber <= 10){
+        if (scrollTopNumber <= 10) {
           clearInterval(scrollTopTimer);
         }
         document.documentElement.scrollTop = scrollTopNumber + speed;
         document.body.scrollTop = scrollTopNumber + speed;
       }, 10);
-
     });
   }
-});
-
+};
 
 /***/ }),
 /* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-  // Date 转换 xxxx-xx-xx 字符串
-  dateToFormat: (myDate) => {
-    let yyyy = myDate.getFullYear();
 
-    let mm = myDate.getMonth() + 1;
-    let mmstring = mm < 10 ? '0' + mm : mm;
 
-    let dd = myDate.getDate();
-    let ddstring = dd < 10 ? '0' + dd : dd;
-
-    return `${yyyy}-${mmstring}-${ddstring}`;
-  },
-
-  // xxxx-xx-xx 字符串 转换 时间戳
-  YYYYMMDDFormatToTimestamp: (data) => {
-    let myDateList = data.split("-");
-    return Date.parse(new Date(myDateList[0], (parseInt(myDateList[1]) - 1), myDateList[2]));
-  },
-  
-  // Date 转换 20180102 字符串
-  dateToYYYYmmNumber: (myDate) => {
-    let yyyy = myDate.getFullYear();
-
-    let mm = myDate.getMonth() + 1;
-    let mmstring = mm < 10 ? '0' + mm : mm;
-
-    let dd = myDate.getDate();
-    let ddstring = dd < 10 ? '0' + dd : dd;
-    
-    return `${yyyy}${mmstring}${ddstring}`;
-  },
-  
-  // Date 转换 xxxx-xx-xx xx:xx:xx 字符串
-  dateToYYYYmmDDhhMMss: (myDate) => {
-    let yyyy = myDate.getFullYear();
-
-    let mm = myDate.getMonth() + 1;
-    let mmstring = mm < 10 ? '0' + mm : mm;
-
-    let dd = myDate.getDate();
-    let ddstring = dd < 10 ? '0' + dd : dd;
-
-    let hh = myDate.getHours();
-    let hhstring = hh < 10 ? '0' + hh : hh;
-
-    let Min = myDate.getMinutes();
-    let Minstring = Min < 10 ? '0' + Min : Min;
-
-    let ss = myDate.getSeconds();
-    let ssstring = ss < 10 ? '0' + ss : ss;
-    
-    return `${yyyy}-${mmstring}-${ddstring} ${hhstring}:${Minstring}:${ssstring}`;
-  }
+Object.defineProperty(exports, "__esModule", {
+    value: true
 });
+exports.default = {
+    // Date 转换 xxxx-xx-xx 字符串
+    dateToFormat: function dateToFormat(myDate) {
+        var yyyy = myDate.getFullYear();
+
+        var mm = myDate.getMonth() + 1;
+        var mmstring = mm < 10 ? '0' + mm : mm;
+
+        var dd = myDate.getDate();
+        var ddstring = dd < 10 ? '0' + dd : dd;
+
+        return yyyy + '-' + mmstring + '-' + ddstring;
+    },
+
+    // xxxx-xx-xx 字符串 转换 时间戳
+    YYYYMMDDFormatToTimestamp: function YYYYMMDDFormatToTimestamp(data) {
+        var myDateList = data.split("-");
+        return Date.parse(new Date(myDateList[0], parseInt(myDateList[1]) - 1, myDateList[2]));
+    },
+
+    // Date 转换 20180102 字符串
+    dateToYYYYmmNumber: function dateToYYYYmmNumber(myDate) {
+        var yyyy = myDate.getFullYear();
+
+        var mm = myDate.getMonth() + 1;
+        var mmstring = mm < 10 ? '0' + mm : mm;
+
+        var dd = myDate.getDate();
+        var ddstring = dd < 10 ? '0' + dd : dd;
+
+        return '' + yyyy + mmstring + ddstring;
+    },
+
+    // Date 转换 xxxx-xx-xx xx:xx:xx 字符串
+    dateToYYYYmmDDhhMMss: function dateToYYYYmmDDhhMMss(myDate) {
+        var yyyy = myDate.getFullYear();
+
+        var mm = myDate.getMonth() + 1;
+        var mmstring = mm < 10 ? '0' + mm : mm;
+
+        var dd = myDate.getDate();
+        var ddstring = dd < 10 ? '0' + dd : dd;
+
+        var hh = myDate.getHours();
+        var hhstring = hh < 10 ? '0' + hh : hh;
+
+        var Min = myDate.getMinutes();
+        var Minstring = Min < 10 ? '0' + Min : Min;
+
+        var ss = myDate.getSeconds();
+        var ssstring = ss < 10 ? '0' + ss : ss;
+
+        return yyyy + '-' + mmstring + '-' + ddstring + ' ' + hhstring + ':' + Minstring + ':' + ssstring;
+    }
+};
 
 /***/ })
 /******/ ]);

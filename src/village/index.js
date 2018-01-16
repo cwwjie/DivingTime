@@ -3,7 +3,7 @@ import scrollTop from './../Component/ScrollTop/index.js';
 import convertDate from './../../utils/convertDate.js';
  
 $(document).ready(() => {
-  header.init();
+  header.init(1);
   scrollTop.init();
 
   myData.getAjax()
@@ -110,11 +110,8 @@ var myVillage = {
       var myData = dataList[i];
 
       $(myDomList[i]).click(function(event) {
-        var myUrl = 'resortCode=' + myData.resortCode + '&resortId=' + myData.resortId;
-        localStorage.setItem('village',JSON.stringify(myData));
-        localStorage.setItem('resortCode',myData.resortCode);
-        localStorage.setItem('resortId',myData.resortId);
-        location = './detail/index.html?' + myUrl;
+        var myUrl = `resortCode=${myData.resortCode}&resortId=${myData.resortId}&selectNum=${i}`;
+        location = `./detail/index.html?${myUrl}`;
       });
     })(i)}
   }

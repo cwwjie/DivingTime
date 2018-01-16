@@ -65,24 +65,30 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Component_Navigation_Bar_index_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Component_ScrollTop_index_js__ = __webpack_require__(4);
 
 
+var _index = __webpack_require__(1);
 
-$(document).ready(() => {
+var _index2 = _interopRequireDefault(_index);
 
-  __WEBPACK_IMPORTED_MODULE_0__Component_Navigation_Bar_index_js__["a" /* default */].init('0');
+var _index3 = __webpack_require__(4);
+
+var _index4 = _interopRequireDefault(_index3);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+$(document).ready(function () {
+
+  _index2.default.init('0');
   carousel.init();
   product.init();
-  __WEBPACK_IMPORTED_MODULE_1__Component_ScrollTop_index_js__["a" /* default */].init();
+  _index4.default.init();
 });
 
-let carousel = {
+var carousel = {
   'data': [
     // {
     //   'carouselDesc': "疯狂旅拍包含宝贝，亲子，情侣三种系列",
@@ -100,90 +106,53 @@ let carousel = {
     // }
   ],
 
-  init() {
-    const _this = this;
+  init: function init() {
+    var _this = this;
 
-    this.getCarousel()
-    .then(val => {
+    this.getCarousel().then(function (val) {
       _this.data = val;
       _this.renderCarousel();
-    }, error => alert(error))
+    }, function (error) {
+      return alert(error);
+    });
   },
-
-  renderCarousel() {
-    $('#carousel').html([
-      '<div class="carousel slide" data-ride="carousel">',
-        '<ol class="carousel-indicators">',
-        this.data.map((val, key) => {
-          return key === 0 ?
-          '<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>' :
-          `<li data-target="#carousel-example-generic" data-slide-to="${key}"></li>`;
-        }).join(''),
-        '</ol>',
-        '<div class="carousel-inner" role="listbox" id="carousel">',
-        this.data.map((val, key) => {
-          return key === 0 ? [
-            '<div class="item active">',
-              `<a href="${val.leadUrl}">`,
-                `<img src="${appConfig.urlBase}${val.carouselUrl}">`,
-                '<div class="carousel-caption"></div>',
-              '</a>',
-            '</div>',
-          ].join('') : [
-            '<div class="item">',
-              `<a href="${val.leadUrl}">`,
-                `<img src="${appConfig.urlBase}${val.carouselUrl}">`,
-                '<div class="carousel-caption"></div>',
-              '</a>',
-            '</div>',
-          ].join('');
-        }).join(''),
-        '</div>',
-        '<a id="carousel-left" class="left carousel-control" role="button" data-slide="prev">',
-          '<span class="sr-only">Previous</span>',
-          '<span class="glyphicon glyphicon-chevron-left"></span>',
-          '<i class="left-btn allbtn"></i>',
-        '</a>',
-        '<a id="carousel-right" class="right carousel-control" role="button" data-slide="next">',
-          '<span class="sr-only">Next</span>',
-          '<span class="glyphicon glyphicon-chevron-right"></span>',
-          '<i class="right-btn allbtn"></i>',
-        '</a>',
-      '</div>',
-    ].join(''));
+  renderCarousel: function renderCarousel() {
+    $('#carousel').html(['<div class="carousel slide" data-ride="carousel">', '<ol class="carousel-indicators">', this.data.map(function (val, key) {
+      return key === 0 ? '<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>' : '<li data-target="#carousel-example-generic" data-slide-to="' + key + '"></li>';
+    }).join(''), '</ol>', '<div class="carousel-inner" role="listbox" id="carousel">', this.data.map(function (val, key) {
+      return key === 0 ? ['<div class="item active">', '<a href="' + val.leadUrl + '">', '<img src="' + appConfig.urlBase + val.carouselUrl + '">', '<div class="carousel-caption"></div>', '</a>', '</div>'].join('') : ['<div class="item">', '<a href="' + val.leadUrl + '">', '<img src="' + appConfig.urlBase + val.carouselUrl + '">', '<div class="carousel-caption"></div>', '</a>', '</div>'].join('');
+    }).join(''), '</div>', '<a id="carousel-left" class="left carousel-control" role="button" data-slide="prev">', '<span class="sr-only">Previous</span>', '<span class="glyphicon glyphicon-chevron-left"></span>', '<i class="left-btn allbtn"></i>', '</a>', '<a id="carousel-right" class="right carousel-control" role="button" data-slide="next">', '<span class="sr-only">Next</span>', '<span class="glyphicon glyphicon-chevron-right"></span>', '<i class="right-btn allbtn"></i>', '</a>', '</div>'].join(''));
 
     $('.carousel').carousel();
-    $('#carousel-left').click(() => {
-      $('.carousel').carousel('prev')
+    $('#carousel-left').click(function () {
+      $('.carousel').carousel('prev');
     });
-    $('#carousel-right').click(() => {
-      $('.carousel').carousel('next')
+    $('#carousel-right').click(function () {
+      $('.carousel').carousel('next');
     });
   },
-
-  getCarousel() {
-    return new Promise((resolve, reject) => {
+  getCarousel: function getCarousel() {
+    return new Promise(function (resolve, reject) {
       $.ajax({
         'type': 'GET',
-        'url': `${appConfig.version}/system/carousel/findByElement.do`,
+        'url': appConfig.version + '/system/carousel/findByElement.do',
         'contentType': 'application/json; charset=utf-8',
-        success: val => {
+        success: function success(val) {
           if (val.result === '0') {
             resolve(val.data);
           } else {
-            reject(`请求服务器成功, 但是轮播图数据有误, 原因: ${val.message}`);
+            reject('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u4F46\u662F\u8F6E\u64AD\u56FE\u6570\u636E\u6709\u8BEF, \u539F\u56E0: ' + val.message);
           }
         },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求轮播图出错, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
+        error: function error(XMLHttpRequest, textStatus, errorThrown) {
+          reject('\u8BF7\u6C42\u8F6E\u64AD\u56FE\u51FA\u9519, \u72B6\u6001\u7801: ' + XMLHttpRequest.status + '. \u539F\u56E0: ' + errorThrown);
         }
       });
-
-    })
+    });
   }
-}
+};
 
-let product = {
+var product = {
   'data': [
     // {
     //   'catDesc': null,
@@ -231,188 +200,148 @@ let product = {
     // }
   ],
 
-  init() {
-    const _this = this;
+  init: function init() {
+    var _this = this;
 
-    this.getProduct()
-    .then(val => {
+    this.getProduct().then(function (val) {
       _this.data = val;
       _this.renderProduct();
-    }, error => alert(error))
+    }, function (error) {
+      return alert(error);
+    });
   },
+  renderProduct: function renderProduct() {
+    var _this = this;
+    var isinterval = false;
 
-  renderProduct() {
-    const _this = this;
-    let isinterval = false;
+    $('#product').html(this.data.map(function (list, key) {
+      // 交换间隔
+      isinterval = isinterval ? false : true;
 
-    $('#product').html(
-      this.data.map((list, key) => {
-        // 交换间隔
-        isinterval = isinterval ? false : true;
+      var productLength = list.productList.length;
 
-        let productLength = list.productList.length;
+      return ['<div class="product-list' + (isinterval ? ' list-interval' : '') + '">', '<h2>' + list.catName + ' <a href="https://divet.taobao.com/?spm=a1z10.1-c.0.0.8cxl3q" target=\'_blank\'>\u66F4\u591A</a></h2>', '<div class="list-content">', list.productList.map(function (val, itemKey) {
+        var isLineThree = true; // 默认 三行
 
-        return [
-          `<div class="product-list${isinterval ? ' list-interval' : ''}">`,
-            `<h2>${list.catName} <a href="https://divet.taobao.com/?spm=a1z10.1-c.0.0.8cxl3q" target='_blank'>更多</a></h2>`,
+        if (productLength % 3 === 0) {
+          // 正好整除
+          isLineThree = true;
+        } else if (productLength % 3 == 2) {
+          // 余 2
+          itemKey < productLength - 2 ? isLineThree = true : isLineThree = false;
+        } else if (productLength % 3 == 1) {
+          // 余 1
+          itemKey < productLength - 4 ? isLineThree = true : isLineThree = false;
+        }
 
-            '<div class="list-content">',
-              list.productList.map((val, itemKey) => {
-                let isLineThree = true; // 默认 三行
-
-                if (productLength % 3 === 0) { // 正好整除
-                  isLineThree = true;
-                } else if (productLength % 3 == 2) { // 余 2
-                  ( itemKey < (productLength - 2) ) ? isLineThree = true : isLineThree = false;
-                } else if (productLength % 3 == 1) { // 余 1
-                  ( itemKey < (productLength - 4) ) ? isLineThree = true : isLineThree = false;
-                }
-
-                return [
-                  `<div class="item${isLineThree ? '' : ' item-big'}">`,
-                    '<div class="item-content">',
-                      `<a href="./product/index.html?productId=${val.productId}">`,
-                        '<div class="item-img">',
-                          `<img src="${appConfig.urlBase}${val.productThumb}" />`,
-                          '<div class="img-label">',
-                            _this.renderLabel(val),
-                          '</div>',
-                        '</div>',
-                      '</a>',
-                      '<div class="item-detail">',
-                        '<div class="detail-NameAndPrice">',
-                          '<div class="detail-productName">',
-                            `<a href="./product/index.html?productId=${val.productId}">${val.productName}</a>`,
-                          '</div>',
-                          _this.renderPrice(val),
-                        '</div>',
-                        '<div class="detail-apartmentAndPromote">',
-                          `<div class="detail-apartment">${
-                            val.productType === "package" ? val.apartment : ''
-                          }</div>`,
-                          _this.renderPromote(val),
-                        '</div>',
-                      '</div>',
-                    '</div>',
-                  '</div>'
-                ].join("");
-              }).join(''),
-            '</div>',
-          '</div>'
-        ].join('');
-      }).join('')
-    );
+        return ['<div class="item' + (isLineThree ? '' : ' item-big') + '">', '<div class="item-content">', '<a href="./product/index.html?productId=' + val.productId + '">', '<div class="item-img">', '<img src="' + appConfig.urlBase + val.productThumb + '" />', '<div class="img-label">', _this.renderLabel(val), '</div>', '</div>', '</a>', '<div class="item-detail">', '<div class="detail-NameAndPrice">', '<div class="detail-productName">', '<a href="./product/index.html?productId=' + val.productId + '">' + val.productName + '</a>', '</div>', _this.renderPrice(val), '</div>', '<div class="detail-apartmentAndPromote">', '<div class="detail-apartment">' + (val.productType === "package" ? val.apartment : '') + '</div>', _this.renderPromote(val), '</div>', '</div>', '</div>', '</div>'].join("");
+      }).join(''), '</div>', '</div>'].join('');
+    }).join(''));
   },
-
-  renderPromote(item) {
-    const nowTimestamp = Date.parse(new Date()),
-      promoteEndTimestamp = item.promoteEndTime,
-      promoteStartTimestamp = item.promoteStartTime,
-      promotePrice = item.promotePrice,
-      productPrice = item.productPrice;
+  renderPromote: function renderPromote(item) {
+    var nowTimestamp = Date.parse(new Date()),
+        promoteEndTimestamp = item.promoteEndTime,
+        promoteStartTimestamp = item.promoteStartTime,
+        promotePrice = item.promotePrice,
+        productPrice = item.productPrice;
 
     // 如果促销
     if (promotePrice != null && promotePrice != 0) {
       // 当前时间 大于等于 促销开始时间
       // 并且
       // 当前时间 小于等于 促销结束时间
-      if (
-        nowTimestamp >= promoteStartTimestamp && 
-        nowTimestamp <= promoteEndTimestamp
-      ) {
-        return `<div class="detail-promote">${productPrice}</div>`
+      if (nowTimestamp >= promoteStartTimestamp && nowTimestamp <= promoteEndTimestamp) {
+        return '<div class="detail-promote">' + productPrice + '</div>';
       }
     }
 
     // 其他情况都不是促销
-    return ""
+    return "";
   },
-
-  renderPrice(item) {
-    const promotePrice = item.promotePrice,
-      productPrice = item.productPrice,
-      promoteEndTimestamp = item.promoteEndTime,
-      promoteStartTimestamp = item.promoteStartTime,
-      nowTimestamp = Date.parse(new Date());
+  renderPrice: function renderPrice(item) {
+    var promotePrice = item.promotePrice,
+        productPrice = item.productPrice,
+        promoteEndTimestamp = item.promoteEndTime,
+        promoteStartTimestamp = item.promoteStartTime,
+        nowTimestamp = Date.parse(new Date());
 
     // 如果促销
     if (promotePrice != null && promotePrice != 0) {
       // 当前时间 大于等于 促销开始时间
       // 并且
       // 当前时间 小于等于 促销结束时间
-      if (
-        nowTimestamp >= promoteStartTimestamp && 
-        nowTimestamp <= promoteEndTimestamp
-      ) {
-        return `<div class="detail-price">${promotePrice} RMB</div>`
+      if (nowTimestamp >= promoteStartTimestamp && nowTimestamp <= promoteEndTimestamp) {
+        return '<div class="detail-price">' + promotePrice + ' RMB</div>';
       }
     }
 
     // 其他情况都不是促销
-    return `<div class="detail-price">${productPrice} RMB</div>`
+    return '<div class="detail-price">' + productPrice + ' RMB</div>';
   },
-
-  renderLabel(item) {
-    const isNew = item.isNew, // 'Y' 'N'
-      promotePrice = item.promotePrice,
-      promoteEndTimestamp = item.promoteEndTime,
-      promoteStartTimestamp = item.promoteStartTime,
-      nowTimestamp = Date.parse(new Date());
+  renderLabel: function renderLabel(item) {
+    var isNew = item.isNew,
+        // 'Y' 'N'
+    promotePrice = item.promotePrice,
+        promoteEndTimestamp = item.promoteEndTime,
+        promoteStartTimestamp = item.promoteStartTime,
+        nowTimestamp = Date.parse(new Date());
 
     // 如果促销
     if (promotePrice != null && promotePrice != 0) {
       // 当前时间 大于等于 促销开始时间
       // 并且
       // 当前时间 小于等于 促销结束时间
-      if (
-        nowTimestamp >= promoteStartTimestamp && 
-        nowTimestamp <= promoteEndTimestamp
-      ) {
-        return '<div class="label-promote">限时促销</div>'
+      if (nowTimestamp >= promoteStartTimestamp && nowTimestamp <= promoteEndTimestamp) {
+        return '<div class="label-promote">限时促销</div>';
       }
     }
 
     // 如果不促销
-    return isNew === 'Y' ? 
-    '<div class="label-isNew">新品</div>' : 
-    '<div class="label-product">度假套餐</div>';
+    return isNew === 'Y' ? '<div class="label-isNew">新品</div>' : '<div class="label-product">度假套餐</div>';
   },
-
-  getProduct() {
-    return new Promise((resolve, reject) => {
+  getProduct: function getProduct() {
+    return new Promise(function (resolve, reject) {
       $.ajax({
         'type': 'GET',
-        'url': `${appConfig.version}/product/listWithCat.do`,
+        'url': appConfig.version + '/product/listWithCat.do',
         'contentType': 'application/json; charset=utf-8',
-        success: val => {
+        success: function success(val) {
           if (val.result === '0') {
             resolve(val.data);
           } else {
-            reject(`请求服务器成功, 但是产品数据有误, 原因: ${val.message}`);
+            reject('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u4F46\u662F\u4EA7\u54C1\u6570\u636E\u6709\u8BEF, \u539F\u56E0: ' + val.message);
           }
         },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-          reject(`请求产品出错, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`);
+        error: function error(XMLHttpRequest, textStatus, errorThrown) {
+          reject('\u8BF7\u6C42\u4EA7\u54C1\u51FA\u9519, \u72B6\u6001\u7801: ' + XMLHttpRequest.status + '. \u539F\u56E0: ' + errorThrown);
         }
       });
-
-    })
+    });
   }
-}
-
+};
 
 /***/ }),
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_cookies__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_request__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_request___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utils_request__);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-/* harmony default export */ __webpack_exports__["a"] = ({
+var _cookies = __webpack_require__(2);
+
+var _cookies2 = _interopRequireDefault(_cookies);
+
+var _request = __webpack_require__(3);
+
+var _request2 = _interopRequireDefault(_request);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   'data': false,
   // {
   //   'bindEmailTime': 1484529221000,
@@ -453,8 +382,8 @@ let product = {
   'isOutDropdown': false, // 是否 离开下拉菜单
   'dropdownSetTimeout': null, // NodeJS.Timer
 
-  init: function(SelectedNumString) {
-    const _this = this;
+  init: function init(SelectedNumString) {
+    var _this = this;
 
     this.litUpContentSelected(SelectedNumString);
 
@@ -462,8 +391,7 @@ let product = {
 
     this.setOptionCookie();
 
-    this.getUserInfo()
-    .then(val => {
+    this.getUserInfo().then(function (val) {
       if (val.result === 1) {
         _this.data = val.data;
         $('.login-true').show();
@@ -472,64 +400,66 @@ let product = {
           console.log(val.message);
         }
         $('.login-false').show();
-  
-        $('#login-show').click(() => {
+
+        $('#login-show').click(function () {
           _this.loginModalShow();
         });
       }
-    }, error => alert(error));
+    }, function (error) {
+      return alert(error);
+    });
   },
 
-  loginModalShow: function() {
+  loginModalShow: function loginModalShow() {
     this.isModalShow = true;
     $("#Modal-login").modal('show');
   },
 
-  loginModalHide: function() {
+  loginModalHide: function loginModalHide() {
     this.isModalShow = false;
     $($('.input-username label')[0]).html('');
     $($('.input-password label')[0]).html('');
     $('#input-password').val('');
   },
 
-  bindjQueryEvent: function() {
-    const _this = this;
+  bindjQueryEvent: function bindjQueryEvent() {
+    var _this = this;
 
     // 隐藏模态框
-    $('#login-hiden').click(() => {
+    $('#login-hiden').click(function () {
       $("#Modal-login").modal('hide');
     });
-    $("#Modal-login").on('hidden.bs.modal', e => {
+    $("#Modal-login").on('hidden.bs.modal', function (e) {
       _this.loginModalHide();
     });
 
     // 显示隐藏密码
-    $('#password-eye').click(() => {
+    $('#password-eye').click(function () {
       if (_this.isPasswordShow) {
         $('#password-eye').removeClass('eye-show');
-        $('#input-password').attr('type','password');
+        $('#input-password').attr('type', 'password');
         _this.isPasswordShow = false;
       } else {
         $('#password-eye').addClass('eye-show');
-        $('#input-password').attr('type','text');
+        $('#input-password').attr('type', 'text');
         _this.isPasswordShow = true;
       }
     });
 
     // 输入账号
-    $('#input-username').bind('input propertychange', function(event) {
+    $('#input-username').bind('input propertychange', function (event) {
       _this.username = $(this).val();
       _this.checkUserName();
     });
 
     // 输入密码
-    $('#input-password').bind('input propertychange', function(event) {
+    $('#input-password').bind('input propertychange', function (event) {
       _this.password = $(this).val();
       _this.checkPassword();
     });
 
     // 记住密码
-    $('#option-cookie').click(function(event) {
+    $('#option-cookie').click(function (event) {
       if (_this.isRememberCookie) {
         $(this).attr("checked", false);
         _this.isRememberCookie = false;
@@ -540,56 +470,54 @@ let product = {
     });
 
     // 登录
-    $('#login-subimt').click(function(event) {
+    $('#login-subimt').click(function (event) {
       _this.optionloginsubimt();
     });
 
     // 退出 登出
-    $('#droplist-logout').click(function(event) {
-      __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].removeItem('token', '/');
-      __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].removeItem('digest', '/');
+    $('#droplist-logout').click(function (event) {
+      _cookies2.default.removeItem('token', '/');
+      _cookies2.default.removeItem('digest', '/');
 
       $('.login-false').show();
       $('.login-true').hide();
     });
 
     // 下拉框移入 显示
-    $('.login-droplist').mouseenter(function(event) {
+    $('.login-droplist').mouseenter(function (event) {
       _this.isOutDropdown = false;
-      _this.dropdownSetTimeout = setTimeout(function() {
+      _this.dropdownSetTimeout = setTimeout(function () {
         if (_this.isOutDropdown === false) {
           $('.login-user').dropdown('toggle');
         }
       }, 500);
     });
-    $('.login-droplist').mouseleave(function(event) {
+    $('.login-droplist').mouseleave(function (event) {
       _this.isOutDropdown = true;
       clearTimeout(_this.dropdownSetTimeout);
     });
-    $('#dLabel').click(function(event) {
+    $('#dLabel').click(function (event) {
       _this.isOutDropdown = true;
       clearTimeout(_this.dropdownSetTimeout);
     });
   },
 
-  optionloginsubimt: function () {
-    const _this = this;
+  optionloginsubimt: function optionloginsubimt() {
+    var _this = this;
 
-    if (this.isLogining) { return false }
-
-    if (
-      this.checkUserName().result !== 1 ||
-      this.checkPassword().result !== 1
-    ) {
-      return false
+    if (this.isLogining) {
+      return false;
     }
-    
-    let myDom = $(this);
+
+    if (this.checkUserName().result !== 1 || this.checkPassword().result !== 1) {
+      return false;
+    }
+
+    var myDom = $(this);
     myDom.text('正在提交');
     this.isLogining = true;
 
-    this.subimtLogin()
-    .then(val => {
+    this.subimtLogin().then(function (val) {
       if (val.result === 1) {
         _this.data = val.data;
 
@@ -599,30 +527,24 @@ let product = {
         $('.login-false').hide();
         $('.login-true').show();
       } else if (val.result == '-9') {
-        $($('.input-username label')[0]).html(
-          '<div class="danger">您的账号尚未激活</div>'
-        );
+        $($('.input-username label')[0]).html('<div class="danger">您的账号尚未激活</div>');
       } else if (val.result == '-5') {
-        $($('.input-username label')[0]).html(
-          '<div class="danger">此账号不存在</div>'
-        );
+        $($('.input-username label')[0]).html('<div class="danger">此账号不存在</div>');
       } else if (val.result == '-6') {
-        $($('.input-password label')[0]).html(
-          '<div class="danger">您输入的密码是错误, 请输入正确的密码！</div>'
-        );
+        $($('.input-password label')[0]).html('<div class="danger">您输入的密码是错误, 请输入正确的密码！</div>');
       }
 
       myDom.text('登录');
       _this.isLogining = false;
-    }, error => {
+    }, function (error) {
       myDom.text('登录');
       _this.isLogining = false;
       alert(error);
     });
   },
 
-  setOptionCookie: function() {
-    let rememberCookie = localStorage.getItem('remember-cookie');
+  setOptionCookie: function setOptionCookie() {
+    var rememberCookie = localStorage.getItem('remember-cookie');
 
     if (rememberCookie) {
       rememberCookie = JSON.parse(rememberCookie);
@@ -637,64 +559,61 @@ let product = {
     }
   },
 
-  SaveCookie: function() {
-    let SevenDayLater = new Date( Date.parse(new Date()) + (86400000 * 7) );
-    
-    __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].setItem('token', this.data.token, SevenDayLater, '/');
-    __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].setItem('digest', this.data.digest, SevenDayLater, '/');
+  SaveCookie: function SaveCookie() {
+    var SevenDayLater = new Date(Date.parse(new Date()) + 86400000 * 7);
+
+    _cookies2.default.setItem('token', this.data.token, SevenDayLater, '/');
+    _cookies2.default.setItem('digest', this.data.digest, SevenDayLater, '/');
 
     if (this.isRememberCookie) {
       localStorage.setItem('remember-cookie', JSON.stringify({
         username: this.username,
-        password: this.password,
-      }))
+        password: this.password
+      }));
     } else {
       localStorage.removeItem('remember-cookie');
     }
   },
 
-  checkUserName: function () {
-    let usernameLabel = $($('.input-username label')[0]);
+  checkUserName: function checkUserName() {
+    var usernameLabel = $($('.input-username label')[0]);
 
     if (this.username === '') {
       usernameLabel.html('<div>请输入用户名</div>');
-      return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('用户名为空');
+      return _request2.default.error('用户名为空');
     }
 
     // 既不是邮箱账号, 也不是手机账号
-    if (
-      /^1[34578]\d{9}$/.test(this.username) === false &&
-      /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(this.username) === false
-    ) {
+    if (/^1[34578]\d{9}$/.test(this.username) === false && /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(this.username) === false) {
       usernameLabel.html('<div class="warning">请输入正确手机或邮箱格式的账号</div>');
-      return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('账号格式有误');
+      return _request2.default.error('账号格式有误');
     }
 
     usernameLabel.html('');
-    return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.success();
+    return _request2.default.success();
   },
 
-  checkPassword: function () {
-    let passwordLabel = $($('.input-password label')[0]);
+  checkPassword: function checkPassword() {
+    var passwordLabel = $($('.input-password label')[0]);
 
     if (this.password === '') {
       passwordLabel.html('<div>请输入密码</div>');
-      return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('密码为空');
+      return _request2.default.error('密码为空');
     }
 
     // 密码小于 8 位
     if (this.password.length < 8) {
       passwordLabel.html('<div class="warning">输入的密码不能小于8位长度</div>');
-      return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('密码格式有误');
+      return _request2.default.error('密码格式有误');
     }
 
     passwordLabel.html('');
-    return __WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.success();
+    return _request2.default.success();
   },
 
-  subimtLogin: function () {
-    const _this = this;
-    let subimtData;
+  subimtLogin: function subimtLogin() {
+    var _this = this;
+    var subimtData = void 0;
 
     if (/^1[34578]\d{9}$/.test(this.username)) {
       subimtData = {
@@ -708,69 +627,76 @@ let product = {
       };
     }
 
-    return new Promise((resolve, reject) => {
-      fetch(`${appConfig.version}/user/login.do`,{
+    return new Promise(function (resolve, reject) {
+      fetch(appConfig.version + '/user/login.do', {
         method: 'POST',
         contentType: 'application/json; charset=utf-8',
         body: JSON.stringify(subimtData)
-      }).then(
-        response => response.json(),
-        error => ({'result':'1', 'message': error})
-      ).then(val => {
+      }).then(function (response) {
+        return response.json();
+      }, function (error) {
+        return { 'result': '1', 'message': error };
+      }).then(function (val) {
         if (val.result === '0') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.success(val.data));
+          resolve(_request2.default.success(val.data));
         } else if (val.result == '-9') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('您的账号尚未激活', '-9'));
+          resolve(_request2.default.error('您的账号尚未激活', '-9'));
         } else if (val.result == '-5') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('此账号不存在', '-5'));
+          resolve(_request2.default.error('此账号不存在', '-5'));
         } else if (val.result == '-6') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('您输入的密码是错误, 请输入正确的密码', '-6'));
+          resolve(_request2.default.error('您输入的密码是错误, 请输入正确的密码', '-6'));
         } else {
-          reject(`请求服务器成功, 但是用户登录信息有误! 原因: ${val.message}`);
+          reject('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u4F46\u662F\u7528\u6237\u767B\u5F55\u4FE1\u606F\u6709\u8BEF! \u539F\u56E0: ' + val.message);
         }
-      }).catch(error => {
-        reject(`请求出错 , 向服务器发起请求用户登录失败, 原因: ${error}`);
-      })
+      }).catch(function (error) {
+        reject('\u8BF7\u6C42\u51FA\u9519 , \u5411\u670D\u52A1\u5668\u53D1\u8D77\u8BF7\u6C42\u7528\u6237\u767B\u5F55\u5931\u8D25, \u539F\u56E0: ' + error);
+      });
     });
   },
 
-  getUserInfo: () => new Promise((resolve, reject) => {
-    $.ajax({
-      'type': "GET", 
-      'url': `${appConfig.version}/user/getUserInfo.do`, 
-      'contentType': "application/json; charset=utf-8", 
-      'headers': {
-        'token': __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].getItem('token'),
-        'digest': __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].getItem('digest')
-      },
-      success: val => {
-        if (val.result === '0') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.success(val.data));
-        } else if (val.result === '401') {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error('你尚未登录!', 2));
-        } else {
-          resolve(__WEBPACK_IMPORTED_MODULE_1__utils_request___default.a.error(`请求服务器成功, 但是用户信息有误! 原因: ${val.message}`, 3));
+  getUserInfo: function getUserInfo() {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        'type': "GET",
+        'url': appConfig.version + '/user/getUserInfo.do',
+        'contentType': "application/json; charset=utf-8",
+        'headers': {
+          'token': _cookies2.default.getItem('token'),
+          'digest': _cookies2.default.getItem('digest')
+        },
+        success: function success(val) {
+          if (val.result === '0') {
+            resolve(_request2.default.success(val.data));
+          } else if (val.result === '401') {
+            resolve(_request2.default.error('你尚未登录!', 2));
+          } else {
+            resolve(_request2.default.error('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u4F46\u662F\u7528\u6237\u4FE1\u606F\u6709\u8BEF! \u539F\u56E0: ' + val.message, 3));
+          }
+        },
+        error: function error(XMLHttpRequest, textStatus, errorThrown) {
+          reject('\u8BF7\u6C42\u7528\u6237\u4FE1\u606F\u51FA\u9519, \u72B6\u6001\u7801: ' + XMLHttpRequest.status + '. \u539F\u56E0: ' + errorThrown);
         }
-      },
-      error: (XMLHttpRequest, textStatus, errorThrown) => {
-        reject(`请求用户信息出错, 状态码: ${XMLHttpRequest.status}. 原因: ${errorThrown}`)
-      }
+      });
     });
-  }),
+  },
 
-  litUpContentSelected(SelectedNumString) {
+  litUpContentSelected: function litUpContentSelected(SelectedNumString) {
     if (SelectedNumString) {
       $($('.header-content a')[SelectedNumString]).addClass('content-selected');
     }
   }
-});
-
+};
 
 /***/ }),
 /* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 /*
  * docCookies.setItem(name, value[, end[, path[, domain[, secure]]]])
  * docCookies.getItem(name)
@@ -779,13 +705,15 @@ let product = {
  * docCookies.keys()
  */
 
-let docCookies = {
-  getItem: function (sKey) {
+var docCookies = {
+  getItem: function getItem(sKey) {
     return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
   },
-  setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
-    if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
-    let sExpires = "";
+  setItem: function setItem(sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+    if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) {
+      return false;
+    }
+    var sExpires = "";
     if (vEnd) {
       switch (vEnd.constructor) {
         case Number:
@@ -802,74 +730,86 @@ let docCookies = {
     document.cookie = encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
     return true;
   },
-  removeItem: function (sKey, sPath, sDomain) {
-    if (!sKey || !this.hasItem(sKey)) { return false; }
-    document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + ( sDomain ? "; domain=" + sDomain : "") + ( sPath ? "; path=" + sPath : "");
+  removeItem: function removeItem(sKey, sPath, sDomain) {
+    if (!sKey || !this.hasItem(sKey)) {
+      return false;
+    }
+    document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
     return true;
   },
-  hasItem: function (sKey) {
-    return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+  hasItem: function hasItem(sKey) {
+    return new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=").test(document.cookie);
   },
-  keys: /* optional method: you can safely remove it! */ function () {
-    let aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
-    for (let nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
+  keys: /* optional method: you can safely remove it! */function keys() {
+    var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+    for (var nIdx = 0; nIdx < aKeys.length; nIdx++) {
+      aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]);
+    }
     return aKeys;
   }
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (docCookies);
-
+exports.default = docCookies;
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 module.exports = {
-    success: (data, message) => ({
-        'result': 1,
-        'data': data || null,
-        'message': message || 'Request to Database success'
-    }),
+    success: function success(data, message) {
+        return {
+            'result': 1,
+            'data': data || null,
+            'message': message || 'Request to Database success'
+        };
+    },
 
-    error: (message, result, data) => ({
-        'result': result || 0,
-        'data': data || null,
-        'message': message
-    })
-}
-
+    error: function error(message, result, data) {
+        return {
+            'result': result || 0,
+            'data': data || null,
+            'message': message
+        };
+    }
+};
 
 /***/ }),
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-  init() {
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  init: function init() {
     this.scrollTop();
     this.siderBar();
   },
+  siderBar: function siderBar() {
+    var myclientWidth = document.body.clientWidth;
 
-  siderBar() {
-    let myclientWidth = document.body.clientWidth;
-
-    $('#showSidebar').click(function(){
+    $('#showSidebar').click(function () {
       $('#side-bar').animate({
         'right': '0'
       }, 70);
     });
 
-    $("#closeSidebar").click(function(){
-      $('#side-bar').animate({'right': '-330px'}, 70);
+    $("#closeSidebar").click(function () {
+      $('#side-bar').animate({ 'right': '-330px' }, 70);
     });
   },
-
-  scrollTop() {
-    let scrollTopTimer = null,
+  scrollTop: function scrollTop() {
+    var scrollTopTimer = null,
         isshowScrollIcon = false,
-        scrollTopNumber;
-    
-    window.onscroll= () => {
+        scrollTopNumber = void 0;
+
+    window.onscroll = function () {
       scrollTopNumber = document.documentElement.scrollTop || document.body.scrollTop;
 
       if (scrollTopNumber > 600) {
@@ -880,7 +820,6 @@ module.exports = {
             'opacity': ' 1'
           }, 500);
         }
-
       } else if (scrollTopNumber < 600) {
         if (isshowScrollIcon == true) {
           isshowScrollIcon = false;
@@ -889,34 +828,32 @@ module.exports = {
             'opacity': '0'
           }, 500);
 
-          setTimeout(() => {
+          setTimeout(function () {
             $('#scroll-icon-top').css('visibility', 'hidden');
           }, 500);
         }
       }
 
       return scrollTopNumber;
-    }
+    };
 
-    $('#scroll-icon-top').click(() => {
+    $('#scroll-icon-top').click(function () {
       clearInterval(scrollTopTimer);
 
-      scrollTopTimer = setInterval(() => {
+      scrollTopTimer = setInterval(function () {
 
-        let nowScroll = scrollTopNumber;
-        let speed= ( 0 - nowScroll ) / 10;
+        var nowScroll = scrollTopNumber;
+        var speed = (0 - nowScroll) / 10;
         speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
-        if(scrollTopNumber <= 10){
+        if (scrollTopNumber <= 10) {
           clearInterval(scrollTopTimer);
         }
         document.documentElement.scrollTop = scrollTopNumber + speed;
         document.body.scrollTop = scrollTopNumber + speed;
       }, 10);
-
     });
   }
-});
-
+};
 
 /***/ })
 /******/ ]);

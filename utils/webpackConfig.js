@@ -3,6 +3,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 
 module.exports = (ReadefilePath, writeFilePath, writeFileName, isproduction) => {
+  process.noDeprecation = true;
   if (isproduction) {
     return {
       'entry': ReadefilePath,
@@ -13,7 +14,7 @@ module.exports = (ReadefilePath, writeFilePath, writeFileName, isproduction) => 
       'module': {
         loaders: [
           {
-            test: path.join(__dirname, 'es6'),
+            test: /\.js$/,
             loader: 'babel-loader',
             query: {
               presets: [
@@ -38,7 +39,7 @@ module.exports = (ReadefilePath, writeFilePath, writeFileName, isproduction) => 
       'module': {
         loaders: [
           {
-            test: path.join(__dirname, 'es6'),
+            test: /\.js$/,
             loader: 'babel-loader',
             query: {
               presets: [

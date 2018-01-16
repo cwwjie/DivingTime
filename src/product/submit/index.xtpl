@@ -10,11 +10,11 @@
   <meta name="description" content="【潜游时光】专业的旅游行程定制,全新的服务体验,最佳的旅游度假体验,为您提供一站式潜水度假村预定服务,为出国旅游者提供最佳的旅游攻略和服务,让您的旅行有温度。" />
   <meta name="author" content="潜游时光" />
 
-  <link rel="stylesheet" type="text/css" href={{ "./index.css?file_version=" + file_version }}>
+  <link rel="stylesheet" type="text/css" href='{{ "./index.css?file_version=" + file_version }}'>
 </head>
 <body>
   <header>
-    <a href="{{ homeURL + "index.html" }}"><i></i></a>
+    <a href='{{ homeURL + "index.html" }}'><i></i></a>
     <div class="tell-header">服务咨询 :<a href="tel://4006709078"> 400-9688-768</a></div>
   </header>
 
@@ -248,13 +248,13 @@
 
   {{ include ("./../../Component/Copyright/index") }}
 
-</body>
-  <script type="text/javascript" src={{ homeURL + "dist/js/vue.min.js" }}></script>
-  <script type="text/javascript" src={{ homeURL + "dist/js/vue-date-picker.js" }}></script>
-  <script type="text/javascript" src={{ homeURL + "dist/js/es6-promise.min.js" }}></script>
-  <script type="text/javascript" src={{ homeURL + "dist/js/fetch.min.js" }}></script>
-  <script type="text/javascript" src={{ homeURL + "dist/js/ChineseHelper.js" }}></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/vue.min.js" }}'></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/vue-date-picker.js" }}'></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/es6-promise.min.js" }}'></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/fetch.min.js" }}'></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/ChineseHelper.js" }}'></script>
 
-  <script type="text/javascript" src={{ homeURL + "dist/js/config.js?file_version=" + file_version }}></script>
-  <script type="text/javascript" src={{ "./index.js?file_version=" + file_version }}></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/config.js?file_version=" + file_version }}'></script>
+  <script type="text/javascript" src='{{ "./index.js?file_version=" + file_version }}'></script>
+</body>
 </html>

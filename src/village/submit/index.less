@@ -35,36 +35,10 @@ header {
   }
 }
 
-.main {
-	min-height: 600px;
-	margin: 0 auto;
-	width: 970px;
-
-	.main-title {
-		padding-bottom: 15px;
-		font-size: 24px;
-		font-weight: normal;
-		color: #404A5A;
-	
-		span {
-			float: left;
-			width: 30px;
-			height: 30px;
-			margin-right: 10px;
-			border-radius: 30px;
-			font-size: 18px;
-			line-height: 30px;
-			text-align: center;
-			background: #404A5A;
-			color: #eee;
-			display: block;
-		}
-	}
-}
-
 .orders-navigation {
 	width: 970px;
-	padding-top: 30px;
+	margin: 0 auto;
+	padding-top: 80px;
 	padding-bottom: 30px;
 	overflow: hidden;
 	
@@ -107,66 +81,137 @@ header {
 	}
 }
 
-.orders-detail {
+.main {
+	width: 970px;
+	margin: 0 auto;
+	position: relative;
+}
 
-	
-	.orders-content {
-		padding: 30px;
-		background: #fff;
-		border: solid 1px #DBDBDB;
-	
-		.orders-title {
-			font-size: 20px;
-			padding-bottom: 10px;
+.main-title {
+	padding-bottom: 15px;
+	font-size: 24px;
+	font-weight: normal;
+	color: #404A5A;
+
+	span {
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 30px;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    background: #404A5A;
+    color: #eee;
+    display: block;
+	}
+}
+
+.orders-content {
+	padding: 30px;
+	background: #fff;
+	border: solid 1px #DBDBDB;
+
+	.orders-title {
+		font-size: 20px;
+		padding-bottom: 10px;
+	}
+
+	.orders-apartment {
+		padding-bottom: 20px;
+
+		.orders-apartment-content {
+			position: relative;
+			border: solid 1px #DBDBDB;
+			padding: 20px;
+			margin-bottom: 20px;
+
+			.postscript {
+				> div {
+					font-size: 14px;
+					color: #8d8d8d;			
+				}
+			}
 		}
-	
-		.orders-date {
-			padding-top: 10px;
-			padding-bottom: 20px;
+
+		.apartment-title {
+			font-size: 18px;
+		}
+
+		.apartment-prices {
+			position: absolute;
+			font-size: 18px;
+			right: 20px;
+			top: 20px;
+		}
+
+		.row {
+			padding-top: 15px;
+		}
+
+		.button {
+
+			button {
+				width: 20px;
+				height: 20px;
+				text-align: center;
+				cursor: pointer;
+			}
+
+			span {
+				padding-left: 10px;
+				padding-right: 10px;
+			}
+		}
+	}
+
+	.orders-date {
+		padding-top: 10px;
+		padding-bottom: 20px;
+		font-size: 16px;
+	}
+
+	.orders-table {
+		.orders-table-title {
 			font-size: 16px;
 		}
-	
-		.orders-table {
-			.orders-table-title {
-				font-size: 16px;
-			}
-	
-			.row {
+
+		.row {
+			>div {
 				>div {
-					>div {
-						padding-left: 20px;
-						padding-top: 10px;
-						padding-bottom: 10px;
-					}
-				}
-				.price {
-					>div {
-						padding-right: 20px;
-						float: right;
-					}
+					padding-left: 20px;
+					padding-top: 10px;
+					padding-bottom: 10px;
 				}
 			}
-	
-			.orders-table-content {
-				border: solid 1px #DBDBDB;
-			}
-	
-			.orders-table-item {
-				border-bottom: solid 1px #DBDBDB;
-			}
-	
-			.orders-table-total {
-				background-color: #e1e1e1;
+			.price {
+				>div {
+					padding-right: 20px;
+					float: right;
+				}
 			}
 		}
-	
-		.orders-postscript {
-			padding-top: 10px;
-			padding-left: 5px;
-			div {
-				font-size: 14px;
-				color: #8d8d8d;
-			}
+
+		.orders-table-content {
+			border: solid 1px #DBDBDB;
+		}
+
+		.orders-table-item {
+			border-bottom: solid 1px #DBDBDB;
+		}
+
+		.orders-table-total {
+			background-color: #e1e1e1;
+		}
+	}
+
+	.orders-postscript {
+		padding-top: 10px;
+		padding-left: 5px;
+		div {
+			font-size: 14px;
+			color: #8d8d8d;
 		}
 	}
 }
@@ -263,12 +308,6 @@ header {
 					height: 40px;
 					padding: 15px;
 					border-bottom: 1px solid #e5e5e5;
-					-webkit-touch-callout: none;
-					-webkit-user-select: none;
-					-khtml-user-select: none;
-					-moz-user-select: none;
-					-ms-user-select: none;
-					user-select: none;
 
 					> div {
 						float: left;

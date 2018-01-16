@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<div class="Client" id="Client">
+		<div class="containAddres" id="containClient">
+			<div class="top">
+				<div class="Btn" id="addClient">新增用户信息</div>
+				<div class="left">您已创建 <span id="lengthClient">0</span> 个用户信息，最多可创建20 个</div>
+			</div>
+			<div id="renderAddres">
+				正在加载...
+				<!-- <div class="line">
+					<div class="line-boder">
+						<div class="title">用户信息</div>
+						<div class="delete" title="">X</div>
+						<div class="content">
+							<div class="row"><div class="left">姓名(中文):</div><div class="right">曾杰杰</div></div>
+							<div class="row"><div class="left">姓名(拼音):</div><div class="right">Zenjie</div></div>
+							<div class="row"><div class="left">性别:</div><div class="right">男</div></div>
+							<div class="row"><div class="left">出生日期:</div><div class="right" title="">2016年12月5日</div></div>
+							<div class="row"><div class="left">年龄:</div><div class="right">22</div></div>
+							<div class="row"><div class="left">手机号码:</div><div class="right">15967613287</div></div>
+							<div class="row"><div class="left">邮箱:</div><div class="right">454766952@qq.com</div></div>
+							<div class="row"><div class="left">护照号:</div><div class="right">F12345678</div></div>
+							<div class="row"><div class="left">潜水等级:</div><div class="right">初级</div></div>
+							<div class="row"><div class="left">潜水次数:</div><div class="right">10次</div></div>
+						</div>
+						<div class="edit">编辑</div>
+					</div>
+				</div>
+				<div class="line">
+					<div class="line-boder">
+						<div class="title">用户信息</div>
+						<div class="delete">X</div>
+						<div class="content">
+							<div class="row"><div class="left">姓名(中文):</div><div class="right">曾杰杰</div></div>
+							<div class="row"><div class="left">姓名(拼音):</div><div class="right">Zenjie</div></div>
+							<div class="row"><div class="left">性别:</div><div class="right">男</div></div>
+							<div class="row"><div class="left">出生日期:</div><div class="right">2016年12月5日</div></div>
+							<div class="row"><div class="left">年龄:</div><div class="right">22</div></div>
+							<div class="row"><div class="left">手机号码:</div><div class="right">15967613287</div></div>
+							<div class="row"><div class="left">邮箱:</div><div class="right">454766952@qq.com</div></div>
+							<div class="row"><div class="left">护照号:</div><div class="right">F12345678</div></div>
+							<div class="row"><div class="left">潜水等级:</div><div class="right">初级</div></div>
+							<div class="row"><div class="left">潜水次数:</div><div class="right">10次</div></div>
+						</div>
+						<div class="edit">编辑</div>
+					</div>
+				</div> -->
+			</div>
+		</div>
+		<aside id="confirmClient" style="display: none;">
+			<div class="title">新增用户信息</div>
+			<div class="delete">X</div>
+			<div class="line-boder">
+				<div class="content">
+					<div class="line">
+						<div class="line-left">
+							<div class="line-top"><span class="red">*</span>姓名(中文)</div>
+							<input class="bot" type="text" name="ChineseName" id="ChineseName">
+							<span class="Des"></span>
+						</div>
+						<div class="line-right">
+							<div class="line-top"><span class="red">*</span>姓名(拼音)</div>
+							<input class="bot" type="text" name="EnglishName" id="EnglishName">
+							<span class="Des"></span>
+						</div>
+					</div>
+					<div class="line">
+						<div class="line-left">
+							<div class="line-top">护照号码</div>
+							<input class="bot" type="text" name="Passport">
+							<span class="Des"></span>
+						</div>
+						<div class="line-right">
+							<div class="line-top"><span class="red">*</span>性别</div>
+	            <div class="sex">
+		            <input type="radio" name="sex" id="male" checked="true"/>
+		            <label for="male">男</label>
+	            </div>
+	            <div class="sex">
+		            <input type="radio" name="sex" id="female"/>
+		            <label for="female">女</label>
+	            </div>
+	            <div class="sex" style="display: none;">
+		            <input type="radio" name="sex" id="secret" />
+		            <label for="secret">保密</label>
+	            </div>
+							<span class="Des"></span>
+						</div>
+					</div>
+					<div class="line">
+						<div class="line-left">
+							<div class="line-top"><span class="red">*</span>出生日期</div>
+			        <div class="" id="time">
+			          <select class="sel_year" rel="0"></select><span> 年 </span>
+			          <select class="sel_month" rel="0"></select><span> 月 </span>
+			          <select class="sel_day" rel="0"></select><span> 日 </span>
+			        </div>
+							<span class="Des" id="sel_time"></span>
+						</div>
+						<div class="line-right">
+							<div class="line-top"><span class="red">*</span>年龄</div>
+							<input class="bot" type="text" name="Age" disabled="disabled" id="Age">
+							<span class="Des"></span>
+						</div>
+					</div>
+					<div class="line">
+						<div class="line-left">
+							<div class="line-top"><span class="red">*</span>手机号码</div>
+							<input class="bot" type="text" name="PhoneNumber">
+							<span class="Des"></span>
+						</div>
+						<div class="line-right">
+							<div class="line-top"><span class="red">*</span>邮箱</div>
+							<input class="bot" type="text" name="Mailbox">
+							<span class="Des"></span>
+						</div>
+					</div>
+					<div class="line">
+						<div class="line-left">
+							<div class="line-top">潜水等级</div>
+							<select name="Divelevel" class="count_select">
+							  <option selected="selected" disabled="disabled" value="null">请选择</option>
+							  <option value="1">OW(初级潜水员)</option>
+							  <option value="2">AO以上(初级潜水员以上)</option>
+							  <!-- <option value="3">EFR(第一紧急反应)</option>
+							  <option value="4">RESCUE(救援潜水员)</option>
+							  <option value="5">MASTER SCUBA(名仕潜水员)</option>
+							  <option value="6">MASTER(潜水长)</option>
+							  <option value="7">OWSI(开放水域水肺教练)</option>
+							  <option value="8">MSDT(名仕潜水员训练官)</option>
+							  <option value="9">MASTER INSTRUCTOR(教练长)</option> -->
+							  <option value="null">无</option>
+							</select>
+							<span class="Des"></span>
+						</div>
+						<div class="line-right">
+							<div class="line-top">潜水次数(请填写100以下次数)</div>
+							<input class="bot" type="text" name="DiveTimes">
+							<span class="Des"></span>
+						</div>
+					</div>
+				</div>
+				<div class="confirm" id="confirm">保存</div>
+				<div class="confirm" id="modifyAddres">保存</div>
+			</div>
+		</aside>
+	</div>
+</body>
+</html>

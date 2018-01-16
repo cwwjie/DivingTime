@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<div class="Account" id="Account">
+		<div class="line">
+			<div>密码设置</div>
+			<div id="renderPassword">正在加载...</div>
+			<div class="modify" id="modifyPassword">修改</div>
+		</div>
+		<div class="line">
+			<div>电子邮箱</div>
+			<div id="renderEmail">未绑定</div>
+			<div class="modify" id="modifyEmail">绑定</div>
+		</div>
+		<div class="line">
+			<div>手机号码</div>
+			<div id="renderPhone">未绑定</div>
+			<div class="modify" id="modifyPhone">绑定</div>
+		</div>
+	</div>
+  <div class="changeAccoun" style="display: none;" id="changePassword">
+    <div class="title">
+      <div class="left">修改密码</div>
+      <div class="right returnBack"><a>返回 ></a></div>
+    </div>
+    <div class="Description">输入正确的原始密码。</div>
+    <div class="input1">
+      <input type="text" name="User" id="userPassword" placeholder="旧密码">
+      <label for="User"><i></i><span></span></label>
+    </div>
+    <div class="input2">
+      <input type="password" name="password" id="newPassword" placeholder="新密码">
+      <div id="ShowPassword" class="ShowPassword hiden"></div>
+      <label for="password"><i></i><span></span></label>
+    </div>
+    <div class="Btn" id="passwordPush" title="allow">修改</div>
+  </div>
+  <div class="changeAccoun" style="display: none;" id="changeEmail">
+    <div class="title">
+      <div class="left">修改邮箱</div>
+      <div class="right returnBack"><a>返回 ></a></div>
+    </div>
+    <div class="Description">输入你的邮箱以及新的邮箱。</div>
+    <div class="input1">
+      <input type="password" name="User" id="userEmail" placeholder="输入你的密码">
+      <div class="ShowPassword hiden" id="ShowPassword2"></div>
+      <label for="User"><i></i><span></span></label>
+    </div>
+    <div class="input3">
+      <input type="text" name="password" id="newEmail" placeholder="新的登录邮箱">
+      <label for="password"><i></i><span></span></label>
+    </div>
+    <div class="Btn" id="emailPush" title="allow">修改</div>
+  </div>
+  <div class="changeAccoun" style="display: none;" id="changePhone">
+    <div class="title">
+      <div class="left">修改手机号码</div>
+      <div class="right returnBack"><a>返回 ></a></div>
+    </div>
+    <div class="Description">输入你要修改的手机号码以及新的手机号码。</div>
+    <div class="input1">
+      <input type="password" name="phone_Password" id="phone_Password" placeholder="输入你的密码">
+      <div class="ShowPassword hiden" id="ShowPassword3"></div>
+      <label for="phone_Password"><i></i><span></span></label>
+    </div>
+    <div class="input2">
+      <input type="text" name="newPhone" id="newPhone" placeholder="新的手机号码">
+      <label for="newPhone"><i></i><span></span></label>
+    </div>
+    <div class="input3">
+      <input type="text" name="PhoneCode" id="PhoneCode" placeholder="验证码">
+      <div class="getMobileCode" id="getMobileCode" title="OK">点击获取</div>
+      <label for="PhoneCode"><i></i><span></span></label>
+    </div>
+    <div class="Btn" id="phonePush" data-allow="allow">修改</div>
+  </div>
+</body>
+</html>

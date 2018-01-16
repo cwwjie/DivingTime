@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<div class="taobao">
+
+
+
+<!-- 订单列表 -->
+<div class='List'>
+  <div class="title">
+    <div class="title1">商品名称</div>
+    <div class="postion title2">支付信息</div>
+    <div class="postion title3">出行信息</div>
+  </div>
+  <div class="line" style="background:#d2d2d2;"></div>
+
+  <div id="Render-item">
+    暂无数据
+  </div>
+  <div id="pageNavigation" class="pageNavigation"></div>
+
+  <div class="List-item" style="display: none;">
+    <div class="item-title">订单号:<span>20170627</span>状态:<span>已付定金</span></div>
+    <div class="item-content">
+      <div class="content1">
+        <div>马达京ce</div>
+        <div class="orderDesc">马达京套餐测试</div>
+        <div class="minor">2017-6-28到2017-6-29</div>
+        <div class="minor">1间房子/1成人/1儿童</div>
+      </div>
+      <div class="content2">
+        <div class="minor">产品总金额:<span>1200</span>RMB</div>
+        <div class="minor">优惠金额:<span>200</span>RMB</div>
+        <div class="minor">订单总金额:<span>1000</span>RMB</div>
+        <div class="minor">已付金额:<span>500</span>RMB</div>
+        <div class="minor">未付金额:<span>500</span>RMB</div>
+      </div>
+      <div class="content3">
+        <div class="supplement">补充完整</div>
+      </div>
+    </div>
+    <div class="line"></div>
+  </div>
+
+  <div class="item" style="display: none;">
+    <div class="item1">20170627</div>
+    <div class="postion item2">已付定金</div>
+    <div class="postion item3">马达京套餐</div>
+    <div class="postion item4">2017-6-28</div>
+    <div class="postion item5">2017-6-29</div>
+    <div class="postion item6">
+      <div class="supplement">补充完整</div>
+      <!-- <div class="checking">查看信息</div> -->
+    </div>
+    <div class="line"></div>
+  </div>
+
+
+
+</div>
+
+
+<!-- 订单详情 -->
+<div class='Detail'>
+</div>
+
+
+
+
+<!-- 模态框 -->
+<div class="modal fade" id="taobaoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">信息收集</h4>
+      </div>
+      <div class="modal-body">
+        <p>是否已经完成信息收集？</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="pop-up">未弹出窗口</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="meetTrouble">遇到问题</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">已经完成</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">确认函</h4>
+      </div>
+      <div class="modal-body">
+        <p>是否弹出确认函信息？</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="pop-confirm">未弹出窗口</button>
+        <button type="button" class="btn btn-default meetTrouble" data-dismiss="modal">遇到问题</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">已经完成</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 联系客服 -->
+  <div class="Sidebar">
+    <div class="title">
+      联系客服
+      <div class="close" id="closeSidebar">X</div>
+    </div>
+    <a href="https://divet.taobao.com/?spm=a1z10.1-c.0.0.8cxl3q" target="_blank">
+    <div class="block-content">
+      <div class="the_block block2">
+        <img src="./../dist/img/Sidebar2.jpg"/>
+      </div>
+    </div>
+    </a>
+    <a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&touid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&siteid=cntaobao&status=1&charset=utf-8">
+    <div class="block-content">
+      <div class="the_block block3">
+        <img src="./../dist/img/Sidebar3.jpg"/>
+        <div class="Sidebar3">
+          <div>淘宝客服</div>
+          <div style="font-size:16px;">点击弹出阿里旺旺客服</div>
+        </div>
+      </div>
+    </div>
+    </a>
+    <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2546623187&site=qq&menu=yes">
+    <div class="block-content">
+      <div class="the_block">
+        <img src="./../dist/img/Sidebar1.jpg"/>
+        <div class="Sidebar1">联系我们</div>
+      </div>
+    </div>
+    </a>
+    <div class="block-content">
+      <div class="the_block block4">
+        <i></i>
+        <div class="the_right">
+        <div class="bigsize">微信咨询</div>
+        <div>请扫码关注我们,收到需求后,我们会第一时间回复你</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
