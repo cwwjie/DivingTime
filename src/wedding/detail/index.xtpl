@@ -18,7 +18,10 @@
   {{ include ("./../../Component/Navigation-Bar/index") }}
 
 
-  
+  <div class="main">
+
+  </div>
+
 
   {{ include ("./../../Component/ScrollTop/index") }}
 
