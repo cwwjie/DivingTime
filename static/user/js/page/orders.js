@@ -21,7 +21,7 @@ var orderDetail = {
 
     $.ajax({
 			type: "GET", 
-			url: appConfig.getOrderById + this.orderId + "/getWith.do", 
+			url: appConfig.version + "/order/id/" + this.orderId + "/getWith.do", 
 			contentType: "application/json; charset=utf-8", 
 			headers: {
 				'token': $.cookie('token'),
@@ -186,7 +186,7 @@ var orderDetail = {
 
     $.ajax({
 			'type': "GET", 
-			'url': appConfig.findByOrderId+"?orderId="+this.orderId, 
+			'url': appConfig.version + "/order/orderUserinfo/findByOrderId.do?orderId=" + this.orderId, 
 			'contentType': "application/json; charset=utf-8", 
 			'headers': {
 				'token': $.cookie('token'),
@@ -444,7 +444,7 @@ var myOrder = {
           '</div>',
           '<div class="item-content">',
             '<div class="item-img">',
-              '<img src=' + URLbase + data[i].orderItemList[0].productThumb + '>',
+              '<img src=' + appConfig.urlBase + data[i].orderItemList[0].productThumb + '>',
             '</div>',
             '<div class="item-description row">',
               '<div class="col-xs-8">',
@@ -712,7 +712,7 @@ var myOrder = {
 
 		$.ajax({
 			'type': 'GET', 
-			'url': URLbase + URLversion + '/order/' + myPageNum + '/' + myPageSize + '/list.do', 
+			'url': appConfig.version + '/order/' + myPageNum + '/' + myPageSize + '/list.do', 
 			'contentType': 'application/json; charset=utf-8', 
 			'headers': {
 				'token': $.cookie('token'),
@@ -745,7 +745,7 @@ var myOrder = {
 		if (confirm("确认申请退款?")) {
       $.ajax({
         type: "GET", 
-        url: URLbase + URLversion + "/order/id/" + orderid + "/refund.do", 
+        url: appConfig.version + "/order/id/" + orderid + "/refund.do", 
         contentType: "application/json; charset=utf-8", 
         headers: {
           'token': $.cookie('token'),
@@ -771,7 +771,7 @@ var myOrder = {
     if ( $(document).width() < 760 ) {
       $.ajax({
         type: "GET", 
-        url:URLbase + URLversion + "/payment/" + orderSn + "/R/alipay4Custom.do?dev=Mobile", 
+        url: appConfig.version + "/payment/" + orderSn + "/R/alipay4Custom.do?dev=Mobile", 
         contentType: "application/json; charset=utf-8", 
         headers: {
           'token':$.cookie('token'),
@@ -789,7 +789,7 @@ var myOrder = {
     } else {
       $.ajax({
         type: "GET", 
-        url:URLbase + URLversion + "/payment/" + orderSn + "/R/alipay4Custom.do?dev=PC", 
+        url: appConfig.version + "/payment/" + orderSn + "/R/alipay4Custom.do?dev=PC", 
         contentType: "application/json; charset=utf-8", 
         headers: {
           'token':$.cookie('token'),
@@ -812,7 +812,7 @@ var myOrder = {
     if ( $(document).width() < 760 ) {
       $.ajax({
         type: "GET", 
-        url:URLbase + URLversion + "/payment/" + orderSn + "/F/alipay4Custom.do?dev=Mobile", 
+        url: appConfig.version + "/payment/" + orderSn + "/F/alipay4Custom.do?dev=Mobile", 
         contentType: "application/json; charset=utf-8", 
         headers: {
           'token':$.cookie('token'),
@@ -830,7 +830,7 @@ var myOrder = {
     } else {
       $.ajax({
         type: "GET", 
-        url:URLbase + URLversion + "/payment/" + orderSn + "/F/alipay4Custom.do?dev=PC", 
+        url: appConfig.version + "/payment/" + orderSn + "/F/alipay4Custom.do?dev=PC", 
         contentType: "application/json; charset=utf-8", 
         headers: {
           'token':$.cookie('token'),
@@ -854,7 +854,7 @@ var myOrder = {
       if ( $(document).width() < 760 ) {
         $.ajax({
           type: "GET", 
-          url:URLbase + URLversion + "/payment/" + orderSn + "/E/alipay4Custom.do?dev=Mobile", 
+          url: appConfig.version + "/payment/" + orderSn + "/E/alipay4Custom.do?dev=Mobile", 
           contentType: "application/json; charset=utf-8", 
           headers: {
             'token':$.cookie('token'),
@@ -872,7 +872,7 @@ var myOrder = {
       } else {
         $.ajax({
           type: "GET", 
-          url:URLbase + URLversion + "/payment/" + orderSn + "/E/alipay4Custom.do?dev=PC", 
+          url: appConfig.version + "/payment/" + orderSn + "/E/alipay4Custom.do?dev=PC", 
           contentType: "application/json; charset=utf-8", 
           headers: {
             'token':$.cookie('token'),
@@ -892,7 +892,7 @@ var myOrder = {
 			if ( $(document).width() < 760 ) {
 				$.ajax({
 					type: "GET", 
-					url:URLbase+URLversion+"/payment/alipayMob.do?orderId=" + orderId, 
+					url: appConfig.version +"/payment/alipayMob.do?orderId=" + orderId, 
 					contentType: "application/json; charset=utf-8", 
 					headers: {
 						'token':$.cookie('token'),
@@ -910,7 +910,7 @@ var myOrder = {
 			}else{
 				$.ajax({
 					type: "GET", 
-					url:URLbase+URLversion+"/payment/alipay.do?orderId=" + orderId, 
+					url: appConfig.version + "/payment/alipay.do?orderId=" + orderId, 
 					contentType: "application/json; charset=utf-8", 
 					headers: {
 						'token':$.cookie('token'),
@@ -935,7 +935,7 @@ var myOrder = {
 
     $.ajax({
       'type': 'GET', 
-      'url': URLbase + URLversion + '/order/id/' + orderid + '/cancelOrder.do', 
+      'url': appConfig.version + '/order/id/' + orderid + '/cancelOrder.do', 
       'contentType': 'application/json; charset=utf-8', 
       'headers': {
         'token': $.cookie('token'),

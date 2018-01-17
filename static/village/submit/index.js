@@ -1,29 +1,102 @@
-window.onload = function () {
-  if (utilities.isSupport() === false) { return }
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
 
-  myData.init()
-    .then(function () {
-      myData.checkLogin()
-        .then(function (response) {
-          return response.json();
-        }, function (error) {
-          alert('非常抱歉，查询登录信息出错！原因: ' + error);
-          return false;
-        })
-        .then(function (val) {
-          if (val === false) { return }
-          if (val.result === '0') {
-            customerInfo.init();
-          } else {
-            alert('检测到您尚未登录！原因: ' + val.message);
-            window.location = './../index.html';
-          }
-        });
+"use strict";
+
+
+window.onload = function () {
+  if (utilities.isSupport() === false) {
+    return;
+  }
+
+  myData.init().then(function () {
+    myData.checkLogin().then(function (response) {
+      return response.json();
     }, function (error) {
-      alert(error);
-      window.location = './../index.html';
+      alert('非常抱歉，查询登录信息出错！原因: ' + error);
+      return false;
+    }).then(function (val) {
+      if (val === false) {
+        return;
+      }
+      if (val.result === '0') {
+        customerInfo.init();
+      } else {
+        alert('检测到您尚未登录！原因: ' + val.message);
+        window.location = './../index.html';
+      }
     });
-}
+  }, function (error) {
+    alert(error);
+    window.location = './../index.html';
+  });
+};
 
 var myData = {
   'date': {
@@ -144,13 +217,13 @@ var myData = {
     // 'updateTime': null
   },
   'myVue': {},
-  
-  init: function() {
+
+  init: function init() {
     var _this = this,
-      mydate = localStorage.getItem('mydate'),
-      myEffective = utilities.loadPageVar('effective'),
-      myApartmentList = localStorage.getItem('apartmentList'),
-      myVillage = localStorage.getItem('village');
+        mydate = localStorage.getItem('mydate'),
+        myEffective = utilities.loadPageVar('effective'),
+        myApartmentList = localStorage.getItem('apartmentList'),
+        myVillage = localStorage.getItem('village');
 
     return new Promise(function (resolve, reject) {
       if (mydate && myApartmentList && myVillage && myEffective) {
@@ -173,42 +246,42 @@ var myData = {
     });
   },
 
-  initOrdersDetailVue: function () {
+  initOrdersDetailVue: function initOrdersDetailVue() {
     var ordersList = [
-        // {
-        //   name: '',
-        //   roomCount: 0,
-        //   personCount: 0,
-        //   price: 0
-        // }
-      ],
-      myapartmentList = [
-        // {
-        //   'id': 0,
-        //   'ordersListId': 0,
-        //   'itemCode': 'KPLyjf',
-        //   'apartmentName': '园景房',
-        //   'bedTypeList': ['大床','双人床','单床','蜜月大床'],
-        //   'bedType': '大床',
-        //   'adult': 1,
-        //   'adultMax': 2,
-        //   'adultUnitPrice': 1200,
-        //   'children': 0,
-        //   'childrenMax': 2,
-        //   'childUnitPrice': 1200,
-        //   'suggestedNum': 2,
-        // }
-      ],
-      ordersRoomCount = 0,
-      ordersPersonCount = 0,
-      ordersprice = 0,
-      ordersTitle = this.village.resortName,
-      startDate = utilities.dateToYYYYMMDDFormat(this.date.startDate),
-      endDate = utilities.dateToYYYYMMDDFormat(this.date.endDate);
+      // {
+      //   name: '',
+      //   roomCount: 0,
+      //   personCount: 0,
+      //   price: 0
+      // }
+    ],
+        myapartmentList = [
+      // {
+      //   'id': 0,
+      //   'ordersListId': 0,
+      //   'itemCode': 'KPLyjf',
+      //   'apartmentName': '园景房',
+      //   'bedTypeList': ['大床','双人床','单床','蜜月大床'],
+      //   'bedType': '大床',
+      //   'adult': 1,
+      //   'adultMax': 2,
+      //   'adultUnitPrice': 1200,
+      //   'children': 0,
+      //   'childrenMax': 2,
+      //   'childUnitPrice': 1200,
+      //   'suggestedNum': 2,
+      // }
+    ],
+        ordersRoomCount = 0,
+        ordersPersonCount = 0,
+        ordersprice = 0,
+        ordersTitle = this.village.resortName,
+        startDate = utilities.dateToYYYYMMDDFormat(this.date.startDate),
+        endDate = utilities.dateToYYYYMMDDFormat(this.date.endDate);
 
     for (var i = 0; i < this.apartmentList.length; i++) {
       var apartment = this.apartmentList[i],
-          myPersonCount = 0;
+          myPersonCount = 0,
           myPrice = 0;
 
       for (var j = 0; j < this.apartmentList[i].select.length; j++) {
@@ -221,10 +294,10 @@ var myData = {
           'bedType': this.apartmentList[i].select[j].bedType,
           'adultNum': this.apartmentList[i].select[j].adultNum,
           'childNum': this.apartmentList[i].select[j].childNum,
- 
+
           'adultMax': this.apartmentList[i].select[j].adultMax,
           'childrenMax': this.apartmentList[i].select[j].childrenMax,
-          'suggestedNum': this.apartmentList[i].select[j].suggestedNum,
+          'suggestedNum': this.apartmentList[i].select[j].suggestedNum
         };
         // var apartmentItem = {
         //   'id': ordersRoomCount,
@@ -246,17 +319,17 @@ var myData = {
 
         ordersRoomCount++;
 
-        var peopleNum = (this.apartmentList[i].select[j].adultNum + this.apartmentList[i].select[j].childNum);
+        var peopleNum = this.apartmentList[i].select[j].adultNum + this.apartmentList[i].select[j].childNum;
         myPersonCount += peopleNum;
         ordersPersonCount += peopleNum;
 
         myPrice += this.apartmentList[i].select[j].prices;
         ordersprice += this.apartmentList[i].select[j].prices;
       }
-        
+
       var ordersItem = {
         'id': i,
-        'isShow': (apartment.select.length > 0 ? true : false),
+        'isShow': apartment.select.length > 0 ? true : false,
         'name': apartment.apartmentName,
         'roomCount': apartment.select.length,
         'personCount': myPersonCount,
@@ -281,12 +354,12 @@ var myData = {
         'ordersPersonCount': ordersPersonCount,
         'ordersprice': ordersprice
       },
-      
+
       'watch': {
         ordersList: {
-          handler: function (val, oldVal) {
+          handler: function handler(val, oldVal) {
             var myOrdersList = oldVal,
-              myCount = 0;
+                myCount = 0;
 
             for (var i = 0; i < myOrdersList.length; i++) {
               myCount += myOrdersList[i].personCount;
@@ -299,56 +372,63 @@ var myData = {
       },
 
       'methods': {
-        reduceAdult: function(id) {
+        reduceAdult: function reduceAdult(id) {
           var dataNum = this.apartmentList[id].adult,
-            ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
-        
-          if (dataNum <= 1) { return }
+              ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
+
+          if (dataNum <= 1) {
+            return;
+          }
 
           this.apartmentList[id].adult = dataNum - 1;
           this.apartmentList[id].personCount = dataNum - 1;
           this.ordersList[this.apartmentList[id].ordersListId].personCount = ordersItemPersonNum - 1;
         },
 
-        addAdult: function(id) {
+        addAdult: function addAdult(id) {
           var dataNum = this.apartmentList[id].adult,
-            maxNum = this.apartmentList[id].adultMax,
-            ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
+              maxNum = this.apartmentList[id].adultMax,
+              ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
 
-          if (dataNum >= maxNum) { return }
+          if (dataNum >= maxNum) {
+            return;
+          }
           this.apartmentList[id].adult = dataNum + 1;
           this.ordersList[this.apartmentList[id].ordersListId].personCount = ordersItemPersonNum + 1;
         },
 
-        reducechildren: function(id) {
+        reducechildren: function reducechildren(id) {
           var dataNum = this.apartmentList[id].children,
-          ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
+              ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
 
-          if (dataNum <= 0) { return }
+          if (dataNum <= 0) {
+            return;
+          }
 
-          this.apartmentList[id].children = dataNum - 1,
-          ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
+          this.apartmentList[id].children = dataNum - 1, ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
           this.ordersList[this.apartmentList[id].ordersListId].personCount = ordersItemPersonNum - 1;
         },
 
-        addchildren: function(id) {
+        addchildren: function addchildren(id) {
           var dataNum = this.apartmentList[id].children,
-            maxNum = this.apartmentList[id].childrenMax,
-            ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
-         
-          if (dataNum >= maxNum) { return }
+              maxNum = this.apartmentList[id].childrenMax,
+              ordersItemPersonNum = this.ordersList[this.apartmentList[id].ordersListId].personCount;
+
+          if (dataNum >= maxNum) {
+            return;
+          }
 
           this.apartmentList[id].children = dataNum + 1;
           this.ordersList[this.apartmentList[id].ordersListId].personCount = ordersItemPersonNum + 1;
-        },
+        }
       }
     });
   },
 
-  initBillItemList: function () {
+  initBillItemList: function initBillItemList() {
     var billItemList = [],
-      apartmentListNum = this.myVue.$data.apartmentList.length,
-      apartmentList = this.myVue.$data.apartmentList;
+        apartmentListNum = this.myVue.$data.apartmentList.length,
+        apartmentList = this.myVue.$data.apartmentList;
 
     for (var i = 0; i < apartmentListNum; i++) {
       var apartment = apartmentList[i];
@@ -360,18 +440,18 @@ var myData = {
         'itemName': apartment.apartmentName,
         'itemSize': apartment.bedType,
         'adultNum': apartment.adultNum,
-        'childNum': apartment.childNum,
+        'childNum': apartment.childNum
       });
     }
 
     this.submitData.billItemList = billItemList;
   },
 
-  checkLogin: function () {
+  checkLogin: function checkLogin() {
     var token = utilities.getCookie('token'),
-      digest = utilities.getCookie('digest');
-    
-    return fetch(appConfig.getUserInfo, {
+        digest = utilities.getCookie('digest');
+
+    return fetch(appConfig.version + '/user/getUserInfo.do', {
       method: "GET",
       headers: {
         'token': token,
@@ -380,18 +460,18 @@ var myData = {
     });
   },
 
-  submit: function () {
+  submit: function submit() {
     var _this = this,
-      mySubmitData = this.submitData,
-      resortCode = this.village.resortCode,
-      checkInDate = utilities.dateToYYYYMMDDString(this.date.startDate),
-      leaveDate = utilities.dateToYYYYMMDDString(this.date.endDate),
-      token = utilities.getCookie('token'),
-      digest = utilities.getCookie('digest');
+        mySubmitData = this.submitData,
+        resortCode = this.village.resortCode,
+        checkInDate = utilities.dateToYYYYMMDDString(this.date.startDate),
+        leaveDate = utilities.dateToYYYYMMDDString(this.date.endDate),
+        token = utilities.getCookie('token'),
+        digest = utilities.getCookie('digest');
 
     this.initBillItemList();
 
-    return fetch(URLbase + URLversion + '/order/' + resortCode + '/' + checkInDate + '/' + leaveDate + '/custom.do', {
+    return fetch(appConfig.version + '/order/' + resortCode + '/' + checkInDate + '/' + leaveDate + '/custom.do', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -399,9 +479,9 @@ var myData = {
         'digest': digest
       },
       body: JSON.stringify(mySubmitData)
-    })
+    });
   }
-}
+};
 
 var customerInfo = {
   data: [
@@ -423,32 +503,32 @@ var customerInfo = {
   ],
   myVue: {},
 
-  init: function () {
+  init: function init() {
     var _this = this;
 
-    this.fetchCustomerData()
-      .then(function (response) {
-        return response.json();
-      }, function (error) {
-        alert('非常抱歉，获取顾客信息出错！原因: ' + error);
-        return false;
-      })
-      .then(function (val) {
-        if (val === false) { return }
-        if (val.result === '0') {
-          _this.data = val.data;
-          _this.myVue = _this.initVue();
-        } else {
-          alert('非常抱歉，获取顾客信息出错！原因: ' + val.message);
-        }
-      });
+    this.fetchCustomerData().then(function (response) {
+      return response.json();
+    }, function (error) {
+      alert('非常抱歉，获取顾客信息出错！原因: ' + error);
+      return false;
+    }).then(function (val) {
+      if (val === false) {
+        return;
+      }
+      if (val.result === '0') {
+        _this.data = val.data;
+        _this.myVue = _this.initVue();
+      } else {
+        alert('非常抱歉，获取顾客信息出错！原因: ' + val.message);
+      }
+    });
   },
 
-  fetchCustomerData: function () {
+  fetchCustomerData: function fetchCustomerData() {
     var token = utilities.getCookie('token'),
-      digest = utilities.getCookie('digest');
+        digest = utilities.getCookie('digest');
 
-    return fetch(appConfig.userinfoFindByUserId, {
+    return fetch(appConfig.version + '/user/userinfo/findByUserId.do', {
       method: 'GET',
       headers: {
         'token': token,
@@ -457,20 +537,20 @@ var customerInfo = {
     });
   },
 
-  updateCustomerData: function (data, type) {
+  updateCustomerData: function updateCustomerData(data, type) {
     var _this = this,
-      url = '',
-      token = utilities.getCookie('token'),
-      digest = utilities.getCookie('digest');
+        url = '',
+        token = utilities.getCookie('token'),
+        digest = utilities.getCookie('digest');
 
     if (type === 'add') {
-      url = appConfig.userinfoAdd;
+      url = appConfig.version + '/user/userinfo/add.do';
     } else {
-      url = appConfig.userupdate;
+      url = appConfig.version + '/user/userinfo/update.do';
     }
 
-    return new Promise(function(resolve, reject){
-      fetch(url, {
+    return new Promise(function (resolve, reject) {
+      fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
@@ -479,28 +559,28 @@ var customerInfo = {
         },
         body: JSON.stringify(data)
       }).then(function (response) {
-        return response.json()
-      },function (error) {
+        return response.json();
+      }, function (error) {
         reject('数据提交发生错误, 原因:' + error);
-      }).then(function(val) {
+      }).then(function (val) {
         if (val.result === '0') {
-          _this.fetchCustomerData()
-            .then(function (response) {
-              return response.json();
-            }, function (error) {
-              reject('数据提交成功, 但获取顾客信息出错！原因:' + error);
-              return false;
-            })
-            .then(function (fetchValue) {
-              if (fetchValue === false) { return }
+          _this.fetchCustomerData().then(function (response) {
+            return response.json();
+          }, function (error) {
+            reject('数据提交成功, 但获取顾客信息出错！原因:' + error);
+            return false;
+          }).then(function (fetchValue) {
+            if (fetchValue === false) {
+              return;
+            }
 
-              if (fetchValue.result === '0') {
-                _this.data = fetchValue.data;
-                resolve(fetchValue.data);
-              } else {
-                reject('数据提交成功, 但获取顾客信息出错！原因:' + fetchValue.message);
-              }
-            });
+            if (fetchValue.result === '0') {
+              _this.data = fetchValue.data;
+              resolve(fetchValue.data);
+            } else {
+              reject('数据提交成功, 但获取顾客信息出错！原因:' + fetchValue.message);
+            }
+          });
         } else {
           reject('数据提交发生错误, 原因:' + val.message);
         }
@@ -508,9 +588,9 @@ var customerInfo = {
     });
   },
 
-  dataToVueList: function (data) {
+  dataToVueList: function dataToVueList(data) {
     var myData = data || this.data,
-      vueList = [];
+        vueList = [];
 
     for (var i = 0; i < myData.length; i++) {
       var vueListitem = {
@@ -518,7 +598,7 @@ var customerInfo = {
         isSelect: false,
         name: myData[i].chineseName,
         age: myData[i].age,
-        gender: (myData[i].gender === 1 ? '女' : '男'),
+        gender: myData[i].gender === 1 ? '女' : '男',
         mobile: myData[i].mobile
       };
       vueList.push(vueListitem);
@@ -527,7 +607,7 @@ var customerInfo = {
     return vueList;
   },
 
-  createVueItem: function () {
+  createVueItem: function createVueItem() {
     return {
       chineseName: '',
       chineseNameError: '',
@@ -549,7 +629,7 @@ var customerInfo = {
 
       email: '',
       emailError: '',
-      
+
       divingCount: '',
 
       divingRank: '',
@@ -557,11 +637,11 @@ var customerInfo = {
     };
   },
 
-  initVue: function () {
+  initVue: function initVue() {
     var _this = this,
-      defaultInspect = true,
-      isSubmit = false,
-      selectID = 0;
+        defaultInspect = true,
+        isSubmit = false,
+        selectID = 0;
 
     return new Vue({
       'el': '#customerInfo',
@@ -600,12 +680,12 @@ var customerInfo = {
       },
 
       watch: {
-        chineseName: function (val, oldVal) {
+        chineseName: function chineseName(val, oldVal) {
           // 如果 默认的检测 是 不检测.
           if (defaultInspect === false) {
             // 则终止此次的检测.
             defaultInspect = true;
-            return
+            return;
           }
           if (val === '') {
             this.chineseNameError = '姓名不能为空';
@@ -617,12 +697,12 @@ var customerInfo = {
             this.chineseNameError = '';
           }
         },
-        pinyinName: function (val, oldVal) {
+        pinyinName: function pinyinName(val, oldVal) {
           // 如果 默认的检测 是 不检测.
           if (defaultInspect === false) {
             // 则终止此次的检测.
             defaultInspect = true;
-            return
+            return;
           }
           if (val === '') {
             this.pinyinNameError = '拼音不能为空';
@@ -634,25 +714,25 @@ var customerInfo = {
         },
 
         item: {
-          handler: function (val, oldVal) {
+          handler: function handler(val, oldVal) {
             var data = oldVal;
 
             // 如果 默认的检测 是 不检测.
             if (defaultInspect === false) {
               // 则终止此次的检测.
               defaultInspect = true;
-              return
+              return;
             }
-  
+
             if (data.birthday === null || data.birthday === '') {
               this.item.birthdayError = '请选择出生日期';
-            }else {
+            } else {
               var nowDate = Date.parse(new Date());
               var selectTimestamp = utilities.YYYYMMDDFormatToTimestamp(data.birthday);
               this.item.age = Math.ceil((nowDate - selectTimestamp) / 31536000000);
               this.item.birthdayError = '';
             }
-  
+
             if (data.mobile === '') {
               this.item.mobileError = '手机号码不能为空';
             } else if (/^1[34578]\d{9}$/.test(data.mobile) === false) {
@@ -660,7 +740,7 @@ var customerInfo = {
             } else {
               this.item.mobileError = '';
             }
-  
+
             if (data.email === '') {
               this.item.emailError = '邮箱不能为空';
             } else if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(data.email) === false) {
@@ -668,31 +748,30 @@ var customerInfo = {
             } else {
               this.item.emailError = '';
             }
-  
+
             if (data.divingRank !== '' && data.divingRank !== null) {
               if (/^[0-9]*$/.test(data.divingRank) === false) {
                 this.item.divingRankError = '请输入数字';
-              } else if ( parseInt(data.divingRank) >= 100) {
+              } else if (parseInt(data.divingRank) >= 100) {
                 this.item.divingRankError = '请填写100一下的次数';
               } else {
                 this.item.divingRankError = '';
               }
             }
-
           },
           deep: true
         }
       },
 
       methods: {
-        showAddItem: function() {
+        showAddItem: function showAddItem() {
           this.itemModalIsShow = true;
           this.itemType = 'add';
           defaultInspect = false;
           this.item = _this.createVueItem();
         },
 
-        showModifyItem: function (id) {
+        showModifyItem: function showModifyItem(id) {
           var data = _this.data[id];
 
           selectID = id;
@@ -705,78 +784,78 @@ var customerInfo = {
           this.item = {
             // 'chineseName': data.chineseName,
             // 'chineseNameError': '',
-      
+
             // 'pinyinName': data.pinyinName,
             // 'pinyinNameError': '',
-      
+
             'passportNo': data.passportNo,
-      
+
             'gender': data.gender,
-      
+
             'birthday': utilities.dateToYYYYMMDDFormat(new Date(data.birthday)),
             'birthdayError': '',
-      
+
             'age': data.age,
-      
+
             'mobile': data.mobile,
             'mobileError': '',
-      
+
             'email': data.email,
             'emailError': '',
-            
+
             'divingCount': data.divingCount,
-      
+
             'divingRank': data.divingRank,
             'divingRankError': ''
           };
         },
 
-        saveItem: function (type) {
+        saveItem: function saveItem(type) {
           var data = this.item;
-          
+
           if (this.chineseName === '') {
             this.chineseNameError = '姓名不能为空';
-            return
+            return;
           } else if (/^[\u2E80-\u9FFF]+$/.test(this.chineseName) === false) {
             this.chineseNameError = '姓名只能为中文';
-            return
+            return;
           } else {
             this.chineseNameError = '';
           }
 
           if (this.pinyinName === '') {
             this.pinyinNameError = '拼音不能为空';
-            return
+            return;
           } else if (/^[a-zA-Z]{0,10000}$/.test(this.pinyinName) === false) {
             this.pinyinNameError = '拼音格式错误';
-            return
+            return;
           } else {
             this.pinyinNameError = '';
           }
-          
+
           if (data.birthday === null || data.birthday === '') {
             data.birthdayError = '请选择出生日期';
-            return
-          }else {
+            return;
+          } else {
             data.birthdayError = '';
           }
 
           if (data.mobile === '') {
             data.mobileError = '手机号码不能为空';
-            return
+            return;
           } else if (/^1[34578]\d{9}$/.test(data.mobile) === false) {
             data.mobileError = '手机号码格式不正确';
-            return
+            return;
           } else {
             data.mobileError = '';
           }
 
           if (data.email === '') {
             data.emailError = '邮箱不能为空';
-            return
+            return;
           } else if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(data.email) === false) {
             data.emailError = '邮箱格式不正确';
-            return
+            return;
           } else {
             data.emailError = '';
           }
@@ -784,10 +863,10 @@ var customerInfo = {
           if (data.divingRank !== '' && data.divingRank !== null) {
             if (/^[0-9]*$/.test(data.divingRank) === false) {
               data.divingRankError = '请输入数字';
-              return
-            } else if ( parseInt(data.divingRank) >= 100) {
+              return;
+            } else if (parseInt(data.divingRank) >= 100) {
               data.divingRankError = '请填写100一下的次数';
-              return
+              return;
             } else {
               data.divingRankError = '';
             }
@@ -805,8 +884,8 @@ var customerInfo = {
             'mobile': data.mobile,
             'email': data.email,
             'divingRank': data.divingRank,
-            'divingCount': data.divingCount,
-          }
+            'divingCount': data.divingCount
+          };
 
           if (type === 'update') {
             submitData.userinfoId = _this.data[selectID].userinfoId;
@@ -814,29 +893,28 @@ var customerInfo = {
 
           var thisVue = this;
 
-          _this.updateCustomerData(submitData, type)
-            .then(function (data) {
-              thisVue.list = _this.dataToVueList(data);
-              thisVue.item = _this.createVueItem();
-              thisVue.itemBTN = '保存';
-              thisVue.listModalIsShow = true;
-              thisVue.itemModalIsShow = false;
-            }, function (error) {
-              thisVue.itemBTN = '保存';
-              alert(error);
-            });
+          _this.updateCustomerData(submitData, type).then(function (data) {
+            thisVue.list = _this.dataToVueList(data);
+            thisVue.item = _this.createVueItem();
+            thisVue.itemBTN = '保存';
+            thisVue.listModalIsShow = true;
+            thisVue.itemModalIsShow = false;
+          }, function (error) {
+            thisVue.itemBTN = '保存';
+            alert(error);
+          });
         },
 
-        addRenderList: function () {
-          var selectCount = 0;
-            mySelectList = this.list,
-            myRenderList = [];
+        addRenderList: function addRenderList() {
+          var selectCount = 0,
+              mySelectList = this.list,
+              myRenderList = [];
 
           for (var i = 0; i < mySelectList.length; i++) {
             if (mySelectList[i].isSelect) {
-              var myId = myRenderList.length;
-                mySelectItemData = _this.data[mySelectList[i].id],
-              divingRank = '';
+              var myId = myRenderList.length,
+                  mySelectItemData = _this.data[mySelectList[i].id],
+                  divingRank = '';
 
               selectCount++;
               if (mySelectItemData.divingRank === 1) {
@@ -863,32 +941,33 @@ var customerInfo = {
 
           if (selectCount === 0) {
             alert('至少选择一人信息!');
-            return
+            return;
           }
 
           this.renderList = myRenderList;
           this.listModalIsShow = false;
         },
 
-        removeRenderitem: function (id) {
+        removeRenderitem: function removeRenderitem(id) {
           var _this = this;
-  
-          if(window.confirm('你确定要删除吗?')){
+
+          if (window.confirm('你确定要删除吗?')) {
             _this.renderList.splice(id, 1);
           }
         },
 
-        submit: function () {
+        submit: function submit() {
           var Vuethis = this,
-            userInfoList = [];
+              userInfoList = [];
 
-          if (isSubmit) { return }
+          if (isSubmit) {
+            return;
+          }
 
           if (this.renderList.length === 0) {
             alert('至少提供一旅客信息!');
-            return
+            return;
           }
-
 
           for (var i = 0; i < this.renderList.length; i++) {
             var myUserInfoItem = _this.data[this.renderList[i].listId];
@@ -912,50 +991,48 @@ var customerInfo = {
             isSubmit = true;
             this.submitBTN = '正在提交...';
 
-            myData.submit()
-              .then(function (response) {
-                return response.json();
-              }, function (error) {
-                return {'result': '1', 'message': error};
-              })
-              .then(function (val) {
-                if (val.result === '0') {
-                  isSubmit = false;
-                  Vuethis.submitBTN = '确认订单';
-                  window.location = './../../user/account.html#Orders';
-                } else if (val.result === '-11') {
-                  isSubmit = false;
-                  Vuethis.submitBTN = '确认订单';
-                  
-                  var notEnoughTermName = '',
-                      notEnoughTermList = val.data.split(',');
-                  for (var i = 0; i < myData.apartmentList.length; i++) {
-                    for (var j = 0; j < notEnoughTermList.length; j++) {
-                      if (myData.apartmentList[i].apartmentCode ==  notEnoughTermList[j]) {
-                        notEnoughTermName += myData.apartmentList[i].apartmentName;
-                        notEnoughTermName += '、 ';
-                      }
+            myData.submit().then(function (response) {
+              return response.json();
+            }, function (error) {
+              return { 'result': '1', 'message': error };
+            }).then(function (val) {
+              if (val.result === '0') {
+                isSubmit = false;
+                Vuethis.submitBTN = '确认订单';
+                window.location = './../../user/account.html#Orders';
+              } else if (val.result === '-11') {
+                isSubmit = false;
+                Vuethis.submitBTN = '确认订单';
+
+                var notEnoughTermName = '',
+                    notEnoughTermList = val.data.split(',');
+                for (var i = 0; i < myData.apartmentList.length; i++) {
+                  for (var j = 0; j < notEnoughTermList.length; j++) {
+                    if (myData.apartmentList[i].apartmentCode == notEnoughTermList[j]) {
+                      notEnoughTermName += myData.apartmentList[i].apartmentName;
+                      notEnoughTermName += '、 ';
                     }
                   }
-                  
-                  alert('非常抱歉，提交信息出错！原因: ' + notEnoughTermName + '库存不足');
-                } else {
-                  isSubmit = false;
-                  Vuethis.submitBTN = '确认订单';
-                  alert('非常抱歉，提交信息出错！原因: ' + val.message);
                 }
-              });
+
+                alert('非常抱歉，提交信息出错！原因: ' + notEnoughTermName + '库存不足');
+              } else {
+                isSubmit = false;
+                Vuethis.submitBTN = '确认订单';
+                alert('非常抱歉，提交信息出错！原因: ' + val.message);
+              }
+            });
           }
         }
       },
 
-      components: { datepicker }
+      components: { datepicker: datepicker }
     });
   }
-}
+};
 
 var utilities = {
-  dateToYYYYMMDDString: function(data) {
+  dateToYYYYMMDDString: function dateToYYYYMMDDString(data) {
     var yyyy = data.getFullYear();
 
     var mm = data.getMonth() + 1;
@@ -967,7 +1044,7 @@ var utilities = {
     return '' + yyyy + mm + dd;
   },
 
-  dateToYYYYMMDDFormat: function(data) {
+  dateToYYYYMMDDFormat: function dateToYYYYMMDDFormat(data) {
     var yyyy = data.getFullYear();
 
     var mm = data.getMonth() + 1;
@@ -978,20 +1055,21 @@ var utilities = {
 
     return '' + yyyy + '-' + mm + '-' + dd;
   },
-  
-  loadPageVar: function(sVar) {
+
+  loadPageVar: function loadPageVar(sVar) {
     return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
   },
 
-  YYYYMMDDFormatToTimestamp(data) {
+  YYYYMMDDFormatToTimestamp: function YYYYMMDDFormatToTimestamp(data) {
     var myDateList = data.split("-");
-    return Date.parse(new Date(myDateList[0], (parseInt(myDateList[1]) - 1), myDateList[2]));
+    return Date.parse(new Date(myDateList[0], parseInt(myDateList[1]) - 1, myDateList[2]));
   },
 
-  isSupport: function() {
+
+  isSupport: function isSupport() {
     if (isIE(6) || isIE(7) || isIE(8)) {
-      alert('因为IE8（及以下）由于存在安全风险，已被本站禁止，请升级到IE11或使用Chrome浏览器。')
-      return false
+      alert('因为IE8（及以下）由于存在安全风险，已被本站禁止，请升级到IE11或使用Chrome浏览器。');
+      return false;
     }
 
     var storage = window.localStorage;
@@ -1000,9 +1078,9 @@ var utilities = {
       storage.removeItem('test');
     } catch (error) {
       alert('非常抱歉，暂不支持此浏览器，请更换您的浏览器或联系客服。');
-      return false
+      return false;
     }
-    return true
+    return true;
 
     function isIE(ver) {
       var b = document.createElement('b');
@@ -1011,7 +1089,10 @@ var utilities = {
     }
   },
 
-  getCookie: function (sKey) {
+  getCookie: function getCookie(sKey) {
     return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
   }
-}
+};
+
+/***/ })
+/******/ ]);

@@ -236,7 +236,7 @@ var myTaobaoOrder = {
 
 		$.ajax({
 			'type': 'GET', 
-			'url': URLbase + URLversion + '/gather/link/' + myPageNum + '/' + myPageSize + '/listOrder.do', 
+			'url': appConfig.version +  '/gather/link/' + myPageNum + '/' + myPageSize + '/listOrder.do', 
 			'contentType': 'application/json; charset=utf-8', 
 			'headers': {
 				'token': $.cookie('token'),

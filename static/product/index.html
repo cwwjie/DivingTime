@@ -1,0 +1,429 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>【潜游时光】马来西亚_卡帕莱_出境游_自由行_潜水度假村-潜游时光，让您的旅行有温度</title>
+  <meta name="keywords" content="潜游时光，马来西亚，卡帕莱，出境游，自由行，潜水度假村，旅游攻略" />
+  <meta name="description" content="【潜游时光】专业的旅游行程定制,全新的服务体验,最佳的旅游度假体验,为您提供一站式潜水度假村预定服务,为出国旅游者提供最佳的旅游攻略和服务,让您的旅行有温度。" />
+  <meta name="author" content="潜游时光" />
+
+  <link rel="stylesheet" type="text/css" href='./../dist/css/bootstrap.min.css'>
+  <link rel="stylesheet" type="text/css" href='./../dist/css/bootstrap-datetimepicker.min.css'>
+  <link rel="stylesheet" type="text/css" href='./index.css?file_version=4.0'>
+</head>
+<body>
+
+  <header id='header' data-homeurl="./../">
+  <div class="header-logo">
+    <a href='./../index.html'><i></i></a>
+  </div>
+
+  <div class='header-content'>
+    <a id='headerHome' href='./../index.html'>首页</a>
+    <a id='headerVillage' href='./../village/index.html'>度假村直订</a>
+    <!-- <a id='headerWedding' href='./../wedding/index.html'>婚拍</a> -->
+    <a id='taobao' href='https://divet.taobao.com/?spm=a1z10.1-c.0.0.8cxl3q'>淘宝店铺</a>
+  </div>
+
+  <div class="header-login" id="header-login">
+
+    <div class="login-false">
+      <a href='./../user/signup.html'><div>注册</div></a>
+      <a><div id="login-show">登录</div></a>
+    </div>
+
+    <div class="login-true">
+      <div class="dropdown login-droplist">
+
+        <div class="login-user" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i></i><span class="user-name">用户</span>
+          <span class="caret"></span>
+        </div>
+
+        <ul class="dropdown-menu pull-right" aria-labelledby="dLabel">
+
+          <li class="Personal">
+            <a href='./../user/account.html#Person'>
+              <i></i><span>个人中心</span>
+            </a>
+          </li>
+
+          <li class="order-Dvt">
+            <a href='./../user/account.html#Orders'>
+              <i></i><span>商城订单</span>
+            </a>
+          </li>
+
+          <li class="order-Taobao">
+            <a href='./../user/account.html#taobao'>
+              <i></i><span>淘宝订单</span>
+            </a>
+          </li>
+
+          <li class="Account">
+            <a href='./../user/account.html#Accoun'>
+              <i></i><span>账号中心</span>
+            </a>
+          </li>
+
+          <li class="Traveller-Infor">
+            <a href='./../user/account.html#Accoun'>
+              <i></i><span>旅客信息</span>
+            </a>
+          </li>
+
+          <li class="Logout">
+            <a href='javascript:;' id="droplist-logout">
+              <i></i><span>退出登录</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-tell">
+    服务咨询 :<a href="tel://4006709078"> 400-9688-768</a>
+  </div>
+</header>
+
+<div class="modal fade bs-example-modal-sm" id="Modal-login" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+  <div class="modal-login">
+    <div class="modal-content">
+      <div class="modal-hiden" id="login-hiden">X</div>
+
+      <div class="content-title">
+        <div class="title-name">登录</div>
+        <div class="title-signup"><a href=./../user/signup.html>去注册 ></a></div>
+      </div>
+
+      <div class="input-username">
+        <input type="text" name="username" id="input-username" placeholder="账号">
+        <label for="username"></label>
+      </div>
+
+      <div class="input-password">
+        <input type="password" name="password" id="input-password" placeholder="密码">
+        <div class="password-eye" id="password-eye"></div>
+        <label for="password"></label>
+      </div>
+
+      <div class="content-option">
+        <input type="checkbox" name="auto" id="option-cookie">
+        <label for="">记住密码</label>
+        <div class="content-forget">
+          <a href=./../user/forget.html>忘记密码</a>
+        </div>
+      </div>
+
+      <div class="content-btn" id="login-subimt">登录</div>
+    </div>
+  </div>
+
+</div>
+
+
+  <div id="carousel"></div>
+
+  <div class="part1 part-tlitle">
+    <div class="part-content">
+
+      <div class="part-content-left">
+        <h1 id="productName">正在加载... <span></span></h1>
+        <p id="productDesc">正在加载...</p>
+      </div>
+
+      <div class="part-aside">
+        <div class="part-aside-top">
+          <div class="aside-left">套餐价格</div>
+          <div class="aside-rigth"><span id="productPrice">正在加载...</span> RMB</div>
+        </div>
+        <div class="part-aside-bottom">
+          <div class="aside-left">价格优惠期</div>
+          <div class="aside-rigth" id="promoteTime">正在加载...</div>
+        </div>
+      </div>
+
+      <div class="part-content-right reserve">
+        <div class="reserve-content">
+          <div id="apartmentTitle" class="reserve-apartmentTitle">正在加载...</div>
+
+          <div class="reserve-reserve-date" id="selectdays">
+            出发日期
+          </div>
+
+          <div class="datetimepicker" id="starDatePicker">
+            <input type="text" style="display: none">
+          </div>
+
+          <div class="package-count" id="selectPackageCount">
+            <div class="count-picker" id="countPicker">
+              <div class="cut">-</div>
+              <div class="main">套餐数量 1 份</div>
+              <div class="add">+</div>
+            </div>
+            <div class="count-price">
+              <div class="price-total">总价</div>
+              <div class="price-calculate" id="totalPrice">正在计算...</div>
+            </div>
+          </div>
+
+          <div class="reserve-reserve-sumbit" id="confirm-sumbit">
+            预定套餐
+          </div>
+
+          <div class="container" id="ContactUS">
+            <div class="container-left">
+              <div class="container-content">
+                <div class="content-detail">
+                  <div class="content-tiltle">联系电话:</div>
+                  <div class="content-other"><a href="tel://13750022341" >137-50022-341</a></div>
+                  <div class="content-tiltle">微信号:</div>
+                  <div class="content-other">divingtime_asia</div>
+                </div>
+                <div class="weixinQRcode"><i></i></div>
+              </div>
+            </div>
+            <div class="container-right">
+              <div>客服咨询</div>
+              <p>联系我们</p>
+              <p>收悉您的需求后，</p>
+              <p>我们会第一时间与您联系！</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="part2 part-attribute">
+    <div class="part-content">
+      <div class="content-tlitle">套餐说明</div>
+      <div class="part-main" id="part-attribute">
+        <div class="main-content">
+          <div class="main-content-name">正在加载...</div>
+          <div class="main-content-value">正在加载...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="part3 part-trip">
+    <div class="part-content">
+      <div class="part-main">
+        <div class="content-tlitle">套餐行程</div>
+        <button type="button" class="trip-modal-btn btn btn-primary btn-sm" data-toggle="modal" data-target="#trip-modal">
+          查看详情
+        </button>
+        <div class="main-content" id="part-trip">
+          <div class="trip-from">
+            <div class="trip-from-tlitle">
+              <div class="from-tripDay">日期</div>
+              <div class="from-tripEvent">项目&amp;活动</div>
+              <div class="from-tripPlace">入宿&amp;景点</div>
+            </div>
+            <div class="trip-from-main" data-toggle="modal" data-target="#trip-modal">
+              <div class="from-tripDay">正在加载...</div>
+              <div class="from-tripEvent">正在加载...</div>
+              <div class="from-tripPlace">正在加载...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal travel fade trip-modal" id="trip-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-content">
+        <div class="trip-modal-nav">
+          <div><a href="#_day1">正在加载...</a></div>
+        </div>
+        <div class="trip-modal-main">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+            <h4 class="modal-title" id="myModalLabel">马达京5天四晚深潜套餐 (诗巴丹名额提前申请)</h4>
+          </div>
+          
+          <div class="modal-body">
+            <div class="journey">
+              <div class="journey-title" id="_day1">
+                正在加载...
+              </div>
+              <div class="journey-content"></div>
+            </div>
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="part4 part-costIncludes">
+    <div class="part-content">
+      <div class="content-tlitle">套餐包含</div>
+      <div class="part-main" id="part-costIncludes">
+        <div class="main-content">
+          <div class="main-content-name">正在加载...</div>
+          <div class="main-content-value">正在加载...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="part5 part-refundrule" id="part-refundrule">
+    <div class="part-content">
+      <div class="content-tlitle">退款说明</div>
+      <div class="part-main">
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-top">
+  <div class="scroll-icon-taobao" id="showSidebar">
+    <div class="taobao-content">
+      <svg class='taobao-svg' viewBox='0 0 1024 1024' width='32' height='32'><path d='M291.127652 378.034087c-27.781565 10.841043-40.269913 20.880696-46.881391 52.001391-8.926609 41.538783 12.354783 107.675826 48.929391 103.980522 51.600696-5.097739 59.258435-102.466783 30.586435-139.642435C316.104348 384.422957 305.39687 381.618087 291.127652 378.034087zM515.383652 378.034087c-27.38087 10.685217-40.136348 20.390957-46.881391 50.977391-9.171478 41.805913 12.221217 108.699826 48.929391 105.004522 52.513391-5.209043 62.330435-113.552696 25.510957-144.762435C535.28487 382.753391 526.870261 381.106087 515.383652 378.034087zM919.863652 313.566609c-78.358261-137.104696-214.817391-226.927304-433.241043-223.254261-15.293217 1.402435-30.586435 2.693565-45.879652 4.096-27.136 5.743304-54.405565 11.597913-81.563826 17.341217C229.086609 152.509217 130.82713 233.182609 82.921739 356.396522 56.653913 423.66887 64.556522 523.464348 90.045217 583.724522c52.379826 123.859478 158.386087 201.750261 298.696348 237.545739 58.88 15.048348 159.922087 23.062261 222.252522 4.073739 44.966957 43.453217 137.48313 83.72313 220.182261 87.663304-14.647652-27.514435-29.184-55.05113-43.831652-82.565565-7.123478-20.390957-14.269217-40.781913-21.392696-61.17287 19.745391-13.623652 39.357217-27.136 59.102609-40.781913 52.112696-40.381217 90.35687-97.480348 116.224-164.129391C971.998609 484.975304 954.145391 373.448348 919.863652 313.566609zM710.90087 741.732174c1.513739 37.197913 16.294957 70.455652 27.514435 99.906783-26.37913-8.281043-51.244522-21.414957-72.370087-35.706435-7.791304-6.099478-15.693913-12.221217-23.462957-18.342957-5.097739-5.476174-10.195478-10.818783-15.293217-16.294957-12.599652 2.671304-25.110261 5.476174-37.732174 8.147478-35.417043 7.012174-84.858435 10.818783-123.347478 4.096-96.456348-16.962783-166.177391-39.891478-229.376-87.663304-47.771826-36.196174-90.223304-89.466435-110.102261-152.909913-41.538783-132.274087 30.586435-252.193391 103.980522-308.891826 43.453217-33.52487 93.651478-59.770435 152.909913-77.467826 22.038261-4.452174 44.210087-8.815304 66.270609-13.245217 11.597913-1.024 23.062261-2.048 34.660174-3.072 187.814957-0.512 313.58887 65.469217 384.333913 181.448348 13.000348 21.147826 22.906435 46.636522 30.564174 72.370087C949.693217 562.064696 811.564522 693.693217 710.90087 741.732174z' p-id='3942' fill='#ffffff'></path></svg>
+      <svg class='taobao-svg-hover' viewBox='0 0 1024 1024' width='32' height='32'><path d='M291.127652 378.034087c-27.781565 10.841043-40.269913 20.880696-46.881391 52.001391-8.926609 41.538783 12.354783 107.675826 48.929391 103.980522 51.600696-5.097739 59.258435-102.466783 30.586435-139.642435C316.104348 384.422957 305.39687 381.618087 291.127652 378.034087zM515.383652 378.034087c-27.38087 10.685217-40.136348 20.390957-46.881391 50.977391-9.171478 41.805913 12.221217 108.699826 48.929391 105.004522 52.513391-5.209043 62.330435-113.552696 25.510957-144.762435C535.28487 382.753391 526.870261 381.106087 515.383652 378.034087zM919.863652 313.566609c-78.358261-137.104696-214.817391-226.927304-433.241043-223.254261-15.293217 1.402435-30.586435 2.693565-45.879652 4.096-27.136 5.743304-54.405565 11.597913-81.563826 17.341217C229.086609 152.509217 130.82713 233.182609 82.921739 356.396522 56.653913 423.66887 64.556522 523.464348 90.045217 583.724522c52.379826 123.859478 158.386087 201.750261 298.696348 237.545739 58.88 15.048348 159.922087 23.062261 222.252522 4.073739 44.966957 43.453217 137.48313 83.72313 220.182261 87.663304-14.647652-27.514435-29.184-55.05113-43.831652-82.565565-7.123478-20.390957-14.269217-40.781913-21.392696-61.17287 19.745391-13.623652 39.357217-27.136 59.102609-40.781913 52.112696-40.381217 90.35687-97.480348 116.224-164.129391C971.998609 484.975304 954.145391 373.448348 919.863652 313.566609zM710.90087 741.732174c1.513739 37.197913 16.294957 70.455652 27.514435 99.906783-26.37913-8.281043-51.244522-21.414957-72.370087-35.706435-7.791304-6.099478-15.693913-12.221217-23.462957-18.342957-5.097739-5.476174-10.195478-10.818783-15.293217-16.294957-12.599652 2.671304-25.110261 5.476174-37.732174 8.147478-35.417043 7.012174-84.858435 10.818783-123.347478 4.096-96.456348-16.962783-166.177391-39.891478-229.376-87.663304-47.771826-36.196174-90.223304-89.466435-110.102261-152.909913-41.538783-132.274087 30.586435-252.193391 103.980522-308.891826 43.453217-33.52487 93.651478-59.770435 152.909913-77.467826 22.038261-4.452174 44.210087-8.815304 66.270609-13.245217 11.597913-1.024 23.062261-2.048 34.660174-3.072 187.814957-0.512 313.58887 65.469217 384.333913 181.448348 13.000348 21.147826 22.906435 46.636522 30.564174 72.370087C949.693217 562.064696 811.564522 693.693217 710.90087 741.732174z' p-id='3942' fill='#01b969'></path></svg>
+    </div>
+  </div>
+  <div class="scroll-icon-top" id="scroll-icon-top">
+    <div class="icon-top-content">
+      <i></i>
+    </div>
+  </div>
+</div>
+
+<div class="side-bar" id="side-bar">
+  <div class="side-title">
+    联系客服
+    <div class="close side-close" id="closeSidebar">X</div>
+  </div>
+
+  <a href="https://divet.taobao.com/?spm=a1z10.1-c.0.0.8cxl3q" target="_blank">
+    <div class="side-item">
+      <div class="item-content item-taobao">
+        <img src=./../dist/img/Sidebar2.jpg>
+      </div>
+    </div>
+  </a>
+
+  <a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&touid=%E6%BD%9C%E6%B8%B8%E6%97%B6%E5%85%89&siteid=cntaobao&status=1&charset=utf-8">
+    <div class="side-item">
+      <div class="item-content item-taobao-server">
+        <img  src=./../dist/img/Sidebar3.jpg>
+        <div class="server-detail">
+          <div>淘宝客服</div>
+          <div style="font-size:16px;">点击弹出阿里旺旺客服</div>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2546623187&site=qq&menu=yes">
+    <div class="side-item">
+      <div class="item-content">
+        <img src=./../dist/img/Sidebar1.jpg>
+        <div class="contact-us">联系我们</div>
+      </div>
+    </div>
+  </a>
+
+  <div class="side-item">
+    <div class="item-content item-weixin">
+      <i></i>
+      <div class="item-weixin-detail">
+      <div class="weixin-detail-tiltle">微信咨询</div>
+      <div>请扫码关注我们,收到需求后,我们会第一时间回复你</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <footer>
+  <div class="footer-content">
+
+    <div class="footer-company">
+      <div class="footer-company-infor">
+        <i></i>
+        <h4>公司信息</h4>
+        <p><a href=./../other/aboutus.html>关于我们</a></p>
+        <p><a href=./../other/teamstory.html>团队故事</a></p>
+        <p><a href=./../other/joinus.html>加入我们</a></p>
+      </div>
+  
+      <div class="footer-other-detail">
+        <h3>深圳潜游时光文化传媒有限公司</h3>
+  
+        <div class="row">
+          <div class="col-3">
+            <h4>关于更多</h4>
+            <p><a href=./../other/help.html>帮助</a></p>
+            <p><a href=./../other/privacy.html>隐私声明</a></p>
+            <p><a href=./../other/policy.html>政策条款</a></p>
+          </div>
+          <div class="col-4">
+            <h4>商务合作</h4>
+            <p>&nbsp;</p>
+            <p><a href="mailto://chopin@divingtime.asia">chopin@divingtime.asia</a></p>
+            <p><a>0755-23708886</a></p>
+          </div>
+          <div class="col-5">
+            <h4>客服专线</h4>
+            <p><a href="tel://400-9688-768">400-9688-768</a></p>
+            <p><a href="mailto://consultant@divingtime.asia">consultant@divingtime.asia</a></p>
+            <p><a>顾问工作时间：9:00 - 18:00</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-icon">
+      <div class="footer-icon-taobao">
+        <a href="https://divet.taobao.com/index.htm?spm=a1z10.1-c.w5002-2373231309.2.2zP0yr" target="_blank">
+          <i></i>
+        </a>
+      </div>
+    
+      <div class="footer-icon-weibo">
+        <a href="http://weibo.com/divingtime" target="_blank">
+          <i></i>
+        </a>
+      </div>
+        
+      <div class="footer-icon-weixin">
+        <div></div>
+        <a href="javascript:;">
+          <i></i>
+        </a>
+      </div>
+      <div class="footer-icon-credit">
+        <a id='___szfw_logo___' href='https://credit.szfw.org/CX20170620038855550156.html' target='_blank'>
+          <i></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-copyright">
+      Copyright © 2016 DivingTime. All Rights Reserved. 潜游时光有限公司 版权所有 <a href='http://www.miitbeian.gov.cn/' target='_blank'>粤ICP备14052188号-2</a>
+    </div>
+  </div>
+</footer>
+
+
+  <script type="text/javascript" src='./../dist/js/jquery-2.1.4.min.js'></script>
+  <script type="text/javascript" src='./../dist/js/es6-promise.min.js'></script>
+  <script type="text/javascript" src='./../dist/js/bootstrap.min.js'></script>
+  <script type="text/javascript" src='./../dist/js/bootstrap-datetimepicker.min.js'></script>
+  <script type="text/javascript" src='./../dist/js/bootstrap-datetimepicker.zh-CN.js'></script>
+  <script type="text/javascript" src='./../dist/js/fetch.min.js'></script>
+
+  <script type="text/javascript" src='./../dist/js/config.js?file_version=4.0'></script>
+  <script type="text/javascript" src='./index.js?file_version=4.0'></script>
+</body>
+</html>

@@ -14,7 +14,7 @@ function loadMessage() {
   var confirmUniqueKey = localStorage.getItem('confirmUniqueKey');
   $.ajax({
     type: "GET", 
-    url: URLbase+URLversion+"/gather/confirmation/"+confirmUniqueKey+"/get.do", 
+    url: appConfig.version +"/gather/confirmation/"+confirmUniqueKey+"/get.do", 
     contentType: "application/json; charset=utf-8", 
     success: function (val) {
       if (val.result == "0") {
@@ -117,7 +117,7 @@ function earnest() {
   }
   // part4
   $("#qrCode").html(
-    "<img src=" + URLbase +loadqrCode+"><div class='message'><div>预订、个人专享</div><div>24小时微服务伴您一路旅程</div><div>（微信号："+loadwebChat+"）</div></div>"
+    "<img src=" + appConfig.urlBase +loadqrCode+"><div class='message'><div>预订、个人专享</div><div>24小时微服务伴您一路旅程</div><div>（微信号："+loadwebChat+"）</div></div>"
   );
 
   $(".part5").css('display','none');
@@ -133,7 +133,7 @@ function fullamount() {
 
   // part4
   $("#qrCode").html(
-    "<img src=" + URLbase +loadqrCode+"><div class='message'><div>预订、个人专享</div><div>24小时微服务伴您一路旅程</div><div>（微信号："+loadwebChat+"）</div></div>"
+    "<img src=" + appConfig.urlBase +loadqrCode+"><div class='message'><div>预订、个人专享</div><div>24小时微服务伴您一路旅程</div><div>（微信号："+loadwebChat+"）</div></div>"
   );
 
   var bedTypeString = "";
@@ -636,3 +636,23 @@ function fullamount() {
 }
 
 
+// Timestamp 转换 xxxx-xx-xx 字符串
+function stampToFormat(stamp) {
+	var _data = new Date(stamp);
+    const year = _data.getFullYear();//获取完整的年份(4位,1970)
+
+    let month = _data.getMonth()+1;//获取月份(0-11,0代表1月,用的时候记得加上1)
+
+    if( month <= 9 ){
+      month = "0"+month;
+    }
+
+    let date = _data.getDate();//获取日(1-31)
+
+    if( date <= 9 ){
+      date = "0"+date;
+    }
+
+    return year+"-"+month+"-"+date;
+
+}

@@ -55,7 +55,7 @@ function Logout() {
 	$("#Log_out").html("<i style='background-position:-312px -185px;'></i>正在退出")
 	$.ajax({
 		type: "POST", 
-		url: appConfig.logout, 
+		url: appConfig.version + "/user/logout.do", 
 		contentType: "application/json; charset=utf-8", 
 		headers: {
 			'token':$.cookie('token'),
@@ -73,7 +73,7 @@ function Logout() {
 function judgLogin() {
 	$.ajax({
 		type: "GET", 
-		url: appConfig.getUserInfo, 
+		url: appConfig.version + "/user/getUserInfo.do", 
 		contentType: "application/json; charset=utf-8", 
 		headers: {
 			'token':$.cookie('token'),
@@ -95,7 +95,7 @@ function SelectCity() {
 	this.renderRegion = function (region) {
 		$.ajax({
 			type: "GET", 
-			url:appConfig.selectProvince+region+"/list.do", 
+			url: appConfig.version + "/system/region/regiontype/" + region + "/list.do", 
 			contentType: "application/json; charset=utf-8", 
 			success: function (message) {
 				if (message.result=="0") {
@@ -145,7 +145,7 @@ function SelectCity() {
 		}
 		$.ajax({
 			type: "GET", 
-			url: URLbase + URLversion+"/system/region/parentid/"+parentId+"/list.do", 
+			url: appConfig.version + "/system/region/parentid/"+parentId+"/list.do", 
 			contentType: "application/json; charset=utf-8", 
 			success: function (message) {
 				renderDOM(message.data.regionList);

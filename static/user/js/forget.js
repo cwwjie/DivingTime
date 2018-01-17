@@ -107,7 +107,7 @@ function getMobileCode() {
 	function pushData() {
 		$.ajax({
 			type: "POST", 
-			url: appConfig.getMobileCode, 
+			url: appConfig.version + "/user/getMobileCode.do", 
 			contentType: "application/json; charset=utf-8", 
 			data: JSON.stringify(data_json), 
 			dataType: "json", 
@@ -186,7 +186,7 @@ function emailGetBack() {
 	function Get() {
 		$("#Btn").css("cursor","not-allowed");
 		$("#Btn").attr("id","BTN-Forbid");
-		$.get(appConfig.forgeturl,"email="+ $("#User").val() ,function(message){
+		$.get(appConfig.version + "/user/forgetPw.do", "email="+ $("#User").val() ,function(message){
 			if (message.result === "10007") {
 				$(".input_1 i").removeClass("correcticon");
 				$(".input_1 i").addClass("mistakeicon");
@@ -236,7 +236,7 @@ function phoneGetBack() {
 	var json = {"passwd":$("#phone_new_Password").val(),"authAction":"forgetPw","messageContent":$("#phone_Code").val(),"mobile":$("#phone_number").val()}
 	$.ajax({ 
 		type: "POST", 
-		url: appConfig.forgetPwtToMob, 
+		url: appConfig.version + "/user/forgetPwtToMob.do", 
 		contentType: "application/json; charset=utf-8", 
 		data: JSON.stringify(json), 
 		dataType: "json", 

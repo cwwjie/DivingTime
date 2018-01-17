@@ -1,0 +1,179 @@
+.scroll-top {
+	position: fixed;
+	right: 10px;
+	bottom: 85px;
+
+  .scroll-icon-taobao {
+    margin-bottom: 20px;
+    width: 55px;
+    height: 55px;
+		border-radius: 5px;
+    background: rgba(170, 170, 170, .7);
+    cursor: pointer;
+
+    .taobao-content {
+      padding-top: 11px;
+      padding-left: 11px;
+    }
+
+    .taobao-svg-hover {
+      display: none;
+    }
+  }
+
+  .scroll-icon-taobao:hover {
+    background: #fff;
+    border: rgba(170, 170, 170, .7) 1px solid;
+
+    .taobao-svg {
+      display: none;
+    }
+
+    .taobao-svg-hover {
+      display: block;
+    }
+  }
+
+  .scroll-icon-top {
+		visibility: hidden;
+    opacity: 0;
+		width: 55px;
+		height: 55px;
+		border-radius: 5px;
+    background: rgba(170, 170, 170, .7);
+    cursor: pointer;
+
+    .icon-top-content {
+      padding-top: 11px;
+    }
+
+    i {
+			margin: 0px auto;
+			width: 32px;
+			height: 32px;
+			background-position: -152px -217px;
+		}
+  }
+
+  .scroll-icon-top:hover{
+    background: #fff;
+    border: rgba(170, 170, 170, .7) 1px solid;
+
+    i {
+      background-position: -120px -217px;
+    }
+  }
+}
+
+.side-bar {
+	position: fixed;
+	top: 0px;
+	right: -330px;
+  width: 320px;
+	height: 100%;
+	border-left: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	background: #fff;
+  z-index: 3;
+  
+  .side-title {
+		position: relative;
+		height: 50px;
+    width: 100%;
+		font-size: 18px;
+		line-height: 50px;
+		text-align: center;
+		color: #fff;
+    background:#26a69a;
+
+    .side-close {
+			position: absolute;
+			top: 13px;
+			right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+  }
+
+  .side-item {
+    padding-top: 15px;
+
+    .item-content {
+      overflow: hidden;
+      position: relative;
+      margin: 0px auto;
+      width: 290px;
+      height: 120px;
+      border-radius: 5px;
+      cursor: pointer;
+
+      .contact-us {
+        position: absolute;
+        top: 40px;
+        right: 10px;
+        letter-spacing: 7px;
+        font-size: 24px;
+        color: #fff;
+        font-family: '华文细黑';
+      }
+    }
+
+    .item-taobao {
+      padding-top: 7px;
+      height: 100px;
+      border: 1px solid #019fea;
+
+      img {
+        position: relative;
+        left: -2.5px;
+      }
+    }
+
+    .item-taobao-server {
+      height: 110px;
+
+      img {
+        position: relative;
+        top: -22px;
+        left: -40px;
+      }
+
+      .server-detail {
+        position: absolute;
+        top: 25px;
+        right: 10px;
+        font-size: 24px;
+        line-height: 32px;
+        text-align: center;
+        color: #fff;
+      }
+    }
+
+    .item-weixin {
+			height: 130px;
+			border: 1px solid #dbdbdb;
+
+      i {
+				float: left;
+				margin: 5px;
+				width: 120px;
+				height: 120px;
+				background-position: 0px -235px;
+      }
+      
+      .item-weixin-detail {
+				margin-top: 5px;
+				margin-left: 130px;
+				padding: 10px 10px 10px 20px;
+				height: 120px;
+        font-size: 14px;
+				border-left: 1px solid #dbdbdb;
+
+        .weixin-detail-tiltle {
+					padding-bottom: 10px;
+					font-size: 16px;
+        }
+      }
+    }
+  }
+}

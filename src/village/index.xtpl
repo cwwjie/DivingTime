@@ -1,0 +1,47 @@
+{{ set (homeURL = "./../") }}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>【潜游时光】马来西亚_卡帕莱_出境游_自由行_潜水度假村-潜游时光，让您的旅行有温度</title>
+  <meta name="keywords" content="潜游时光，马来西亚，卡帕莱，出境游，自由行，潜水度假村，旅游攻略" />
+  <meta name="description" content="【潜游时光】专业的旅游行程定制,全新的服务体验,最佳的旅游度假体验,为您提供一站式潜水度假村预定服务,为出国旅游者提供最佳的旅游攻略和服务,让您的旅行有温度。" />
+  <meta name="author" content="潜游时光" />
+
+  <link rel="stylesheet" type="text/css" href='{{ homeURL + "dist/css/bootstrap.min.css" }}'>
+  <link rel="stylesheet" type="text/css" href='{{ "./index.css?file_version=" + file_version }}'>
+</head>
+<body>
+
+  {{ include ("./../Component/Navigation-Bar/index") }}
+
+  <h2>度假村直定</h2>
+  <div id="village">
+    <!-- <div class="village-block">
+      <div class="village-content">
+        <div class="img-content">
+          <img src='"http://192.168.0.100:8080/source/image/product/thum/thum_8f217c44-f783-408a-9cc1-9c230c680769.JPG" />
+          <div class="village-label">热卖</div>
+        </div>
+        <div class="village-depiction">
+          <div class="village-title">潜游沙巴·仙本那</div>
+          <div class="village-price">111 RMB起</div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+  {{ include ("./../Component/ScrollTop/index") }}
+
+  {{ include ("./../Component/Copyright/index") }}
+
+  <script type="text/javascript" src='{{ homeURL + "dist/js/jquery-2.1.4.min.js" }}'></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/es6-promise.min.js" }}'></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/bootstrap.min.js" }}'></script>
+
+  <script type="text/javascript" src='{{ homeURL + "dist/js/config.js?file_version=" + file_version }}'></script>
+  <script type="text/javascript" src='{{ "./index.js?file_version=" + file_version }}'></script>
+</body>
+</html>

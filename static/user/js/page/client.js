@@ -70,7 +70,7 @@ function client() {
 		}
 		$.ajax({
 			type: "GET", 
-			url: appConfig.userinfoFindByUserId, 
+			url: appConfig.version + "/user/userinfo/findByUserId.do", 
 			contentType: "application/json; charset=utf-8", 
 			headers: {
 				'token':$.cookie('token'),
@@ -108,7 +108,7 @@ function client() {
 		}
 		$.ajax({
 			type: "POST", 
-			url: appConfig.userinfoAdd, 
+			url: appConfig.version + "/user/userinfo/add.do", 
 			contentType: "application/json; charset=utf-8", 
 			data: JSON.stringify(json), 
 			dataType: "json", 
@@ -215,7 +215,7 @@ function client() {
 		}
 		$.ajax({
 			type: "GET", 
-			url: appConfig.userinfoId + data, 
+			url: appConfig.version +"/user/userinfo/delete.do?userinfoId=" + data, 
 			contentType: "application/json; charset=utf-8", 
 			headers: {
 				'token':$.cookie('token'),
@@ -278,7 +278,7 @@ function client() {
 		}
 		$.ajax({
 			type: "POST", 
-			url: appConfig.userupdate, 
+			url: appConfig.version + "/user/userinfo/update.do", 
 			contentType: "application/json; charset=utf-8", 
 			data: JSON.stringify(json), 
 			dataType: "json", 

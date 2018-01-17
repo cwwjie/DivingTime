@@ -87,7 +87,7 @@ function addres() {
 		$("#renderAddres").html("正在加载..");
 		$.ajax({
 			type: "GET", 
-			url: appConfig.findByUserId, 
+			url: appConfig.version + "/user/address/findByUserId.do", 
 			contentType: "application/json; charset=utf-8", 
 			// data: JSON.stringify(json), 
 			// dataType: "json", 
@@ -170,7 +170,7 @@ function addres() {
 			}
 			$.ajax({
 				type: "POST", 
-				url: appConfig.updateAddress, 
+				url: appConfig.version + "/user/address/update.do", 
 				contentType: "application/json; charset=utf-8", 
 				data: JSON.stringify(json), 
 				dataType: "json", 
@@ -199,7 +199,7 @@ function addres() {
 	function deleteAddres(event){
 		$.ajax({
 			type: "GET", 
-			url: appConfig.deleteAddress + "?addressId=" + event.target.title, 
+			url: appConfig.version + "/user/address/delete.do?addressId=" + event.target.title, 
 			contentType: "application/json; charset=utf-8", 
 			headers: {
 				'token':$.cookie('token'),
@@ -232,7 +232,7 @@ function addres() {
 			}
 			$.ajax({
 				type: "POST", 
-				url: appConfig.addAddress, 
+				url: appConfig.version + "/user/address/add.do", 
 				contentType: "application/json; charset=utf-8", 
 				data: JSON.stringify(json), 
 				dataType: "json", 

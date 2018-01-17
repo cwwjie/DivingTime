@@ -34,7 +34,7 @@ function Post(passwd){
 	var json = {"passwd":passwd,"email":loadPageVar("email"),"validateCode":loadPageVar("validateCode")}
 	$.ajax({
 		type: "POST",
-		url: appConfig.forgetPwSubmit,
+		url: appConfig.version + "/user/forgetPwSubmit.do",
 		contentType: "application/json; charset=utf-8", 
 		data: JSON.stringify(json),
 		dataType: "json", 
@@ -48,7 +48,7 @@ function Post(passwd){
 	})
 }
 function Check(){
-	$.get(appConfig.forgetPwCheck,"email="+loadPageVar("email")+"&validateCode=" + loadPageVar("validateCode"), function(data) {
+	$.get(appConfig.version + "/user/forgetPwCheck.do" ,"email="+loadPageVar("email")+"&validateCode=" + loadPageVar("validateCode"), function(data) {
 		if(data.result == "-1") {
 			alert("链接已失效");
 			window.location.href="./../index.html"

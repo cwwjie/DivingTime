@@ -1,0 +1,180 @@
+{{ set (homeURL = "./../") }}
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>【潜游时光】马来西亚_卡帕莱_出境游_自由行_潜水度假村-潜游时光，让您的旅行有温度</title>
+    <meta name="keywords" content="潜游时光，马来西亚，卡帕莱，出境游，自由行，潜水度假村，旅游攻略" />
+    <meta name="description" content="【潜游时光】专业的旅游行程定制,全新的服务体验,最佳的旅游度假体验,为您提供一站式潜水度假村预定服务,为出国旅游者提供最佳的旅游攻略和服务,让您的旅行有温度。" />
+    <meta name="author" content="潜游时光" />
+  
+    <link rel="stylesheet" type="text/css" href='{{ homeURL + "dist/css/bootstrap.min.css" }}'>
+    <link rel="stylesheet" type="text/css" href="./index.css" media="screen">
+  </head>
+<body>
+
+  {{ include ("./../Component/Navigation-Bar/index") }}
+  
+  <div class="main">
+    <div class="main_img">
+      <img src="./../dist/img/bar.jpg">
+    </div>
+    <div class="content teamStory">
+      <h1>团队故事</h1>
+      <div style="height: 1px;background:rgb(220,220,220);margin:60px 0px 30px;"></div>
+      <p>深圳潜游时光文化传媒有限公司创立于2012年，是一家关于潜水度假的在线旅游的供应商，因爱好潜水而将其做成了事业，旨在竭尽为客户提供更个性化的私人定制服务，更专业的服务推广平台，务求让客人体验到最全面贴心的出行服务。目前，我们公司的主要产品有一站式的度假村行程预定平台-- <a href="http://www.divingtime.asia" target="_blank"> (http://www.divingtime.asia) </a> 和潜游时光淘宝店--<a href="https://divet.taobao.com" target="_blank">(https://divet.taobao.com)</a>。</p>
+      <h2 style="margin-top:30px;">团队成员</h2>
+      <div style="height: 1px;background:rgb(220,220,220);margin:15px 0px 10px;"></div>
+      <div class="team">
+        <div class="one">
+          <div class="img"><img src="./../dist/img/CE0.jpg"></div>
+          <div class="Text">
+            <div class="title">李霄鹏</div>
+            <div class="office">CEO</div>
+            <div class="Introdu">一个人的真正伟大之处就在于他能够认识到自己的渺小。</div>
+          </div>
+        </div>
+        <div class="one">
+          <div class="img"><img src="./../dist/img/COO.jpg"></div>
+          <div class="Text">
+            <div class="title">车娜</div>
+            <div class="office">COO</div>
+            <div class="Introdu">人活着总是有趣的，即便是烦恼也是有趣的。</div>
+          </div>
+        </div>
+        <div class="one">
+          <div class="img"><img src="./../dist/img/Melody.jpg"></div>
+          <div class="Text">
+            <div class="title">潘木兰/Melody</div>
+            <div class="office">Financial Director</div>
+            <div class="Introdu">Learn more,love more.</div>
+          </div>
+        </div>
+        <div class="one">
+          <div class="img"><img src="./../dist/img/Annie.jpg"></div>
+          <div class="Text">
+            <div class="title">陈娟/Annie</div>
+            <div class="office">Administrative Director</div>
+            <div class="Introdu">先做人，后做事。</div>
+          </div>
+        </div>
+        <div class="one">
+          <div class="img"><img src="./../dist/img/Epernon.jpg"></div>
+          <div class="Text">
+            <div class="title">张艺鹏/Eric</div>
+            <div class="office">Business Operations Manager</div>
+            <div class="Introdu">路漫漫其修远兮，吾将上下而求索。</div>
+          </div>
+        </div>
+        <div class="one">
+          <div class="img"><img src="./../dist/img/Vivian.jpg"></div>
+          <div class="Text">
+            <div class="title">吕昭昭/Vivian</div>
+            <div class="office">Business Development Director</div>
+            <div class="Introdu">Work smart,then play harder!</div>
+          </div>
+        </div>
+        <div class="one">
+          <div class="img"><img src="./../dist/img/Snow.jpg"></div>
+          <div class="Text">
+            <div class="title">欧阳/Snow</div>
+            <div class="office">Operations Specialist</div>
+            <div class="Introdu">夏虫不可语冰，池鱼安知鲲鹏之志</div>
+          </div>
+        </div>
+        <div class="one">
+          <!-- <div class="img"><img src="./../dist/img/Allison.jpg"></div>
+          <div class="Text">
+            <div class="title">林艳阳/Allison</div>
+            <div class="office">Operations Specialist</div>
+            <div class="Introdu">No pains no gains</div>
+          </div> -->
+          <div class="img"><img src="./../dist/img/WentaoZhu.jpg"></div>
+          <div class="Text">
+            <div class="title">朱文涛/WentaoZhu</div>
+            <div class="office">Senior Software Engineer</div>
+            <div class="Introdu">我们由多种不同的状态组成，每天寻找自己最好的状态。</div>
+          </div>
+        </div>
+        <div class="one">
+          <div class="img"><img src="./../dist/img/zhimu.jpg"></div>
+          <div class="Text">
+            <div class="title">葛武荣/止木</div>
+            <div class="office">Senior Software Engineer</div>
+            <div class="Introdu">我是程序猿，但我有一颗射鸡湿的心！</div>
+          </div>
+        </div>
+        <div class="one">
+          <div class="img"><img src="./../dist/img/Rejiejay.jpg"></div>
+          <div class="Text">
+            <div class="title">曾杰/Rejiejay</div>
+            <div class="office">Senior Software Engineer</div>
+            <div class="Introdu">我们的征途是星辰大海!</div>
+          </div>
+        </div>
+        <!-- <div class="one">
+          <div class="img"><img src="./../dist/img/WentaoZhu.jpg"></div>
+          <div class="Text">
+            <div class="title">朱文涛/WentaoZhu</div>
+            <div class="office">Senior Software Engineer</div>
+            <div class="Introdu">我们由多种不同的状态组成，每天寻找自己最好的状态。</div>
+          </div>
+        </div>
+        <div class="one">
+          <div class="img"><img src="./../dist/img/Designer.jpg"></div>
+          <div class="Text">
+            <div class="title">林嘉鑫/加薪</div>
+            <div class="office">User Interface Designer</div>
+            <div class="Introdu">生活不止眼前的苟且，还有湿与设计</div>
+          </div>
+        </div> -->
+        <div class="one">
+          <div class="img"><img src="./../dist/img/Coco.jpg"></div>
+          <div class="Text">
+            <div class="title">李可欣/Coco</div>
+            <div class="office">Data Analysis Assistant</div>
+            <div class="Introdu">在路上</div>
+          </div>
+        </div>
+        <div class="one">
+          <div class="img"><img src="./../dist/img/Liz.jpg"></div>
+          <div class="Text">
+            <div class="title">欧阳志力/Liz</div>
+            <div class="office">Senior secretary</div>
+            <div class="Introdu">Stay hungry，stay foolish</div>
+          </div>
+        </div>
+        <div class="one">
+          <div class="img"><img src="./../dist/img/jiaojiao.jpg"></div>
+          <div class="Text">
+            <div class="title">杨娇/Joy</div>
+            <div class="office">Operations Director</div>
+            <div class="Introdu">停下来休息的时候不要忘记，别人还在奔跑!</div>
+          </div>
+        </div>
+        <!-- <div class="one">
+          <div class="img"><img src="./../dist/img/Colian.jpg"></div>
+          <div class="Text">
+            <div class="title">柯宁/Colian</div>
+            <div class="office">Marketing Position</div>
+            <div class="Introdu">follow your heart.</div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  {{ include ("./../Component/ScrollTop/index") }}
+
+  {{ include ("./../Component/Copyright/index") }}
+
+  <script type="text/javascript" src='{{ homeURL + "dist/js/jquery-2.1.4.min.js" }}'></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/es6-promise.min.js" }}'></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/bootstrap.min.js" }}'></script>
+
+  <script type="text/javascript" src='{{ homeURL + "dist/js/config.js?file_version=" + file_version }}'></script>
+  <script type="text/javascript" src='{{ "./index.js?file_version=" + file_version }}'></script>
+</body>
+</html>

@@ -71,7 +71,7 @@ function bindAccoun() {
 			thr.text("");
 			$.ajax({
 				type: "GET", 
-				url: appConfig.checkEmail + "?email=" + fir, 
+				url: appConfig.version + "/user/checkEmail.do?email=" + fir, 
 				contentType: "application/json; charset=utf-8", 
 				success: function (message) {
 					if (message.result == "0") {
@@ -99,7 +99,7 @@ function bindAccoun() {
 			thr.text("");
 			$.ajax({
 				type: "GET", 
-				url: appConfig.checkMobile + "?mobile=" + fir, 
+				url: appConfig.version + "/user/checkMobile.do?mobile=" + fir, 
 				contentType: "application/json; charset=utf-8", 
 				success: function (message) {
 					if (message.result == "0") {
@@ -158,7 +158,7 @@ function bindAccoun() {
 			Onsubmit(domclick);
 			$.ajax({
 				type: "POST", 
-				url: appConfig.changePw, 
+				url: appConfig.version + "/user/changePw.do", 
 				contentType: "application/json; charset=utf-8", 
 				data: JSON.stringify(json), 
 				dataType: "json", 
@@ -210,7 +210,7 @@ function bindAccoun() {
 			}
 			$.ajax({
 				type: "POST", 
-				url: appConfig.updateEmail, 
+				url: appConfig.version + "/user/updateEmailActivate.do", 
 				contentType: "application/json; charset=utf-8", 
 				data: JSON.stringify(json), 
 				dataType: "json", 
@@ -265,7 +265,7 @@ function bindAccoun() {
 			$("#getMobileCode").attr("title","not-allow")
 			$.ajax({
 				type: "POST", 
-				url: appConfig.getMobileCode, 
+				url: appConfig.version + "/user/getMobileCode.do", 
 				contentType: "application/json; charset=utf-8", 
 				data: JSON.stringify(datajson), 
 				dataType: "json", 
@@ -315,7 +315,7 @@ function bindAccoun() {
 			}
 			$.ajax({
 				type: "POST", 
-				url: appConfig.updateMobile, 
+				url: appConfig.version + "/user/updateMobile.do", 
 				contentType: "application/json; charset=utf-8", 
 				data: JSON.stringify(json), 
 				dataType: "json", 
@@ -399,7 +399,7 @@ function bindAccoun() {
 		}
 		$.ajax({
 			type: "GET", 
-			url: appConfig.getUserInfo, 
+			url: appConfig.version + "/user/getUserInfo.do", 
 			contentType: "application/json; charset=utf-8", 
 			// data: JSON.stringify(json), 
 			// dataType: "json", 

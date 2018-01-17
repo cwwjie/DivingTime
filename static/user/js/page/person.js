@@ -13,7 +13,7 @@ function Person() {
 	function loadInfo(go){
 		$.ajax({
 			type: "GET", 
-			url: appConfig.getUserInfo, 
+			url: appConfig.version + "/user/getUserInfo.do", 
 			contentType: "application/json; charset=utf-8", 
 			// data: JSON.stringify(json), 
 			// dataType: "json", 
@@ -128,7 +128,7 @@ function Person() {
 
 			$.ajax({
 				type: "POST", 
-				url: appConfig.updateUser, 
+				url: appConfig.version + "/user/update.do", 
 				contentType: "application/json; charset=utf-8", 
 				data: JSON.stringify(json), 
 				dataType: "json", 

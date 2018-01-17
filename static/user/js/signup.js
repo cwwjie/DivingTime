@@ -233,7 +233,7 @@ function Signup(){
 			var datajson = {"mobile":$("#PhoneUser").val(),"authAction":"register"};
 			$.ajax({
 				type: "POST", 
-				url: appConfig.getMobileCode, 
+				url: appConfig.version + "/user/getMobileCode.do", 
 				contentType: "application/json; charset=utf-8", 
 				data: JSON.stringify(datajson), 
 				dataType: "json", 
@@ -269,7 +269,7 @@ function Signup(){
 		var json = {passwd:$("#emailPassword").val(),email:$("#emailUser").val()}
 		$.ajax({ 
 		type: "POST", 
-		url: appConfig.sigupturl, 
+		url: appConfig.version +"/user/register.do", 
 		contentType: "application/json; charset=utf-8", 
 		data: JSON.stringify(json), 
 		dataType: "json", 
@@ -300,7 +300,7 @@ function Signup(){
 		var json = {"passwd":$("#PhonePassword").val(),"authAction":"register","messageContent":$("#PhoneCode").val(),"mobile":$("#PhoneUser").val()}
 		$.ajax({ 
 			type: "POST", 
-			url: appConfig.registerMobile, 
+			url: appConfig.version + "/user/registerMobile.do", 
 			contentType: "application/json; charset=utf-8", 
 			data: JSON.stringify(json), 
 			dataType: "json", 
@@ -328,7 +328,7 @@ function Signup(){
  */
 function judgEmail() {
   var email = $("#emailUser").val();
-  $.get(appConfig.checkEmail+"?email="+email, function(result){
+  $.get(appConfig.version + "/user/checkEmail.do?email=" + email, function(result){
   	if (result.result == "0") {
 		$(".input4 i").removeClass("mistakeicon");
 		$(".input4 i").addClass("correcticon");
@@ -345,7 +345,7 @@ function judgEmail() {
  */
 function judgPhone() {
   var phone = $("#PhoneUser").val();
-  $.get(appConfig.checkMobile+"?mobile="+phone, function(result){
+  $.get(appConfig.version + "/user/checkMobile.do?mobile=" + phone, function(result){
   	if (result.result == "0") {
 		$(".input1 i").removeClass("mistakeicon");
 		$(".input1 i").addClass("correcticon");

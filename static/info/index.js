@@ -25,7 +25,7 @@ window.onload = function() {
               var myadminInfo = {
                 'name': json.data.name,
                 'webchat': json.data.webchat || '暂无',
-                'qrimg': URLbase + json.data.qrCode
+                'qrimg': appConfig.urlBase + json.data.qrCode
               }
               Info.part_1.$data.adminInfo = myadminInfo;
               Info.part_2.$data.adminInfo = myadminInfo;
@@ -172,7 +172,7 @@ var Info = {
       token = localStorage.getItem('_token'),
       digest = localStorage.getItem('_digest');
 
-    return fetch(URLbase + URLversion + '/gather/link/' + uniqueKey + '/getGatherInfo.do',{
+    return fetch(appConfig.version + '/gather/link/' + uniqueKey + '/getGatherInfo.do',{
       method: 'GET',
       headers: {
         token: token,
@@ -217,8 +217,8 @@ var Info = {
         'payAccount': null,
         'signName': basicData.signName,
         'pinyinName': basicData.pinyinName,
-        'mobile': null,
-        'email': null,
+        'mobile': basicData.mobile,
+        'email': basicData.email,
         'outboundNum': null,
         'landTime': null,
         'landDate': null,
@@ -231,6 +231,9 @@ var Info = {
         'outHarbourNum': null,
         'hTakeoffTime': null,
         'hTakeoffDate': null,
+        'insuranceBegin': basicData.insuranceBegin,
+        'insuranceEnd': basicData.insuranceEnd,
+        'reservationCode': basicData.reservationCode,
         'roomInfoList': []
       }
 
@@ -264,7 +267,7 @@ var Info = {
   },
 
   getNationality: function () {
-    return fetch(URLbase + URLversion + '/system/codetype/nationality/getWith.do',{
+    return fetch(appConfig.version + '/system/codetype/nationality/getWith.do',{
       'method': 'GET',
       'headers': {
         'Content-Type': 'application/json; charset=utf-8'
@@ -285,7 +288,7 @@ var Info = {
         token = localStorage.getItem('_token'),
         digest = localStorage.getItem('_digest');
 
-    return fetch(URLbase + URLversion + '/admin/' + basicData.belongId + '/getAdminInfo.do',{
+    return fetch(appConfig.version + '/admin/' + basicData.belongId + '/getAdminInfo.do',{
       'method': 'GET',
       'headers': {
         'Content-Type': 'application/json; charset=utf-8'
@@ -421,10 +424,10 @@ var VuePart_2 = {
         'fileListPT2': [],
         'fileListPT3': [],
         'fileListPT4': [],
-        'actionPT1': URLbase + URLversion + '/gather/attach/PT1/add.do',
-        'actionPT2': URLbase + URLversion + '/gather/attach/PT2/add.do',
-        'actionPT3': URLbase + URLversion + '/gather/attach/PT3/add.do',
-        'actionPT4': URLbase + URLversion + '/gather/attach/PT4/add.do',
+        'actionPT1': appConfig.version + '/gather/attach/PT1/add.do',
+        'actionPT2': appConfig.version + '/gather/attach/PT2/add.do',
+        'actionPT3': appConfig.version + '/gather/attach/PT3/add.do',
+        'actionPT4': appConfig.version + '/gather/attach/PT4/add.do',
         'headers': {
           'token': localStorage.getItem('_token'),
           'digest': localStorage.getItem('_digest')
@@ -567,7 +570,7 @@ var VuePart_2 = {
               _this.annex.attachmentList.push(val.data);
               _this.annex.fileListPT1 = [{
                 'name': '出国航班机票截图',
-                'url': URLbase + val.data.attachThumb
+                'url': appConfig.urlBase + val.data.attachThumb
               }];
             } else {
               alert('上传失败, 原因:' + val.message);
@@ -591,7 +594,7 @@ var VuePart_2 = {
             if (attachmentList[i].attachType === 'PT1') {
               myfileList = [{
                 'name': '出国航班机票截图',
-                'url': URLbase + attachmentList[i].attachThumb
+                'url': appConfig.urlBase + attachmentList[i].attachThumb
               }]
               attachId = attachmentList[i].attachId;
             } else {
@@ -660,7 +663,7 @@ var VuePart_2 = {
               _this.annex.attachmentList.push(val.data);
               _this.annex.fileListPT1 = [{
                 'name': '出国航班机票截图',
-                'url': URLbase + val.data.attachThumb
+                'url': appConfig.urlBase + val.data.attachThumb
               }];
             } else {
               alert('上传失败, 原因:' + val.message);
@@ -684,7 +687,7 @@ var VuePart_2 = {
             if (attachmentList[i].attachType === 'PT2') {
               myfileList = [{
                 'name': '回国航班机票截图',
-                'url': URLbase + attachmentList[i].attachThumb
+                'url': appConfig.urlBase + attachmentList[i].attachThumb
               }]
               attachId = attachmentList[i].attachId;
             } else {
@@ -753,7 +756,7 @@ var VuePart_2 = {
               _this.annex.attachmentList.push(val.data);
               _this.annex.fileListPT3 = [{
                 'name': '出国航班机票截图',
-                'url': URLbase + val.data.attachThumb
+                'url': appConfig.urlBase + val.data.attachThumb
               }];
             } else {
               alert('上传失败, 原因:' + val.message);
@@ -777,7 +780,7 @@ var VuePart_2 = {
             if (attachmentList[i].attachType === 'PT3') {
               myfileList = [{
                 'name': '到达斗湖航班机票截图',
-                'url': URLbase + attachmentList[i].attachThumb
+                'url': appConfig.urlBase + attachmentList[i].attachThumb
               }]
               attachId = attachmentList[i].attachId;
             } else {
@@ -846,7 +849,7 @@ var VuePart_2 = {
               _this.annex.attachmentList.push(val.data);
               _this.annex.fileListPT4 = [{
                 'name': '出国航班机票截图',
-                'url': URLbase + val.data.attachThumb
+                'url': appConfig.urlBase + val.data.attachThumb
               }];
             } else {
               alert('上传失败, 原因:' + val.message);
@@ -870,7 +873,7 @@ var VuePart_2 = {
             if (attachmentList[i].attachType === 'PT4') {
               myfileList = [{
                 'name': '到达斗湖航班机票截图',
-                'url': URLbase + attachmentList[i].attachThumb
+                'url': appConfig.urlBase + attachmentList[i].attachThumb
               }]
               attachId = attachmentList[i].attachId;
             } else {
@@ -908,7 +911,7 @@ var VuePart_2 = {
       },
       
       AnnexFileUpload: function(type, uploadForm) {
-        return fetch(URLbase + URLversion + '/gather/attach/'+ type +'/add.do', {
+        return fetch(appConfig.version + '/gather/attach/'+ type +'/add.do', {
           'method': 'POST',
           'headers': {
             'token': localStorage.getItem('_token'),
@@ -926,7 +929,7 @@ var VuePart_2 = {
       },
       
       AnnexFileRemove: function(attachId) {
-        return fetch(URLbase + URLversion + '/gather/attach/' + attachId + '/del.do', {
+        return fetch(appConfig.version + '/gather/attach/' + attachId + '/del.do', {
           'method': 'GET',
           'headers': {
             'token': localStorage.getItem('_token'),
@@ -1153,22 +1156,22 @@ var VuePart_2 = {
         if (myattachmentList[i] === 'PT1') {
           this.Vue.data.annex.fileListPT1 = [{
             'name': '出国航班机票截图',
-            'url': URLbase + myattachmentList[i].attachThumb
+            'url': appConfig.urlBase + myattachmentList[i].attachThumb
           }];
         } else if (myattachmentList[i] === 'PT2') {
           this.Vue.data.annex.fileListPT2 = [{
             'name': '回国航班机票截图',
-            'url': URLbase + myattachmentList[i].attachThumb
+            'url': appConfig.urlBase + myattachmentList[i].attachThumb
           }];
         } else if (myattachmentList[i] === 'PT3') {
           this.Vue.data.annex.fileListPT3 = [{
             'name': '到达斗湖航班机票截图',
-            'url': URLbase + myattachmentList[i].attachThumb
+            'url': appConfig.urlBase + myattachmentList[i].attachThumb
           }];
         } else if (myattachmentList[i] === 'PT4') {
           this.Vue.data.annex.fileListPT4 = [{
             'name': '离开斗湖航班机票截图',
-            'url': URLbase + myattachmentList[i].attachThumb
+            'url': appConfig.urlBase + myattachmentList[i].attachThumb
           }];
         }
       }
@@ -1994,26 +1997,7 @@ var VuePart_4 = {
             token = localStorage.getItem('_token'),
             digest = localStorage.getItem('_digest');
   
-        // return new Promise(function (resolve, reject) {
-        //   $.ajax({ 
-        //     'type': 'POST', 
-        //     'url': URLbase + URLversion + '/gather/'+ uniqueKey +'/updateForm.do', 
-        //     'contentType':'application/json; charset=utf-8',  
-        //     'headers': {
-        //       'token': token,
-        //       'digest': digest
-        //     },
-        //     'data': JSON.stringify(data),
-        //     'dataType': 'json',
-        //     success: function (val) {
-        //       resolve(val);
-        //     },
-        //     error: function (XMLHttpRequest, textStatus, errorThrown) {
-        //       resolve({ 'result': '100', 'message': errorThrown });
-        //     }
-        //   })
-        // });
-        return fetch(URLbase + URLversion + '/gather/'+ uniqueKey +'/updateForm.do', {
+        return fetch(appConfig.version + '/gather/'+ uniqueKey +'/updateForm.do', {
           'method': 'POST',
           'headers': {
             'Content-Type': 'application/json; charset=utf-8',
@@ -2035,27 +2019,7 @@ var VuePart_4 = {
             token = localStorage.getItem('_token'),
             digest = localStorage.getItem('_digest');
   
-        // return new Promise(function (resolve, reject) {
-        //   $.ajax({ 
-        //     'type': 'POST', 
-        //     'url': URLbase + URLversion + '/gather/'+ uniqueKey +'/gather.do', 
-        //     'contentType': 'application/json; charset=utf-8',  
-        //     'headers': {
-        //       'token': token,
-        //       'digest': digest
-        //     },
-        //     'data': JSON.stringify(data),
-        //     'dataType': 'json',
-        //     success: function (val) {
-        //       resolve(val);
-        //     },
-        //     error: function (XMLHttpRequest, textStatus, errorThrown) {
-        //       resolve({ 'result': '100', 'message': errorThrown });
-        //     }
-        //   })
-        // });
-  
-        return fetch(URLbase + URLversion + '/gather/'+ uniqueKey +'/gather.do', {
+        return fetch(appConfig.version + '/gather/'+ uniqueKey +'/gather.do', {
           'method': 'POST',
           'headers': {
             'Content-Type': 'application/json; charset=utf-8',
@@ -2511,3 +2475,4 @@ var utilities = {
     }
   },
 }
+
