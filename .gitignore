@@ -1,14 +1,48 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
 
-# dependencies
-/node_modules
+# Folder config file
+Desktop.ini
 
-# production
-/dist
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
 
-# misc
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# =========================
+# Operating System Files
+# =========================
+
+# OSX
+# =========================
+
 .DS_Store
-npm-debug.log*
+.AppleDouble
+.LSOverride
 
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
 node_modules/
-build/
+*.png
+*.jpeg
+*.jpg
+*.flv

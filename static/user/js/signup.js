@@ -328,7 +328,7 @@ function Signup(){
  */
 function judgEmail() {
   var email = $("#emailUser").val();
-  $.get(appConfig.checkEmail+"?email="+email, function(result){
+  $.get(appConfig.version + "/user/checkEmail.do?email=" + email, function(result){
   	if (result.result == "0") {
 		$(".input4 i").removeClass("mistakeicon");
 		$(".input4 i").addClass("correcticon");
@@ -345,7 +345,7 @@ function judgEmail() {
  */
 function judgPhone() {
   var phone = $("#PhoneUser").val();
-  $.get(appConfig.checkMobile+"?mobile="+phone, function(result){
+  $.get(appConfig.version + "/user/checkMobile.do?mobile=" + phone, function(result){
   	if (result.result == "0") {
 		$(".input1 i").removeClass("mistakeicon");
 		$(".input1 i").addClass("correcticon");

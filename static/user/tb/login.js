@@ -96,7 +96,7 @@ function log() {
 			}
 			$.ajax({ 
 				type: "POST", 
-				url: appConfig.logurl, 
+				url: appConfig.version + "/user/login.do", 
 				contentType: "application/json; charset=utf-8", 
 				data: JSON.stringify(json), 
 				dataType: "json", 

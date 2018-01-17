@@ -6,6 +6,7 @@
   <div class='header-content'>
     <a id='headerHome' href='{{ homeURL + "index.html" }}'>首页</a>
     <a id='headerVillage' href='{{ homeURL + "village/index.html" }}'>度假村直订</a>
+    <a id='headerWedding' href='{{ homeURL + "wedding/index.html" }}'>婚拍</a>
     <a id='taobao' href='https://divet.taobao.com/?spm=a1z10.1-c.0.0.8cxl3q'>淘宝店铺</a>
   </div>
 

@@ -666,7 +666,7 @@ var customerInfo = {
 
             myData.submitProduct()
             .then(val => {
-              alert('恭喜你提交成功! 请在30分钟内付定金!');
+              alert('恭喜你提交成功! 正在等待客服处理!');
               isSubmit = false;
               Vuethis.submitBTN = '确认订单';
               window.location = './../../user/account.html#Orders';

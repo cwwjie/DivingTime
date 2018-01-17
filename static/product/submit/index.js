@@ -65,23 +65,31 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_cookies__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_convertDate__ = __webpack_require__(2);
 
 
+var _cookies = __webpack_require__(1);
+
+var _cookies2 = _interopRequireDefault(_cookies);
+
+var _convertDate = __webpack_require__(2);
+
+var _convertDate2 = _interopRequireDefault(_convertDate);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 window.onload = function () {
-  if (utilities.isSupport() === false) { return }
+  if (utilities.isSupport() === false) {
+    return;
+  }
 
   myData.init();
   customerInfo.init();
-}
+};
 
-let myData = {
+var myData = {
   'data': {
     // 'apartment': "邦邦 沙滩屋",
     // 'apartmentNum': 1,
@@ -119,11 +127,11 @@ let myData = {
   'departureDate': null,
   'productNum': null,
 
-  init() {
-    const _this = this;
-    let productId = utilities.loadPageVar('productId');
-    let departureDate = utilities.loadPageVar('departureDate');
-    let productNum = utilities.loadPageVar('productNum');
+  init: function init() {
+    var _this = this;
+    var productId = utilities.loadPageVar('productId');
+    var departureDate = utilities.loadPageVar('departureDate');
+    var productNum = utilities.loadPageVar('productNum');
 
     if (!productId || !departureDate || !productNum) {
       return alert('此订单数据有误, 请检查您的操作或者联系客服!');
@@ -132,36 +140,32 @@ let myData = {
     this.productId = productId;
     this.departureDate = parseInt(departureDate);
     this.productNum = parseInt(productNum);
-    this.getProduct()
-    .then(val => {
+    this.getProduct().then(function (val) {
       document.getElementById('main').setAttribute('style', 'display: block;');
       _this.data = val;
       _this.renderOrders();
-    }, error => alert(error))
+    }, function (error) {
+      return alert(error);
+    });
   },
-
-  renderOrders() {
-    document.getElementById('orders-title').innerHTML = `${this.data.productName}`;
-    document.getElementById('departureDate').innerHTML = `出发日期: ${__WEBPACK_IMPORTED_MODULE_1__utils_convertDate__["a" /* default */].dateToFormat(new Date(this.departureDate))}`;
-    document.getElementById('productNum').innerHTML = `&nbsp&nbsp ${this.productNum}`;
+  renderOrders: function renderOrders() {
+    document.getElementById('orders-title').innerHTML = '' + this.data.productName;
+    document.getElementById('departureDate').innerHTML = '\u51FA\u53D1\u65E5\u671F: ' + _convertDate2.default.dateToFormat(new Date(this.departureDate));
+    document.getElementById('productNum').innerHTML = '&nbsp&nbsp ' + this.productNum;
     document.getElementById('totalPrice').innerHTML = this.TotalPrice();
   },
-
-  TotalPrice() {
-    const nowTimestamp = Date.parse(new Date()),
-      promotePrice = this.data.promotePrice,
-      promoteEndTimestamp = this.data.promoteEndTime,
-      promoteStartTimestamp = this.data.promoteStartTime;
+  TotalPrice: function TotalPrice() {
+    var nowTimestamp = Date.parse(new Date()),
+        promotePrice = this.data.promotePrice,
+        promoteEndTimestamp = this.data.promoteEndTime,
+        promoteStartTimestamp = this.data.promoteStartTime;
 
     // 表示促销
     if (promotePrice != null && promotePrice != 0) {
       // 当前时间 大于等于 促销开始时间
       // 并且
       // 当前时间 小于等于 促销结束时间
-      if (
-        nowTimestamp >= promoteStartTimestamp && 
-        nowTimestamp <= promoteEndTimestamp
-      ) {
+      if (nowTimestamp >= promoteStartTimestamp && nowTimestamp <= promoteEndTimestamp) {
         return this.data.promotePrice * this.productNum;
       }
     }
@@ -169,61 +173,59 @@ let myData = {
     // 表示不促销
     return this.data.productPrice * this.productNum;
   },
+  chackIsPromote: function chackIsPromote() {},
+  submitProduct: function submitProduct() {
+    var _this = this;
+    var fetchbody = JSON.stringify(this.submitData);
+    var url = appConfig.version + '/order/' + this.productId + '/' + this.productNum + '/' + _convertDate2.default.dateToYYYYmmNumber(new Date(this.departureDate)) + '/reserve.do';
 
-  chackIsPromote() {
-  },
-
-  submitProduct() {
-    const _this = this;
-    let fetchbody = JSON.stringify(this.submitData)
-    let url = `${appConfig.version}/order/${this.productId}/${this.productNum}/${__WEBPACK_IMPORTED_MODULE_1__utils_convertDate__["a" /* default */].dateToYYYYmmNumber(new Date(this.departureDate))}/reserve.do`
-
-    return new Promise((resolve, reject) => {
+    return new Promise(function (resolve, reject) {
       fetch(url, {
         'method': 'POST',
-        'headers':{
+        'headers': {
           'Content-Type': 'application/json; charset=utf-8',
-          'token': __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].getItem('token'),
-          'digest': __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].getItem('digest')
+          'token': _cookies2.default.getItem('token'),
+          'digest': _cookies2.default.getItem('digest')
         },
-        'body': fetchbody 
-      }).then(
-        response => ( response.json() ),
-        error => ({'result': '1', 'message': error})
-      ).then((json) => {
+        'body': fetchbody
+      }).then(function (response) {
+        return response.json();
+      }, function (error) {
+        return { 'result': '1', 'message': error };
+      }).then(function (json) {
         if (json.result === '0') {
           resolve();
         } else {
-          reject(`请求服务器成功, 但是返回的预订信息有误! 原因: ${json.message}`);
+          reject('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u4F46\u662F\u8FD4\u56DE\u7684\u9884\u8BA2\u4FE1\u606F\u6709\u8BEF! \u539F\u56E0: ' + json.message);
         }
-      }).catch(error => {
-        reject(`向服务器发起请求预订信息失败, 原因: ${error}`);
-      })
+      }).catch(function (error) {
+        reject('\u5411\u670D\u52A1\u5668\u53D1\u8D77\u8BF7\u6C42\u9884\u8BA2\u4FE1\u606F\u5931\u8D25, \u539F\u56E0: ' + error);
+      });
     });
   },
+  getProduct: function getProduct() {
+    var _this = this;
 
-  getProduct() {
-    const _this = this;
-
-    return new Promise((resolve, reject) => {
-      fetch(`${appConfig.version}/product/${_this.productId}/get.do`, {
+    return new Promise(function (resolve, reject) {
+      fetch(appConfig.version + '/product/' + _this.productId + '/get.do', {
         'method': "GET",
         'contentType': 'application/json; charset=utf-8'
-      }).then(
-        response => response.json(),
-        error => ({'result': '1', 'message': error})
-      ).then((json) => {
+      }).then(function (response) {
+        return response.json();
+      }, function (error) {
+        return { 'result': '1', 'message': error };
+      }).then(function (json) {
         if (json.result === '0') {
           resolve(json.data);
         } else {
-          reject(`请求服务器成功, 但是返回的订单信息有误! 原因: ${json.message}`);
+          reject('\u8BF7\u6C42\u670D\u52A1\u5668\u6210\u529F, \u4F46\u662F\u8FD4\u56DE\u7684\u8BA2\u5355\u4FE1\u606F\u6709\u8BEF! \u539F\u56E0: ' + json.message);
         }
-      }).catch(error => {
-        reject(`向服务器发起请求订单信息失败, 原因: ${error}`);
-      })
+      }).catch(function (error) {
+        reject('\u5411\u670D\u52A1\u5668\u53D1\u8D77\u8BF7\u6C42\u8BA2\u5355\u4FE1\u606F\u5931\u8D25, \u539F\u56E0: ' + error);
+      });
     });
   }
-}
+};
 
 var customerInfo = {
   data: [
@@ -245,33 +247,33 @@ var customerInfo = {
   ],
   myVue: {},
 
-  init: function () {
+  init: function init() {
     var _this = this;
 
-    this.fetchCustomerData()
-      .then(function (response) {
-        return response.json();
-      }, function (error) {
-        alert('非常抱歉，获取顾客信息出错！原因: ' + error);
-        return false;
-      })
-      .then(function (val) {
-        if (val === false) { return }
-        if (val.result === '0') {
-          _this.data = val.data;
-          _this.myVue = _this.initVue();
-        } else {
-          alert('非常抱歉，获取顾客信息出错！原因: ' + val.message);
-        }
-      });
+    this.fetchCustomerData().then(function (response) {
+      return response.json();
+    }, function (error) {
+      alert('非常抱歉，获取顾客信息出错！原因: ' + error);
+      return false;
+    }).then(function (val) {
+      if (val === false) {
+        return;
+      }
+      if (val.result === '0') {
+        _this.data = val.data;
+        _this.myVue = _this.initVue();
+      } else {
+        alert('非常抱歉，获取顾客信息出错！原因: ' + val.message);
+      }
+    });
   },
 
   // 获取 旅客信息方法
-  fetchCustomerData: function () {
-    var token = __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].getItem('token'),
-      digest = __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].getItem('digest');
+  fetchCustomerData: function fetchCustomerData() {
+    var token = _cookies2.default.getItem('token'),
+        digest = _cookies2.default.getItem('digest');
 
-    return fetch(`${appConfig.version}/user/userinfo/findByUserId.do`, {
+    return fetch(appConfig.version + '/user/userinfo/findByUserId.do', {
       method: 'GET',
       headers: {
         'token': token,
@@ -281,20 +283,20 @@ var customerInfo = {
   },
 
   // 更新 旅客信息方法
-  updateCustomerData: function (data, type) {
+  updateCustomerData: function updateCustomerData(data, type) {
     var _this = this,
-      url = '',
-      token = __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].getItem('token'),
-      digest = __WEBPACK_IMPORTED_MODULE_0__utils_cookies__["a" /* default */].getItem('digest');
+        url = '',
+        token = _cookies2.default.getItem('token'),
+        digest = _cookies2.default.getItem('digest');
 
     if (type === 'add') {
-      url = `${appConfig.version}/user/userinfo/add.do`;
+      url = appConfig.version + '/user/userinfo/add.do';
     } else {
-      url = `${appConfig.version}/user/userinfo/update.do`;
+      url = appConfig.version + '/user/userinfo/update.do';
     }
 
-    return new Promise(function(resolve, reject){
-      fetch(url, {
+    return new Promise(function (resolve, reject) {
+      fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
@@ -303,28 +305,28 @@ var customerInfo = {
         },
         body: JSON.stringify(data)
       }).then(function (response) {
-        return response.json()
-      },function (error) {
+        return response.json();
+      }, function (error) {
         reject('数据提交发生错误, 原因:' + error);
-      }).then(function(val) {
+      }).then(function (val) {
         if (val.result === '0') {
-          _this.fetchCustomerData()
-            .then(function (response) {
-              return response.json();
-            }, function (error) {
-              reject('数据提交成功, 但获取顾客信息出错！原因:' + error);
-              return false;
-            })
-            .then(function (fetchValue) {
-              if (fetchValue === false) { return }
+          _this.fetchCustomerData().then(function (response) {
+            return response.json();
+          }, function (error) {
+            reject('数据提交成功, 但获取顾客信息出错！原因:' + error);
+            return false;
+          }).then(function (fetchValue) {
+            if (fetchValue === false) {
+              return;
+            }
 
-              if (fetchValue.result === '0') {
-                _this.data = fetchValue.data;
-                resolve(fetchValue.data);
-              } else {
-                reject('数据提交成功, 但获取顾客信息出错！原因:' + fetchValue.message);
-              }
-            });
+            if (fetchValue.result === '0') {
+              _this.data = fetchValue.data;
+              resolve(fetchValue.data);
+            } else {
+              reject('数据提交成功, 但获取顾客信息出错！原因:' + fetchValue.message);
+            }
+          });
         } else {
           reject('数据提交发生错误, 原因:' + val.message);
         }
@@ -333,9 +335,9 @@ var customerInfo = {
   },
 
   // 初始化 Vue 旅客信息 列表(空)数据 方法
-  dataToVueList: function (data) {
+  dataToVueList: function dataToVueList(data) {
     var myData = data || this.data,
-      vueList = [];
+        vueList = [];
 
     for (var i = 0; i < myData.length; i++) {
       var vueListitem = {
@@ -343,7 +345,7 @@ var customerInfo = {
         isSelect: false,
         name: myData[i].chineseName,
         age: myData[i].age,
-        gender: (myData[i].gender === 1 ? '女' : '男'),
+        gender: myData[i].gender === 1 ? '女' : '男',
         mobile: myData[i].mobile
       };
       vueList.push(vueListitem);
@@ -353,7 +355,7 @@ var customerInfo = {
   },
 
   // 初始化 Vue 旅客信息 项目(空)数据 方法
-  createVueItem: function () {
+  createVueItem: function createVueItem() {
     return {
       chineseName: '',
       chineseNameError: '',
@@ -375,7 +377,7 @@ var customerInfo = {
 
       email: '',
       emailError: '',
-      
+
       divingCount: '',
 
       divingRank: '',
@@ -383,11 +385,11 @@ var customerInfo = {
     };
   },
 
-  initVue: function () {
+  initVue: function initVue() {
     var _this = this,
-      defaultInspect = true,
-      isSubmit = false,
-      selectID = 0;
+        defaultInspect = true,
+        isSubmit = false,
+        selectID = 0;
 
     return new Vue({
       'el': '#customerInfo',
@@ -426,12 +428,12 @@ var customerInfo = {
       },
 
       watch: {
-        chineseName: function (val, oldVal) {
+        chineseName: function chineseName(val, oldVal) {
           // 如果 默认的检测 是 不检测.
           if (defaultInspect === false) {
             // 则终止此次的检测.
             defaultInspect = true;
-            return
+            return;
           }
           if (val === '') {
             this.chineseNameError = '姓名不能为空';
@@ -443,12 +445,12 @@ var customerInfo = {
             this.chineseNameError = '';
           }
         },
-        pinyinName: function (val, oldVal) {
+        pinyinName: function pinyinName(val, oldVal) {
           // 如果 默认的检测 是 不检测.
           if (defaultInspect === false) {
             // 则终止此次的检测.
             defaultInspect = true;
-            return
+            return;
           }
           if (val === '') {
             this.pinyinNameError = '拼音不能为空';
@@ -460,25 +462,25 @@ var customerInfo = {
         },
 
         item: {
-          handler: function (val, oldVal) {
+          handler: function handler(val, oldVal) {
             var data = oldVal;
 
             // 如果 默认的检测 是 不检测.
             if (defaultInspect === false) {
               // 则终止此次的检测.
               defaultInspect = true;
-              return
+              return;
             }
-  
+
             if (data.birthday === null || data.birthday === '') {
               this.item.birthdayError = '请选择出生日期';
-            }else {
+            } else {
               var nowDate = Date.parse(new Date());
-              var selectTimestamp = __WEBPACK_IMPORTED_MODULE_1__utils_convertDate__["a" /* default */].YYYYMMDDFormatToTimestamp(data.birthday);
+              var selectTimestamp = _convertDate2.default.YYYYMMDDFormatToTimestamp(data.birthday);
               this.item.age = Math.ceil((nowDate - selectTimestamp) / 31536000000);
               this.item.birthdayError = '';
             }
-  
+
             if (data.mobile === '') {
               this.item.mobileError = '手机号码不能为空';
             } else if (/^1[34578]\d{9}$/.test(data.mobile) === false) {
@@ -486,7 +488,7 @@ var customerInfo = {
             } else {
               this.item.mobileError = '';
             }
-  
+
             if (data.email === '') {
               this.item.emailError = '邮箱不能为空';
             } else if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(data.email) === false) {
@@ -494,31 +496,30 @@ var customerInfo = {
             } else {
               this.item.emailError = '';
             }
-  
+
             if (data.divingRank !== '' && data.divingRank !== null) {
               if (/^[0-9]*$/.test(data.divingRank) === false) {
                 this.item.divingRankError = '请输入数字';
-              } else if ( parseInt(data.divingRank) >= 100) {
+              } else if (parseInt(data.divingRank) >= 100) {
                 this.item.divingRankError = '请填写100一下的次数';
               } else {
                 this.item.divingRankError = '';
               }
             }
-
           },
           deep: true
         }
       },
 
       methods: {
-        showAddItem: function() {
+        showAddItem: function showAddItem() {
           this.itemModalIsShow = true;
           this.itemType = 'add';
           defaultInspect = false;
           this.item = _this.createVueItem();
         },
 
-        showModifyItem: function (id) {
+        showModifyItem: function showModifyItem(id) {
           var data = _this.data[id];
 
           selectID = id;
@@ -531,78 +532,78 @@ var customerInfo = {
           this.item = {
             // 'chineseName': data.chineseName,
             // 'chineseNameError': '',
-      
+
             // 'pinyinName': data.pinyinName,
             // 'pinyinNameError': '',
-      
+
             'passportNo': data.passportNo,
-      
+
             'gender': data.gender,
-      
-            'birthday': __WEBPACK_IMPORTED_MODULE_1__utils_convertDate__["a" /* default */].dateToFormat(new Date(data.birthday)),
+
+            'birthday': _convertDate2.default.dateToFormat(new Date(data.birthday)),
             'birthdayError': '',
-      
+
             'age': data.age,
-      
+
             'mobile': data.mobile,
             'mobileError': '',
-      
+
             'email': data.email,
             'emailError': '',
-            
+
             'divingCount': data.divingCount,
-      
+
             'divingRank': data.divingRank,
             'divingRankError': ''
           };
         },
 
-        saveItem: function (type) {
+        saveItem: function saveItem(type) {
           var data = this.item;
-          
+
           if (this.chineseName === '') {
             this.chineseNameError = '姓名不能为空';
-            return
+            return;
           } else if (/^[\u2E80-\u9FFF]+$/.test(this.chineseName) === false) {
             this.chineseNameError = '姓名只能为中文';
-            return
+            return;
           } else {
             this.chineseNameError = '';
           }
 
           if (this.pinyinName === '') {
             this.pinyinNameError = '拼音不能为空';
-            return
+            return;
           } else if (/^[a-zA-Z]{0,10000}$/.test(this.pinyinName) === false) {
             this.pinyinNameError = '拼音格式错误';
-            return
+            return;
           } else {
             this.pinyinNameError = '';
           }
-          
+
           if (data.birthday === null || data.birthday === '') {
             data.birthdayError = '请选择出生日期';
-            return
-          }else {
+            return;
+          } else {
             data.birthdayError = '';
           }
 
           if (data.mobile === '') {
             data.mobileError = '手机号码不能为空';
-            return
+            return;
           } else if (/^1[34578]\d{9}$/.test(data.mobile) === false) {
             data.mobileError = '手机号码格式不正确';
-            return
+            return;
           } else {
             data.mobileError = '';
           }
 
           if (data.email === '') {
             data.emailError = '邮箱不能为空';
-            return
+            return;
           } else if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(data.email) === false) {
             data.emailError = '邮箱格式不正确';
-            return
+            return;
           } else {
             data.emailError = '';
           }
@@ -610,10 +611,10 @@ var customerInfo = {
           if (data.divingRank !== '' && data.divingRank !== null) {
             if (/^[0-9]*$/.test(data.divingRank) === false) {
               data.divingRankError = '请输入数字';
-              return
-            } else if ( parseInt(data.divingRank) >= 100) {
+              return;
+            } else if (parseInt(data.divingRank) >= 100) {
               data.divingRankError = '请填写100一下的次数';
-              return
+              return;
             } else {
               data.divingRankError = '';
             }
@@ -631,8 +632,8 @@ var customerInfo = {
             'mobile': data.mobile,
             'email': data.email,
             'divingRank': data.divingRank,
-            'divingCount': data.divingCount,
-          }
+            'divingCount': data.divingCount
+          };
 
           if (type === 'update') {
             submitData.userinfoId = _this.data[selectID].userinfoId;
@@ -640,29 +641,28 @@ var customerInfo = {
 
           var thisVue = this;
 
-          _this.updateCustomerData(submitData, type)
-            .then(function (data) {
-              thisVue.list = _this.dataToVueList(data);
-              thisVue.item = _this.createVueItem();
-              thisVue.itemBTN = '保存';
-              thisVue.listModalIsShow = true;
-              thisVue.itemModalIsShow = false;
-            }, function (error) {
-              thisVue.itemBTN = '保存';
-              alert(error);
-            });
+          _this.updateCustomerData(submitData, type).then(function (data) {
+            thisVue.list = _this.dataToVueList(data);
+            thisVue.item = _this.createVueItem();
+            thisVue.itemBTN = '保存';
+            thisVue.listModalIsShow = true;
+            thisVue.itemModalIsShow = false;
+          }, function (error) {
+            thisVue.itemBTN = '保存';
+            alert(error);
+          });
         },
 
-        addRenderList: function () {
+        addRenderList: function addRenderList() {
           var selectCount = 0,
-            mySelectList = this.list,
-            myRenderList = [];
+              mySelectList = this.list,
+              myRenderList = [];
 
           for (var i = 0; i < mySelectList.length; i++) {
             if (mySelectList[i].isSelect) {
               var myId = myRenderList.length,
-                mySelectItemData = _this.data[mySelectList[i].id],
-                divingRank = '';
+                  mySelectItemData = _this.data[mySelectList[i].id],
+                  divingRank = '';
 
               selectCount++;
               if (mySelectItemData.divingRank === 1) {
@@ -677,7 +677,7 @@ var customerInfo = {
                 'chineseName': mySelectItemData.chineseName,
                 'pinyinName': mySelectItemData.pinyinName,
                 'gender': mySelectItemData.gender,
-                'birthday': __WEBPACK_IMPORTED_MODULE_1__utils_convertDate__["a" /* default */].dateToFormat(new Date(mySelectItemData.birthday)),
+                'birthday': _convertDate2.default.dateToFormat(new Date(mySelectItemData.birthday)),
                 'age': mySelectItemData.age,
                 'mobile': mySelectItemData.mobile,
                 'email': mySelectItemData.email,
@@ -689,30 +689,32 @@ var customerInfo = {
 
           if (selectCount === 0) {
             alert('至少选择一人信息!');
-            return
+            return;
           }
 
           this.renderList = myRenderList;
           this.listModalIsShow = false;
         },
 
-        removeRenderitem: function (id) {
+        removeRenderitem: function removeRenderitem(id) {
           var _this = this;
-  
-          if(window.confirm('你确定要删除吗?')){
+
+          if (window.confirm('你确定要删除吗?')) {
             _this.renderList.splice(id, 1);
           }
         },
 
-        submit: function () {
+        submit: function submit() {
           var Vuethis = this,
-            userInfoList = [];
+              userInfoList = [];
 
-          if (isSubmit) { return }
+          if (isSubmit) {
+            return;
+          }
 
           if (this.renderList.length === 0) {
             alert('至少提供一旅客信息!');
-            return
+            return;
           }
 
           for (var i = 0; i < this.renderList.length; i++) {
@@ -737,63 +739,65 @@ var customerInfo = {
             isSubmit = true;
             this.submitBTN = '正在提交...';
 
-            myData.submitProduct()
-            .then(val => {
+            myData.submitProduct().then(function (val) {
               alert('恭喜你提交成功! 请在30分钟内付定金!');
               isSubmit = false;
               Vuethis.submitBTN = '确认订单';
               window.location = './../../user/account.html#Orders';
-            }, error => {
+            }, function (error) {
               alert(error);
               isSubmit = false;
               Vuethis.submitBTN = '确认订单';
-            })
+            });
           }
         }
       },
 
-      components: { datepicker }
+      components: { datepicker: datepicker }
     });
   }
-}
 
-// 工具类
-let utilities = {
-
-  isSupport() {
+  // 工具类
+};var utilities = {
+  isSupport: function isSupport() {
     if (isIE(6) || isIE(7) || isIE(8)) {
-      alert('因为IE8（及以下）由于存在安全风险，已被本站禁止，请升级到IE11或使用Chrome浏览器。')
-      return false
+      alert('因为IE8（及以下）由于存在安全风险，已被本站禁止，请升级到IE11或使用Chrome浏览器。');
+      return false;
     }
 
-    let storage = window.localStorage;
+    var storage = window.localStorage;
     try {
       storage.setItem('test', 'testValue');
       storage.removeItem('test');
     } catch (error) {
       alert('非常抱歉，暂不支持此浏览器，请更换您的浏览器或联系客服。');
-      return false
+      return false;
     }
-    return true
+    return true;
 
     function isIE(ver) {
-      let b = document.createElement('b');
+      var b = document.createElement('b');
       b.innerHTML = '<!--[if IE ' + ver + ']><i></i><![endif]-->';
       return b.getElementsByTagName('i').length === 1;
     }
   },
 
-  loadPageVar: function(sVar) {
+
+  loadPageVar: function loadPageVar(sVar) {
     return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
   }
-}
-
+};
 
 /***/ }),
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 /*
  * docCookies.setItem(name, value[, end[, path[, domain[, secure]]]])
  * docCookies.getItem(name)
@@ -802,13 +806,15 @@ let utilities = {
  * docCookies.keys()
  */
 
-let docCookies = {
-  getItem: function (sKey) {
+var docCookies = {
+  getItem: function getItem(sKey) {
     return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
   },
-  setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
-    if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
-    let sExpires = "";
+  setItem: function setItem(sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+    if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) {
+      return false;
+    }
+    var sExpires = "";
     if (vEnd) {
       switch (vEnd.constructor) {
         case Number:
@@ -825,84 +831,92 @@ let docCookies = {
     document.cookie = encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
     return true;
   },
-  removeItem: function (sKey, sPath, sDomain) {
-    if (!sKey || !this.hasItem(sKey)) { return false; }
-    document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + ( sDomain ? "; domain=" + sDomain : "") + ( sPath ? "; path=" + sPath : "");
+  removeItem: function removeItem(sKey, sPath, sDomain) {
+    if (!sKey || !this.hasItem(sKey)) {
+      return false;
+    }
+    document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
     return true;
   },
-  hasItem: function (sKey) {
-    return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+  hasItem: function hasItem(sKey) {
+    return new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=").test(document.cookie);
   },
-  keys: /* optional method: you can safely remove it! */ function () {
-    let aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
-    for (let nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
+  keys: /* optional method: you can safely remove it! */function keys() {
+    var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+    for (var nIdx = 0; nIdx < aKeys.length; nIdx++) {
+      aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]);
+    }
     return aKeys;
   }
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (docCookies);
-
+exports.default = docCookies;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-  // Date 转换 xxxx-xx-xx 字符串
-  dateToFormat: (myDate) => {
-    let yyyy = myDate.getFullYear();
 
-    let mm = myDate.getMonth() + 1;
-    let mmstring = mm < 10 ? '0' + mm : mm;
 
-    let dd = myDate.getDate();
-    let ddstring = dd < 10 ? '0' + dd : dd;
-
-    return `${yyyy}-${mmstring}-${ddstring}`;
-  },
-
-  // xxxx-xx-xx 字符串 转换 时间戳
-  YYYYMMDDFormatToTimestamp: (data) => {
-    let myDateList = data.split("-");
-    return Date.parse(new Date(myDateList[0], (parseInt(myDateList[1]) - 1), myDateList[2]));
-  },
-  
-  // Date 转换 20180102 字符串
-  dateToYYYYmmNumber: (myDate) => {
-    let yyyy = myDate.getFullYear();
-
-    let mm = myDate.getMonth() + 1;
-    let mmstring = mm < 10 ? '0' + mm : mm;
-
-    let dd = myDate.getDate();
-    let ddstring = dd < 10 ? '0' + dd : dd;
-    
-    return `${yyyy}${mmstring}${ddstring}`;
-  },
-  
-  // Date 转换 xxxx-xx-xx xx:xx:xx 字符串
-  dateToYYYYmmDDhhMMss: (myDate) => {
-    let yyyy = myDate.getFullYear();
-
-    let mm = myDate.getMonth() + 1;
-    let mmstring = mm < 10 ? '0' + mm : mm;
-
-    let dd = myDate.getDate();
-    let ddstring = dd < 10 ? '0' + dd : dd;
-
-    let hh = myDate.getHours();
-    let hhstring = hh < 10 ? '0' + hh : hh;
-
-    let Min = myDate.getMinutes();
-    let Minstring = Min < 10 ? '0' + Min : Min;
-
-    let ss = myDate.getSeconds();
-    let ssstring = ss < 10 ? '0' + ss : ss;
-    
-    return `${yyyy}-${mmstring}-${ddstring} ${hhstring}:${Minstring}:${ssstring}`;
-  }
+Object.defineProperty(exports, "__esModule", {
+    value: true
 });
+exports.default = {
+    // Date 转换 xxxx-xx-xx 字符串
+    dateToFormat: function dateToFormat(myDate) {
+        var yyyy = myDate.getFullYear();
+
+        var mm = myDate.getMonth() + 1;
+        var mmstring = mm < 10 ? '0' + mm : mm;
+
+        var dd = myDate.getDate();
+        var ddstring = dd < 10 ? '0' + dd : dd;
+
+        return yyyy + '-' + mmstring + '-' + ddstring;
+    },
+
+    // xxxx-xx-xx 字符串 转换 时间戳
+    YYYYMMDDFormatToTimestamp: function YYYYMMDDFormatToTimestamp(data) {
+        var myDateList = data.split("-");
+        return Date.parse(new Date(myDateList[0], parseInt(myDateList[1]) - 1, myDateList[2]));
+    },
+
+    // Date 转换 20180102 字符串
+    dateToYYYYmmNumber: function dateToYYYYmmNumber(myDate) {
+        var yyyy = myDate.getFullYear();
+
+        var mm = myDate.getMonth() + 1;
+        var mmstring = mm < 10 ? '0' + mm : mm;
+
+        var dd = myDate.getDate();
+        var ddstring = dd < 10 ? '0' + dd : dd;
+
+        return '' + yyyy + mmstring + ddstring;
+    },
+
+    // Date 转换 xxxx-xx-xx xx:xx:xx 字符串
+    dateToYYYYmmDDhhMMss: function dateToYYYYmmDDhhMMss(myDate) {
+        var yyyy = myDate.getFullYear();
+
+        var mm = myDate.getMonth() + 1;
+        var mmstring = mm < 10 ? '0' + mm : mm;
+
+        var dd = myDate.getDate();
+        var ddstring = dd < 10 ? '0' + dd : dd;
+
+        var hh = myDate.getHours();
+        var hhstring = hh < 10 ? '0' + hh : hh;
+
+        var Min = myDate.getMinutes();
+        var Minstring = Min < 10 ? '0' + Min : Min;
+
+        var ss = myDate.getSeconds();
+        var ssstring = ss < 10 ? '0' + ss : ss;
+
+        return yyyy + '-' + mmstring + '-' + ddstring + ' ' + hhstring + ':' + Minstring + ':' + ssstring;
+    }
+};
 
 /***/ })
 /******/ ]);

@@ -186,7 +186,7 @@ function emailGetBack() {
 	function Get() {
 		$("#Btn").css("cursor","not-allowed");
 		$("#Btn").attr("id","BTN-Forbid");
-		$.get(appConfig.forgeturl,"email="+ $("#User").val() ,function(message){
+		$.get(appConfig.version + "/user/forgetPw.do", "email="+ $("#User").val() ,function(message){
 			if (message.result === "10007") {
 				$(".input_1 i").removeClass("correcticon");
 				$(".input_1 i").addClass("mistakeicon");
