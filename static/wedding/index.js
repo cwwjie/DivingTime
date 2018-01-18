@@ -114,19 +114,22 @@ var video = {
 };
 
 var myCarousel = {
-  data: [{ 'imgUrl': './../../dist/img/404.jpg' }, { 'imgUrl': './../../dist/img/404.jpg' }, { 'imgUrl': './../../dist/img/404.jpg' }, { 'imgUrl': './../../dist/img/404.jpg' }, { 'imgUrl': './../../dist/img/404.jpg' }],
+  'mataking': [{ 'imgUrl': './static/3sheetsMataking/1.jpg' }, { 'imgUrl': './static/3sheetsMataking/2.jpg' }, { 'imgUrl': './static/3sheetsMataking/3.jpg' }],
+  'PompomIsland': [{ 'imgUrl': './static/3sheetsPOMPOMIsland/1.jpg' }, { 'imgUrl': './static/3sheetsPOMPOMIsland/2.jpg' }, { 'imgUrl': './static/3sheetsPOMPOMIsland/3.jpg' }],
+  'lankayan': [{ 'imgUrl': './static/3sheetsLankayan/1.jpg' }, { 'imgUrl': './static/3sheetsLankayan/2.jpg' }, { 'imgUrl': './static/3sheetsLankayan/3.jpg' }],
+  'Jesselton': [{ 'imgUrl': './static/3sheetsJesselton/1.jpg' }, { 'imgUrl': './static/3sheetsJesselton/2.jpg' }, { 'imgUrl': './static/3sheetsJesselton/3.jpg' }],
 
   init: function init() {
-    var mataking = new Carousel(this.data, '马达京婚拍', 0);
+    var mataking = new Carousel(this.mataking, '马达京婚拍', 0);
     mataking.render('carousel-mataking');
 
-    var PompomIsland = new Carousel(this.data, '邦邦岛婚拍', 1);
+    var PompomIsland = new Carousel(this.PompomIsland, '邦邦岛婚拍', 1);
     PompomIsland.render('carousel-POMPOMIsland');
 
-    var lankayan = new Carousel(this.data, '兰卡央婚拍', 2);
+    var lankayan = new Carousel(this.lankayan, '兰卡央婚拍', 2);
     lankayan.render('carousel-lankayan');
 
-    var Jesselton = new Carousel(this.data, '亚庇婚拍', 3);
+    var Jesselton = new Carousel(this.Jesselton, '亚庇婚拍', 3);
     Jesselton.render('carousel-Jesselton');
   }
 };

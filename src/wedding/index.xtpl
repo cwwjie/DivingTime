@@ -25,7 +25,7 @@
         <div>
           <h1>潜游时光 度假婚拍</h1>
           <h2>全国统一咨询电话: <span>400-9688-768</span> ( 在线时间: <span>9:30 - 17:30</span> )</h2>
-          <button>马上定制你的婚拍!</button>
+          <a href="https://traveldetail.taobao.com/item.htm?spm=a1z10.3-c-s.w4002-15809980522.53.428e260b1PA5l6&id=558295505163&">马上定制你的婚拍!</a>
           <p>婚拍目的地：马来西亚 | 亚庇&仙本那</p>
         </div>
       </div>
@@ -64,6 +64,7 @@
   <script type="text/javascript" src='{{ homeURL + "dist/js/bootstrap.min.js" }}'></script>
   <script type="text/javascript" src='{{ homeURL + "dist/js/flv.min.js" }}'></script>
 
+  <script type="text/javascript" src='./../../dist/js/jquery.pin.min.js'></script>
   <script type="text/javascript" src='{{ homeURL + "dist/js/config.js?file_version=" + file_version }}'></script>
   <script type="text/javascript" src='{{ "./index.js?file_version=" + file_version }}'></script>
 </body>

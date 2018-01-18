@@ -17,9 +17,27 @@
 
   {{ include ("./../../Component/Navigation-Bar/index") }}
 
-
   <div class="main">
-
+    <div id="carousel" class=" carousel"  data-ride="carousel">
+    </div>
+    <div class="main-content">
+      <div class="pin-wrapper content-operate">
+        <div class="content-pin">
+          <div class="btn" id="main-content-contact-us">联系我们</div>
+          <div class="btn" id="main-content-scrollTop">返回顶部</div>
+        </div>
+      </div>
+      <div class="main-render" id="main-render">
+      </div>
+      <div class="pin-wrapper content-select">
+        <div class="content-pin" id="select-destination">
+          <div class="btn">马达京</div>
+          <div class="btn">邦邦岛</div>
+          <div class="btn">兰卡央</div>
+          <div class="btn">亚庇</div>
+        </div>
+      </div>
+    </div>
   </div>
 
 
@@ -30,6 +48,8 @@
   <script type="text/javascript" src='{{ homeURL + "dist/js/jquery-2.1.4.min.js" }}'></script>
   <script type="text/javascript" src='{{ homeURL + "dist/js/es6-promise.min.js" }}'></script>
   <script type="text/javascript" src='{{ homeURL + "dist/js/bootstrap.min.js" }}'></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/jquery.pin.min.js" }}'></script>
+  <script type="text/javascript" src='{{ homeURL + "dist/js/jquery.smooth-scroll.js" }}'></script>
 
   <script type="text/javascript" src='{{ homeURL + "dist/js/config.js?file_version=" + file_version }}'></script>
   <script type="text/javascript" src='{{ "./index.js?file_version=" + file_version }}'></script>

@@ -6,6 +6,11 @@
 @import './Component/Copyright/index.less';
 
 * {
+
+	body {
+		background: #f9f9f9;
+	}
+
 	a {
 		text-decoration: none;
 		color: #000;
@@ -20,11 +25,201 @@
 		display: block;
 		background-image: url("./../../dist/img/ico.png");
 	}
+
+	.btn {
+		padding: 8px 20px;
+		font-weight: 500;
+		border-radius: 4px;
+		letter-spacing: 2px;
+		font-size: 16px;
+		color: #fff;
+		background: rgba(64, 158, 255, 1);
+		border: none;
+		outline: none;
+		cursor: pointer;
+		-webkit-appearance: none;
+		text-align: center;
+		-moz-user-select: none; /*火狐*/
+		-webkit-user-select: none; /*webkit浏览器*/
+		-ms-user-select: none; /*IE10*/
+		-khtml-user-select: none; /*早期浏览器*/
+		user-select: none;
+	}
 }
 
 .main {
 	padding-top: 85px;
 	width: 995px;
 	margin: 0 auto;
+	padding-bottom: 35px;
 }
 
+.carousel {
+	position: relative;
+	height: 320px;
+
+  .carousel-inner {
+
+    .item {
+
+      img {
+				width: 100%;
+				height: 320px;
+			}
+		}
+	}
+
+	.carousel-control {
+
+    .glyphicon {
+			width: 64px;
+			height: 64px;
+			background-image: url("./../../dist/img/ico.png");
+      cursor: pointer;
+		}
+
+    .glyphicon-chevron-left {
+			background-position: 0px -35px;
+		}
+
+    .glyphicon-chevron-right {
+			background-position: -64px -35px;
+		}
+	}
+
+	.carousel-masking,
+	.carousel-detail {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		height: 100%;
+	}
+
+	.carousel-masking {
+		background: rgba(0, 0, 0, 0.1);
+	}
+
+	.carousel-detail {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flexbox;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 1;
+
+		> div {
+			text-align: center;
+		}
+		
+		.btn:hover {
+			color: #fff;
+		}
+
+		h1 {
+			padding-bottom: 5px;
+			color: #fff;
+			font-size: 30px;
+			line-height: 38px;
+			font-weight: 400;
+		}
+
+		p {
+			padding-bottom: 20px;
+			font-size: 24px;
+			line-height: 32px;
+			color: #fff;
+		}
+
+		.carousel-btn {
+			padding: 6px 18px;
+			font-size: 16px;
+			line-height: 24px;
+			border-radius: 20px;
+			color: #fff;
+			border: 1px #fff solid;
+		}
+		.carousel-btn:hover {
+			color: #ffeb3b;
+			border: 1px #ffeb3b solid;
+			background: rgba(255, 235, 59, 0.15);
+		}
+	}
+
+}
+
+.main-content {
+	overflow: hidden;
+	padding-top: 35px;
+	width: 995px;
+
+	.pin-wrapper {
+		float: left;
+	}
+
+	.content-operate,
+	.content-select {
+		width: 158px;
+
+		.content-pin {
+			padding: 25px 20px;
+			background: #fff;
+			border: 1px solid #dbdbdb;
+		}
+
+		.btn {
+			margin-bottom: 15px;
+			background: #fff;
+			border: 1px solid #dcdfe6;
+			border-color: #dcdfe6;
+			color: #606266;
+		}
+
+		.btn:hover {
+			color: #fff;
+			background: rgba(64, 158, 255, 1);
+			border: 1px solid rgba(64, 158, 255, 1);
+			border-color: rgba(64, 158, 255, 1);
+		}
+	}
+
+	.content-operate {
+
+		.content-pin {
+			height: 145px;
+		}
+	}
+
+	.content-select {
+		.content-pin {
+			height: 258px;
+		}
+
+		.btn {
+			width: 112px;
+			text-align: center;
+		}
+
+		.active {
+			color: #fff;
+			background: rgba(64, 158, 255, 1);
+			border: 1px solid rgba(64, 158, 255, 1);
+			border-color: rgba(64, 158, 255, 1);
+		}
+	}	
+
+	.main-render {
+		float: left;
+		width: 679px;
+
+		.img-content {
+			padding: 0px 35px 20px;
+
+			img {
+				width: 100%;
+			}
+		}
+	}
+}

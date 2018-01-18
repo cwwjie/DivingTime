@@ -10,6 +10,7 @@ const renderVillageDetail = require('./controller/village/detail/build');
 const renderVillageSubmit = require('./controller/village/submit/build');
 const renderOther = require('./controller/other/build');
 const renderWedding = require('./controller/wedding/build');
+const renderWeddingDetail = require('./controller/wedding/detail/build');
 
 let main = {
   URLbase: 'http://112.74.92.97:8080',
@@ -78,6 +79,10 @@ let main = {
     // 渲染 wedding 婚拍
     fs.mkdirSync(`${__dirname}\\build\\wedding`);
     await renderWedding();
+
+    // 渲染 wedding 婚拍详情页
+    fs.mkdirSync(`${__dirname}\\build\\wedding\\detail`);
+    await renderWeddingDetail();
   },
 
   async renderConfigJSFile() {
