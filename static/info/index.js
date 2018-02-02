@@ -1757,6 +1757,7 @@ var VuePart_3 = {
           var newCustomerInfoList = [];
           for (var j = 0; j < this.roomList[i].customerInfoList.length; j++) {
             var customerInfoList = this.roomList[i].customerInfoList[j];
+            var divingCount = parseInt(customerInfoList.divingCount);
 
             newCustomerInfoList.push({
               'roomId': customerInfoList.roomId,
@@ -1773,7 +1774,7 @@ var VuePart_3 = {
               'email': customerInfoList.email,
               'mobile': customerInfoList.mobile,
               'isDive': customerInfoList.isDive,
-              'divingCount': customerInfoList.divingCount,
+              'divingCount': divingCount > 100 ? 100 : divingCount,
               'divingNo': customerInfoList.divingNo,
               'divingRank': customerInfoList.divingRank,
               'lastDiveTime': customerInfoList.lastDiveTime,
@@ -2202,16 +2203,16 @@ var utilities = {
           'label': '大床'
         }, {
           'value': '双床',
-          'label': '双床'
+          'label': '双床(六角花园房不可选)'
         }, {
           'value': '蜜月大床',
           'label': '蜜月大床(需半年内结婚证申请/含免费花瓣铺床)'
         }, {
           'value': '大床+单床',
-          'label': '大床+单床'
+          'label': '大床+单床(六角花园房不可选)'
         }, {
           'value': '双床+单床',
-          'label': '双床+单床'
+          'label': '双床+单床(六角花园房不可选)'
         }
       ]
     } else if (template === 6) {// 马布岛-----------木屋
@@ -2301,6 +2302,13 @@ var utilities = {
         {
           'value': '随机安排',
           'label': '默认床型'
+        }
+      ]
+    } else if (template === 15 ) { // 那本仙境棕榈度假庄园
+      return [
+        {
+          'value': '两张大床',
+          'label': '两张大床'
         }
       ]
     } else {
@@ -2475,4 +2483,3 @@ var utilities = {
     }
   },
 }
-

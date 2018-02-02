@@ -460,7 +460,7 @@
               </div>
               <div class="pickUpP3">
                 <div class="pickUp-title">马布岛度假村—机场</div>
-                <div>① 07：30AM</div>
+                <div>① 07：00AM</div>
                 <div>② 11：00AM</div>
                 <div>③ 14：00PM</div>
                 <div>离岛第二天不送机</div>
@@ -824,7 +824,7 @@
                 <div class="col-1"></div>
               </div>
 
-              <div class="row switch-dive">
+              <div class="row switch-dive" v-if="template !== 15">
                 <div>度假潜水类型:</div>
                 <el-switch
                   v-model="isDive"
@@ -882,7 +882,7 @@
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row" v-if="template !== 15">
                 <div class="col-11">
                   <div>以往重大病史:</div>
                   <el-input v-model="anamnesis" placeholder="无"></el-input>
@@ -1002,6 +1002,25 @@
             <div class="row">我们对自身掌控范围之外的原因直接或间接给客人造成的延迟、额外费用或不便不承担责任</div>
           </div>
           <div class="Refundinstruction-content">具体请参考潜游时光淘宝店里“政策说明”页面</div>
+          <div class="Refundinstruction-content" style="color: red">如您在本店铺支付了预订款项，代表您已同意以上政策，谢谢理解</div>
+        </div>
+
+        <div class="Refundinstruction-4" v-if="template === 15">
+          <div class="Refundinstruction-content">
+            <div class="Refundinstruction-title">1. 退款说明：</div>
+            <div class="row">· 出发前45天(不含)以上买家通知取消，收取订单20%的费用</div>
+            <div class="row">· 出发前45天至35天买家通知取消，收取订单30%的费用</div>
+            <div class="row">· 出发前34天至16天买家通知取消，收取订单50%的费用</div>
+            <div class="row">· 出发前15天至8天买家通知取消，收取订单75%的费用</div>
+            <div class="row">· 出发前7天以内买家通知取消，收取订单100%的费用</div>
+          </div>
+          <div class="Refundinstruction-content Refundinstruction-title">2. 因各个度假村上岛时间及接送安排不同，预定机票时请咨询我们的顾问</div>
+          <div class="Refundinstruction-content">
+            <div class="Refundinstruction-title">3. 免责声明：</div>
+            <div class="row">我们对自身掌控范围之外的原因直接或间接给客人造成的延迟、额外费用或不便不承担责任</div>
+          </div>
+          <div class="Refundinstruction-content">具体请参考潜游时光淘宝店里“政策说明”页面</div>
+          <div class="Refundinstruction-content">注：如按上述比例支付的业务损失费不足以赔偿卖家的实际损失，买家应当按实际损失对卖家予以赔偿，但最高额不应当超过订单费用总额。</div>
           <div class="Refundinstruction-content" style="color: red">如您在本店铺支付了预订款项，代表您已同意以上政策，谢谢理解</div>
         </div>
 

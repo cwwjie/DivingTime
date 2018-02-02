@@ -83,6 +83,9 @@ let main = {
     // 渲染 wedding 婚拍详情页
     fs.mkdirSync(`${__dirname}\\build\\wedding\\detail`);
     await renderWeddingDetail();
+
+    // 渲染 wedding 婚拍图片
+    await this.copyDirBy(`${__dirname}\\static\\wedding\\static`, `${__dirname}\\build\\wedding\\static`);
   },
 
   async renderConfigJSFile() {

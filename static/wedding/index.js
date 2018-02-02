@@ -102,8 +102,8 @@ var video = {
       // 如果支持 自动播放视频, 如果不支持则 放置图片
       var videoElement = document.getElementById('videoElement');
       var flvPlayer = flvjs.createPlayer({
-        'type': 'flv',
-        'url': './../dist/video/demo.flv',
+        'type': 'mp4',
+        'url': './../dist/video/DivingTime-Lankayan-Travel-Photos.mp4',
         'hasAudio': false
       });
       flvPlayer.attachMediaElement(videoElement);
