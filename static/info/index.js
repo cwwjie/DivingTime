@@ -1683,7 +1683,7 @@ var VuePart_3 = {
             'email': Info.data.email,
             'divingCount': this.divingCount,
             'divingNo': this.divingNo,
-            'divingRank': this.divingRank,
+            'divingRank': this.divingRank ? parseInt(this.divingRank) : 0,
             'isDive': this.isDive ? 'Y' : 'N',
             'lastDiveTime': this.lastDiveTime ? Date.parse(new Date(this.lastDiveTime)) : '',
             'anamnesis': this.anamnesis
@@ -1709,7 +1709,7 @@ var VuePart_3 = {
             'email': Info.data.email,
             'divingCount': this.divingCount,
             'divingNo': this.divingNo,
-            'divingRank': this.divingRank,
+            'divingRank': this.divingRank ? parseInt(this.divingRank) : 0,
             'isDive': this.isDive ? 'Y' : 'N',
             'lastDiveTime': this.lastDiveTime ? Date.parse(new Date(this.lastDiveTime)) : '',
             'anamnesis': this.anamnesis
