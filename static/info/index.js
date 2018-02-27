@@ -160,11 +160,13 @@ var Info = {
     this.part_4 = new Vue(VuePart_4.init(this.data, this.isFirst));
     this.part_5 = new Vue(VuePart_5);
 
-    if (this.isFirst) {
-      this.part_1.$data.isShow = true;
-    } else {
-      this.part_2.$data.isShow = true;
-    }
+    this.part_2.$data.isShow = true;
+    // 废弃
+    // if (this.isFirst) {
+    //   this.part_1.$data.isShow = true;
+    // } else {
+    //   this.part_2.$data.isShow = true;
+    // }
   },
 
   get: function () {
@@ -315,13 +317,20 @@ var VuePart_1 = {
 
     'methods': {
       toNext: function (event) {
+        this.isShow = false;
+        Info.part_4.$data.isShow = true;
+        Info.part_4.$data.checked = this.checked;
         if (this.checked) {
           Info.data.isRead = 'Y';
-          this.isShow = false;
-          Info.part_2.$data.isShow = true;
-        } else {
-          alert('请同意相关条款');
         }
+
+        // if (this.checked) {
+        //   Info.data.isRead = 'Y';
+        //   this.isShow = false;
+        //   Info.part_2.$data.isShow = true;
+        // } else {
+        //   alert('请同意相关条款');
+        // }
       }
     }
   },
@@ -1102,10 +1111,9 @@ var VuePart_2 = {
 
   initOrderinfor: function(data) {
     var cycleLength = Math.floor((data.checkOut - data.checkIn)/86400000);
-
-    this.Vue.data.orderinfor = {
+    var orderinfor = {
       'orderSn': data.orderSn,
-      'payStatus': data.payStatus === 1 ? '已付全款' : '已付定金',
+      'payStatus': '已付金额' + data.payAmount + '/未付金额' + data.notPayAmount,
       'orderName': data.orderName,
       'cycleLength': '' + ( cycleLength + 1 ) + '天' + cycleLength + '晚',
       'roomNum': data.roomNum,
@@ -1119,8 +1127,10 @@ var VuePart_2 = {
       'orderAmount': data.orderAmount,
       'calMethod': data.calMethod,
       'payAmount': data.payAmount,
-      'notPayAmount': data.notPayAmount,
+      'notPayAmount': data.notPayAmount
     }
+    
+    this.Vue.data.orderinfor = orderinfor;
   },
 
   initExtra: function() {
@@ -1857,10 +1867,12 @@ var VuePart_3 = {
     ];
 
     if (roomInfoList.length > 0) {
-      this.Vue.data.iceName = roomInfoList[0].iceName;
-      this.Vue.data.iceEmail = roomInfoList[0].iceEmail;
-      this.Vue.data.iceMobile = roomInfoList[0].iceMobile;
-      this.Vue.data.iceRelation = roomInfoList[0].iceRelation;
+      if (data.template !== 3) {
+        this.Vue.data.iceName = roomInfoList[0].iceName;
+        this.Vue.data.iceEmail = roomInfoList[0].iceEmail;
+        this.Vue.data.iceMobile = roomInfoList[0].iceMobile;
+        this.Vue.data.iceRelation = roomInfoList[0].iceRelation;
+      }
 
       for (var i = 0; i < roomInfoList.length; i++) {
         var mycustomerInfoList = [];
@@ -1906,6 +1918,7 @@ var VuePart_4 = {
     'data': {
       'isShow': false,
       'template': null,
+      'checked': false,
       'isFirst': null,
       'adminInfo': { 'name': '正在加载...', 'webchat': '正在加载...', 'qrimg': ''},
     },
@@ -1917,6 +1930,10 @@ var VuePart_4 = {
       },
 
       toNext: function () {
+        if (!this.checked) {
+          return alert('请同意相关条款');
+        }
+
         var _this = this,
             loadingInstance = this.$loading({
               fullscreen: true,
@@ -1993,6 +2010,16 @@ var VuePart_4 = {
         }
       },
 
+      toTerms: function () {
+        this.isShow = false;
+        Info.part_1.$data.isShow = true;
+        Info.part_1.$data.checked = this.checked;
+
+        if (this.checked) {
+          Info.data.isRead = 'Y';
+        }
+      },
+
       ajaxUpdate: function (data) {
         var uniqueKey = localStorage.getItem('_uniqueKey'),
             token = localStorage.getItem('_token'),
@@ -2043,6 +2070,10 @@ var VuePart_4 = {
   init: function (data, isFirst) {
     this.Vue.data.template = data.template;
     this.Vue.data.isFirst = isFirst;
+    if (!isFirst) {
+      this.Vue.data.checked = true;
+      Info.data.isRead = 'Y';
+    }
 
     return this.Vue;
   },
@@ -2105,7 +2136,7 @@ var qrCodeVue = {
     '<div class="QR-code">',
       '<div class="QR-person">行程负责人: {{name}}</div>',
       '<div class="QR-WeChat">',
-        '微信号: {{webchat}}',
+        '{{name}}微信: {{webchat}}',
         '<div class="QR-WeChat-img">',
           '<img v-bind:src="qrimg" />',
         '</div>',

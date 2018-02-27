@@ -17,6 +17,7 @@
   </header>
 
 <div id="main" style="display: none;">
+
   <div id="part1" class="part1 main" v-if="isShow">
     <div class="main-content">
       <qr-code 
@@ -44,7 +45,7 @@
       </div>
     </div>
     <div class="main-control">
-      <div class="control-next no-select" v-on:click="toNext">填写基本信息 →</div>
+      <div class="control-next no-select" v-on:click="toNext">返回 →</div>
     </div>
   </div>
 
@@ -63,7 +64,7 @@
         </div>
         <div class="part2-content">
           <div class="row">
-            <div class="col-6">订单号: {{orderinfor.orderSn}}</div>
+            <div class="col-6">订单编号: {{orderinfor.orderSn}}</div>
             <div class="col-6">订单状态: {{orderinfor.payStatus}}</div>
           </div>
           <div class="row">
@@ -71,23 +72,26 @@
             <div class="col-6">周期长度: {{orderinfor.cycleLength}}</div>
           </div>
           <div class="row">
-            <div class="col-6">房间数: {{orderinfor.roomNum}}</div>
-            <div class="col-6">总人数: {{orderinfor.peopleNum}}</div>
-          </div>
-          <div class="row">
-            <div class="col-6">儿童数: {{orderinfor.childNum}}</div>
-            <div class="col-6">成人数: {{orderinfor.adultNum}}</div>
-          </div>
-          <div class="row">
             <div class="col-6">入住日期: {{orderinfor.checkIn}}</div>
             <div class="col-6">退房日期: {{orderinfor.checkOut}}</div>
           </div>
           <div class="row">
-            <div class="col-6">产品金额: {{orderinfor.productAmount}}</div>
-            <div class="col-6">优惠金额: {{orderinfor.discount}}</div>
+            <div class="col-6">房间总数: {{orderinfor.roomNum}}间</div>
+            <div class="col-6">人数合计: {{orderinfor.peopleNum}}人(成人{{orderinfor.adultNum}}/儿童{{orderinfor.childNum}})</div>
           </div>
           <div class="row">
-            <div class="col-12">订单总额: {{orderinfor.orderAmount}}</div>
+            <div class="col-12">订单总额: {{orderinfor.orderAmount}} (计算方式{{orderinfor.calMethod}})</div>
+          </div>
+          <div class="row">
+            <div class="col-12">优惠金额: {{orderinfor.discount}}</div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-6">儿童数: {{orderinfor.childNum}}</div>
+            <div class="col-6">成人数: {{orderinfor.adultNum}}</div>
+          </div>
+          <div class="row">
+            <div class="col-6">产品金额: {{orderinfor.productAmount}}</div>
+            <div class="col-6">优惠金额: {{orderinfor.discount}}</div>
           </div>
           <div class="row">
             <div class="col-12">计算方式: {{orderinfor.calMethod}}</div>
@@ -95,7 +99,7 @@
           <div class="row">
             <div class="col-6">已付金额: {{orderinfor.payAmount}}</div>
             <div class="col-6">未付金额: {{orderinfor.notPayAmount}}</div>
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -597,7 +601,7 @@
       </div>
     </div>
     <div class="main-control">
-      <div v-on:click="toPrev" class="control-prev no-select">← 阅读条款声明</div>
+      <!-- <div v-on:click="toPrev" class="control-prev no-select">← 阅读条款声明</div> -->
       <div v-on:click="toNext" class="control-next no-select">下一步 →</div>
     </div>
   </div>
@@ -874,7 +878,7 @@
                   </div>
                   <div class="col-1"></div>
                   <div class="col-5">
-                    <div>潜水次数:</div>
+                    <div>潜水总次数:</div>
                     <el-input v-model="divingCount" placeholder="请输入潜水次数"></el-input>
                     <div class="input-descr"></div>
                   </div>
@@ -1064,6 +1068,12 @@
           <div class="row">入住独栋和水屋5晚及以上的客人享受一日诗巴丹，优先安排水屋的潜水员，并不能保证非潜水员诗巴丹名额。</div>
           <div class="row">上岛当天可询问岛上工作人员是否被安排去诗巴丹，如果没被安排，可390马币/人购买</div>
         </div>
+      </div>
+
+      <div class="part4-title title-terms">条款声明</div>
+      <div class="part4-terms no-select">
+        <input type="checkbox" id="Terms" v-model="checked"/>
+        <label>我已阅读并同意<a v-on:click="toTerms">《潜游时光政策条款》</a></label>
       </div>
     </div>
     <div class="main-control">

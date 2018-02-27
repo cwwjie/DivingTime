@@ -88,13 +88,43 @@ $(document).ready(function () {
 });
 
 var equipment = {
-  'data': [],
+  'data': [
+    // {
+    //   "productId": 87,
+    //   "brandId": 27,
+    //   "refundRuleId": 41,
+    //   "productSn": "000029",
+    //   "productName": "【租借】大疆航拍机",
+    //   "productBrief": "高清航拍",
+    //   "productImg": "/source/image/product/thum/thum_2f3ab26d-a16a-459e-a016-ab36c79e60c3.jpg",
+    //   "productThumb": "/source/image/product/thum/thum_2f3ab26d-a16a-459e-a016-ab36c79e60c3.jpg",
+    //   "productPrice": 3500.0,
+    //   "promotePrice": 0.0,
+    //   "promoteStartTime": null,
+    //   "promoteEndTime": null,
+    //   "clickCount": null,
+    //   "isNew": "N",
+    //   "isOnsale": "Y",
+    //   "period": 1,
+    //   "apartment": "",
+    //   "apartmentNum": 1,
+    //   "bedType": "",
+    //   "createBy": 31,
+    //   "createTime": 1517271696000,
+    //   "updateBy": null,
+    //   "updateTime": null,
+    //   "isDelete": "N",
+    //   "productDesc": null,
+    //   "productType": "equipment",
+    //   "productView": null
+    // }
+  ],
 
   init: function init() {
     var _this = this;
 
     this.getData().then(function (val) {
-      _this.data = val;
+      _this.data = val.productList;
     }, function (error) {
       return alert(error);
     });

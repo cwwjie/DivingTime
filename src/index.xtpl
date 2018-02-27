@@ -9,7 +9,23 @@
   <meta name="keywords" content="潜游时光，马来西亚，卡帕莱，出境游，自由行，潜水度假村，旅游攻略" />
   <meta name="description" content="【潜游时光】专业的旅游行程定制,全新的服务体验,最佳的旅游度假体验,为您提供一站式潜水度假村预定服务,为出国旅游者提供最佳的旅游攻略和服务,让您的旅行有温度。" />
   <meta name="author" content="潜游时光" />
-
+  <script type="text/javascript">  
+    function browserRedirect() {  
+      var sUserAgent = navigator.userAgent.toLowerCase();  
+      var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";  
+      var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";  
+      var bIsMidp = sUserAgent.match(/midp/i) == "midp";  
+      var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";  
+      var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";  
+      var bIsAndroid = sUserAgent.match(/android/i) == "android";  
+      var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";  
+      var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";  
+      if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {  
+        window.location.href='./Dvt-Mobile/index.html';
+      } 
+    }  
+    browserRedirect();
+    </script>
   <link rel="stylesheet" type="text/css" href='{{ homeURL + "dist/css/bootstrap.min.css" }}'>
   <link rel="stylesheet" type="text/css" href='{{ "./index.css?file_version=" + file_version }}'>
 </head>
