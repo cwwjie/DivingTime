@@ -76,6 +76,9 @@ let main = {
     // 渲染 user 用户中心
     await this.copyDirBy(`${__dirname}\\static\\user`, `${__dirname}\\build\\user`);
 
+    // 渲染 welcome 信息手机入口
+    await this.copyDirBy(`${__dirname}\\static\\welcome`, `${__dirname}\\build\\welcome`);
+
     // 渲染 wedding 婚拍
     fs.mkdirSync(`${__dirname}\\build\\wedding`);
     await renderWedding();

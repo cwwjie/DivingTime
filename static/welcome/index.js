@@ -122,9 +122,9 @@ function log() {
 						}
 
 						if (utils.checkIsPhone()) {
-							window.location.href = './../../Dvt-Mobile/index.html#/user/order/taobao';
+							window.location.href = './../Dvt-Mobile/index.html#/user/order/taobao';
 						} else {
-							window.location.href = './../../user/account.html#taobao';
+							window.location.href = './../user/account.html#taobao';
 						}
 					}else if (message.result == -9) {
 						$(".input1 i").removeClass("correcticon");
@@ -176,7 +176,7 @@ function log() {
 
 function advertising() {
 	$('#advertising').click(function () {
-		window.location = './../../other/advertising/index.html';
+		window.location = './../other/advertising/index.html';
 	});
 }
 

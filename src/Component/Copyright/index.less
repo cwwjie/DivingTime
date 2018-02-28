@@ -7,65 +7,53 @@ footer {
     left: 50%;
     margin-left: -350px;
     width: 700px;
-    height: 330px;
+    height: 300px;
     overflow: hidden;
 
     .footer-company {
-      overflow: hidden;
-      padding-top: 20px;
-      padding-bottom: 20px;
+      padding-top: 35px;
+      padding-bottom: 10px;
 
-      .footer-company-infor,
-      .footer-other-detail {
-        a {
-          font-size: 14px;
-          color: #fff;
-        }
-  
-        h3, h4 {
-          color: #fff;
-        }
-  
-        p {
-          padding: 5px 0px;
-        }
-      }
-  
-      .footer-company-infor {
-        float: left;
-        padding-top: 20px;
-  
+      .company-tiltle {
+        margin: 0 auto;
+        width: 560px;
+
         i {
-          display: block;
+          display: inline-block;
+          position: relative;
+          top: 5px;
           width: 60px;
           height: 23px;
           background-position: -300px 0px;
         }
-  
-        h4 {
-          padding-top: 20px;
-          padding-bottom: 15px;
-        }
-      }
-  
-      .footer-other-detail {
-        float: right;
-        width: 80%;
-        padding-top: 15px;
 
-        .row {
-          padding-left: 0px;
-          margin-left: 0px;
-        }
-  
         h3 {
-          padding-bottom: 20px;
+          color: #fff;
+          width: 480px;
+          padding-left: 20px;
+          display: inline-block;
           letter-spacing: 8px;
         }
-  
-        h4 {
-          padding-top: 2px;
-          padding-bottom: 15px;
+      }
+
+      .footer-company-infor {
+        padding-top: 5px;
+        padding-left: 155px;
+
+        a {
+          font-size: 14px;
+          color: #fff;
+        }
+
+        .infor-row {
+          padding-top: 15px;
+          position: relative;
+
+          .infor-row-right {
+            position: absolute;
+            top: 15px;
+            left: 195px;
+          }
         }
       }
     }
@@ -81,7 +69,6 @@ footer {
         display: inline-block;
         padding: 0px 20px;
       }
-
 
       i {
         display: block;
