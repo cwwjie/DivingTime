@@ -12,13 +12,18 @@ const renderOther = require('./controller/other/build');
 const renderWedding = require('./controller/wedding/build');
 const renderWeddingDetail = require('./controller/wedding/detail/build');
 
-let main = {
-  URLbase: 'http://112.74.92.97:8080',
-  URLversion: 'http://112.74.92.97:8080/dvtweb',
-  URLvillage: 'http://112.74.92.97:8080/dvtreserve',
+const appConfig = `var appConfig = (function () {
+  var URLbase = document.location.protocol + '//' + location.host + (document.location.protocol === 'https:' ? ':8443' :':8080');
+  return { 
+    urlBase: URLbase, 
+    version: URLbase + '/dvtweb', 
+    village: URLbase + '/dvtreserve'
+  };
+})();`;
 
+let main = {
   urlConfig() {
-    return Buffer.from(`var appConfig = { urlBase: "${this.URLbase}", version: "${this.URLversion}", village: "${this.URLvillage}" };`);
+    return Buffer.from(appConfig);
   },
 
   async init() {

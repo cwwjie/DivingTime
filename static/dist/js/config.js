@@ -1,6 +1,6 @@
 
 var appConfig = (function () {
-	var URLbase = 'http://192.168.0.100:8080';
+	var URLbase = document.location.protocol + '//192.168.0.100:8080';
 
 	return {
 		/**
