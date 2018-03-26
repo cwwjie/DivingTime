@@ -1298,17 +1298,19 @@ var VuePart_3 = {
               'isError': false,
               'message': ''
             };
-          } else if (/^[\u4E00-\u9FA5]+$/.test(val) === false) {
-            this.chineseNameAddition = {
-              'isError': true,
-              'message': '必须为中文'
-            };
-          } else if (val.length >= 15) {
-            this.chineseNameAddition = {
-              'isError': true,
-              'message': '不能超出15个汉字!'
-            };
-          } else {
+          }
+          //  else if (/^[\u4E00-\u9FA5]+$/.test(val) === false) {
+          //   this.chineseNameAddition = {
+          //     'isError': true,
+          //     'message': '必须为中文'
+          //   };
+          // } else if (val.length >= 15) {
+          //   this.chineseNameAddition = {
+          //     'isError': true,
+          //     'message': '不能超出15个汉字!'
+          //   };
+          // } 
+          else if (/^[\u4E00-\u9FA5]+$/.test(val)) {
             this.pinyinName = ConvertPinyin(val);
             this.chineseNameAddition = {
               'isError': false,

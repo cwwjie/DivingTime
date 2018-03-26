@@ -1,0 +1,120 @@
+@import './less/base.less';
+@import './less/row.less';
+
+@import './Component/Navigation-Bar/index.less';
+@import './Component/ScrollTop/index.less';
+@import './Component/Copyright/index.less';
+
+i {
+  display: block;
+  background-image: url("./../../dist/img/ico.png");
+}
+
+body {
+  background: rgba(0, 0, 0, 8%);;
+}
+
+.main {
+  padding-top: 75px;
+  min-height: 800px;
+  padding-bottom: 25px;
+
+  .main-content {
+    margin: auto;
+    border-radius: 15px;
+    background: #fff;
+
+    width: 995px;
+    min-height: 40px;
+  }
+
+  .main-header {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    h1 {
+      text-align: center;
+      font-weight: 400;
+      font-size: 30px;
+      color: #4d5d77;
+    }
+
+    h2 {
+      display: block;
+      padding-top: 10px;
+      text-align: center;
+      font-weight: 400;
+      font-size: 18px;
+      color: #4d5d77;
+
+      span {
+        padding: 0px 10px;
+      }
+    }
+  }
+  
+  .main-products {
+    width: 995px;
+
+    .product-content {
+      width: 990px;
+      margin: auto;
+    }
+
+    .product-list {
+      overflow: hidden;
+      padding: 11.25px;
+    }
+
+    .product-item {
+      float: left;
+      padding: 11.25px;
+
+      .item-content {
+        overflow: hidden;
+        width: 300px;
+        border-radius: 5px;
+        background: rgba(0, 0, 0, 4%);
+      }
+
+      .item-img {
+        width: 300px;
+        height: 220px;
+        overflow: hidden;
+      }
+
+      .item-detail {
+        padding: 10px;
+
+        .item-productName {
+          font-weight: bold;
+          font-size: 18px;
+          color: #4d5d77;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .item-productBrief {
+          padding-top: 5px;
+          font-size: 14px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .item-price {
+          margin-top: 15px;
+          position: relative;
+          
+          .price-right {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+          }
+        }
+      }
+    }
+
+  }
+
+}

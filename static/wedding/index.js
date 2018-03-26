@@ -89,7 +89,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 $(document).ready(function () {
-  _index2.default.init(2);
+  _index2.default.init(3);
   _index4.default.init();
 
   video.init();

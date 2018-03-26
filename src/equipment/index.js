@@ -2,7 +2,7 @@ import header from './../Component/Navigation-Bar/index.js';
 import scrollTop from './../Component/ScrollTop/index.js';
  
 $(document).ready(() => {
-  header.init(3);
+  header.init(4);
   scrollTop.init();
 
   equipment.init();

@@ -2,18 +2,24 @@ const fs = require('fs');
 const path = require('path');
 
 const fsExtra = require('fs-extra');
+
 const renderHome = require('./controller/build');
 const renderProduct = require('./controller/product/build');
 const renderProductSubmit = require('./controller/product/submit/build');
+const renderPackages = require('./controller/product/all/build');
+
 const renderVillage = require('./controller/village/build');
 const renderVillageDetail = require('./controller/village/detail/build');
 const renderVillageSubmit = require('./controller/village/submit/build');
+
 const renderOther = require('./controller/other/build');
+
 const renderWedding = require('./controller/wedding/build');
 const renderWeddingDetail = require('./controller/wedding/detail/build');
 
+// let URLbase = `${document.location.protocol}//112.74.92.97:${document.location.protocol === 'https:' ? '8443' :'8080'}`;
 const appConfig = `var appConfig = (function () {
-  var URLbase = document.location.protocol + '//' + location.host + (document.location.protocol === 'https:' ? ':8443' :':8080');
+  var URLbase = document.location.protocol + '//112.74.92.97:' + (document.location.protocol === 'https:' ? '8443' :'8080');
   return { 
     urlBase: URLbase, 
     version: URLbase + '/dvtweb', 
@@ -45,6 +51,10 @@ let main = {
 
     // 渲染 product 首页 产品详情
     fs.mkdirSync(`${__dirname}\\build\\product`);
+    await renderProduct();
+
+    // 渲染 packages 首页 所有产品
+    fs.mkdirSync(`${__dirname}\\build\\product\\all`);
     await renderProduct();
 
     // 渲染 Submit 首页 产品提交

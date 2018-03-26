@@ -3,7 +3,7 @@ import scrollTop from './../Component/ScrollTop/index.js';
 import convertDate from './../../utils/convertDate.js';
  
 $(document).ready(() => {
-  header.init(1);
+  header.init(2);
   scrollTop.init();
 
   myData.getAjax()
