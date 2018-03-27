@@ -55,7 +55,7 @@ let main = {
 
     // 渲染 packages 首页 所有产品
     fs.mkdirSync(`${__dirname}\\build\\product\\all`);
-    await renderProduct();
+    await renderPackages();
 
     // 渲染 Submit 首页 产品提交
     fs.mkdirSync(`${__dirname}\\build\\product\\submit`);

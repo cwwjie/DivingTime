@@ -6,8 +6,8 @@ const WriteToFille = require(path.relative(__dirname, './utils/WriteToFille'));
 
 module.exports = async function renderPackages(next) {
 
-  const ReadeJavaScriptFilePath = RelativeToFilePath('./src/packages/index.js');
-  const WriteJavaScriptFilePath = RelativeToFilePath('./build/packages/');
+  const ReadeJavaScriptFilePath = RelativeToFilePath('./src/product/all/index.js');
+  const WriteJavaScriptFilePath = RelativeToFilePath('./build/product/all/');
   let WriteJavaScriptToFille = WriteToFille.JavaScriptbyWebpack(
     ReadeJavaScriptFilePath, 
     WriteJavaScriptFilePath, 
@@ -15,8 +15,8 @@ module.exports = async function renderPackages(next) {
     true // 证明是生产环境
   );
 
-  const ReadeCSSfilePath = RelativeToFilePath('./src/packages/index.less');
-  const WriteCSSfilePath = RelativeToFilePath('./build/packages');
+  const ReadeCSSfilePath = RelativeToFilePath('./src/product/all/index.less');
+  const WriteCSSfilePath = RelativeToFilePath('./build/product/all');
   const gulpLessfilePath = RelativeToFilePath('./src');
   let WriteCSStoFille = WriteToFille.CSS(
     ReadeCSSfilePath, 
@@ -24,8 +24,8 @@ module.exports = async function renderPackages(next) {
     gulpLessfilePath
   );
 
-  const ReadeHTMLfilePath = './src/packages/index.xtpl';
-  const WriteHTMLfilePath = RelativeToFilePath('./build/packages/index.html');
+  const ReadeHTMLfilePath = './src/product/all/index.xtpl';
+  const WriteHTMLfilePath = RelativeToFilePath('./build/product/all/index.html');
   let WriteHTMLtoFille = WriteToFille.HTML(
     ReadeHTMLfilePath, 
     WriteHTMLfilePath

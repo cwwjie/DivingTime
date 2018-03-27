@@ -5,13 +5,13 @@
 
   <div class='header-content'>
     <a id='headerHome' href='{{ homeURL + "index.html" }}'>首页</a>
-    <a id='headerHome' href='{{ homeURL + "product/all/index.html" }}'>所有产品</a>
+    <a id='headerHome' href='{{ homeURL + "product/all/index.html" }}'>潜游套餐</a>
     <a id='headerVillage' href='{{ homeURL + "village/index.html" }}'>度假村直订</a>
     <a id='headerWedding' href='{{ homeURL + "wedding/index.html" }}'>旅拍服务</a>
     <!-- <a id='headerEquipment' href='{{ homeURL + "equipment/index.html" }}'>设备租赁</a> -->
     <!-- <a id='headerAboutus' href='{{ homeURL + "other/aboutus.html" }}'>关于我们</a> -->
     <a id='taobao' href='https://divet.taobao.com/?spm=a1z10.1-c.0.0.8cxl3q'>淘宝店铺</a>
-    <a id='taobao' href='https://weibo.com/divingtime'>微博链接</a>
+    <a id='taobao' href='https://weibo.com/divingtime'>官方微博</a>
   </div>
 
   <div class="header-login" id="header-login">

@@ -9,118 +9,61 @@ footer {
     width: 700px;
     overflow: hidden;
 
-    .footer-company {
-      padding-top: 0px;
-      padding-bottom: 10px;
-
-      .company-tiltle {
-        margin: 0 auto;
-        width: 560px;
-
-        i {
-          display: inline-block;
-          position: relative;
-          top: 5px;
-          width: 60px;
-          height: 23px;
-          background-position: -300px 0px;
-        }
-
-        h3 {
-          color: #fff;
-          width: 480px;
-          padding-left: 20px;
-          display: inline-block;
-          letter-spacing: 8px;
-        }
-      }
-
-      .footer-company-infor {
-        padding-top: 5px;
-        padding-left: 155px;
-
-        a {
-          font-size: 14px;
-          color: #fff;
-        }
-
-        .infor-row {
-          padding-top: 15px;
-          position: relative;
-
-          .infor-row-right {
-            position: absolute;
-            top: 15px;
-            left: 195px;
-          }
-        }
-      }
-    }
-
-    .footer-icon {
-      position: absolute;
-      left: 50%;
-      padding-top: 20px;
-      margin-left: -155px;
-      width: 310px;
+    .footer-details {
+      padding-top: 25px;
+      overflow: hidden;
 
       > div {
-        display: inline-block;
-        padding: 0px 20px;
+        height: 120px;
+        float: left;
       }
 
-      i {
-        display: block;
-        width: 32px;
-        height: 32px;
+      a {
+        color: #fff;
       }
 
-      .footer-icon-taobao {
-        i {
-          background-position: -361px 0px;
+      .details-row {
+        padding: 5px 0px;
+      }
+
+      .details-companyLink {
+        padding-top: 15px;
+        width: 25%;
+
+        .companyLink-content {
+          padding-left: 25px;
         }
       }
 
-      .footer-icon-weibo {
-        i {
-          background-position: -393px 0px;
+      .details-companyInfor {
+        padding-top: 15px;
+        width: 50%;
+
+        .companyInfor-content {
+          padding-left: 55px;
         }
       }
 
-      .footer-icon-weixin {
-				position: relative;
+      .details-qrcode {
+        position: relative;
+        width: 25%;
 
         i {
-          background-position: -425px 0px;
-        }
-
-        > div{
-          display: none;
-					position: absolute;
-					top: -130px;
-					left: -25px;
-					width: 120px;
-					height: 120px;
-          background-image: url("/dist/img/ico.png");
-					background-position: 0px -115px;
-				}
-      }
-
-      .footer-icon-weixin:hover {
-        > div {
+          position: absolute;
+          right: 35px;
           display: block;
+          width: 120px;
+          height: 120px;
+          background-position: 0px -235px
         }
-      }
-
-      .footer-icon-credit {
-        i {
-          background-position: -344px -217px;
-        }
+        // i {
+        //   background-position: -425px 0px;
+        // }
       }
     }
     
     .footer-copyright {
-      padding-top: 10px;
+      padding-top: 25px;
       padding-bottom: 10px;
       text-align: center;
       font-size: 14px;
@@ -131,4 +74,119 @@ footer {
       }
     }
   }
+}
+
+// 下面的是被隐藏的
+footer .footer-content {
+
+  .footer-company {
+    padding-top: 0px;
+    padding-bottom: 10px;
+
+    .company-tiltle {
+      margin: 0 auto;
+      width: 560px;
+
+      i {
+        display: inline-block;
+        position: relative;
+        top: 5px;
+        width: 60px;
+        height: 23px;
+        background-position: -300px 0px;
+      }
+
+      h3 {
+        color: #fff;
+        width: 480px;
+        padding-left: 20px;
+        display: inline-block;
+        letter-spacing: 8px;
+      }
+    }
+
+    .footer-company-infor {
+      padding-top: 5px;
+      padding-left: 155px;
+
+      a {
+        font-size: 14px;
+        color: #fff;
+      }
+
+      .infor-row {
+        padding-top: 15px;
+        position: relative;
+
+        .infor-row-right {
+          position: absolute;
+          top: 15px;
+          left: 195px;
+        }
+      }
+    }
+  }
+
+  .footer-icon {
+    position: absolute;
+    left: 50%;
+    padding-top: 20px;
+    margin-left: -155px;
+    width: 310px;
+
+    > div {
+      display: inline-block;
+      padding: 0px 20px;
+    }
+
+    i {
+      display: block;
+      width: 32px;
+      height: 32px;
+    }
+
+    .footer-icon-taobao {
+      i {
+        background-position: -361px 0px;
+      }
+    }
+
+    .footer-icon-weibo {
+      i {
+        background-position: -393px 0px;
+      }
+    }
+
+    .footer-icon-weixin {
+      position: relative;
+
+      i {
+        background-position: -425px 0px;
+      }
+
+      > div {
+        display: none;
+        position: absolute;
+        top: -130px;
+        left: -25px;
+        width: 120px;
+        height: 120px;
+        background-image: url("/dist/img/ico.png");
+        background-position: 0px -115px;
+      }
+    }
+
+    .footer-icon-weixin:hover {
+      > div {
+        display: block;
+      }
+    }
+
+    .footer-icon-credit {
+      i {
+        background-position: -344px -217px;
+      }
+    }
+  }
+
 }
