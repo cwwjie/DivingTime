@@ -453,9 +453,21 @@ var VuePart_2 = {
           this.template === 13 ||
           this.template === 14
         ) {
-          return '马来西亚'
+          return '爱妮岛(ITI)'
         } else {
           return '斗湖'
+        }
+      },
+      internationalFlightName: function () {
+        if (
+          this.template === 11 ||
+          this.template === 12 ||
+          this.template === 13 ||
+          this.template === 14
+        ) {
+          return '马尼拉'
+        } else {
+          return '马来西亚'
         }
       }
     },

@@ -190,9 +190,11 @@
           </div>
 
           <!-- 国际航班号（入境） -->
-          <div class="row" v-if="template === 3">
+          <div class="row" v-if="template === 3 || template === 11 || template === 12 || template === 13 || template === 14">
             <div class="col-4">
-              <div class="flight-descri">马来西亚抵达日期</div>
+              <div class="flight-descri">
+                {{internationalFlightName}}抵达日期
+              </div>
               <div class="flight-picker">
                 <el-date-picker
                   v-model="landDate" 
@@ -286,9 +288,9 @@
           </div>
 
           <!-- 国际航班号（出境） -->
-          <div class="row" v-if="template === 3">
+          <div class="row" v-if="template === 3 || template === 11 || template === 12 || template === 13 || template === 14">
             <div class="col-4">
-              <div class="flight-descri">马来西亚离开日期</div>
+              <div class="flight-descri">{{internationalFlightName}}离开日期</div>
               <div class="flight-picker">
                 <el-date-picker
                   v-model="takeoffDate" 
@@ -318,7 +320,7 @@
           </div>
           <div class="row">
             <div class="col-12">
-              <input type="text" v-model="flightNote" name="flightNote" placeholder='如有中转，请填写斗湖或仙本那地区的中转酒店（中英文名称）'>
+              <input type="text" v-model="flightNote" name="flightNote" :placeholder=`如有中转，请填写${internationalFlightName}或${flightName}地区的中转酒店（中英文名称）`>
               <label for="flightNote">备注</label>
             </div>
           </div>
